@@ -13,6 +13,8 @@ Maintnence Log:
 
 int main()
 {
+	int characterHealth = 100;
+	int characterLevel = 0;
 
 }
 
