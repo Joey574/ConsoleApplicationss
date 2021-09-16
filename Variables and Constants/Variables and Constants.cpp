@@ -7,7 +7,7 @@ Pseudocode:
 Maintenance Log:
 9/14/21:	I added 21 lines of code containing variables and constants, as well as working on outputting them to the screen, 
 			so far i have 6 outputting sucessfully.
-
+9/16/21:	Got all the variables and constants to print to screen however struggling with the last 3
 */
 #include <stdio.h>
 #include <conio.h>
@@ -49,13 +49,20 @@ int main()
 	printf("Age:%i\n", age);
 	printf("Places I have lived:%i\n", placesIHAveLived);
 	printf("Lucky number:%i\n", luckyNumber);
-	printf("I've played football for %i", yearsIvePlayedFootball, "years");
-
-
-
-
-
-
+	printf("I've played football for %i", yearsIvePlayedFootball);
+	printf(" years\n");
+	cout << "" << struggle << endl;
+	cout << "" << color << endl;
+	cout << "" << food << endl;
+	printf("Math Grade:%c\n", mathGrade);
+	printf("11:%c\n", _11);
+	printf("24:%c\n", _24);
+	printf("My Networth:%fl\n", netWorth);
+	printf("Washington State tax percentage:%fl\n ", taxes);
+	printf("I am %fl", height);
+	printf(" feet tall");
+		
+	return 0;
 
 
 }

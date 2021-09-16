@@ -14,14 +14,11 @@ Mainenance Log:
 
 int main()
 {
-	int a;
-
-	scanf_s("%i", &a);
-	fseek(stdin, 0, SEEK_END);
-		if ();
-		{
-			printf("Space detected");
-		}
+	printf("Welcome to my humble abode\n");
+	_getch();
+	system("CLS");
+	printf("I hope this is working\n");
+	printf("IT WORKS!!!!!!\n");
 }
 
 
