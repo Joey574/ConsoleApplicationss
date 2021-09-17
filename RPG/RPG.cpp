@@ -88,6 +88,7 @@ int main()
 	if (intro = true)
 	{
 		introduction();
+		intro = false;
 	}
 	else
 	{
