@@ -31,29 +31,40 @@ void introduction()
 	{
 		
 	}
-	printf("CHOOSE YOUR CHARACTER\n\t 1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman");
-	cin >> input1;
-	if (input1 == 1)
-	{
+		
+		printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
+		cin >> input1;
+		if (input1 == 1)
+		{
+			system("CLS");
+			printf("You have chosen knight\n\t Press any key to continue");
 
-	}
-	else if (input1 == 2)
-	{
+		}
+		else if (input1 == 2)
+		{
+			system("CLS");
+			printf("You have chosen Calvary\n\t Press any key to continue");
+		}
+		else if (input1 == 3)
+		{
+			system("CLS");
+			printf("You have chosen Spearman\n\t Press any key to continue");
+		}
+		else if (input1 == 4)
+		{
+			system("CLS");
+			printf("You have chosen Archer\n\t Press any key to continue");
+		}
+		else if (input1 == 5)
+		{
+			system("CLS");
+			printf("You have chosen Swordsman\n\t Press any key to continue");
+		}
+		else;
+		{
 
-	}
-	else if (input1 == 3)
-	{
-
-	}
-	else if (input1 == 4)
-	{
-
-	}
-	else if (input1 == 5)
-	{
-
-	}
-	else ()
+		}
+		
 
 }
 void defeat()
@@ -67,6 +78,10 @@ int main()
 	int characterHealth;
 	int level;
 	int xp;
+	int damage;
+	int speed;
+	int agility;
+	int constitution;
 	bool intro = true;
 	int input1;
 	
