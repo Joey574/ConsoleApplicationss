@@ -1,7 +1,7 @@
 /*
 Author: Joey Soroka
-Project Name: 
-File Name: Variables and Constants
+Project Name: Variables and Constants
+File Name: Variables and Constants.cpp
 Purpose: To declare and initialie 13 variables and 5 constants
 Pseudocode:
 Maintenance Log:

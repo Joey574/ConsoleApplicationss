@@ -9,6 +9,7 @@ Maintenance Log:
 9/10/21:	Attempting to set up main screen
 9/13/21:	Attempting to set up player input
 9/16/21:	Still working on player input, managed to get player input, setting up introduction
+9/17/21:	Added character stats, have not initialized them yet
 */
 #include <stdio.h>
 #include <conio.h>
@@ -20,45 +21,49 @@ using namespace std;
 
 void introduction()
 {
+	int strength;
+	int perception;
+	int endurance;
+	int charisma;
+	int intelligence;
+	int agility;
+	int luck;
 	int input1;
-	printf("Hello adventurer! We need your help.\nThe world is in peril, you are the last hope\n\t Press 1 to continue\n");
-	cin >> input1;
-	if (input1 == 1)
-	{
-		system("CLS");
-	}
-	else
-	{
-		
-	}
-		
+	printf("Hello adventurer! We need your help.\nThe world is in peril, you are the last hope\n\t Press any key to continue\n");
+	_getch();
+	system("CLS");
 		printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
 		cin >> input1;
 		if (input1 == 1)
 		{
 			system("CLS");
 			printf("You have chosen knight\n\t Press any key to continue");
+			_getch();
 
 		}
 		else if (input1 == 2)
 		{
 			system("CLS");
 			printf("You have chosen Calvary\n\t Press any key to continue");
+			_getch();
 		}
 		else if (input1 == 3)
 		{
 			system("CLS");
 			printf("You have chosen Spearman\n\t Press any key to continue");
+			_getch();
 		}
 		else if (input1 == 4)
 		{
 			system("CLS");
 			printf("You have chosen Archer\n\t Press any key to continue");
+			_getch();
 		}
 		else if (input1 == 5)
 		{
 			system("CLS");
 			printf("You have chosen Swordsman\n\t Press any key to continue");
+			_getch();
 		}
 		else;
 		{
@@ -78,10 +83,13 @@ int main()
 	int characterHealth;
 	int level;
 	int xp;
-	int damage;
-	int speed;
+	int strength;
+	int perception;
+	int endurance;
+	int charisma;
+	int intelligence;
 	int agility;
-	int constitution;
+	int luck;
 	bool intro = true;
 	int input1;
 	
