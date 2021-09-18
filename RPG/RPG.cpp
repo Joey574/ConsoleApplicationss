@@ -22,10 +22,10 @@ using namespace std;
 
 
 void introduction()
-
+	{
 	srand(0);
-{	srand((unsigned)time(NULL));
-{
+	srand((unsigned)time(NULL));
+
 	int strength;
 	int perception;
 	int endurance;
@@ -33,13 +33,18 @@ void introduction()
 	int intelligence;
 	int agility;
 	int luck;
+	bool knight;
+	bool calvary;
+	bool spearman;
+	bool archer;
+	bool swordsman;
 	int luckMax = 5;
 	int luckMin = 0;
 	int input1;
-	printf("Hello adventurer! We need your help.\nThe world is in peril, and we need your help\n\t Press any key to continue\n");
+	printf("Hello adventurer! We need your help.\nThe world is in peril, and you must save us\n\t Press any key to continue\n");
 	
 	_getch();
-	
+
 	system("CLS");
 		
 	printf("The year is 1257, hords of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
@@ -56,41 +61,107 @@ void introduction()
 			strength = 8;
 			perception = 3;
 			endurance = 9;
-			charisma = 5;
+			charisma = 7;
 			intelligence = 4;
 			agility = 2;
-			
 			luck = luckMin + rand() % (luckMax - luckMin + 1);
+			knight = true;
 
 			system("CLS");
 			printf("You have chosen knight\n");
 			printf("Your stats are:\n");
+			printf("Strength: %i\n", strength);
+			printf("Perception: %i\n", perception);
+			printf("Endurance: %i\n", endurance);
+			printf("Charisma: %i\n", charisma);
+			printf("Intelligence: %i\n", intelligence);
+			printf("Agility: %i\n", agility);
+			printf("Luck: %i\n", luck);
+			printf("SPECIAL ABILITY: During times of need a knight can pray for a random gift from the heavens.\n\n");
+			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
+			printf("Press any key to continue\n");
 
-			getch();
-
+			_getch();
 		}
 		else if (input1 == 2)
 		{
+			strength = 5;
+			perception = 8;
+			endurance = 4;
+			charisma = 5;
+			intelligence = 6;
+			agility = 9;
+			luck = luckMin + rand() % (luckMax - luckMin + 1);
+			calvary = true;
+
 			system("CLS");
-			printf("You have chosen Calvary\n\t Press any key to continue");
+			printf("You have chosen Calvary\n");
+			printf("Your stats are:\n");
+			printf("Strength: %i\n", strength);
+			printf("Perception: %i\n", perception);
+			printf("Endurance: %i\n", endurance);
+			printf("Charisma: %i\n", charisma);
+			printf("Intelligence: %i\n", intelligence);
+			printf("Agility: %i\n", agility);
+			printf("Luck: %i\n", luck);
+			printf("SPECIAL ABILITY: Calvary can charge into units dealing massive splash damage.\n\n");
+			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
+			printf("Press any key to continue\n");
+
 			_getch();
 		}
 		else if (input1 == 3)
 		{
 			system("CLS");
-			printf("You have chosen Spearman\n\t Press any key to continue");
+			printf("You have chosen Spearman\n");
+			printf("Your stats are:\n");
+			printf("Strength: %i\n", strength);
+			printf("Perception: %i\n", perception);
+			printf("Endurance: %i\n", endurance);
+			printf("Charisma: %i\n", charisma);
+			printf("Intelligence: %i\n", intelligence);
+			printf("Agility: %i\n", agility);
+			printf("Luck: %i\n", luck);
+			printf("SPECIAL ABILITY: Spearmen can fortify, damaging any units that come near them.\n\n");
+			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
+			printf("Press any key to continue\n");
+
 			_getch();
 		}
 		else if (input1 == 4)
 		{
 			system("CLS");
-			printf("You have chosen Archer\n\t Press any key to continue");
+			printf("You have chosen Archer\n");
+			printf("Your stats are:\n");
+			printf("Strength: %i\n", strength);
+			printf("Perception: %i\n", perception);
+			printf("Endurance: %i\n", endurance);
+			printf("Charisma: %i\n", charisma);
+			printf("Intelligence: %i\n", intelligence);
+			printf("Agility: %i\n", agility);
+			printf("Luck: %i\n", luck);
+			printf("SPECIAL ABILITY: Archers can set their arrows alight for a short duration.\n\n");
+			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
+			printf("Press any key to continue\n");
+
 			_getch();
 		}
 		else if (input1 == 5)
 		{
 			system("CLS");
-			printf("You have chosen Swordsman\n\t Press any key to continue");
+			printf("You have chosen Swordsman\n");
+			printf("Your stats are:\n");
+			printf("Strength: %i\n", strength);
+			printf("Perception: %i\n", perception);
+			printf("Endurance: %i\n", endurance);
+			printf("Charisma: %i\n", charisma);
+			printf("Intelligence: %i\n", intelligence);
+			printf("Agility: %i\n", agility);
+			printf("Luck: %i\n", luck);
+			printf("SPECIAL ABILITY: Swordsman can fortify, massively increasing their endurance and making them near invulnerable to arrows.\n\n");
+			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
+			printf("Press any key to continue\n");
+
 			_getch();
 		}
 		else;
@@ -107,7 +178,7 @@ void defeat()
 
 
 int main()
-
+{
 	int characterHealth;
 	int level;
 	int xp;
@@ -118,6 +189,11 @@ int main()
 	int intelligence;
 	int agility;
 	int luck;
+	bool knight;
+	bool calvary;
+	bool spearman;
+	bool archer;
+	bool swordsman;
 	bool intro = true;
 	int input1;
 	
