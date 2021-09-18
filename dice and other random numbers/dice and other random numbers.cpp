@@ -29,7 +29,8 @@ int main()
 	srand((unsigned)time(NULL));
 	sixFacedDie = min + rand() % (max - min + 1);
 	printf("Six sided die:%d\n", sixFacedDie);
-	_12SidedDie = min + rand() % ()
+	_12SidedDie = min + rand() % (secondMax - min + 1);
+	printf("Twelve sided die:%d\n", _12SidedDie);
 
 
 

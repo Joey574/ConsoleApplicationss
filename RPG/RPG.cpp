@@ -11,8 +11,8 @@ Maintenance Log:
 9/16/21:	Still working on player input, managed to get player input, setting up introduction
 9/17/21:	Added character stats, have not initialized them yet
 */
-#include <stdio.h>
 #include <conio.h>
+#include <stdio.h>
 #include <iostream>
 #include <string>
 #include <stdlib.h>
@@ -22,7 +22,7 @@ using namespace std;
 
 
 void introduction()
-	{
+{
 	srand(0);
 	srand((unsigned)time(NULL));
 
@@ -39,7 +39,7 @@ void introduction()
 	bool archer;
 	bool swordsman;
 	int luckMax = 5;
-	int luckMin = 0;
+	int luckMin = 1;
 	int input1;
 	printf("Hello adventurer! We need your help.\nThe world is in peril, and you must save us\n\t Press any key to continue\n");
 	
@@ -89,7 +89,7 @@ void introduction()
 			perception = 8;
 			endurance = 4;
 			charisma = 5;
-			intelligence = 6;
+			intelligence = 7;
 			agility = 9;
 			luck = luckMin + rand() % (luckMax - luckMin + 1);
 			calvary = true;
@@ -112,6 +112,15 @@ void introduction()
 		}
 		else if (input1 == 3)
 		{
+			strength = 9;
+			perception = 4;
+			endurance = 5;
+			charisma = 4;
+			intelligence = 6;
+			agility = 6;
+			luck = luckMin + rand() % (luckMax - luckMin + 1);
+			spearman = true;
+
 			system("CLS");
 			printf("You have chosen Spearman\n");
 			printf("Your stats are:\n");
