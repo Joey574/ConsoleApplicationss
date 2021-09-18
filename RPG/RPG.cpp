@@ -15,11 +15,16 @@ Maintenance Log:
 #include <conio.h>
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 
 
 
 void introduction()
+
+	srand(0);
+{	srand((unsigned)time(NULL));
 {
 	int strength;
 	int perception;
@@ -28,17 +33,40 @@ void introduction()
 	int intelligence;
 	int agility;
 	int luck;
+	int luckMax = 5;
+	int luckMin = 0;
 	int input1;
-	printf("Hello adventurer! We need your help.\nThe world is in peril, you are the last hope\n\t Press any key to continue\n");
+	printf("Hello adventurer! We need your help.\nThe world is in peril, and we need your help\n\t Press any key to continue\n");
+	
 	_getch();
+	
 	system("CLS");
+		
+	printf("The year is 1257, hords of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
+
+	_getch();
+	
+	system("CLS");
+		
+		
 		printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
 		cin >> input1;
 		if (input1 == 1)
 		{
+			strength = 8;
+			perception = 3;
+			endurance = 9;
+			charisma = 5;
+			intelligence = 4;
+			agility = 2;
+			
+			luck = luckMin + rand() % (luckMax - luckMin + 1);
+
 			system("CLS");
-			printf("You have chosen knight\n\t Press any key to continue");
-			_getch();
+			printf("You have chosen knight\n");
+			printf("Your stats are:\n");
+
+			getch();
 
 		}
 		else if (input1 == 2)
@@ -79,7 +107,7 @@ void defeat()
 
 
 int main()
-{
+
 	int characterHealth;
 	int level;
 	int xp;
