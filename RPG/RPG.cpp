@@ -10,7 +10,9 @@ Maintenance Log:
 9/13/21:	Attempting to set up player input
 9/16/21:	Still working on player input, managed to get player input, setting up introduction
 9/17/21:	Added character stats, have not initialized them yet
-9/20/21:	
+9/20/21:	Finished character stats, gonna work on character equipment next
+			sctracth that, working on organization and transfering ints from functions to main and vice versa
+
 */
 #include <stdio.h>
 #include <iostream>
@@ -21,24 +23,33 @@ Maintenance Log:
 using namespace std;
 
 
-
-void characterSelection()
+void introduction(int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, string& playerName)
 {
-	int strength;
-	int perception;
-	int endurance;
-	int charisma;
-	int intelligence;
-	int agility;
-	int luck;
-	bool knight;
-	bool calvary;
-	bool spearman;
-	bool archer;
-	bool swordsman;
-	int luckMax = 5;
-	int luckMin = 1;
-	int input1;
+	srand(0);
+	srand((unsigned)time(NULL));
+
+	cout << "Hello " << playerName << "! We need your help." << endl;
+
+	printf("The world is in peril, and you must save us\n\t Press any key to continue\n");
+
+	_getch();
+
+	system("CLS");
+
+	printf("The year is 1257, hords of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
+
+	_getch();
+
+	system("CLS");
+
+	characterSelection(strength, perception, endurance, charisma, intelligence, agility, luck, playerName);
+
+}
+
+void characterSelection(int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, string& playerName)
+{
+	
+	system("CLS");
 
 	printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
 	cin >> input1;
@@ -245,27 +256,6 @@ void characterSelection()
 }
 
 
-
-void introduction()
-{
-	srand(0);
-	srand((unsigned)time(NULL));
-		
-	printf("Hello adventurer! We need your help.\nThe world is in peril, and you must save us\n\t Press any key to continue\n");
-	
-	_getch();
-
-	system("CLS");
-		
-	printf("The year is 1257, hords of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
-
-	_getch();
-	
-	system("CLS");
-	
-	characterSelection();
-
-}
 void defeat()
 {
 
@@ -291,10 +281,21 @@ int main()
 	bool swordsman;
 	bool intro = true;
 	int input1;
-	
+	string playerName;
+
+	printf("Hello adventurer, what would you like to be known as?\n");
+	cin >> playerName;
+	system("CLS");
+	cout << "Welcome " << playerName;
+	printf(" Press any key to continue.\n");
+
+	_getch();
+
+	system("CLS");
+
 	if (intro = true)
 	{
-		introduction();
+		introduction(strength, perception, endurance, charisma, intelligence, agility, luck, playerName);
 		intro = false;
 	}
 	else
@@ -302,7 +303,7 @@ int main()
 		defeat();
 	}
 
-
+	
 	
 	return 0;
 }
