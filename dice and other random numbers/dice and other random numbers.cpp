@@ -34,22 +34,22 @@ int main()
 	int randomizer;
 	char characters;
 			
-	srand(0);
-	srand((unsigned)time(NULL));
+	srand(0); //only initiate this once at the beginning of the program, any more times will cause errors
+	srand((unsigned)time(NULL)); // ^
 	
-	sixFacedDie = min + rand() % (max - min + 1);
+	sixFacedDie = min + rand() % (max - min + 1); //use this for ints
 	printf("Six sided die:%d\n", sixFacedDie);
 	
 	_12SidedDie = min + rand() % (secondMax - min + 1);
 	printf("Twelve sided die:%d\n", _12SidedDie);
 	
-	floatRan = floatMin + (float)(rand()) / ((float)(RAND_MAX / (floatMax - floatMin)));
+	floatRan = floatMin + (float)(rand()) / ((float)(RAND_MAX / (floatMax - floatMin))); // use this for floats, there seem to be several ways to do floats, and idk what any of this doest, but it works
 	printf("Random Float:%f\n", floatRan);
 	
-	characters = 'a' + rand() % 26 - 32;
+	characters = 'a' + rand() % 26 - 32; // use this to generate random char
 	/* 
 	first generates a random number 1-26
-	next it converts to a character from a-z, subtracts 32 to change from lowercase to uppercase as this is the 
+	next it converts to a character from numbers to a-z, subtracts 32 to change from lowercase to uppercase as this is the 
 	ASCII code difference between uppercase and lowercase characters
 	*/
 	printf("Random Character:%c\n", characters);
