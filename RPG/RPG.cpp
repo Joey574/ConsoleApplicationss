@@ -11,12 +11,12 @@ Maintenance Log:
 9/16/21:	Still working on player input, managed to get player input, setting up introduction
 9/17/21:	Added character stats, have not initialized them yet
 */
-#include <conio.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <stdlib.h>
 #include <time.h>
+#include <conio.h>
 using namespace std;
 
 
@@ -41,15 +41,16 @@ void introduction()
 	int luckMax = 5;
 	int luckMin = 1;
 	int input1;
+
 	printf("Hello adventurer! We need your help.\nThe world is in peril, and you must save us\n\t Press any key to continue\n");
 	
-	_getch();
+	cin.get();
 
 	system("CLS");
 		
 	printf("The year is 1257, hords of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
 
-	_getch();
+	cin.get();
 	
 	system("CLS");
 		
@@ -81,7 +82,7 @@ void introduction()
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("Press any key to continue\n");
 
-			_getch();
+			cin.get();
 		}
 		else if (input1 == 2)
 		{
@@ -108,7 +109,7 @@ void introduction()
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("Press any key to continue\n");
 
-			_getch();
+			cin.get();
 		}
 		else if (input1 == 3)
 		{
@@ -135,7 +136,7 @@ void introduction()
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("Press any key to continue\n");
 
-			_getch();
+			cin.get();
 		}
 		else if (input1 == 4)
 		{
@@ -153,7 +154,7 @@ void introduction()
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("Press any key to continue\n");
 
-			_getch();
+			cin.get();
 		}
 		else if (input1 == 5)
 		{
@@ -171,7 +172,7 @@ void introduction()
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("Press any key to continue\n");
 
-			_getch();
+			cin.get();
 		}
 		else;
 		{
