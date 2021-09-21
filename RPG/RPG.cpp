@@ -23,7 +23,7 @@ Maintenance Log:
 using namespace std;
 
 
-void introduction(int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, string& playerName)
+void introduction(string& playerName)
 {
 	srand(0);
 	srand((unsigned)time(NULL));
@@ -41,19 +41,19 @@ void introduction(int strength, int perception, int endurance, int charisma, int
 	_getch();
 
 	system("CLS");
-
-	characterSelection(strength, perception, endurance, charisma, intelligence, agility, luck, playerName);
-
 }
 
-void characterSelection(int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, string& playerName)
+void characterSelection(int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, string& playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman)
 {
-	
+	int input;
+	int luckMin = 1;
+	int luckMax = 10;
+
 	system("CLS");
 
 	printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
-	cin >> input1;
-	if (input1 == 1)
+	cin >> input;
+	if (input == 1)
 	{
 		strength = 8;
 		perception = 3;
@@ -77,22 +77,22 @@ void characterSelection(int strength, int perception, int endurance, int charism
 		printf("SPECIAL ABILITY: During times of need a knight can pray for a random gift from the heavens.\n\n");
 		printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 		printf("\t Press 1 to continue, 2 to go back\n");
-		cin >> input1;
+		cin >> input;
 
-		if (input1 == 1)
+		if (input == 1)
 		{
 
 		}
-		else if (input1 == 2)
+		else if (input == 2)
 		{
-			characterSelection();
+		//	characterSelection();
 		}
 		else
 		{
 
 		}
 	}
-	else if (input1 == 2)
+	else if (input == 2)
 	{
 		strength = 5;
 		perception = 8;
@@ -116,22 +116,22 @@ void characterSelection(int strength, int perception, int endurance, int charism
 		printf("SPECIAL ABILITY: Calvary can charge into units dealing massive splash damage.\n\n");
 		printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 		printf("\t Press 1 to continue, 2 to go back\n");
-		cin >> input1;
+		cin >> input;
 
-		if (input1 == 1)
+		if (input == 1)
 		{
 
 		}
-		else if (input1 == 2)
+		else if (input == 2)
 		{
-			characterSelection();
+		//	characterSelection();
 		}
 		else
 		{
 
 		}
 	}
-	else if (input1 == 3)
+	else if (input == 3)
 	{
 		strength = 9;
 		perception = 4;
@@ -155,22 +155,22 @@ void characterSelection(int strength, int perception, int endurance, int charism
 		printf("SPECIAL ABILITY: Spearmen can fortify, damaging any units that come near them.\n\n");
 		printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 		printf("\t Press 1 to continue, 2 to go back\n");
-		cin >> input1;
+		cin >> input;
 
-		if (input1 == 1)
+		if (input == 1)
 		{
 
 		}
-		else if (input1 == 2)
+		else if (input == 2)
 		{
-			characterSelection();
+		//	characterSelection();
 		}
 		else
 		{
 
 		}
 	}
-	else if (input1 == 4)
+	else if (input == 4)
 	{
 		strength = 3;
 		perception = 9;
@@ -194,22 +194,22 @@ void characterSelection(int strength, int perception, int endurance, int charism
 		printf("SPECIAL ABILITY: Archers can set their arrows alight for a short duration.\n\n");
 		printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 		printf("\t Press 1 to continue, 2 to go back\n");
-		cin >> input1;
+		cin >> input;
 
-		if (input1 == 1)
+		if (input == 1)
 		{
 
 		}
-		else if (input1 == 2)
+		else if (input == 2)
 		{
-			characterSelection();
+		//	characterSelection();
 		}
 		else
 		{
 
 		}
 	}
-	else if (input1 == 5)
+	else if (input == 5)
 	{
 		strength = 8;
 		perception = 4;
@@ -233,15 +233,15 @@ void characterSelection(int strength, int perception, int endurance, int charism
 		printf("SPECIAL ABILITY: Swordsman can fortify, massively increasing their endurance and making them near invulnerable to arrows.\n\n");
 		printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 		printf("\t Press 1 to continue, 2 to go back\n");
-		cin >> input1;
+		cin >> input;
 
-		if (input1 == 1)
+		if (input == 1)
 		{
 
 		}
-		else if (input1 == 2)
+		else if (input == 2)
 		{
-			characterSelection();
+		//	characterSelection();
 		}
 		else
 		{
@@ -278,9 +278,9 @@ int main()
 	bool calvary;
 	bool spearman;
 	bool archer;
-	bool swordsman;
+	bool swordsman;   
 	bool intro = true;
-	int input1;
+	int input;
 	string playerName;
 
 	printf("Hello adventurer, what would you like to be known as?\n");
@@ -295,8 +295,9 @@ int main()
 
 	if (intro = true)
 	{
-		introduction(strength, perception, endurance, charisma, intelligence, agility, luck, playerName);
+		introduction(playerName);
 		intro = false;
+		characterSelection(strength, perception, endurance, charisma, intelligence, agility, luck, playerName, knight, calvary, spearman, archer, swordsman);
 	}
 	else
 	{
