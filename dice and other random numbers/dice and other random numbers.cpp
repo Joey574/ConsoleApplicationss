@@ -54,6 +54,8 @@ int main()
 	*/
 	printf("Random Character:%c\n", characters);
 
+	_getch();
+
 	return 0;
 }
 
