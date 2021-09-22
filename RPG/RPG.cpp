@@ -39,7 +39,7 @@ void introduction(string playerName)
 
 	system("CLS");
 
-	printf("The year is 1257, hords of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
+	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
 
 	_getch();
 
@@ -507,5 +507,4 @@ int main()
 	
 	return 0;
 }
-
 
