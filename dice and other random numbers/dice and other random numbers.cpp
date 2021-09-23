@@ -36,13 +36,13 @@ int main()
 	srand(0); //only initiate this once at the beginning of the program, any more times will cause errors
 	srand((unsigned)time(NULL)); // ^
 	
-	sixFacedDie = min + rand() % (max - min + 1); //use this for ints
+	sixFacedDie = min + rand() % (max - min + 1); //use this for ints, the plus one means it is inclusive of max, no + 1 means exclusive of max
 	printf("Six sided die:%d\n", sixFacedDie);
 	
 	_12SidedDie = min + rand() % (secondMax - min + 1);
 	printf("Twelve sided die:%d\n", _12SidedDie);
 	
-	floatRan = floatMin + (float)(rand()) / ((float)(RAND_MAX / (floatMax - floatMin))); // use this for floats, there seem to be several ways to do floats, and idk what any of this doest, but it works
+	floatRan = floatMin + (float)(rand()) / ((float)(RAND_MAX / (floatMax - floatMin + 1))); // use this for floats, there seem to be several ways to do floats, like int, + 1 means inclusive of max
 	printf("Random Float:%f\n", floatRan);
 	
 	characters = 'a' + rand() % 26 - 32; // use this to generate random char
