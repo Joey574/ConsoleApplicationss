@@ -17,11 +17,11 @@ Maintenance Log:
 int main()
 {
 	printf("Division problems. \n\n");
-	int a = 36;
-	int b = 42;
+	int a = 3;
+	int b = 4;
 	int c;
-	float x = 3.6;
-	float y = 4.2;
+	float x = 3.3;
+	float y = 4.4;
 	float z;
 
 
