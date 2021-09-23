@@ -31,7 +31,6 @@ int main()
 	float floatMax = 5.0;
 	float floatMin = 0.0;
 	float floatRan;
-	int randomizer;
 	char characters;
 			
 	srand(0); //only initiate this once at the beginning of the program, any more times will cause errors

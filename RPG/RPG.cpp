@@ -28,8 +28,6 @@ using namespace std;
 
 void introduction(string playerName)
 {
-	srand(0);
-	srand((unsigned)time(NULL));
 
 	cout << "Hello " << playerName << "! We need your help. The worl is in peril." << endl;
 
@@ -44,6 +42,7 @@ void introduction(string playerName)
 	_getch();
 
 	system("CLS");
+
 }
 	//void characterSelection(int strength, int perception, int endurance, int charisma, int intelligence, int agility, int luck, string playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman)
 /*{
@@ -278,6 +277,9 @@ int main()
 	bool intro = true;
 	
 	string playerName;
+
+	srand(0);
+	srand((unsigned)time(NULL));
 
 	printf("Hello adventurer, what would you like to be known as?\n");
 	cin >> playerName;

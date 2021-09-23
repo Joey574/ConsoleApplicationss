@@ -66,9 +66,9 @@ int main()
 	cout << "" << color << endl;
 	cout << "" << food << endl;
 
-	printf("My Networth:%f\n", netWorth);
-	printf("Washington State tax percentage:%f\n", taxes);
-	printf("I am %f", height);
+	printf("My Networth:%.1f\n", netWorth);
+	printf("Washington State tax percentage:%.1f\n", taxes);
+	printf("I am %.2f", height);
 	printf(" feet tall\n");
 
 	cout << std::boolalpha;

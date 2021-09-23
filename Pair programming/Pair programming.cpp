@@ -86,7 +86,22 @@ int main()
 	uInt = uIntMin + rand() % (uIntMax - uIntMin + 1);
 	printf("Random Integer:%d\n");
 
-	printf("OMG INSANE, NOW LET's DO CHARACTERS");
+	printf("OMG INSANE, NOW LET's DO CHARACTERS!\n\tPress any key to continue");
+
+	_getch();
+
+	printf("Enter the low parameter below:\n");
+	cin >> uCharMin;
+
+	system("CLS");
+
+	printf("Enter the high parameter below:\n");
+	cin >> uCharMax;
+
+	system("CLS");
+
+	uChar = 'a' + rand() % (uIntMax - uIntMin);
+	printf("Random Character:%c", uChar);
 
 	return 0;
 
