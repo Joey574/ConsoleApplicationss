@@ -5,7 +5,8 @@ File Name: Pair programming.cpp
 Purpose: Allow the user to choose the min and max for different outputs
 Pseudocode:
 Maintenance Log:
-9/22/21:	Started project
+9/22/21:	Started project, added random float, random user genertated float and int
+9/23/21:	Working on getting random character from user, currently running into a "file not found issue"
 */
 
 #include <iostream>
