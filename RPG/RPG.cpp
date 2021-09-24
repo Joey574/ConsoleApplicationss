@@ -56,7 +56,9 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 
 	system("CLS"); 
 
-	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
+	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, ");
+	cout << playerName << endl;
+	printf(" a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
 
 	_getch();
 
@@ -103,6 +105,7 @@ void callBack()
 			knight = true;
 
 			system("CLS");
+
 			printf("You have chosen knight\n");
 			printf("Your stats are:\n");
 			printf("Strength: %i\n", strength);
@@ -149,6 +152,7 @@ void callBack()
 			calvary = true;
 
 			system("CLS");
+
 			printf("You have chosen Calvary\n");
 			printf("Your stats are:\n");
 			printf("Strength: %i\n", strength);
@@ -194,6 +198,7 @@ void callBack()
 			spearman = true;
 
 			system("CLS");
+
 			printf("You have chosen Spearman\n");
 			printf("Your stats are:\n");
 			printf("Strength: %i\n", strength);
@@ -239,6 +244,7 @@ void callBack()
 			archer = true;
 
 			system("CLS");
+
 			printf("You have chosen Archer\n");
 			printf("Your stats are:\n");
 			printf("Strength: %i\n", strength);
@@ -284,6 +290,7 @@ void callBack()
 			swordsman = true;
 
 			system("CLS");
+
 			printf("You have chosen Swordsman\n");
 			printf("Your stats are:\n");
 			printf("Strength: %i\n", strength);
@@ -373,13 +380,9 @@ int main()
 
 		characterSelection(strength, perception, endurance, charisma, intelligence, agility, luck, playerName, knight, calvary, spearman, archer, swordsman);
 
-		int input;
-		int luckMin = 1;
-		int luckMax = 10;
-
 		system("CLS");
-
 	}
+
 	
 	
 	return 0;
