@@ -16,28 +16,45 @@ Maintenance Log:
 9/23/21:	Working on setters and getters to allow variables to be set and gotten throughout the code, so far going well, much better than any other atempt
 9/24/21:	While setters and getters are great they don't do exactly what I want them to do, went back to passing by refference, got it to work, set up callBack function
 		and set up while loop for characterSelection
+		
+Common Commands and what they do:
+_getch(); // Kind of like a break, the code waits here until any key is pressed
+system("CLS") // Clears the screen of any text that has been outputed, may not want to use this when clearing specific text
+continue; // This command will cause a loop to go back to the beginnig
+break; // This command will cause a loop to "break" and stop repeating
+void example()  // A void is a function, you can call a fucntion any time you want under main and the code in a void will be executed, helpful for saving space
+{      		// the parameters of a void can be set to pass a local variable through by reference, to do this, when you call a void under main, type the name
+	 	// of the variable you want to pass, then in the void parameters, define the variable and give it the name it will be called under that void
+ }	
+cin >> example; // This is an easy way to collect player input, however be careful, as the input is stored and if the game asks for another input it will automatically
+		// use the one given previously unless another cin command is given
+while (example = true) // While is a type of loop that will continuesly execute the commands inside until the while statement is no longer true or a break; command is given
+{
+
+}
+srand(0); and srand((unsigned)time(NULL)); // Both of these commands should only be executed once at the beginning of the code, as they are what gives the number for the
+					   // srand randomizer, initilizing these more than once will cause an error
 */
 #include <stdio.h>
 #include <iostream>
-#include <string>
-#include <stdlib.h>
-#include <time.h>
-#include <conio.h>
+#include <string> // Needed for string
+#include <stdlib.h> // Needed for srand
+#include <time.h> // Needed for srand
+#include <conio.h> 
 #include <vector>
 
 using namespace std;
 
 
-void introduction(string playerName)
+void introduction(string playerName)  // Says hello to user and gives intoduction
 {
 
 	cout << "Hello " << playerName << "! We need your help. The world is in peril." << endl;
-
 	printf("\tYou are our last hope.\n\t Press any key to continue\n");
 
-	_getch();
+	_getch(); 
 
-	system("CLS");
+	system("CLS"); 
 
 	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
 
