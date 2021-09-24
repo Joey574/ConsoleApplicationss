@@ -8,6 +8,7 @@ Maintenance Log:
 */
 
 #include <iostream>
+#include <conio.h>
 
 using namespace std;
 
@@ -16,9 +17,9 @@ class test
 	private:
 		int test;
 	public:
-		void testing()
+		void testing(int t)
 	{
-		test = 1;
+		test = t;
 	}
 	int getTest()
 	{
@@ -27,12 +28,27 @@ class test
 	}
 };
 
-int main()
+void test2()
 {
 	test myObj;
 
 	myObj.testing();
 	cout << myObj.getTest();
+}
+
+int main()
+{
+	test myObj;
+
+	myObj.testing(10);
+	cout << myObj.getTest();
+
+	_getch();
+
+	system("CLS");
+
+	test2();
+
 
 	return 0;
 			
