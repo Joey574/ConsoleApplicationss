@@ -14,6 +14,8 @@ Maintenance Log:
 			sctracth that, working on organization and transfering ints from functions to main and vice versa
 9/21/21:	Working on header file, absolute chaos, simplified code with help of tucker, made it out of the dark ages, code works, no functions though );
 9/23/21:	Working on setters and getters to allow variables to be set and gotten throughout the code, so far going well, much better than any other atempt
+9/24/21:	While setters and getters are great they don't do exactly what I want them to do, went back to passing by refference, got it to work, set up callBack function
+		and set up while loop for characterSelection
 */
 #include <stdio.h>
 #include <iostream>
@@ -102,6 +104,8 @@ void callBack()
 			if (input == 1)
 			{
 				reselectChar = false;
+				
+				break;
 			}
 			else if (input == 2)
 			{
@@ -145,7 +149,8 @@ void callBack()
 			if (input == 1)
 			{
 				reselectChar = false;
-
+				
+				break;
 			}
 			else if (input == 2)
 			{
@@ -189,6 +194,8 @@ void callBack()
 			if (input == 1)
 			{
 				reselectChar = false;
+				
+				break;
 			}
 			else if (input == 2)
 			{
@@ -232,6 +239,8 @@ void callBack()
 			if (input == 1)
 			{
 				reselectChar = false;
+				
+				break;
 			}
 			else if (input == 2)
 			{
@@ -275,6 +284,8 @@ void callBack()
 			if (input == 1)
 			{
 				reselectChar = false;
+				
+				break;
 			}
 			else if (input == 2)
 			{
