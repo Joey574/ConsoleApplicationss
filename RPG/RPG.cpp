@@ -18,25 +18,9 @@ Maintenance Log:
 			and set up while loop for characterSelection
 9/26/21:	Setting up equipment selection, going to be a long one though, currently just set up indtroduction for knight and set it up in a function.
 			planning on creating a funciton for each different class
-		
-Common Commands and what they do:
-_getch(); // Kind of like a break, the code waits here until any key is pressed
-system("CLS"); // Clears the screen of any text that has been outputed, may not want to use this when clearing specific text
-continue; // This command will cause a loop to go back to the beginnig
-break; // This command will cause a loop to "break" and stop repeating
-void example()  // A void is a function, you can call a fucntion any time you want under main and the code in a void will be executed, helpful for saving space
-{      			// the parameters of a void can be set to pass a local variable through by reference, to do this, when you call a void under main, type the name
-	 			// of the variable you want to pass, then in the void parameters, define the variable and give it the name it will be called under that void
-}	
-cin >> example; // This is an easy way to collect player input, however be careful, as the input is stored and if the game asks for another input it will automatically
-				// use the one given previously unless another cin command is given
-while (example = true) // While is a type of loop that will continuesly execute the commands inside until the while statement is no longer true or a break; command is given
-{
 
-}
-srand(0); and srand((unsigned)time(NULL)); // Both of these commands should only be executed once at the beginning of the code, as they are what gives the number for the
-										   // srand randomizer, initilizing these more than once will cause an error
 */
+
 #include <stdio.h>
 #include <iostream>
 #include <string> // Needed for string
@@ -60,7 +44,7 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 
 	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, ");
 	cout << playerName << endl;
-	printf(" a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
+	printf("a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
 
 	_getch();
 
@@ -342,16 +326,73 @@ void callBack()
 	}
 }
 
-void knightEquipment()
+void knightEquipment(int &strengthMod, int &perceptionMod, int &enduranceMod, int &charismaMod, int &intelligenceMod, int &agilityMod, int &luckMod)
 {
-	printf("As a knight, you get to pick from a wide assortment of heavy equipment.\nMainly consisting of plate armour and a longsword.\nHowever slight variations are definitely possible.\n ");
-	printf("Press any key to choose your armour.\n");
+
+	int input;
+	bool selectingEquipment = true;
+
+	printf("As a knight, you get to pick from a wide assortment of heavy equipment.\nMainly consisting of plate armor and a longsword.\nHowever slight variations are definitely possible.\n ");
+	printf("Press any key to choose your armor.\n");
 
 	_getch();
 
 	system("CLS");
 
+	while (selectingEquipment == true)
+	{
+		printf("1. Plate armor\t2. Half plate armor\t3. Leather armor\n");
 
+		cin >> input;
+
+		if (input == 1)
+		{
+			int strengthMod = 2;
+			int perceptionMod = -1;
+			int enduranceMod = 5;
+			int charismaMod = 2;
+			int intelligenceMod = 0;
+			int agilityMod = -3;
+			int luckMod = 0;
+
+			system("CLS");
+
+			printf("You have selected Plate armor\nPress 1 to continue, 2 to go back");
+
+			cin >> input;
+
+			if (input == 1)
+			{
+				system("CLS");
+
+				printf("Great! Now you can choose your weapon, the best part!\nPress any key to continue");
+
+				_getch();
+
+				system("CLS");
+			}
+			else if (input == 2)
+			{
+				system("CLS");
+
+				continue;
+			}
+		}
+		else if (input == 2)
+		{
+
+		}
+		else if (input == 3)
+		{
+
+		}
+		else
+		{
+			callBack();
+
+			continue;
+		}
+	}
 }
 
 void calvaryEquipment()
@@ -369,7 +410,7 @@ void archerEquipment()
 
 }
 
-void swordsman()
+void swordsmanEquipment()
 {
 
 }
@@ -378,12 +419,19 @@ void swordsman()
 {
 
 	int input;
+	int strengthMod = 0;
+	int perceptionMod = 0;
+	int enduranceMod = 0;
+	int charismaMod = 0;
+	int intelligenceMod = 0;
+	int agilityMod = 0;
+	int luckMod = 0;
 
 	bool selectingEquipment = true;
 
 	while (selectingEquipment = true)
 	{
-		cout << "Welcome to the armoury " << playerName << "!" << endl;
+		cout << "Welcome to the armory " << playerName << "!" << endl;
 		printf("Press any key to continue\n");
 
 		_getch();
@@ -392,7 +440,7 @@ void swordsman()
 
 		if (knight == true)
 		{
-			knightEquipment();
+			knightEquipment(strengthMod, perceptionMod, enduranceMod, charismaMod, intelligenceMod, agilityMod, luckMod);
 			
 		}
 		else if (calvary == true)

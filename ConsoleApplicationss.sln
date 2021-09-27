@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RPG Introction", "RPG Intro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground", "Playground\Playground.vcxproj", "{843366B6-8B7C-479C-9DC0-12D518A29ECB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common Commands", "Common Commands\Common Commands.vcxproj", "{249F7093-9221-4A92-8170-5EBE8E5EDE05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -131,6 +133,14 @@ Global
 		{843366B6-8B7C-479C-9DC0-12D518A29ECB}.Release|x64.Build.0 = Release|x64
 		{843366B6-8B7C-479C-9DC0-12D518A29ECB}.Release|x86.ActiveCfg = Release|Win32
 		{843366B6-8B7C-479C-9DC0-12D518A29ECB}.Release|x86.Build.0 = Release|Win32
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Debug|x64.ActiveCfg = Debug|x64
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Debug|x64.Build.0 = Debug|x64
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Debug|x86.ActiveCfg = Debug|Win32
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Debug|x86.Build.0 = Debug|Win32
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Release|x64.ActiveCfg = Release|x64
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Release|x64.Build.0 = Release|x64
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Release|x86.ActiveCfg = Release|Win32
+		{249F7093-9221-4A92-8170-5EBE8E5EDE05}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
