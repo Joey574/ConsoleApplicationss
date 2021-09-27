@@ -354,6 +354,26 @@ void knightEquipment()
 
 }
 
+void calvaryEquipment()
+{
+	
+}
+
+void spearmanEquipment()
+{
+
+}
+
+void archerEquipment()
+{
+
+}
+
+void swordsman()
+{
+
+}
+	
 	void equipmentSelection(string playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman)
 {
 
@@ -373,22 +393,25 @@ void knightEquipment()
 		if (knight == true)
 		{
 			knightEquipment();
+			
 		}
 		else if (calvary == true)
 		{
-
+			calvaryEquipment();
+			
 		}
 		else if (spearman == true)
 		{
-
+			spearmanEquipment();
+			
 		}
 		else if (archer == true)
 		{
-
+			archerEquipment();
 		}
 		else if (swordsman == true)
 		{
-
+			swordsmanEquipment();
 		}
 		else
 		{
