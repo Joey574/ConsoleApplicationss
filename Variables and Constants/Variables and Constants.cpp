@@ -3,7 +3,7 @@ Author: Joey Soroka
 Project Name: Variables and Constants
 File Name: Variables and Constants.cpp
 Purpose: To declare and initialie 13 variables and 5 constants
-Pseudocode:
+Pseudocode: Outputs 6 different constants and 14 different variables
 Maintenance Log:
 9/14/21:	I added 21 lines of code containing variables and constants, as well as working on outputting them to the screen, 
 			so far i have 6 outputting sucessfully.
