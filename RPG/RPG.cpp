@@ -16,6 +16,8 @@ Maintenance Log:
 9/23/21:	Working on setters and getters to allow variables to be set and gotten throughout the code, so far going well, much better than any other atempt
 9/24/21:	While setters and getters are great they don't do exactly what I want them to do, went back to passing by refference, got it to work, set up callBack function
 		and set up while loop for characterSelection
+9/26/21:	Setting up equipment selection, going to be a long one though, currently just set up indtroduction for knight and set it up in a function.
+			planning on creating a funciton for each different class
 		
 Common Commands and what they do:
 _getch(); // Kind of like a break, the code waits here until any key is pressed
@@ -23,17 +25,17 @@ system("CLS") // Clears the screen of any text that has been outputed, may not w
 continue; // This command will cause a loop to go back to the beginnig
 break; // This command will cause a loop to "break" and stop repeating
 void example()  // A void is a function, you can call a fucntion any time you want under main and the code in a void will be executed, helpful for saving space
-{      		// the parameters of a void can be set to pass a local variable through by reference, to do this, when you call a void under main, type the name
-	 	// of the variable you want to pass, then in the void parameters, define the variable and give it the name it will be called under that void
+{      			// the parameters of a void can be set to pass a local variable through by reference, to do this, when you call a void under main, type the name
+	 			// of the variable you want to pass, then in the void parameters, define the variable and give it the name it will be called under that void
  }	
 cin >> example; // This is an easy way to collect player input, however be careful, as the input is stored and if the game asks for another input it will automatically
-		// use the one given previously unless another cin command is given
+				// use the one given previously unless another cin command is given
 while (example = true) // While is a type of loop that will continuesly execute the commands inside until the while statement is no longer true or a break; command is given
 {
 
 }
 srand(0); and srand((unsigned)time(NULL)); // Both of these commands should only be executed once at the beginning of the code, as they are what gives the number for the
-					   // srand randomizer, initilizing these more than once will cause an error
+										   // srand randomizer, initilizing these more than once will cause an error
 */
 #include <stdio.h>
 #include <iostream>
@@ -335,6 +337,59 @@ void callBack()
 
 }
 
+	void equipmentSelection(string playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman)
+{
+
+	int input;
+
+	bool selectingEquipment = true;
+
+	while (selectingEquipment = true)
+	{
+		cout << "Welcome " << playerName << "!" << endl;
+		printf("Press any key to continue\n");
+
+		_getch();
+
+		system("CLS");
+
+		if (knight = true)
+		{
+			printf("As a knight, you get to pick from a wide assortment of heavy equipment.\n Mainly consisting of plate armour and a longsword.\nHowever slight variations are definitely possible.\n ");
+			printf("Press any key to choose your armour.\n");
+
+			_getch();
+
+			system("CLS");
+		}
+		else if (calvary = true)
+		{
+
+		}
+		else if (spearman = true)
+		{
+
+		}
+		else if (archer = true)
+		{
+
+		}
+		else if (swordsman = true)
+		{
+
+		}
+		else
+		{
+			callBack();
+
+			continue;
+
+		}
+
+	}
+	
+}
+
 
 int main()
 {
@@ -381,6 +436,10 @@ int main()
 		characterSelection(strength, perception, endurance, charisma, intelligence, agility, luck, playerName, knight, calvary, spearman, archer, swordsman);
 
 		system("CLS");
+
+		equipmentSelection(playerName, knight, calvary, spearman, archer, swordsman);
+
+
 	}
 
 	
