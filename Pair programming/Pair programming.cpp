@@ -3,11 +3,13 @@ Author: Joey Soroka
 Project Name: pair programming
 File Name: Pair programming.cpp
 Purpose: Allow the user to choose the min and max for different outputs
-Pseudocode:
+Pseudocode: Displays a random float, then asks user for paramerters for another random float, followed by a random integer, and then finally a
+			random character.
 Maintenance Log:
 9/22/21:	Started project, added random float, random user genertated float and int
 9/23/21:	Working on getting random character from user, currently running into a "file not found issue"
 			Probably a home computer issue, working fine at school, set up random character, all seems to be working
+9/28/21:	Fixed error with random character, now working completely
 */
 
 #include <iostream>
@@ -106,8 +108,10 @@ int main()
 
 	system("CLS");
 
-	uChar = 'a' + rand() % (uIntMax - uIntMin - 32);
+	uChar = uCharMin + rand() % (uCharMax - uCharMin + 1);
 	printf("Random Character:%c\n", uChar);
+
+	printf("Press any key to exit");
 
 	_getch();
 

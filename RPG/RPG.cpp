@@ -51,7 +51,7 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 	system("CLS");
 
 	printf("What can only be described as a gate to hell has opened deep undergrund,\nunleashing swarms of monsters of your worst nightmares.\n");
-	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\n");
+	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\n\tPress any key to continue");
 
 	_getch();
 
@@ -71,9 +71,41 @@ void callBack()
 
 }
 
-	void characterSelection(int &strength, int &perception, int &endurance, int &charisma, int &intelligence, int &agility, int &luck, string playerName, bool &knight, bool &calvary, bool &spearman, bool &archer, bool &swordsman)
+void statChecker(int& strength, int& perception, int& endurance, int& charisma, int& intelligence, int& agility, int& luck)
 {
-	int input;
+	if (strength > 10)
+	{
+		strength = 10;
+	}
+	if (perception > 10)
+	{
+		perception = 10;
+	}
+	if (endurance > 10)
+	{
+		endurance = 10;
+	}
+	if (charisma > 10)
+	{
+		charisma = 10;
+	}
+	if (intelligence > 10)
+	{
+		intelligence = 10;
+	}
+	if (agility > 10)
+	{
+		agility = 10;
+	}
+	if (luck > 10)
+	{
+		luck = 10;
+	}
+}
+
+void characterSelection(int &strength, int &perception, int &endurance, int &charisma, int &intelligence, int &agility, int &luck, string playerName, bool &knight, bool &calvary, bool &spearman, bool &archer, bool &swordsman)
+{
+	string input;
 	int luckMin = 1;
 	int luckMax = 10;
 	bool reselectChar = true;
@@ -86,7 +118,7 @@ void callBack()
 
 		cin >> input;
 
-		if (input == 1)
+		if (input == "1")
 		{
 			strength = 8;
 			perception = 3;
@@ -114,13 +146,13 @@ void callBack()
 			
 			cin >> input;
 
-			if (input == 1)
+			if (input == "1")
 			{
 				reselectChar = false;
 				
 				break;
 			}
-			else if (input == 2)
+			else if (input == "2")
 			{
 				system("CLS");
 
@@ -133,7 +165,7 @@ void callBack()
 				continue;
 			}
 		}
-		else if (input == 2)
+		else if (input == "2")
 		{
 			strength = 5;
 			perception = 8;
@@ -160,13 +192,13 @@ void callBack()
 			printf("\t Press 1 to continue, 2 to go back\n");
 			cin >> input;
 
-			if (input == 1)
+			if (input == "1")
 			{
 				reselectChar = false;
 				
 				break;
 			}
-			else if (input == 2)
+			else if (input == "2")
 			{
 				system("CLS");
 
@@ -179,7 +211,7 @@ void callBack()
 				continue;
 			}
 		}
-		else if (input == 3)
+		else if (input == "3")
 		{
 			strength = 9;
 			perception = 4;
@@ -206,13 +238,13 @@ void callBack()
 			printf("\t Press 1 to continue, 2 to go back\n");
 			cin >> input;
 
-			if (input == 1)
+			if (input == "1")
 			{
 				reselectChar = false;
 				
 				break;
 			}
-			else if (input == 2)
+			else if (input == "2")
 			{
 				system("CLS");
 
@@ -225,7 +257,7 @@ void callBack()
 				continue;
 			}
 		}
-		else if (input == 4)
+		else if (input == "4")
 		{
 			strength = 3;
 			perception = 9;
@@ -252,13 +284,13 @@ void callBack()
 			printf("\t Press 1 to continue, 2 to go back\n");
 			cin >> input;
 
-			if (input == 1)
+			if (input == "1")
 			{
 				reselectChar = false;
 				
 				break;
 			}
-			else if (input == 2)
+			else if (input == "2")
 			{
 				system("CLS");
 
@@ -271,7 +303,7 @@ void callBack()
 				continue;
 			}
 		}
-		else if (input == 5)
+		else if (input == "5")
 		{
 			strength = 8;
 			perception = 4;
@@ -298,13 +330,13 @@ void callBack()
 			printf("\t Press 1 to continue, 2 to go back\n");
 			cin >> input;
 
-			if (input == 1)
+			if (input == "1")
 			{
 				reselectChar = false;
 				
 				break;
 			}
-			else if (input == 2)
+			else if (input == "2")
 			{
 				system("CLS");
 
@@ -329,70 +361,7 @@ void callBack()
 void knightEquipment(int &strengthMod, int &perceptionMod, int &enduranceMod, int &charismaMod, int &intelligenceMod, int &agilityMod, int &luckMod)
 {
 
-	int input;
-	bool selectingEquipment = true;
 
-	printf("As a knight, you get to pick from a wide assortment of heavy equipment.\nMainly consisting of plate armor and a longsword.\nHowever slight variations are definitely possible.\n ");
-	printf("Press any key to choose your armor.\n");
-
-	_getch();
-
-	system("CLS");
-
-	while (selectingEquipment == true)
-	{
-		printf("1. Plate armor\t2. Half plate armor\t3. Leather armor\n");
-
-		cin >> input;
-
-		if (input == 1)
-		{
-			int strengthMod = 2;
-			int perceptionMod = -1;
-			int enduranceMod = 5;
-			int charismaMod = 2;
-			int intelligenceMod = 0;
-			int agilityMod = -3;
-			int luckMod = 0;
-
-			system("CLS");
-
-			printf("You have selected Plate armor\nPress 1 to continue, 2 to go back");
-
-			cin >> input;
-
-			if (input == 1)
-			{
-				system("CLS");
-
-				printf("Great! Now you can choose your weapon, the best part!\nPress any key to continue");
-
-				_getch();
-
-				system("CLS");
-			}
-			else if (input == 2)
-			{
-				system("CLS");
-
-				continue;
-			}
-		}
-		else if (input == 2)
-		{
-
-		}
-		else if (input == 3)
-		{
-
-		}
-		else
-		{
-			callBack();
-
-			continue;
-		}
-	}
 }
 
 void calvaryEquipment()
@@ -415,18 +384,11 @@ void swordsmanEquipment()
 
 }
 	
-	void equipmentSelection(string playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman)
+	void equipmentSelection(string playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman, int &strengthMod, int &perceptionMod, int &enduranceMod, int &charismaMod, int &intelligenceMod, int &agilityMod, int &luckMod)
 {
 
-	int input;
-	int strengthMod = 0;
-	int perceptionMod = 0;
-	int enduranceMod = 0;
-	int charismaMod = 0;
-	int intelligenceMod = 0;
-	int agilityMod = 0;
-	int luckMod = 0;
-
+	string input;
+	
 	bool selectingEquipment = true;
 
 	while (selectingEquipment = true)
@@ -438,36 +400,7 @@ void swordsmanEquipment()
 
 		system("CLS");
 
-		if (knight == true)
-		{
-			knightEquipment(strengthMod, perceptionMod, enduranceMod, charismaMod, intelligenceMod, agilityMod, luckMod);
-			
-		}
-		else if (calvary == true)
-		{
-			calvaryEquipment();
-			
-		}
-		else if (spearman == true)
-		{
-			spearmanEquipment();
-			
-		}
-		else if (archer == true)
-		{
-			archerEquipment();
-		}
-		else if (swordsman == true)
-		{
-			swordsmanEquipment();
-		}
-		else
-		{
-			callBack();
-
-			continue;
-
-		}
+		
 
 	}
 	
@@ -492,6 +425,13 @@ int main()
 	bool archer = false;
 	bool swordsman = false;
 	bool intro = true;
+	int strengthMod = 0;
+	int perceptionMod = 0;
+	int enduranceMod = 0;
+	int charismaMod = 0;
+	int intelligenceMod = 0;
+	int agilityMod = 0;
+	int luckMod = 0;
 	
 	string playerName;
 
@@ -503,7 +443,7 @@ int main()
 
 	system("CLS");
 
-	cout << "Welcome to this RPG, " << playerName << " this is a c++ text based game made by me, Joey Soroka.\nHowever I should also credit Eric Pace for moral support." << endl;
+	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\nHowever I should also credit Eric Pace for moral support.\nOn that note Isaac Morine also deserves a shoutout for inventing chainmail.\nLast but certainly not least The Void Monster under my bed" << endl;
 	printf("Press any key to start the RPG.\n");
 
 	_getch();
@@ -520,7 +460,7 @@ int main()
 
 		system("CLS");
 
-		equipmentSelection(playerName, knight, calvary, spearman, archer, swordsman);
+		equipmentSelection(playerName, knight, calvary, spearman, archer, swordsman, strengthMod, perceptionMod, enduranceMod, charismaMod, intelligenceMod, agilityMod, luckMod);
 
 
 	}
