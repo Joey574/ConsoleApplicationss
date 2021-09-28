@@ -400,6 +400,8 @@ void swordsmanEquipment()
 
 		system("CLS");
 
+		printf("We'll first start off with armor, there are several")
+
 		
 
 	}
