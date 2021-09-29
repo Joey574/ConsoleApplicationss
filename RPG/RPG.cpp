@@ -18,6 +18,8 @@ Maintenance Log:
 			and set up while loop for characterSelection
 9/26/21:	Setting up equipment selection, going to be a long one though, currently just set up indtroduction for knight and set it up in a function.
 			planning on creating a funciton for each different class
+9/28/21:	Working on equipment selection, got rid of about 100 lines of code, going to redesign the whole thing, should be much more streamlined this way however, and
+		much much more do-able.
 
 */
 
