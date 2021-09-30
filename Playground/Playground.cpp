@@ -10,54 +10,47 @@ Maintenance Log:
 
 #include <iostream>
 #include <conio.h>
+#include <windows.h>
 #include <string>
 
 using namespace std;
 
-int main()
+void escapeTesting()
 {
-	string input;
+	
+	_getch();
 
-	bool loop = true;
+	char input = _getch();
 
-	while (loop == true)
+	if (input ==  VK_ESCAPE)
 	{
-		cin >> input;
-
-		if (input == "1")
-		{
-			printf("1");
-		}
-		else if (input == "w")
-		{
-			printf("w");
-		}
-		else if (input == "`")
-		{
-			printf("`");
-		}
-		else if (input == "W")
-		{
-			printf("W");
-		}
+		printf("escape key detected\n");
 
 		_getch();
 
-		system("CLS");
-
-		cin >> input;
-
-		if (input == "1")
+		if (input == VK_ESCAPE)
 		{
-			continue;
+			printf("somethings up");
 		}
-		else if (input == "2")
+		else
 		{
-			break;
+			printf("WOOHOO IT WORKS");
 		}
-
+			
 
 	}
 
+
+}
+
+void vectorTesting()
+{
+	vector 
+}
+
+int main()
+{
+
+	
 	return 0;
 }
