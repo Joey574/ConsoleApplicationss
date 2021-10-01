@@ -15,11 +15,14 @@ Maintenance Log:
 #include <thread>
 
 using namespace std;
-/*
+
 void gotoxy(int x, int y);
 DWORD WINAPI InputThread(LPVOID data);
 
 bool quitting = false;
+int r;
+int c;
+
 
 int main()
 {
@@ -31,12 +34,20 @@ int main()
 
 	do
 	{
-		int r = rand() % 24, c = rand() % (80 - 27);
+		r = rand() % 24, c = rand() % (80 - 27);
 		gotoxy(c, r);
 		printf("Where is the line? (%2i, % 2i)", r, c);
 		Sleep(500);
 		gotoxy(c, r);
 		printf("                            ");
+		gotoxy(0, 24);
+		printf("PRESS the ESC key to exit, line is currently at, : ");
+		cout << r;
+		cout << ", " << c;
+		gotoxy(27, 24);
+		gotoxy(32, 27);
+		printf("             ");
+
 		} 
 	while (!quitting);
 	
@@ -44,6 +55,8 @@ int main()
 	 
 	return 0;
 }
+
+
 
 void gotoxy(int x, int y)
 {
@@ -59,9 +72,7 @@ DWORD WINAPI InputThread(LPVOID data)
 	char input;
 	while (1)
 	{
-		gotoxy(0, 24);
-		printf("PRESS the ESC key to exit (line is currently at, : ");
-		gotoxy(27, 24);
+		
 		input = _getche();
 		//flushall();
 		if (input == ESC)
@@ -72,8 +83,8 @@ DWORD WINAPI InputThread(LPVOID data)
 	}
 	return 0;
 }
-*/
 
+/*
 void thread_task(int i)
 {
 	const char ESC = 27;
@@ -104,3 +115,4 @@ int main()
 		Sleep(500);
 	}
 }
+*/
