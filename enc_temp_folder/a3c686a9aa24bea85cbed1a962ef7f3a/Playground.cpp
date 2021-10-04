@@ -50,12 +50,14 @@ void vectorTesting()
 
 	testing.assign(1, 10);
 
+	cout << testing[2] << endl;
 }
 
 int main()
 {
 	vectorTesting();
 	
+	_getch();
 
 	return 0;
 }
