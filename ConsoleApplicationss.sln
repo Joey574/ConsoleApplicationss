@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RPG", "RPG\RPG.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Numbers 1-10", "Numbers 1-10\Numbers 1-10.vcxproj", "{39CC4128-FC9A-43F0-8C4E-19B84C22D193}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Player Input Testing", "Player Input Testing\Player Input Testing.vcxproj", "{643E4FAD-A5D3-4B56-8447-22550F1905FC}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Variables and Constants", "Variables and Constants\Variables and Constants.vcxproj", "{26DD5ACB-531B-4C45-9A87-29618280F56D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Division", "Division\Division.vcxproj", "{B4514297-3EBA-46C7-8966-BA2831025722}"
@@ -36,6 +34,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Science Quiz", "Science Quiz\Science Quiz.vcxproj", "{32FF04A2-AC57-4032-8514-3A159D02D0BF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bus Charter", "Bus Charter\Bus Charter.vcxproj", "{424678AD-520F-4010-93A0-B349784E300E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Averages", "Averages\Averages.vcxproj", "{46518C76-BE9C-495D-8260-966C573DBC1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,14 +69,6 @@ Global
 		{39CC4128-FC9A-43F0-8C4E-19B84C22D193}.Release|x64.Build.0 = Release|x64
 		{39CC4128-FC9A-43F0-8C4E-19B84C22D193}.Release|x86.ActiveCfg = Release|Win32
 		{39CC4128-FC9A-43F0-8C4E-19B84C22D193}.Release|x86.Build.0 = Release|Win32
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Debug|x64.ActiveCfg = Debug|x64
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Debug|x64.Build.0 = Debug|x64
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Debug|x86.ActiveCfg = Debug|Win32
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Debug|x86.Build.0 = Debug|Win32
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Release|x64.ActiveCfg = Release|x64
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Release|x64.Build.0 = Release|x64
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Release|x86.ActiveCfg = Release|Win32
-		{643E4FAD-A5D3-4B56-8447-22550F1905FC}.Release|x86.Build.0 = Release|Win32
 		{26DD5ACB-531B-4C45-9A87-29618280F56D}.Debug|x64.ActiveCfg = Debug|x64
 		{26DD5ACB-531B-4C45-9A87-29618280F56D}.Debug|x64.Build.0 = Debug|x64
 		{26DD5ACB-531B-4C45-9A87-29618280F56D}.Debug|x86.ActiveCfg = Debug|Win32
@@ -181,6 +173,14 @@ Global
 		{424678AD-520F-4010-93A0-B349784E300E}.Release|x64.Build.0 = Release|x64
 		{424678AD-520F-4010-93A0-B349784E300E}.Release|x86.ActiveCfg = Release|Win32
 		{424678AD-520F-4010-93A0-B349784E300E}.Release|x86.Build.0 = Release|Win32
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Debug|x64.ActiveCfg = Debug|x64
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Debug|x64.Build.0 = Debug|x64
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Debug|x86.ActiveCfg = Debug|Win32
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Debug|x86.Build.0 = Debug|Win32
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Release|x64.ActiveCfg = Release|x64
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Release|x64.Build.0 = Release|x64
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Release|x86.ActiveCfg = Release|Win32
+		{46518C76-BE9C-495D-8260-966C573DBC1D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
