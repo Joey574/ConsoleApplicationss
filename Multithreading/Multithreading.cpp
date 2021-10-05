@@ -15,7 +15,7 @@ Maintenance Log:
 #include <thread>
 
 using namespace std;
-/*
+
 void gotoxy(int x, int y);
 DWORD WINAPI InputThread(LPVOID data);
 
@@ -72,8 +72,8 @@ DWORD WINAPI InputThread(LPVOID data)
 	}
 	return 0;
 }
-*/
 
+/*
 void thread_task(int i)
 {
 	const char ESC = 27;
@@ -104,3 +104,4 @@ int main()
 		Sleep(500);
 	}
 }
+*/
