@@ -1,6 +1,6 @@
 /*
 Author: Joey Soroka
-Project Name: pair programming
+Project Name: More random stuff
 File Name: Pair programming.cpp
 Purpose: Allow the user to choose the min and max for different outputs
 Pseudocode: Displays a random float, then asks user for paramerters for another random float, followed by a random integer, and then finally a

@@ -3,7 +3,7 @@ Author: Joey Soroka
 Project Name: dice and other random numbers
 File Name: dice and other random numbers.cpp
 Purpose: To create a 6 sided die, a 12 sided die, a random float between 0.0 and 5.0, and a random upper case letter
-Pseudocode:
+Pseudocode:	outputs several random numbers, a six sided die, a 12 sided die, a random char and a random int
 Maintenance Log:
 9/17/21:	Started project setting up code
 9/20/21:	Set up all the randomizers, so far working properly, looks to be finished
