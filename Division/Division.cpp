@@ -16,38 +16,57 @@ using namespace std;
 
 int main()
 {
-	printf("Division problems: \n\n");
 	int a = 6;
 	int b = 8;
-	int c;
 	float d = 3.7;
 	float e = 6.2;
-	float f;
+	
+	printf("Addition problems:\n\n");
 
-	c = a / b;
-	cout << "a / b = " << c << endl;
+	cout << "a + b = " << a + b << endl;
 
-	f = d / e;
-	cout << "d / e = " << f << endl;
+	cout << "d + e = " << d + e << endl;
 
+	printf("\nPress any key to see subtraction problems\n");
+	_getch();
+	system("CLS");
+	printf("Subtraction problems:\n\n");
 
+	cout << "a - b = " << a - b << endl;
 
+	cout << "d - e = " << d - e << endl;
 
-	printf("\n Press any key to see multipulcation problems");
+	printf("\nPress any key to see multipulcation problems\n");
 	_getch();
 	system("CLS");
 	printf("Multiplecation problems:\n\n");
 
-	c = a * b;
-	cout << "a * b = " << c << endl;
+	cout << "a * b = " << a * b << endl;
+		
+	cout << "d * e = " << d * e << endl;
 
-	f = d * e;
-	cout << "d * e = " << f << endl;
+	printf("\nPress any key to see division problems\n");
+	_getch();
+	system("CLS");
+	printf("Division probles:\n\n");
 
+	cout << "a / b = " << a / b << endl;
 
-	printf("\nPress any key to exit");
+	cout << "d / e = " << d / e << endl;
+
+	cout << "a / d = " << a / d << endl;
+	
+	cout << "e / a = " << e / a << endl;
+
+	cout << "a / d = " << a / (int)d << endl;
+
+	cout << "e / b = " << e / (float)b << endl;
+
+	printf("\nPress any key to exit\n");
 
 	_getch();
+
+	system("CLS");
 
 	return 0;
 }
