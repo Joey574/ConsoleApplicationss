@@ -20,6 +20,31 @@ Maintenance Log
 
 using namespace std;
 
+void correct(float &score, string name)
+{
+	system("CLS");
+	cout << "Correct answer " << name << ", + 1 point. Press any key to continue" << endl;
+	score += 1;
+	_getch();
+	system("CLS");
+}
+void incorrect(float &score, string name)
+{
+	system("CLS");
+	cout << "Incorrect answer " << name << ", - 0.25 points. Press any key to continue" << endl;
+	score -= 0.25;
+	_getch();
+	system("CLS");
+}
+void _default(string name)
+{
+	system("CLS");
+	cout << "No valid input detected " << name << " no point awarded or subtracted. Press any key to continue" << endl;
+	_getch();
+	system("CLS");
+}
+
+
 int main()
 {
 	string name;
@@ -28,22 +53,186 @@ int main()
 	
 	printf("Hi! What's your name?\n");
 	cin >> name;
+	system("CLS");
 	cout << "Welcome " << name << " to this programming quiz, press 1 to start, or 2 to exit." << endl;
 	cin >> input;
+	system("CLS");
 
 	switch (input)
 	{
 	case 1:
 		cout << "The first question " << name << " is what are the 2 ways to branch in coding?" << endl;
+		printf("1. if and else\t2. if and else if\t3. switch and void\t4. if and switch\n");
 		cin >> input;
-		printf("1. if and else\t2. if and else if\t3. switch and ");
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			correct(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+		
+		cout << "The second question " << name << " is what is an identifier?" << endl;
+		printf("1. A type of variable\t2. A name assigned to variables, type, functions, and labels\t3. Another word used for branching\t4. Value assigned to a variable\n");
+		cin >> input;
 
-		break;
-	case 2:
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			correct(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		cout << "The third question " << name << " is what is an operator?" << endl;
+		printf("1. A type of void\t2. A symbol to tell the computer to do a mathematical or similar operation\t3. A way to go to the top of an if statement\t4. Similar to PEMDAS is it the computers order of operations\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			correct(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		cout << "The fourth question " << name << " is what does I/O mean?" << endl;
+		printf("1. It means information/operations\t2. It means input/operations\t3. It means information/output\t4. It means input/output\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			correct(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		cout << "The fifth question " << name << " is what are the 2 ways to pass a variable to a function?" << endl;
+		printf("1. Pass by reference and pass by value\t2. Pass by value and pass by operation\t3. Pass by reference and pass by order\t4. Pass by reference and pass by argument\n");
+		cin >> input;
+		
+		switch (input)
+		{
+		case 1:
+			correct(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		system("CLS");
+		cout << "You scored " << score << " out of 5 possible points" << endl;
+		score = (score / 5) * 100;
+		if (score >= 91)
+		{
+			printf("You got an A!\n");
+		}
+		else if (score >= 84 && score < 91)
+		{
+			printf("You got an A-!\n");
+		}
+		else if (score >= 80 && score < 84)
+		{
+			printf("You got a B+!\n");
+		}
+		else if (score >= 76 && score < 80)
+		{
+			printf("You got a B!\n");
+		}
+		else if (score >= 71 && score < 76)
+		{
+			printf("You got a B-!\n");
+		}
+		else if (score >= 67 && score < 71)
+		{
+			printf("You got a C+\n");
+		}
+		else if (score >= 63 && score < 67)
+		{
+			printf("You got a C\n");
+		}
+		else if (score >= 58 && score < 63)
+		{
+			printf("You got a C-\n");
+		}
+		else if (score >= 51 && score < 58)
+		{
+			printf("You got a D+\n");
+		}
+		else if (score >= 42 && score < 51)
+		{
+			printf("You got a D\n");
+		}
+		else if (score < 42)
+		{
+			printf("You got a F\n");
+		}
+		else
+		{
+			printf("Something isn't working right");
+		}
+
 		break;
 	default:
 		break;
 	}
+
+
 
 
 	return 0;
