@@ -41,12 +41,7 @@ int main()
 		gotoxy(c, r);
 		printf("                            ");
 		gotoxy(0, 24);
-		printf("PRESS the ESC key to exit, line is currently at, : ");
-		cout << r;
-		cout << ", " << c;
-		gotoxy(27, 24);
-		gotoxy(32, 27);
-		printf("             ");
+		printf("PRESS the ESC key to exit:");		
 
 		} 
 	while (!quitting);

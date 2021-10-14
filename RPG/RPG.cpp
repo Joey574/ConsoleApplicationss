@@ -19,8 +19,8 @@ Maintenance Log:
 9/26/21:	Setting up equipment selection, going to be a long one though, currently just set up indtroduction for knight and set it up in a function.
 			planning on creating a funciton for each different class
 9/28/21:	Working on equipment selection, got rid of about 100 lines of code, going to redesign the whole thing, should be much more streamlined this way however, and
-		much much more do-able.
-
+			much much more do-able.
+10/14/21:	Changed out individual character stat variables into an array, same with character type
 */
 
 #include <stdio.h>
@@ -105,7 +105,7 @@ void statChecker(int& strength, int& perception, int& endurance, int& charisma, 
 	}
 }
 
-void characterSelection(int &strength, int &perception, int &endurance, int &charisma, int &intelligence, int &agility, int &luck, string playerName, bool &knight, bool &calvary, bool &spearman, bool &archer, bool &swordsman)
+void characterSelection(int characterStats[7], string playerName, bool characterType[5])
 {
 	string input;
 	int luckMin = 1;
@@ -122,26 +122,27 @@ void characterSelection(int &strength, int &perception, int &endurance, int &cha
 
 		if (input == "1")
 		{
-			strength = 8;
-			perception = 3;
-			endurance = 9;
-			charisma = 7;
-			intelligence = 4;
-			agility = 2;
-			luck = luckMin + rand() % (luckMax - luckMin + 1);
-			knight = true;
+			characterStats[0] = 8;
+			characterStats[1] = 3;
+			characterStats[2] = 9;
+			characterStats[3] = 7;
+			characterStats[4] = 4;
+			characterStats[5] = 2;
+			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
+			
+			characterType[0] = true;
 
 			system("CLS");
 
 			printf("You have chosen knight\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", strength);
-			printf("Perception: %i\n", perception);
-			printf("Endurance: %i\n", endurance);
-			printf("Charisma: %i\n", charisma);
-			printf("Intelligence: %i\n", intelligence);
-			printf("Agility: %i\n", agility);
-			printf("Luck: %i\n", luck);
+			printf("Strength: %i\n", characterStats[0]);
+			printf("Perception: %i\n", characterStats[1]);
+			printf("Endurance: %i\n", characterStats[2]);
+			printf("Charisma: %i\n", characterStats[3]);
+			printf("Intelligence: %i\n", characterStats[4]);
+			printf("Agility: %i\n", characterStats[5]);
+			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: During times of need a knight can pray for a random gift from the heavens.\n\n");
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("\t Press 1 to continue, 2 to go back\n");
@@ -175,20 +176,20 @@ void characterSelection(int &strength, int &perception, int &endurance, int &cha
 			charisma = 5;
 			intelligence = 7;
 			agility = 9;
-			luck = luckMin + rand() % (luckMax - luckMin + 1);
+			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
 			calvary = true;
 
 			system("CLS");
 
 			printf("You have chosen Calvary\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", strength);
-			printf("Perception: %i\n", perception);
-			printf("Endurance: %i\n", endurance);
-			printf("Charisma: %i\n", charisma);
-			printf("Intelligence: %i\n", intelligence);
-			printf("Agility: %i\n", agility);
-			printf("Luck: %i\n", luck);
+			printf("Strength: %i\n", characterStats[0]);
+			printf("Perception: %i\n", characterStats[1]);
+			printf("Endurance: %i\n", characterStats[2]);
+			printf("Charisma: %i\n", characterStats[3]);
+			printf("Intelligence: %i\n", characterStats[4]);
+			printf("Agility: %i\n", characterStats[5]);
+			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Calvary can charge into units dealing massive splash damage.\n\n");
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("\t Press 1 to continue, 2 to go back\n");
@@ -221,20 +222,20 @@ void characterSelection(int &strength, int &perception, int &endurance, int &cha
 			charisma = 4;
 			intelligence = 6;
 			agility = 6;
-			luck = luckMin + rand() % (luckMax - luckMin + 1);
+			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
 			spearman = true;
 
 			system("CLS");
 
 			printf("You have chosen Spearman\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", strength);
-			printf("Perception: %i\n", perception);
-			printf("Endurance: %i\n", endurance);
-			printf("Charisma: %i\n", charisma);
-			printf("Intelligence: %i\n", intelligence);
-			printf("Agility: %i\n", agility);
-			printf("Luck: %i\n", luck);
+			printf("Strength: %i\n", characterStats[0]);
+			printf("Perception: %i\n", characterStats[1]);
+			printf("Endurance: %i\n", characterStats[2]);
+			printf("Charisma: %i\n", characterStats[3]);
+			printf("Intelligence: %i\n", characterStats[4]);
+			printf("Agility: %i\n", characterStats[5]);
+			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Spearmen can fortify, damaging any units that come near them.\n\n");
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("\t Press 1 to continue, 2 to go back\n");
@@ -261,26 +262,26 @@ void characterSelection(int &strength, int &perception, int &endurance, int &cha
 		}
 		else if (input == "4")
 		{
-			strength = 3;
-			perception = 9;
-			endurance = 4;
-			charisma = 5;
-			intelligence = 8;
-			agility = 7;
-			luck = luckMin + rand() % (luckMax - luckMin + 1);
-			archer = true;
+			characterStats[0] = 3;
+			characterStats[1] = 9;
+			characterStats[2] = 4;
+			characterStats[3] = 5;
+			characterStats[4] = 8;
+			characterStats[5] = 7;
+			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
+			characterType[3] = true;
 
 			system("CLS");
 
 			printf("You have chosen Archer\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", strength);
-			printf("Perception: %i\n", perception);
-			printf("Endurance: %i\n", endurance);
-			printf("Charisma: %i\n", charisma);
-			printf("Intelligence: %i\n", intelligence);
-			printf("Agility: %i\n", agility);
-			printf("Luck: %i\n", luck);
+			printf("Strength: %i\n", characterStats[0]);
+			printf("Perception: %i\n", characterStats[1]);
+			printf("Endurance: %i\n", characterStats[2]);
+			printf("Charisma: %i\n", characterStats[3]);
+			printf("Intelligence: %i\n", characterStats[4]);
+			printf("Agility: %i\n", characterStats[5]);
+			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Archers can set their arrows alight for a short duration.\n\n");
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("\t Press 1 to continue, 2 to go back\n");
@@ -307,26 +308,26 @@ void characterSelection(int &strength, int &perception, int &endurance, int &cha
 		}
 		else if (input == "5")
 		{
-			strength = 8;
-			perception = 4;
-			endurance = 7;
-			charisma = 6;
-			intelligence = 5;
-			agility = 6;
-			luck = luckMin + rand() % (luckMax - luckMin + 1);
-			swordsman = true;
+			characterStats[0] = 8;
+			characterStats[1] = 4;
+			characterStats[2] = 7;
+			characterStats[3] = 6;
+			characterStats[4] = 5;
+			characterStats[5] = 6;
+			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
+			characterType[4] = true;
 
 			system("CLS");
 
 			printf("You have chosen Swordsman\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", strength);
-			printf("Perception: %i\n", perception);
-			printf("Endurance: %i\n", endurance);
-			printf("Charisma: %i\n", charisma);
-			printf("Intelligence: %i\n", intelligence);
-			printf("Agility: %i\n", agility);
-			printf("Luck: %i\n", luck);
+			printf("Strength: %i\n", characterStats[0]);
+			printf("Perception: %i\n", characterStats[1]);
+			printf("Endurance: %i\n", characterStats[2]);
+			printf("Charisma: %i\n", characterStats[3]);
+			printf("Intelligence: %i\n", characterStats[4]);
+			printf("Agility: %i\n", characterStats[5]);
+			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Swordsman can fortify, massively increasing their endurance and making them near invulnerable to arrows.\n\n");
 			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
 			printf("\t Press 1 to continue, 2 to go back\n");
@@ -359,34 +360,8 @@ void characterSelection(int &strength, int &perception, int &endurance, int &cha
 		}
 	}
 }
-
-void knightEquipment(int &strengthMod, int &perceptionMod, int &enduranceMod, int &charismaMod, int &intelligenceMod, int &agilityMod, int &luckMod)
-{
-
-
-}
-
-void calvaryEquipment()
-{
 	
-}
-
-void spearmanEquipment()
-{
-
-}
-
-void archerEquipment()
-{
-
-}
-
-void swordsmanEquipment()
-{
-
-}
-	
-	void equipmentSelection(string playerName, bool knight, bool calvary, bool spearman, bool archer, bool swordsman, int &strengthMod, int &perceptionMod, int &enduranceMod, int &charismaMod, int &intelligenceMod, int &agilityMod, int &luckMod)
+void equipmentSelection(string playerName, bool characterType[5], int characterStats[7])
 {
 
 	string input;
@@ -413,30 +388,13 @@ void swordsmanEquipment()
 
 int main()
 {
+	int characterStats[7] = { 0, 0, 0, 0, 0, 0, 0};
 	int characterHealth;
 	int level;
 	int xp;
-	int strength = 0;
-	int perception = 0;
-	int endurance = 0;
-	int charisma = 0;
-	int intelligence = 0;
-	int agility = 0;
-	int luck = 0;
-	bool knight = false;
-	bool calvary = false;
-	bool spearman = false;
-	bool archer = false;
-	bool swordsman = false;
+	bool characterType[5] = { false, false, false, false, false };
 	bool intro = true;
-	int strengthMod = 0;
-	int perceptionMod = 0;
-	int enduranceMod = 0;
-	int charismaMod = 0;
-	int intelligenceMod = 0;
-	int agilityMod = 0;
-	int luckMod = 0;
-	
+		
 	string playerName;
 
 	srand(0);
@@ -460,11 +418,11 @@ int main()
 
 		intro = false;
 
-		characterSelection(strength, perception, endurance, charisma, intelligence, agility, luck, playerName, knight, calvary, spearman, archer, swordsman);
+		characterSelection(characterStats, playerName, characterType);
 
 		system("CLS");
 
-		equipmentSelection(playerName, knight, calvary, spearman, archer, swordsman, strengthMod, perceptionMod, enduranceMod, charismaMod, intelligenceMod, agilityMod, luckMod);
+		equipmentSelection(playerName, characterType, characterStats);
 
 
 	}

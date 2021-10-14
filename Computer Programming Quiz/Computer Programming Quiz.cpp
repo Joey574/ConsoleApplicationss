@@ -19,7 +19,6 @@ Maintenance Log
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
-//test
 
 using namespace std;
 
@@ -111,7 +110,7 @@ int main()
 		}
 
 		cout << "The third question " << name << " is what is an operator?" << endl;
-		printf("1. A type of void\t2. A symbol to tell the computer to do a mathematical or similar operation\t3. A way to go to the top of an if statement\t4. Similar to PEMDAS is it the computers order of operations\n");
+		printf("1. A type of void\t2. A symbol to tell the computer to do a mathematical or similar operation\t3. A way to go to the top of an if statement\t4. Similar to PEMDAS it is the computers order of operations\n");
 		cin >> input;
 
 		switch (input)
@@ -225,7 +224,7 @@ int main()
 			break;
 		}
 
-		cout << "The eighth question " << name << "is how many threads are in the Ryzen 5 3600X?" << endl;
+		cout << "The eighth question " << name << " is how many threads are in the Ryzen 5 3600X?" << endl;
 		printf("1. 12\t2. 8\t3. 6\t4. 16\n");
 		cin >> input;
 
