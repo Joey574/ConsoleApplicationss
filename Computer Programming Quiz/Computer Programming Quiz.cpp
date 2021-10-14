@@ -9,6 +9,7 @@ Pseudocode:
 Maintenance Log
 10/11/21:	Collected player name and added choices for first question
 10/12/21:	Added 5 questions, and 3 functions for when the player is correct, incorrect, or enters an incorrect input
+10/14/21:	Added 3 more questions, hoping for 10 total, added letter and percentage grading at end of quiz
 */
 
 #include <stdio.h>
