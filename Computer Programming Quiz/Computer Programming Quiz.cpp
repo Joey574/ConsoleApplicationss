@@ -8,6 +8,7 @@ Purpose: A computer programming quiz that will use switch statements, it will ha
 Pseudocode:
 Maintenance Log
 10/11/21:	Collected player name and added choices for first question
+10/12/21:	Added 5 questions, and 3 functions for when the player is correct, incorrect, or enters an incorrect input
 */
 
 #include <stdio.h>
@@ -64,6 +65,7 @@ int main()
 		cout << "The first question " << name << " is what are the 2 ways to branch in coding?" << endl;
 		printf("1. if and else\t2. if and else if\t3. switch and void\t4. if and switch\n");
 		cin >> input;
+
 		switch (input)
 		{
 		case 1:
@@ -175,9 +177,80 @@ int main()
 			break;
 		}
 
+		cout << "The sixth question " << name << " is what is multithreading?" << endl;
+		printf("1. A way to use subprocesses to process several lines of code at the same time\n2. Similar to a header file, multithreading includes new declarations for your code\n3. A way to assign different threads with different lines of code, allowing your computer to run two or more programs at the same time\n4. Allows each thread on a cpu to handle more lines of code at the same time\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			correct(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		cout << "The seventh question " << name << " is how many cores are in the Ryzen 5 3600X?" << endl;
+		printf("1. 4\t2. 6\t3.8\t4.10\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			correct(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		cout << "The eighth question " << name << "is how many threads are in the Ryzen 5 3600X?" << endl;
+		printf("1. 12\t2. 8\t3. 6\t4. 16\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			correct(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
 		system("CLS");
-		cout << "You scored " << score << " out of 5 possible points" << endl;
-		score = (score / 5) * 100;
+		cout << "You scored " << score << " out of 8 possible points" << endl;
+		score = (score / 8) * 100;
+		printf("Percentage: %.0f", score);
+		printf("%%\n");
 		if (score >= 91)
 		{
 			printf("You got an A!\n");
@@ -231,10 +304,6 @@ int main()
 	default:
 		break;
 	}
-
-
-
-
 	return 0;
 }
 
