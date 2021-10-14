@@ -247,9 +247,57 @@ int main()
 			break;
 		}
 
+		cout << "The ningth question " << name << " is what was the 3000 Nvidia GPU series architecture called?" << endl;
+		printf("1. Love life\t2. RTX\t3. Ampere\t4. Turing\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			incorrect(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			correct(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+
+		cout << "The tenth and final question " << name << " is what header file is needed for _getch()?" << endl;
+		printf("1. Conio.h\t2. Stdio.h\t3. iostream\t4. vector\n");
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			correct(score, name);
+			break;
+		case 2:
+			incorrect(score, name);
+			break;
+		case 3:
+			incorrect(score, name);
+			break;
+		case 4:
+			incorrect(score, name);
+			break;
+		default:
+			_default(name);
+			break;
+		}
+		printf("Congrats on completing this quiz! Press any key to see your score.\n");
+		_getch();
+		
 		system("CLS");
-		cout << "You scored " << score << " out of 8 possible points" << endl;
-		score = (score / 8) * 100;
+		cout << "You scored " << score << " out of 10 possible points" << endl;
+		score = (score / 10) * 100;
 		printf("Percentage: %.0f", score);
 		printf("%%\n");
 		if (score >= 91)
