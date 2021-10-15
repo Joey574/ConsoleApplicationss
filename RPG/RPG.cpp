@@ -21,6 +21,7 @@ Maintenance Log:
 9/28/21:	Working on equipment selection, got rid of about 100 lines of code, going to redesign the whole thing, should be much more streamlined this way however, and
 			much much more do-able.
 10/14/21:	Changed out individual character stat variables into an array, same with character type
+10/15/21:	Working on equipment selection, I've got the 3 universal armor types set up as well as the 2 unique armor types for knight
 */
 
 #include <stdio.h>
@@ -38,7 +39,7 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 {
 
 	cout << "Hello " << playerName << "! We need your help. The world is in peril." << endl;
-	printf("\tYou are our last hope.\n\t Press any key to continue\n");
+	printf("You are our last hope.\nPress any key to continue\n");
 
 	_getch(); 
 
@@ -46,14 +47,14 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 
 	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, ");
 	cout << playerName << endl;
-	printf("a noble from a long forgotten land, holds the key to salvation.\n\t Press any key to continue\n");
+	printf("a noble from a long forgotten land, holds the key to salvation.\nPress any key to continue\n");
 
 	_getch();
 
 	system("CLS");
 
 	printf("What can only be described as a gate to hell has opened deep undergrund,\nunleashing swarms of monsters of your worst nightmares.\n");
-	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\n\tPress any key to continue");
+	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\nPress any key to continue");
 
 	_getch();
 
@@ -105,7 +106,7 @@ void statChecker(int& strength, int& perception, int& endurance, int& charisma, 
 	}
 }
 
-void characterSelection(int characterStats[7], string playerName, bool characterType[5])
+void characterSelection(int (&characterStats)[7], string playerName, bool (&characterType)[5])
 {
 	string input;
 	int luckMin = 1;
@@ -170,14 +171,15 @@ void characterSelection(int characterStats[7], string playerName, bool character
 		}
 		else if (input == "2")
 		{
-			strength = 5;
-			perception = 8;
-			endurance = 4;
-			charisma = 5;
-			intelligence = 7;
-			agility = 9;
+			characterStats[0] = 5;
+			characterStats[1] = 8;
+			characterStats[2] = 4;
+			characterStats[3] = 5;
+			characterStats[4] = 7;
+			characterStats[5] = 9;		
 			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
-			calvary = true;
+
+			characterType[1] = true;
 
 			system("CLS");
 
@@ -216,14 +218,15 @@ void characterSelection(int characterStats[7], string playerName, bool character
 		}
 		else if (input == "3")
 		{
-			strength = 9;
-			perception = 4;
-			endurance = 5;
-			charisma = 4;
-			intelligence = 6;
-			agility = 6;
+			characterStats[0] = 9;
+			characterStats[1] = 4;
+			characterStats[2] = 5;
+			characterStats[3] = 4;
+			characterStats[4] = 6;
+			characterStats[5] = 6;
 			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
-			spearman = true;
+
+			characterType[2] = true;
 
 			system("CLS");
 
@@ -269,6 +272,7 @@ void characterSelection(int characterStats[7], string playerName, bool character
 			characterStats[4] = 8;
 			characterStats[5] = 7;
 			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
+
 			characterType[3] = true;
 
 			system("CLS");
@@ -315,6 +319,7 @@ void characterSelection(int characterStats[7], string playerName, bool character
 			characterStats[4] = 5;
 			characterStats[5] = 6;
 			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
+
 			characterType[4] = true;
 
 			system("CLS");
@@ -368,20 +373,56 @@ void equipmentSelection(string playerName, bool characterType[5], int characterS
 	
 	bool selectingEquipment = true;
 
-	while (selectingEquipment = true)
+	do 
 	{
 		cout << "Welcome to the armory " << playerName << "!" << endl;
 		printf("Press any key to continue\n");
-
 		_getch();
-
 		system("CLS");
 
-		printf("We'll first start off with armor, there are several");
+		printf("We'll first start off with armor, there are several of universal armor, available to everyone, and there are some only available to specific classes\nPress amy key to continue\n");
+		_getch();
+		system("CLS");
 
-		
+		printf("UNIVERSAL:\n1. Leather\n2.Chainmail\n3.Plate\n");
+		if (characterType[0] == true)
+		{
+			printf("UNIQUE:\n");
+			printf("4. The kings holy plate\n5. Heavy Plate\n");
+			cin >> input;
+		}
+		else if (characterType[1] == true)
+		{
+			printf("UNIQUE:\n");
 
-	}
+		}
+		else if (characterType[2] == true)
+		{
+			printf("UNIQUE:\n");
+
+		}
+		else if (characterType[3] == true)
+		{
+			printf("UNIQUE:\n");
+
+		}
+		else if (characterType[4] == true)
+		{
+			printf("UNIQUE:\n");
+
+		}
+		else
+		{
+			printf("How.... How did you manage this?");
+			printf("\nERROR ERROR... ERROR... ERRO... ER......");
+			_getch();
+			system("CLS");
+			printf("...");
+			_getch();
+			exit(0);
+		}
+
+	} while (selectingEquipment = true);
 	
 }
 
@@ -405,7 +446,7 @@ int main()
 
 	system("CLS");
 
-	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\nHowever I should also credit Eric Pace for moral support.\nOn that note Isaac Morine also deserves a shoutout for inventing chainmail.\nLast but certainly not least The Void Monster under my bed" << endl;
+	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\nCREDITS:\nEric Pace for moral support.\nIsaac Morine for inventing chainmail.\nLast but certainly not least The Void Monster under my bed" << endl;
 	printf("Press any key to start the RPG.\n");
 
 	_getch();
@@ -416,14 +457,13 @@ int main()
 	{
 		introduction(playerName);
 
-		intro = false;
-
 		characterSelection(characterStats, playerName, characterType);
 
 		system("CLS");
 
 		equipmentSelection(playerName, characterType, characterStats);
 
+		intro = false;
 
 	}
 
