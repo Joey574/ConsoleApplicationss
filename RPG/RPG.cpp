@@ -363,10 +363,12 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 	
 			continue;
 		}
+
 	}
+	system("CLS");
 }
 	
-void equipmentSelection(string playerName, bool characterType[5], int characterStats[7])
+void equipmentSelection(string playerName, bool (characterType)[5], int (characterStats)[7])
 {
 
 	string input;
@@ -380,11 +382,11 @@ void equipmentSelection(string playerName, bool characterType[5], int characterS
 		_getch();
 		system("CLS");
 
-		printf("We'll first start off with armor, there are several of universal armor, available to everyone, and there are some only available to specific classes\nPress amy key to continue\n");
+		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nPress amy key to continue\n");
 		_getch();
 		system("CLS");
 
-		printf("UNIVERSAL:\n1. Leather\n2.Chainmail\n3.Plate\n");
+		printf("UNIVERSAL:\n1. Leather\n2. Chainmail\n3. Plate\n");
 		if (characterType[0] == true)
 		{
 			printf("UNIQUE:\n");
@@ -446,7 +448,7 @@ int main()
 
 	system("CLS");
 
-	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\nCREDITS:\nEric Pace for moral support.\nIsaac Morine for inventing chainmail.\nLast but certainly not least The Void Monster under my bed" << endl;
+	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\n\nCREDITS:\n\nEric Pace for moral support.\nIsaac Morine for inventing chainmail.\nLast but certainly not least The Void Monster under my bed" << endl;
 	printf("Press any key to start the RPG.\n");
 
 	_getch();
@@ -458,9 +460,7 @@ int main()
 		introduction(playerName);
 
 		characterSelection(characterStats, playerName, characterType);
-
-		system("CLS");
-
+		
 		equipmentSelection(playerName, characterType, characterStats);
 
 		intro = false;
