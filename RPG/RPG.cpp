@@ -23,6 +23,7 @@ Maintenance Log:
 10/14/21:	Changed out individual character stat variables into an array, same with character type
 10/15/21:	Working on equipment selection, I've got the 3 universal armor types set up as well as the 2 unique armor types for knight
 10/16/21:	Added 3 universal armor classes available to all, currently working on finding 2 unique armor types for each class
+10/17/21:	Added 2 unique armor classes for knight and fixed exploit with luck skill generation, thinking about adding custom stat selection soon
 */
 
 #include <stdio.h>
@@ -81,6 +82,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 	int luckMin = 1;
 	int luckMax = 10;
 	bool reselectChar = true;
+	characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
 
 	system("CLS");
 
@@ -98,7 +100,6 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			characterStats[3] = 7;
 			characterStats[4] = 4;
 			characterStats[5] = 2;
-			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
 			
 			characterType[0] = true;
 
@@ -146,7 +147,6 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			characterStats[3] = 5;
 			characterStats[4] = 7;
 			characterStats[5] = 9;		
-			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
 
 			characterType[1] = true;
 
@@ -193,8 +193,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			characterStats[3] = 4;
 			characterStats[4] = 6;
 			characterStats[5] = 6;
-			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
-
+		
 			characterType[2] = true;
 
 			system("CLS");
@@ -240,8 +239,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			characterStats[3] = 5;
 			characterStats[4] = 8;
 			characterStats[5] = 7;
-			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
-
+			
 			characterType[3] = true;
 
 			system("CLS");
@@ -287,8 +285,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			characterStats[3] = 6;
 			characterStats[4] = 5;
 			characterStats[5] = 6;
-			characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
-
+			
 			characterType[4] = true;
 
 			system("CLS");
@@ -367,7 +364,7 @@ void universalEquipment(string input, bool(characterType)[5], int(&characterStat
 	}
 	else if (input == "3")
 	{
-		printf("Plate Selected:\n Strength: +2\nPerception: -3\nEndurance: +5\nCharisma: +2\nIntelligence: +0\nAgility: -3\nLuck: + 0\n\n");
+		printf("Plate Selected:\nStrength: +2\nPerception: -3\nEndurance: +5\nCharisma: +2\nIntelligence: +0\nAgility: -3\nLuck: + 0\n\n");
 		characterStats[0] += 2;
 		characterStats[1] -= 3;
 		characterStats[2] += 5;
@@ -409,17 +406,35 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			cin >> input;
 			system("CLS");
 
-			if (input == "1" || "2" || "3")
+			if (input == "1" || input == "2" ||input == "3")
 			{
 				universal = true;
 			}
 			else if (input == "4")
 			{
-
+				printf("Kings Holy Plate Selected:\nStrength: +2\nPerception: -1\nEndurance: +4\nCharisma: +4\nIntelligence: +1\nAgility: -3\nLuck: +2\n\n");
+				characterStats[0] += 2;
+				characterStats[1] -= 1;
+				characterStats[2] += 4;
+				characterStats[3] += 4;
+				characterStats[4] += 1;
+				characterStats[5] -= 3;
+				characterStats[6] += 2;
+				printf("Current Stats:\n");
+				cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
 			}
 			else if (input == "5")
 			{
-
+				printf("Heavy Plate Selected:\nStrength: +4\nPerception: -4\nEndurance +6\nCharisma: +3\nIntelligence: +0\nAgility: -5\nLuck: +0\n\n");
+				characterStats[0] += 4;
+				characterStats[1] -= 4;
+				characterStats[2] += 6;
+				characterStats[3] += 3;
+				characterStats[5] -= 5;
+				printf("Current Stats:\n");
+				cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
 			}
 			else
 			{
@@ -464,27 +479,28 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		if (universal == true)
 		{
 			universalEquipment(input, characterType, characterStats);
-			printf("Press 1 to continue, 2 to go back");
-			cin >> input;
-			if (input == "2")
-			{
-				system("CLS");
-
-				continue;
-			}
-			else
-			{
-				callBack;
-
-				continue;
-			}
 		}
-		
+
+		printf("Press 1 to continue, 2 to go back\n");
+		cin >> input;
+
+		if (input == "2")
+		{
+			system("CLS");
+
+			continue;
+		}
+		else
+		{
+			callBack;
+
+			continue;
+		}
 
 		printf("OK! So now that we've picked out our armor we can move on to the fun part, weapons!\nPress any key to continue");
 		_getch();
+		selectingArmor = false;
 		system("CLS");
-
 
 	} while (selectingArmor = true);
 	
