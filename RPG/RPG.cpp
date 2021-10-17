@@ -22,6 +22,7 @@ Maintenance Log:
 			much much more do-able.
 10/14/21:	Changed out individual character stat variables into an array, same with character type
 10/15/21:	Working on equipment selection, I've got the 3 universal armor types set up as well as the 2 unique armor types for knight
+10/16/21:	Added 3 universal armor classes available to all, currently working on finding 2 unique armor types for each class
 */
 
 #include <stdio.h>
@@ -54,7 +55,7 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 	system("CLS");
 
 	printf("What can only be described as a gate to hell has opened deep undergrund,\nunleashing swarms of monsters of your worst nightmares.\n");
-	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\nPress any key to continue");
+	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\nPress any key to continue\n");
 
 	_getch();
 
@@ -72,38 +73,6 @@ void callBack()
 
 	system("CLS");
 
-}
-
-void statChecker(int& strength, int& perception, int& endurance, int& charisma, int& intelligence, int& agility, int& luck)
-{
-	if (strength > 10)
-	{
-		strength = 10;
-	}
-	if (perception > 10)
-	{
-		perception = 10;
-	}
-	if (endurance > 10)
-	{
-		endurance = 10;
-	}
-	if (charisma > 10)
-	{
-		charisma = 10;
-	}
-	if (intelligence > 10)
-	{
-		intelligence = 10;
-	}
-	if (agility > 10)
-	{
-		agility = 10;
-	}
-	if (luck > 10)
-	{
-		luck = 10;
-	}
 }
 
 void characterSelection(int (&characterStats)[7], string playerName, bool (&characterType)[5])
@@ -367,24 +336,70 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 	}
 	system("CLS");
 }
+
+void universalEquipment(string input, bool(characterType)[5], int(&characterStats)[7])
+{
+
+	if (input == "1")
+	{
+		printf("Leather Selected:\nStrength: +0\nPerception: -1\nEndurance: +2\nCharisma: -1\nIntelligence: +0\nAgility: +1\nLuck: +0\n\n");
+		characterStats[1] -= 1;
+		characterStats[2] += 2;
+		characterStats[3] -= 1;
+		characterStats[5] += 1;
+		printf("Current Stats:\n");
+		cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+		cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
+
+	}
+	else if (input == "2")
+	{
+		printf("Chainmail Selected:\nStrength +1\nPerception: -2\nEndurance +3\nCharisma: +1\nIntelligence: +0\nAgility: -1\nLuck: +0\n\n");
+		characterStats[0] += 1;
+		characterStats[1] -= 2;
+		characterStats[2] += 3;
+		characterStats[3] += 1;
+		characterStats[5] -= 1;
+		printf("Current Stats:\n");
+		cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+		cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
+
+	}
+	else if (input == "3")
+	{
+		printf("Plate Selected:\n Strength: +2\nPerception: -3\nEndurance: +5\nCharisma: +2\nIntelligence: +0\nAgility: -3\nLuck: + 0\n\n");
+		characterStats[0] += 2;
+		characterStats[1] -= 3;
+		characterStats[2] += 5;
+		characterStats[3] += 2;
+		characterStats[5] -= 3;
+		printf("Current Stats:\n");
+		cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+		cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
+	}
 	
-void equipmentSelection(string playerName, bool (characterType)[5], int (characterStats)[7])
+}
+	
+void equipmentSelection(string playerName, bool (characterType)[5], int (&characterStats)[7])
 {
 
 	string input;
+	bool universal = false;
 	
-	bool selectingEquipment = true;
+	bool selectingArmor = true;
 
-	do 
-	{
+	
 		cout << "Welcome to the armory " << playerName << "!" << endl;
 		printf("Press any key to continue\n");
 		_getch();
 		system("CLS");
 
-		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nPress amy key to continue\n");
+		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nAlso note that should a stat achieve a value higher than 10 it will be set to 10 automatically\nAnd vice versa for negative stats\nPress amy key to continue\n");
 		_getch();
 		system("CLS");
+
+		do
+	{
 
 		printf("UNIVERSAL:\n1. Leather\n2. Chainmail\n3. Plate\n");
 		if (characterType[0] == true)
@@ -392,10 +407,33 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (charact
 			printf("UNIQUE:\n");
 			printf("4. The kings holy plate\n5. Heavy Plate\n");
 			cin >> input;
+			system("CLS");
+
+			if (input == "1" || "2" || "3")
+			{
+				universal = true;
+			}
+			else if (input == "4")
+			{
+
+			}
+			else if (input == "5")
+			{
+
+			}
+			else
+			{
+				callBack();
+
+				continue;
+			}
+
 		}
 		else if (characterType[1] == true)
 		{
 			printf("UNIQUE:\n");
+			printf("4. Lamellar Armor\n5. ");
+
 
 		}
 		else if (characterType[2] == true)
@@ -415,16 +453,40 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (charact
 		}
 		else
 		{
-			printf("How.... How did you manage this?");
-			printf("\nERROR ERROR... ERROR... ERRO... ER......");
+			printf("How.... How did you manage this?\nERROR ERROR... ERROR... ERRO... ER......");
 			_getch();
 			system("CLS");
 			printf("...");
 			_getch();
 			exit(0);
 		}
+		
+		if (universal == true)
+		{
+			universalEquipment(input, characterType, characterStats);
+			printf("Press 1 to continue, 2 to go back");
+			cin >> input;
+			if (input == "2")
+			{
+				system("CLS");
 
-	} while (selectingEquipment = true);
+				continue;
+			}
+			else
+			{
+				callBack;
+
+				continue;
+			}
+		}
+		
+
+		printf("OK! So now that we've picked out our armor we can move on to the fun part, weapons!\nPress any key to continue");
+		_getch();
+		system("CLS");
+
+
+	} while (selectingArmor = true);
 	
 }
 
@@ -434,6 +496,7 @@ int main()
 	int characterStats[7] = { 0, 0, 0, 0, 0, 0, 0};
 	int characterHealth;
 	int level;
+	int gameDifficulty;
 	int xp;
 	bool characterType[5] = { false, false, false, false, false };
 	bool intro = true;
