@@ -33,6 +33,7 @@ Maintenance Log:
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
+#include <sstream> // needed for string to int conversion
 
 using namespace std;
 
@@ -74,6 +75,42 @@ void callBack()
 
 	system("CLS");
 
+}
+
+void statSelection(string playerName, int(&characterStats)[7])
+{
+	string input;
+	int statPoints = 18;
+	string numbers[11] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+
+	cout << "Ok, " << playerName << " time to spread out your character points, you have 18 stat points you can put in 6 different categories" << endl;
+	printf("These categories are Strength, Perception, Endurance, Charisma, Intelligence, and Agility, or S.P.E.C.I.A, Luck will be randomly generated\n");
+	printf("Also note each stat can only have a maximum of 10 points\n");
+	printf("Press any key to continue");
+	_getch();
+	system("CLS");
+
+	do
+	{
+		printf("Strength: ");
+		cin >> input;
+
+		if (input != numbers)
+		{
+			callBack();
+			continue;
+		}
+		else
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[0] = points;
+
+			statPoints -= points;
+		}
+	}
 }
 
 void statChecker(int(&characterStats)[7])
