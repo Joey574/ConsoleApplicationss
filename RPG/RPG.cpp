@@ -80,27 +80,25 @@ void callBack()
 void statSelection(string playerName, int(&characterStats)[7])
 {
 	string input;
-	int statPoints = 18;
-	string numbers[11] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+	int i;
 
+	int statPoints = 18;
+
+	system("CLS");
+	
 	cout << "Ok, " << playerName << " time to spread out your character points, you have 18 stat points you can put in 6 different categories" << endl;
 	printf("These categories are Strength, Perception, Endurance, Charisma, Intelligence, and Agility, or S.P.E.C.I.A, Luck will be randomly generated\n");
 	printf("Also note each stat can only have a maximum of 10 points\n");
-	printf("Press any key to continue");
+	printf("Press any key to continue\n");
 	_getch();
 	system("CLS");
 
-	do
+	for (i = 1; i < 2; i++)
 	{
 		printf("Strength: ");
 		cin >> input;
 
-		if (input != numbers)
-		{
-			callBack();
-			continue;
-		}
-		else
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" |3|| input == "8" || input == "9" || input == "10" || input == "0")
 		{
 			stringstream x(input);
 			int points = 0;
@@ -109,8 +107,159 @@ void statSelection(string playerName, int(&characterStats)[7])
 			characterStats[0] = points;
 
 			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Perception: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[1] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Endurance: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[2] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Charisma: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[3] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Intelligence: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[4] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Agility: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[5] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
 		}
 	}
+	
 }
 
 void statChecker(int(&characterStats)[7])
@@ -621,6 +770,8 @@ int main()
 
 	printf("Hello adventurer, what would you like to be known as?\n");
 	cin >> playerName;
+
+	statSelection(playerName, characterStats);
 
 	system("CLS");
 
