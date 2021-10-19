@@ -76,6 +76,66 @@ void callBack()
 
 }
 
+void statChecker(int(&characterStats)[7])
+{
+	if (characterStats[0] > 10)
+	{
+		characterStats[0] = 10;
+	}
+	if (characterStats[1] > 10)
+	{
+		characterStats[1] = 10;
+	}
+	if (characterStats[2] > 10)
+	{
+		characterStats[2] = 10;
+	}
+	if (characterStats[3] > 10)
+	{
+		characterStats[3] = 10;
+	}
+	if (characterStats[4] > 10)
+	{
+		characterStats[4] = 10;
+	}
+	if (characterStats[5] > 10)
+	{
+		characterStats[5] = 10;
+	}
+	if (characterStats[6] > 10)
+	{
+		characterStats[6] = 10;
+	}
+	if (characterStats[0] < -10)
+	{
+		characterStats[0] = -10;
+	}
+	if (characterStats[1] < -10)
+	{
+		characterStats[1] = -10;
+	}
+	if (characterStats[2] < -10)
+	{
+		characterStats[2] = -10;
+	}
+	if (characterStats[3] < -10)
+	{
+		characterStats[3] = -10;
+	}
+	if (characterStats[4] < -10)
+	{
+		characterStats[4] = -10;
+	}
+	if (characterStats[5] < -10)
+	{
+		characterStats[5] = -10;
+	}
+	if (characterStats[6] < -10)
+	{
+		characterStats[6] = -10;
+	}
+}
+
 void characterSelection(int (&characterStats)[7], string playerName, bool (&characterType)[5])
 {
 	string input;
@@ -433,7 +493,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 				characterStats[3] += 3;
 				characterStats[5] -= 5;
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+				cout << "Strength: " << characterStats[0] + 4 << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
 				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
 			}
 			else
