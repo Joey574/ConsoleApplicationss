@@ -41,6 +41,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RPG w multithreading", "RPG
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Computer Programming Quiz", "Computer Programming Quiz\Computer Programming Quiz.vcxproj", "{755A0204-1102-484E-A5F9-4EC1FF8EF9ED}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Choose your own adventure", "Choose your own adventure\Choose your own adventure.vcxproj", "{ADDE2552-444C-4C23-B5BD-ED1153174F77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -201,6 +203,14 @@ Global
 		{755A0204-1102-484E-A5F9-4EC1FF8EF9ED}.Release|x64.Build.0 = Release|x64
 		{755A0204-1102-484E-A5F9-4EC1FF8EF9ED}.Release|x86.ActiveCfg = Release|Win32
 		{755A0204-1102-484E-A5F9-4EC1FF8EF9ED}.Release|x86.Build.0 = Release|Win32
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Debug|x64.ActiveCfg = Debug|x64
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Debug|x64.Build.0 = Debug|x64
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Debug|x86.ActiveCfg = Debug|Win32
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Debug|x86.Build.0 = Debug|Win32
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Release|x64.ActiveCfg = Release|x64
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Release|x64.Build.0 = Release|x64
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Release|x86.ActiveCfg = Release|Win32
+		{ADDE2552-444C-4C23-B5BD-ED1153174F77}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

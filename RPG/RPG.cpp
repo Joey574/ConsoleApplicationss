@@ -33,6 +33,7 @@ Maintenance Log:
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
+#include <sstream> // needed for string to int conversion
 
 using namespace std;
 
@@ -76,7 +77,252 @@ void callBack()
 
 }
 
-void characterSelection(int(&characterStats)[7], string playerName, bool(&characterType)[5])
+void statSelection(string playerName, int(&characterStats)[7])
+{
+	string input;
+	int i;
+
+	int statPoints = 18;
+
+	system("CLS");
+	
+	cout << "Ok, " << playerName << " time to spread out your character points, you have 18 stat points you can put in 6 different categories" << endl;
+	printf("These categories are Strength, Perception, Endurance, Charisma, Intelligence, and Agility, or S.P.E.C.I.A, Luck will be randomly generated\n");
+	printf("Also note each stat can only have a maximum of 10 points\n");
+	printf("Press any key to continue\n");
+	_getch();
+	system("CLS");
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Strength: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" |3|| input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[0] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Perception: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[1] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Endurance: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[2] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Charisma: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[3] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Intelligence: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[4] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	} 
+
+
+	for (i = 1; i < 2; i++)
+	{
+		printf("Agility: ");
+		cin >> input;
+
+		if (input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "0")
+		{
+			stringstream x(input);
+			int points = 0;
+			x >> points;
+
+			characterStats[5] = points;
+
+			statPoints -= points;
+			if (statPoints < 0)
+			{
+				printf("Out of stat points, choose a smaller number");
+				continue;
+			}
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+	}
+	
+}
+
+void statChecker(int(&characterStats)[7])
+{
+	if (characterStats[0] > 10)
+	{
+		characterStats[0] = 10;
+	}
+	if (characterStats[1] > 10)
+	{
+		characterStats[1] = 10;
+	}
+	if (characterStats[2] > 10)
+	{
+		characterStats[2] = 10;
+	}
+	if (characterStats[3] > 10)
+	{
+		characterStats[3] = 10;
+	}
+	if (characterStats[4] > 10)
+	{
+		characterStats[4] = 10;
+	}
+	if (characterStats[5] > 10)
+	{
+		characterStats[5] = 10;
+	}
+	if (characterStats[6] > 10)
+	{
+		characterStats[6] = 10;
+	}
+	if (characterStats[0] < -10)
+	{
+		characterStats[0] = -10;
+	}
+	if (characterStats[1] < -10)
+	{
+		characterStats[1] = -10;
+	}
+	if (characterStats[2] < -10)
+	{
+		characterStats[2] = -10;
+	}
+	if (characterStats[3] < -10)
+	{
+		characterStats[3] = -10;
+	}
+	if (characterStats[4] < -10)
+	{
+		characterStats[4] = -10;
+	}
+	if (characterStats[5] < -10)
+	{
+		characterStats[5] = -10;
+	}
+	if (characterStats[6] < -10)
+	{
+		characterStats[6] = -10;
+	}
+}
+
+void characterSelection(int (&characterStats)[7], string playerName, bool (&characterType)[5])
 {
 
 	string input;
@@ -434,7 +680,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 				characterStats[3] += 3;
 				characterStats[5] -= 5;
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
+				cout << "Strength: " << characterStats[0] + 4 << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
 				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
 			}
 			else
@@ -525,6 +771,8 @@ int main()
 
 	printf("Hello adventurer, what would you like to be known as?\n");
 	cin >> playerName;
+
+	statSelection(playerName, characterStats);
 
 	system("CLS");
 
