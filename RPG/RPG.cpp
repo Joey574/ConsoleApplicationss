@@ -53,7 +53,7 @@ void introduction(string playerName)  // Says hello to user and gives intoductio
 
 	_getch();
 
-	system("CLS");
+		system("CLS");
 
 	printf("What can only be described as a gate to hell has opened deep undergrund,\nunleashing swarms of monsters of your worst nightmares.\n");
 	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\nPress any key to continue\n");
@@ -70,14 +70,15 @@ void callBack()
 
 	printf("Incorrect input detected\nPress any key to continue\n");
 
-	_getch();
+		_getch();
 
 	system("CLS");
 
 }
 
-void characterSelection(int (&characterStats)[7], string playerName, bool (&characterType)[5])
+void characterSelection(int(&characterStats)[7], string playerName, bool(&characterType)[5])
 {
+
 	string input;
 	int luckMin = 1;
 	int luckMax = 10;
@@ -90,7 +91,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 	{
 		printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
 
-		cin >> input;
+			cin >> input;
 
 		if (input == "1")
 		{
@@ -339,14 +340,14 @@ void universalEquipment(string input, bool(characterType)[5], int(&characterStat
 
 	if (input == "1")
 	{
-		printf("Leather Selected:\nStrength: +0\nPerception: -1\nEndurance: +2\nCharisma: -1\nIntelligence: +0\nAgility: +1\nLuck: +0\n\n");
 		characterStats[1] -= 1;
 		characterStats[2] += 2;
 		characterStats[3] -= 1;
 		characterStats[5] += 1;
+		printf("Leather Selected:\nStrength: +0\nPerception: -1\nEndurance: +2\nCharisma: -1\nIntelligence: +0\nAgility: +1\nLuck: +0\n\n");
 		printf("Current Stats:\n");
-		cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] << endl << "Endurance: " << characterStats[2] << endl;
-		cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
+		cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] - 1<< endl << "Endurance: " << characterStats[2] + 2<< endl;
+		cout << "Charisma: " << characterStats[3] - 1<< endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 1 << endl << "Luck: " << characterStats[6] << endl;
 
 	}
 	else if (input == "2")
