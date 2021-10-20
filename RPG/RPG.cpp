@@ -24,6 +24,7 @@ Maintenance Log:
 10/15/21:	Working on equipment selection, I've got the 3 universal armor types set up as well as the 2 unique armor types for knight
 10/16/21:	Added 3 universal armor classes available to all, currently working on finding 2 unique armor types for each class
 10/17/21:	Added 2 unique armor classes for knight and fixed exploit with luck skill generation, thinking about adding custom stat selection soon
+10/20/21:	Completed stat selection, still has many bugs and exploits, negative stats, stats of 11, etc. needs much more polishing
 */
 
 #include <stdio.h>
@@ -81,7 +82,12 @@ void statSelection(string playerName, int(&characterStats)[7])
 {
 	string input;
 	int i;
-
+	bool selectingStrength = true;
+	bool selectingPerception = true;
+	bool selectingEndurance = true;
+	bool selectingCharisma = true;
+	bool selectingIntelligence = true;
+	bool selectingAgility = true;
 	int statPoints = 18;
 
 	system("CLS");
@@ -93,7 +99,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 	_getch();
 	system("CLS");
 
-	for (i = 1; i < 2; i++)
+	while(selectingStrength = true)
 	{
 		printf("Strength: ");
 		cin >> input;
@@ -106,12 +112,15 @@ void statSelection(string playerName, int(&characterStats)[7])
 
 			characterStats[0] = points;
 
-			statPoints -= points;
-			if (statPoints < 0)
+			if (statPoints - points < 0)
 			{
-				printf("Out of stat points, choose a smaller number");
+				printf("\nOut of stat points, choose a smaller number\n");
+				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
+
+			statPoints -= points;
+			break;
 		}
 		else
 		{
@@ -121,7 +130,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 	} 
 
 
-	for (i = 1; i < 2; i++)
+	while(selectingPerception = true)
 	{
 		printf("Perception: ");
 		cin >> input;
@@ -134,12 +143,15 @@ void statSelection(string playerName, int(&characterStats)[7])
 
 			characterStats[1] = points;
 
-			statPoints -= points;
-			if (statPoints < 0)
+			if (statPoints - points < 0)
 			{
-				printf("Out of stat points, choose a smaller number");
+				printf("\nOut of stat points, choose a smaller number\n");
+				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
+
+			statPoints -= points;
+			break;
 		}
 		else
 		{
@@ -149,7 +161,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 	} 
 
 
-	for (i = 1; i < 2; i++)
+	while (selectingEndurance = true)
 	{
 		printf("Endurance: ");
 		cin >> input;
@@ -162,12 +174,15 @@ void statSelection(string playerName, int(&characterStats)[7])
 
 			characterStats[2] = points;
 
-			statPoints -= points;
-			if (statPoints < 0)
+			if (statPoints - points < 0)
 			{
-				printf("Out of stat points, choose a smaller number");
+				printf("\nOut of stat points, choose a smaller number\n");
+				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
+
+			statPoints -= points;
+			break;
 		}
 		else
 		{
@@ -177,7 +192,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 	} 
 
 
-	for (i = 1; i < 2; i++)
+	while (selectingCharisma = true)
 	{
 		printf("Charisma: ");
 		cin >> input;
@@ -190,12 +205,15 @@ void statSelection(string playerName, int(&characterStats)[7])
 
 			characterStats[3] = points;
 
-			statPoints -= points;
-			if (statPoints < 0)
+			if (statPoints - points < 0)
 			{
-				printf("Out of stat points, choose a smaller number");
+				printf("\nOut of stat points, choose a smaller number\n");
+				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
+
+			statPoints -= points;
+			break;
 		}
 		else
 		{
@@ -205,7 +223,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 	} 
 
 
-	for (i = 1; i < 2; i++)
+	while (selectingIntelligence = true)
 	{
 		printf("Intelligence: ");
 		cin >> input;
@@ -218,12 +236,15 @@ void statSelection(string playerName, int(&characterStats)[7])
 
 			characterStats[4] = points;
 
-			statPoints -= points;
-			if (statPoints < 0)
+			if (statPoints - points < 0)
 			{
-				printf("Out of stat points, choose a smaller number");
+				printf("\nOut of stat points, choose a smaller number\n");
+				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
+
+			statPoints -= points;
+			break;
 		}
 		else
 		{
@@ -233,7 +254,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 	} 
 
 
-	for (i = 1; i < 2; i++)
+	while (selectingAgility = true)
 	{
 		printf("Agility: ");
 		cin >> input;
@@ -246,12 +267,15 @@ void statSelection(string playerName, int(&characterStats)[7])
 
 			characterStats[5] = points;
 
-			statPoints -= points;
-			if (statPoints < 0)
+			if (statPoints - points < 0)
 			{
-				printf("Out of stat points, choose a smaller number");
+				printf("\nOut of stat points, choose a smaller number\n");
+				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
+
+			statPoints -= points;
+			break;
 		}
 		else
 		{
@@ -259,6 +283,10 @@ void statSelection(string playerName, int(&characterStats)[7])
 			continue;
 		}
 	}
+	_getch();
+	system("CLS");
+	printf("Great! Now that you have selected your stats, lets move on to character selection!\nPress any key to continue\n");
+	_getch();
 	
 }
 
@@ -341,13 +369,6 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 
 		if (input == "1")
 		{
-			characterStats[0] = 8;
-			characterStats[1] = 3;
-			characterStats[2] = 9;
-			characterStats[3] = 7;
-			characterStats[4] = 4;
-			characterStats[5] = 2;
-			
 			characterType[0] = true;
 
 			system("CLS");
@@ -387,14 +408,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			}
 		}
 		else if (input == "2")
-		{
-			characterStats[0] = 5;
-			characterStats[1] = 8;
-			characterStats[2] = 4;
-			characterStats[3] = 5;
-			characterStats[4] = 7;
-			characterStats[5] = 9;		
-
+		{	
 			characterType[1] = true;
 
 			system("CLS");
@@ -434,13 +448,6 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 		}
 		else if (input == "3")
 		{
-			characterStats[0] = 9;
-			characterStats[1] = 4;
-			characterStats[2] = 5;
-			characterStats[3] = 4;
-			characterStats[4] = 6;
-			characterStats[5] = 6;
-		
 			characterType[2] = true;
 
 			system("CLS");
@@ -479,14 +486,7 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			}
 		}
 		else if (input == "4")
-		{
-			characterStats[0] = 3;
-			characterStats[1] = 9;
-			characterStats[2] = 4;
-			characterStats[3] = 5;
-			characterStats[4] = 8;
-			characterStats[5] = 7;
-			
+		{	
 			characterType[3] = true;
 
 			system("CLS");
@@ -526,13 +526,6 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 		}
 		else if (input == "5")
 		{
-			characterStats[0] = 8;
-			characterStats[1] = 4;
-			characterStats[2] = 7;
-			characterStats[3] = 6;
-			characterStats[4] = 5;
-			characterStats[5] = 6;
-			
 			characterType[4] = true;
 
 			system("CLS");
@@ -638,7 +631,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		_getch();
 		system("CLS");
 
-		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nAlso note that should a stat achieve a value higher than 10 it will be set to 10 automatically\nAnd vice versa for negative stats\nPress amy key to continue\n");
+		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nAlso note that should a stat achieve a value higher than 10 it will be set to 10 automatically\nAnd vice versa for negative stats\nPress any key to continue\n");
 		_getch();
 		system("CLS");
 
@@ -731,7 +724,11 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		printf("Press 1 to continue, 2 to go back\n");
 		cin >> input;
 
-		if (input == "2")
+		if (input == "1")
+		{
+
+		}
+		else if (input == "2")
 		{
 			system("CLS");
 
@@ -744,6 +741,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			continue;
 		}
 
+		system("CLS");
 		printf("OK! So now that we've picked out our armor we can move on to the fun part, weapons!\nPress any key to continue");
 		_getch();
 		selectingArmor = false;
@@ -772,8 +770,6 @@ int main()
 	printf("Hello adventurer, what would you like to be known as?\n");
 	cin >> playerName;
 
-	statSelection(playerName, characterStats);
-
 	system("CLS");
 
 	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\n\nCREDITS:\n\nEric Pace for moral support.\nIsaac Morine for inventing chainmail.\nLast but certainly not least The Void Monster under my bed" << endl;
@@ -787,6 +783,8 @@ int main()
 	{
 		introduction(playerName);
 
+		statSelection(playerName, characterStats);
+
 		characterSelection(characterStats, playerName, characterType);
 		
 		equipmentSelection(playerName, characterType, characterStats);
@@ -799,4 +797,3 @@ int main()
 	
 	return 0;
 }
-
