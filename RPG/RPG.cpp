@@ -760,8 +760,7 @@ int main()
 	int gameDifficulty;
 	int xp;
 	bool characterType[5] = { false, false, false, false, false };
-	bool intro = true;
-		
+	bool intro = true;	
 	string playerName;
 
 	srand(0);
