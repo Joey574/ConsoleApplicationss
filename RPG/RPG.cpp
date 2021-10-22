@@ -30,7 +30,8 @@ Maintenance Log:
 			and if a negative number is enetered it will give that amount of stat points to the user... fixed the issue, no idea what it was but copying and pasting code 
 			that worked fixed the issue... worked on equipment selection, univaersal armor will no longer stack stats, also fixed the flow for universal equipment so it's not
 			funky and broken... added 2 unique armors for calvary, both are functional, added one partially functional armor for archer
-10/22/21:	Worked on effiecieny a bit, getting rid of 80 lines of code, still having the same function as before
+10/22/21:	Worked on effiecieny a bit, getting rid of 80 lines of code, still having the same function as before, fixed error with character selection retaining the value even if user 
+			went back and selected new character
 */
 
 #include <stdio.h>
@@ -449,13 +450,23 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 		{
 			system("CLS");
 
-			bool characterType[5] = { false, false, false, false, false };
+			characterType[0] = false;
+			characterType[1] = false;
+			characterType[2] = false;
+			characterType[3] = false;
+			characterType[4] = false;
 
 			continue;
 		}
 		else
 		{
 			callBack();
+
+			characterType[0] = false;
+			characterType[1] = false;
+			characterType[2] = false;
+			characterType[3] = false;
+			characterType[4] = false;
 
 			continue;
 		}
@@ -822,8 +833,42 @@ int main()
 		intro = false;
 
 	}
+	printf("Now that you've finished your customization we can move on to some more interesting things... LIKE CHARACTER HEALTH!!!\n");
+	_getch();
+	system("CLS");
+	cout << "Because you have an endurance of " << characterStats[2] << " and chose ";
+	if (characterType[0] == true)
+	{
+		printf("knight as your class");
+		characterHealth = 12 * (characterStats[2] * 0.01 + 1);
+	}
+	else if (characterType[1] == true)
+	{
+		printf("calvary as your calss");
+		characterHealth = 8 * (characterStats[2] * 0.01 + 1);
+	}
+	else if (characterType[2] == true)
+	{
+		printf("spearman as your class");
+		characterHealth = 8 * (characterStats[2] * 0.01 + 1);
+	}
+	else if (characterType[3] == true)
+	{
+		printf("archer as your class");
+		characterHealth = 6 * (characterStats[2] * 0.01 + 1);
+	}
+	else if (characterType[4] == true)
+	{
+		printf("swordsman as your class");
+		characterHealth = 10 * (characterStats[2] * 0.01 + 1);
+	}
+	else
+	{
+		printf("ERROR NO CHARACTER TYPE SELECTED");
+	}
+	cout << " your character health is given a value of " << characterHealth;
+	
+	_getch();
 
-	
-	
 	return 0;
 }
