@@ -30,6 +30,7 @@ Maintenance Log:
 			and if a negative number is enetered it will give that amount of stat points to the user... fixed the issue, no idea what it was but copying and pasting code 
 			that worked fixed the issue... worked on equipment selection, univaersal armor will no longer stack stats, also fixed the flow for universal equipment so it's not
 			funky and broken... added 2 unique armors for calvary, both are functional, added one partially functional armor for archer
+10/22/21:	Worked on effiecieny a bit, getting rid of 80 lines of code, still having the same function as before
 */
 
 #include <stdio.h>
@@ -78,7 +79,13 @@ void callBack()
 	_getch();
 
 	system("CLS");
+}
 
+void callBackNoCLS()
+{
+	printf("\nIncorrect input detected\nPress any key to continue\n\n");
+
+	_getch();
 }
 
 void statSelection(string playerName, int(&characterStats)[7])
@@ -117,7 +124,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 		}
 		else
 		{
-			callBack();
+			callBackNoCLS();
 			continue;
 		}
 	}
@@ -145,7 +152,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 		}
 		else
 		{
-			callBack();
+			callBackNoCLS();
 			continue;
 		}
 	} 
@@ -173,7 +180,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 		}
 		else
 		{
-			callBack();
+			callBackNoCLS();
 			continue;
 		}
 	} 
@@ -201,7 +208,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 		}
 		else
 		{
-			callBack();
+			callBackNoCLS();
 			continue;
 		}
 	} 
@@ -229,7 +236,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 		}
 		else
 		{
-			callBack();
+			callBackNoCLS();
 			continue;
 		}
 	} 
@@ -257,7 +264,7 @@ void statSelection(string playerName, int(&characterStats)[7])
 		}
 		else
 		{
-			callBack();
+			callBackNoCLS();
 			continue;
 		}
 	}
@@ -332,24 +339,21 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 {
 
 	string input;
-	int luckMin = 1;
+	int luckMin = 0;
 	int luckMax = 10;
-	bool reselectChar = true;
 	characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
 
 	system("CLS");
 
-	while (reselectChar = true)
+	while (1)
 	{
 		printf("\t\t\tCHOOSE YOUR CHARACTER\n1. Knight \t 2. Calvary \t 3. Spearman \t 4. Archer \t 5. Swordsman\n");
-
-			cin >> input;
+		cin >> input;
+		system("CLS");
 
 		if (input == "1")
 		{
 			characterType[0] = true;
-
-			system("CLS");
 
 			printf("You have chosen knight\n");
 			printf("Your stats are:\n");
@@ -361,35 +365,11 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			printf("Agility: %i\n", characterStats[5]);
 			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: During times of need a knight can pray for a random gift from the heavens.\n\n");
-			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
-			printf("\t Press 1 to continue, 2 to go back\n");
-			
-			cin >> input;
-
-			if (input == "1")
-			{
-				reselectChar = false;
-				
-				break;
-			}
-			else if (input == "2")
-			{
-				system("CLS");
-
-				continue;
-			}
-			else
-			{
-				callBack();
-				
-				continue;
-			}
+	
 		}
 		else if (input == "2")
 		{	
 			characterType[1] = true;
-
-			system("CLS");
 
 			printf("You have chosen Calvary\n");
 			printf("Your stats are:\n");
@@ -401,34 +381,10 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			printf("Agility: %i\n", characterStats[5]);
 			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Calvary can charge into units dealing massive splash damage.\n\n");
-			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
-			printf("\t Press 1 to continue, 2 to go back\n");
-			cin >> input;
-
-			if (input == "1")
-			{
-				reselectChar = false;
-				
-				break;
-			}
-			else if (input == "2")
-			{
-				system("CLS");
-
-				continue;
-			}
-			else
-			{
-				callBack();
-
-				continue;
-			}
 		}
 		else if (input == "3")
 		{
 			characterType[2] = true;
-
-			system("CLS");
 
 			printf("You have chosen Spearman\n");
 			printf("Your stats are:\n");
@@ -440,34 +396,11 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			printf("Agility: %i\n", characterStats[5]);
 			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Spearmen can fortify, damaging any units that come near them.\n\n");
-			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
-			printf("\t Press 1 to continue, 2 to go back\n");
-			cin >> input;
-
-			if (input == "1")
-			{
-				reselectChar = false;
-				
-				break;
-			}
-			else if (input == "2")
-			{
-				system("CLS");
-
-				continue;
-			}
-			else
-			{
-				callBack();
-
-				continue;
-			}
+	
 		}
 		else if (input == "4")
 		{	
 			characterType[3] = true;
-
-			system("CLS");
 
 			printf("You have chosen Archer\n");
 			printf("Your stats are:\n");
@@ -479,34 +412,11 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			printf("Agility: %i\n", characterStats[5]);
 			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Archers can set their arrows alight for a short duration.\n\n");
-			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
-			printf("\t Press 1 to continue, 2 to go back\n");
-			cin >> input;
 
-			if (input == "1")
-			{
-				reselectChar = false;
-				
-				break;
-			}
-			else if (input == "2")
-			{
-				system("CLS");
-
-				continue;
-			}
-			else
-			{
-				callBack();
-
-				continue;
-			}
 		}
 		else if (input == "5")
 		{
 			characterType[4] = true;
-
-			system("CLS");
 
 			printf("You have chosen Swordsman\n");
 			printf("Your stats are:\n");
@@ -518,33 +428,35 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 			printf("Agility: %i\n", characterStats[5]);
 			printf("Luck: %i\n", characterStats[6]);
 			printf("SPECIAL ABILITY: Swordsman can fortify, massively increasing their endurance and making them near invulnerable to arrows.\n\n");
-			printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
-			printf("\t Press 1 to continue, 2 to go back\n");
-			cin >> input;
 
-			if (input == "1")
-			{
-				reselectChar = false;
-				
-				break;
-			}
-			else if (input == "2")
-			{
-				system("CLS");
-
-				continue;
-			}
-			else
-			{
-				callBack();
-
-				continue;
-			}
 		}
-		else;
+		else
 		{
 			callBack();
 	
+			continue;
+		}
+
+		printf("Good luck on your quest, I know not what you will encounter nor what you must do.\nHowever I have heard rumors that the bartender may help thee greatly\n");
+		printf("\t Press 1 to continue, 2 to go back\n");
+		cin >> input;
+
+		if (input == "1")
+		{
+			break;
+		}
+		else if (input == "2")
+		{
+			system("CLS");
+
+			bool characterType[5] = { false, false, false, false, false };
+
+			continue;
+		}
+		else
+		{
+			callBack();
+
 			continue;
 		}
 
@@ -677,6 +589,28 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		else if (characterType[2] == true)
 		{
 			printf("UNIQUE:\n");
+			
+
+			cin >> input;
+			system("CLS");
+
+			if (input == "1" || input == "2" || input == "3")
+			{
+				universal = true;
+			}
+			else if (input == "4")
+			{
+				
+			}
+			else if (input == "5")
+			{
+
+			}
+
+		}
+		else if (characterType[3] == true)
+		{
+			printf("UNIQUE:\n");
 			printf("4. Padded Leather\n5.  \n");
 
 			cin >> input;
@@ -697,22 +631,10 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 
 		}
-		else if (characterType[3] == true)
-		{
-			printf("UNIQUE:\n");
-
-			cin >> input;
-			system("CLS");
-
-			if (input == "1" || input == "2" || input == "3")
-			{
-				universal = true;
-			}
-
-		}
 		else if (characterType[4] == true)
 		{
 			printf("UNIQUE:\n");
+			
 
 			cin >> input;
 			system("CLS");
@@ -721,6 +643,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			{
 				universal = true;
 			}
+			
 
 		}
 		else
@@ -845,7 +768,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		{
 			bool universalsSelected[3] = { false, false, false };
 			bool uniqueSelected[10] = { false, false, false, false, false, false, false, false, false, false };
-			callBack;
+			callBack();
 
 			continue;
 		}
