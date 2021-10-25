@@ -898,7 +898,7 @@ int main()
 	}
 	else if (characterType[1] == true)
 	{
-		printf("calvary as your calss");
+		printf("calvary as your class");
 		characterHealth = 8 * (characterStats[2] * 0.01 + 1);
 	}
 	else if (characterType[2] == true)
@@ -928,4 +928,4 @@ int main()
 	printf("Now for damage, since you chose ");
 
 	return 0;
-}
+} 
