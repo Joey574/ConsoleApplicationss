@@ -647,7 +647,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 			else if (input == "4")
 			{
-				printf("Padded Leather Selected:\nStrength: -1\nPerception: +3\nEndurance: +1\nCharisma: +0\nIntelligence: + 0\nAgility: +1\nLuck: +0\n\n");
+				printf("Padded Leather Selected:\nStrength: -1\nPerception: +3\nEndurance: +1\nCharisma: +0\nIntelligence: + 0\nAgility: +1\nLuck: +0");
 				printf("Current Stats:\n");
 				cout << "Strength: " << characterStats[0] - 1 << endl << "Perception: " << characterStats[1] + 3 << endl << "Endurance: " << characterStats[2] + 1 << endl;
 				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 1 << endl << "Luck: " << characterStats[6] << endl;
@@ -655,8 +655,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 			else if (input == "5")
 			{
-				printf("Assasin's Robes Selected:\nStrength: -2\nPerception: +2\nEndurance: -1\nCharisma: +3\nIntelligence: +0\nAgility: +3\nLuck: +2\n\n");
-				printf("Current Stats:\n");
+				printf("Assasin's Robes Selected:\nStrength: -2\nPerception: +2\nEndurance: -1\nCharisma: +3\nIntelligence: +0\nAgility: +3\nLuck: +2");
 				cout << "Strength: " << characterStats[0] - 2 << endl << "Perception: " << characterStats[1] + 2 << endl << "Endurance: " << characterStats[2] - 1 << endl;
 				cout << "Charisma: " << characterStats[3] + 3 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 3 << endl << "Luck: " << characterStats[6] + 2 << endl;
 				uniqueSelected[7] = true;
