@@ -54,7 +54,7 @@ Maintenance Log:
 
 10/26/21:	Added the 2 final armors, changed how health is set up, endurance no longers plays a role in health, set up a dev mode when user enters DEV. as their username
 			allowing user to jump to most functions, skipping rest of the code, reached 1000 lines of code milestone!!!! Redid credit scene at beginning, working on cleaning
-			up the visual side of things and getting rid of walls of text
+			up the visual side of things and getting rid of walls of text... Added introductory text for weapon selection, as well as begining if statement for it
 */
 
 #include <stdio.h>
@@ -901,7 +901,45 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 	printf("OK! So now that we've picked out our armor we can move on to the fun part, weapons!\nPress any key to continue\n");
 	_getch();
 	system("CLS");
+	printf("Each weapon has its own characteristics, these include, peircing, blunt, or slash damage, weapon range, weapon accuracy (only applies to ranged weapons) and weight.\nPress any key to continue\n");
+	_getch();
+	system("CLS");
+	printf("You will have access to a primary and secondary weapon, each class will have their own choice of weapons\nPress any key to continue\n");
+	_getch();
+	system("CLS");
 
+do
+{
+	
+	if (characterType[0] = true)
+	{
+	
+	}
+	else if (characterType[1] = true)
+	{
+		
+	}
+	else if (characterType[2] = true)
+	{
+		
+	}
+	else if (characterType[3] = true)
+	{
+		
+	}
+	else if (characterType[4] = true)
+	{
+		
+	}
+	else
+	{
+	printf("ERROR NO CHARACTER TYPE SELECTED");
+	_getch();
+	system("CLS");
+	}
+	
+} while(1)
+	
 }
 
 int main()
