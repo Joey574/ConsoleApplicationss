@@ -55,6 +55,9 @@ Maintenance Log:
 10/26/21:	Added the 2 final armors, changed how health is set up, endurance no longers plays a role in health, set up a dev mode when user enters DEV. as their username
 			allowing user to jump to most functions, skipping rest of the code, reached 1000 lines of code milestone!!!! Redid credit scene at beginning, working on cleaning
 			up the visual side of things and getting rid of walls of text... Added introductory text for weapon selection, as well as begining if statement for it
+
+10/27/21:	Set up struct containing player information, going to make it easier to pass all sorts of variables, also added a few comments on functions saying what they do, not exactly
+			much, but it's progress which is good, added weapon variables to the struct
 */
 
 #include <stdio.h>
@@ -68,34 +71,45 @@ Maintenance Log:
 
 using namespace std;
 
-void introduction(string playerName)  // Says hello to user and gives intoduction
+struct characterInformation
 {
+	int baseStats[7] = { 0, 0, 0, 0, 0, 0, 0 };
+	int characterStats[7] = { 0, 0, 0, 0, 0, 0, 0 };
+	int characterHealth;
+	int level;
+	int xp;
+	bool characterType[5] = { false, false, false, false, false };
+	string playerName;
+	string horseName;
 
-	cout << "Hello " << playerName << "! We need your help. The world is in peril." << endl;
+	bool peircing;
+	bool blunt;
+	bool slash;
+	int range;
+	int accuracy;
+	int weight;
+};
+
+void introduction(struct characterInformation c)  // Says hello to user and gives intoduction
+{
+	cout << "Hello " << c.playerName << "! We need your help. The world is in peril." << endl;
 	printf("You are our last hope.\nPress any key to continue\n");
-
-	_getch(); 
-
+	_getch();	
 	system("CLS"); 
 
 	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, ");
-	cout << playerName << endl;
+	cout << c.playerName << endl;
 	printf("a noble from a long forgotten land, holds the key to salvation.\nPress any key to continue\n");
-
 	_getch();
-
-		system("CLS");
+	system("CLS");
 
 	printf("What can only be described as a gate to hell has opened deep underground,\nunleashing swarms of monsters of your worst nightmares.\n");
 	printf("Hundreds, no THOUSANDS, have tried to close said gate, however none have succeeded.\nYou have been called upon by your king to dispatch of this threat.\nPress any key to continue\n");
-
 	_getch();
-
 	system("CLS");
-
 }
 
-void callBack()
+void callBack() // used in case incorrect input is taken, more convieniant than copy and pasting it everywhere
 {
 	system("CLS");
 
@@ -106,14 +120,14 @@ void callBack()
 	system("CLS");
 }
 
-void callBackNoCLS()
+void callBackNoCLS() // same thing as callback however doesnt clear any text from the screen
 {
 	printf("\nIncorrect input detected\nPress any key to continue\n\n");
 
 	_getch();
 }
 
-void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7])
+void statSelection(struct characterInformation &c) // allows the user to select their own stats, however it will randomly generate luck
 {
 	string input;
 	int statPoints = 18;
@@ -122,7 +136,7 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 
 	system("CLS");
 	
-	cout << "Ok, " << playerName << " time to spread out your character points, you have 18 stat points you can put in 6 different categories" << endl;
+	cout << "Ok, " << c.playerName << " time to spread out your character points, you have 18 stat points you can put in 6 different categories" << endl;
 	printf("Press any key to continue\n");
 	_getch();
 	system("CLS");
@@ -150,8 +164,8 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
-			characterStats[0] = points;
-			baseStats[0] = points;
+			c.characterStats[0] = points;
+			c.baseStats[0] = points;
 
 			statPoints -= points;
 			break;
@@ -179,8 +193,8 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
-			characterStats[1] = points;
-			baseStats[1] = points;
+			c.characterStats[1] = points;
+			c.baseStats[1] = points;
 
 			statPoints -= points;
 			break;
@@ -208,8 +222,8 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
-			characterStats[2] = points;
-			baseStats[2] = points;
+			c.characterStats[2] = points;
+			c.baseStats[2] = points;
 
 			statPoints -= points;
 			break;
@@ -237,8 +251,8 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
-			characterStats[3] = points;
-			baseStats[3] = points;
+			c.characterStats[3] = points;
+			c.baseStats[3] = points;
 
 			statPoints -= points;
 			break;
@@ -266,8 +280,8 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
-			characterStats[4] = points;
-			baseStats[4] = points;
+			c.characterStats[4] = points;
+			c.baseStats[4] = points;
 
 			statPoints -= points;
 			break;
@@ -295,8 +309,8 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 				cout << "Stat points left: " << statPoints << endl << endl;
 				continue;
 			}
-			characterStats[5] = points;
-			baseStats[5] = points;
+			c.characterStats[5] = points;
+			c.baseStats[5] = points;
 
 			statPoints -= points;
 			break;
@@ -307,76 +321,75 @@ void statSelection(string playerName, int(&characterStats)[7], int(&baseStats)[7
 			continue;
 		}
 	}
-	characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
-	baseStats[6] = characterStats[6];
+	c.characterStats[6] = luckMin + rand() % (luckMax - luckMin + 1);
+	c.baseStats[6] = c.characterStats[6];
 	_getch();
 	system("CLS");
 	printf("Great! Now that you have selected your stats, lets move on to character selection!\nPress any key to continue\n");
 	_getch();
-	
 }
 
-void statChecker(int(&characterStats)[7])
+void statChecker(struct characterInformation &c) // checks stats to make sure they dont exceed the maximum or minimum values
 {
-	if (characterStats[0] > 10)
+	if (c.characterStats[0] > 10)
 	{
-		characterStats[0] = 10;
+		c.characterStats[0] = 10;
 	}
-	if (characterStats[1] > 10)
+	if (c.characterStats[1] > 10)
 	{
-		characterStats[1] = 10;
+		c.characterStats[1] = 10;
 	}
-	if (characterStats[2] > 10)
+	if (c.characterStats[2] > 10)
 	{
-		characterStats[2] = 10;
+		c.characterStats[2] = 10;
 	}
-	if (characterStats[3] > 10)
+	if (c.characterStats[3] > 10)
 	{
-		characterStats[3] = 10;
+		c.characterStats[3] = 10;
 	}
-	if (characterStats[4] > 10)
+	if (c.characterStats[4] > 10)
 	{
-		characterStats[4] = 10;
+		c.characterStats[4] = 10;
 	}
-	if (characterStats[5] > 10)
+	if (c.characterStats[5] > 10)
 	{
-		characterStats[5] = 10;
+		c.characterStats[5] = 10;
 	}
-	if (characterStats[6] > 10)
+	if (c.characterStats[6] > 10)
 	{
-		characterStats[6] = 10;
+		c.characterStats[6] = 10;
 	}
-	if (characterStats[0] < -10)
+	if (c.characterStats[0] < -10)
 	{
-		characterStats[0] = -10;
+		c.characterStats[0] = -10;
 	}
-	if (characterStats[1] < -10)
+	if (c.characterStats[1] < -10)
 	{
-		characterStats[1] = -10;
+		c.characterStats[1] = -10;
 	}
-	if (characterStats[2] < -10)
+	if (c.characterStats[2] < -10)
 	{
-		characterStats[2] = -10;
+		c.characterStats[2] = -10;
 	}
-	if (characterStats[3] < -10)
+	if (c.characterStats[3] < -10)
 	{
-		characterStats[3] = -10;
+		c.characterStats[3] = -10;
 	}
-	if (characterStats[4] < -10)
+	if (c.characterStats[4] < -10)
 	{
-		characterStats[4] = -10;
+		c.characterStats[4] = -10;
 	}
-	if (characterStats[5] < -10)
+	if (c.characterStats[5] < -10)
 	{
-		characterStats[5] = -10;
+		c.characterStats[5] = -10;
 	}
-	if (characterStats[6] < -10)
+	if (c.characterStats[6] < -10)
 	{
-		characterStats[6] = -10;
+		c.characterStats[6] = -10;
 	}
 }
 
-void characterSelection(int (&characterStats)[7], string playerName, bool (&characterType)[5])
+void characterSelection(struct characterInformation &c)
 {
 
 	string input;
@@ -391,80 +404,80 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 
 		if (input == "1")
 		{
-			characterType[0] = true;
+			c.characterType[0] = true;
 
 			printf("You have chosen knight\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", characterStats[0]);
-			printf("Perception: %i\n", characterStats[1]);
-			printf("Endurance: %i\n", characterStats[2]);
-			printf("Charisma: %i\n", characterStats[3]);
-			printf("Intelligence: %i\n", characterStats[4]);
-			printf("Agility: %i\n", characterStats[5]);
-			printf("Luck: %i\n", characterStats[6]);
+			printf("Strength: %i\n", c.characterStats[0]);
+			printf("Perception: %i\n", c.characterStats[1]);
+			printf("Endurance: %i\n", c.characterStats[2]);
+			printf("Charisma: %i\n", c.characterStats[3]);
+			printf("Intelligence: %i\n", c.characterStats[4]);
+			printf("Agility: %i\n", c.characterStats[5]);
+			printf("Luck: %i\n", c.characterStats[6]);
 			printf("SPECIAL ABILITY: During times of need a knight can pray for a random gift from the heavens.\n\n");
 	
 		}
 		else if (input == "2")
 		{	
-			characterType[1] = true;
+			c.characterType[1] = true;
 
 			printf("You have chosen Calvary\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", characterStats[0]);
-			printf("Perception: %i\n", characterStats[1]);
-			printf("Endurance: %i\n", characterStats[2]);
-			printf("Charisma: %i\n", characterStats[3]);
-			printf("Intelligence: %i\n", characterStats[4]);
-			printf("Agility: %i\n", characterStats[5]);
-			printf("Luck: %i\n", characterStats[6]);
+			printf("Strength: %i\n", c.characterStats[0]);
+			printf("Perception: %i\n", c.characterStats[1]);
+			printf("Endurance: %i\n", c.characterStats[2]);
+			printf("Charisma: %i\n", c.characterStats[3]);
+			printf("Intelligence: %i\n", c.characterStats[4]);
+			printf("Agility: %i\n", c.characterStats[5]);
+			printf("Luck: %i\n", c.characterStats[6]);
 			printf("SPECIAL ABILITY: Calvary can charge into units dealing massive splash damage.\n\n");
 		}
 		else if (input == "3")
 		{
-			characterType[2] = true;
+			c.characterType[2] = true;
 
 			printf("You have chosen Spearman\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", characterStats[0]);
-			printf("Perception: %i\n", characterStats[1]);
-			printf("Endurance: %i\n", characterStats[2]);
-			printf("Charisma: %i\n", characterStats[3]);
-			printf("Intelligence: %i\n", characterStats[4]);
-			printf("Agility: %i\n", characterStats[5]);
-			printf("Luck: %i\n", characterStats[6]);
+			printf("Strength: %i\n", c.characterStats[0]);
+			printf("Perception: %i\n", c.characterStats[1]);
+			printf("Endurance: %i\n", c.characterStats[2]);
+			printf("Charisma: %i\n", c.characterStats[3]);
+			printf("Intelligence: %i\n", c.characterStats[4]);
+			printf("Agility: %i\n", c.characterStats[5]);
+			printf("Luck: %i\n", c.characterStats[6]);
 			printf("SPECIAL ABILITY: Spearmen can fortify, damaging any units that come near them.\n\n");
 	
 		}
 		else if (input == "4")
 		{	
-			characterType[3] = true;
+			c.characterType[3] = true;
 
 			printf("You have chosen Archer\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", characterStats[0]);
-			printf("Perception: %i\n", characterStats[1]);
-			printf("Endurance: %i\n", characterStats[2]);
-			printf("Charisma: %i\n", characterStats[3]);
-			printf("Intelligence: %i\n", characterStats[4]);
-			printf("Agility: %i\n", characterStats[5]);
-			printf("Luck: %i\n", characterStats[6]);
+			printf("Strength: %i\n", c.characterStats[0]);
+			printf("Perception: %i\n", c.characterStats[1]);
+			printf("Endurance: %i\n", c.characterStats[2]);
+			printf("Charisma: %i\n", c.characterStats[3]);
+			printf("Intelligence: %i\n", c.characterStats[4]);
+			printf("Agility: %i\n", c.characterStats[5]);
+			printf("Luck: %i\n", c.characterStats[6]);
 			printf("SPECIAL ABILITY: Archers can set their arrows alight for a short duration.\n\n");
 
 		}
 		else if (input == "5")
 		{
-			characterType[4] = true;
+			c.characterType[4] = true;
 
 			printf("You have chosen Swordsman\n");
 			printf("Your stats are:\n");
-			printf("Strength: %i\n", characterStats[0]);
-			printf("Perception: %i\n", characterStats[1]);
-			printf("Endurance: %i\n", characterStats[2]);
-			printf("Charisma: %i\n", characterStats[3]);
-			printf("Intelligence: %i\n", characterStats[4]);
-			printf("Agility: %i\n", characterStats[5]);
-			printf("Luck: %i\n", characterStats[6]);
+			printf("Strength: %i\n", c.characterStats[0]);
+			printf("Perception: %i\n", c.characterStats[1]);
+			printf("Endurance: %i\n", c.characterStats[2]);
+			printf("Charisma: %i\n", c.characterStats[3]);
+			printf("Intelligence: %i\n", c.characterStats[4]);
+			printf("Agility: %i\n", c.characterStats[5]);
+			printf("Luck: %i\n", c.characterStats[6]);
 			printf("SPECIAL ABILITY: Swordsman can fortify, massively increasing their endurance and making them near invulnerable to arrows.\n\n");
 
 		}
@@ -487,11 +500,11 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 		{
 			system("CLS");
 
-			characterType[0] = false;
-			characterType[1] = false;
-			characterType[2] = false;
-			characterType[3] = false;
-			characterType[4] = false;
+			c.characterType[0] = false;
+			c.characterType[1] = false;
+			c.characterType[2] = false;
+			c.characterType[3] = false;
+			c.characterType[4] = false;
 
 			continue;
 		}
@@ -499,11 +512,11 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 		{
 			callBack();
 
-			characterType[0] = false;
-			characterType[1] = false;
-			characterType[2] = false;
-			characterType[3] = false;
-			characterType[4] = false;
+			c.characterType[0] = false;
+			c.characterType[1] = false;
+			c.characterType[2] = false;
+			c.characterType[3] = false;
+			c.characterType[4] = false;
 
 			continue;
 		}
@@ -512,37 +525,37 @@ void characterSelection(int (&characterStats)[7], string playerName, bool (&char
 	system("CLS");
 }
 
-void universalEquipment(string input, bool(characterType)[5], int(&characterStats)[7], bool(&universalsSelected)[3])
+void universalEquipment(struct characterInformation& c, string input, bool(&universalsSelected)[3])
 {
 
 	if (input == "1")
 	{
 		printf("Leather Selected:\nStrength: +0\nPerception: -1\nEndurance: +2\nCharisma: -1\nIntelligence: +0\nAgility: +1\nLuck: +0\n\n");
 		printf("Current Stats:\n");
-		cout << "Strength: " << characterStats[0] << endl << "Perception: " << characterStats[1] - 1<< endl << "Endurance: " << characterStats[2] + 2<< endl;
-		cout << "Charisma: " << characterStats[3] - 1<< endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 1 << endl << "Luck: " << characterStats[6] << endl;
+		cout << "Strength: " << c.characterStats[0] << endl << "Perception: " << c.characterStats[1] - 1<< endl << "Endurance: " << c.characterStats[2] + 2<< endl;
+		cout << "Charisma: " << c.characterStats[3] - 1<< endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] + 1 << endl << "Luck: " << c.characterStats[6] << endl;
 		universalsSelected[0] = true;
 	}
 	else if (input == "2")
 	{
 		printf("Chainmail Selected:\nStrength +1\nPerception: -2\nEndurance +3\nCharisma: +1\nIntelligence: +0\nAgility: -1\nLuck: +0\n\n");
 		printf("Current Stats:\n");
-		cout << "Strength: " << characterStats[0] + 1 << endl << "Perception: " << characterStats[1] - 2 << endl << "Endurance: " << characterStats[2] + 3 << endl;
-		cout << "Charisma: " << characterStats[3] + 1 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] - 1 << endl << "Luck: " << characterStats[6] << endl;
+		cout << "Strength: " << c.characterStats[0] + 1 << endl << "Perception: " << c.characterStats[1] - 2 << endl << "Endurance: " << c.characterStats[2] + 3 << endl;
+		cout << "Charisma: " << c.characterStats[3] + 1 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] - 1 << endl << "Luck: " << c.characterStats[6] << endl;
 		universalsSelected[1] = true;
 	}
 	else if (input == "3")
 	{
 		printf("Plate Selected:\nStrength: +2\nPerception: -3\nEndurance: +5\nCharisma: +2\nIntelligence: +0\nAgility: -3\nLuck: + 0\n\n");
 		printf("Current Stats:\n");
-		cout << "Strength: " << characterStats[0] + 2 << endl << "Perception: " << characterStats[1] - 3 << endl << "Endurance: " << characterStats[2] + 5 << endl;
-		cout << "Charisma: " << characterStats[3] + 2 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] - 3 << endl << "Luck: " << characterStats[6] << endl;
+		cout << "Strength: " << c.characterStats[0] + 2 << endl << "Perception: " << c.characterStats[1] - 3 << endl << "Endurance: " << c.characterStats[2] + 5 << endl;
+		cout << "Charisma: " << c.characterStats[3] + 2 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] - 3 << endl << "Luck: " << c.characterStats[6] << endl;
 		universalsSelected[2] = true;
 	}
 	
 }
 	
-void equipmentSelection(string playerName, bool (characterType)[5], int (&characterStats)[7])
+void equipmentSelection(struct characterInformation &c)
 {
 
 	string input;
@@ -550,12 +563,10 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 	bool universalsSelected[3] = { false, false, false };
 	bool uniqueSelected[10] = { false, false, false, false, false, false, false, false, false, false };
 
-	
-		cout << "Welcome to the armory " << playerName << "!" << endl;
+		cout << "Welcome to the armory " << c.playerName << "!" << endl;
 		printf("Press any key to continue\n");
 		_getch();
 		system("CLS");
-
 		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nPress any key to continue\n");
 		_getch();
 		system("CLS");
@@ -567,7 +578,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 	{
 
 		printf("UNIVERSAL:\n1. Leather\n2. Chainmail\n3. Plate\n");
-		if (characterType[0] == true)
+		if (c.characterType[0] == true)
 		{
 			printf("UNIQUE:\n");
 			printf("4. The kings holy plate\n5. Heavy Plate\n");
@@ -582,16 +593,16 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			{
 				printf("Kings Holy Plate Selected:\nStrength: +2\nPerception: -1\nEndurance: +4\nCharisma: +4\nIntelligence: +1\nAgility: -3\nLuck: +2\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 2 << endl << "Perception: " << characterStats[1] - 1 << endl << "Endurance: " << characterStats[2] + 4 << endl;
-				cout << "Charisma: " << characterStats[3] + 4 << endl << "Intelligence: " << characterStats[4] + 1 << endl << "Agility: " << characterStats[5] - 3 << endl << "Luck: " << characterStats[6] + 2 << endl;
+				cout << "Strength: " << c.characterStats[0] + 2 << endl << "Perception: " << c.characterStats[1] - 1 << endl << "Endurance: " << c.characterStats[2] + 4 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 4 << endl << "Intelligence: " << c.characterStats[4] + 1 << endl << "Agility: " << c.characterStats[5] - 3 << endl << "Luck: " << c.characterStats[6] + 2 << endl;
 				uniqueSelected[0] = true;
 			}
 			else if (input == "5")
 			{
 				printf("Heavy Plate Selected:\nStrength: +4\nPerception: -4\nEndurance +6\nCharisma: +3\nIntelligence: +0\nAgility: -5\nLuck: +0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 4 << endl << "Perception: " << characterStats[1] - 4 << endl << "Endurance: " << characterStats[2] + 6 << endl;
-				cout << "Charisma: " << characterStats[3] + 3 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] - 5 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 4 << endl << "Perception: " << c.characterStats[1] - 4 << endl << "Endurance: " << c.characterStats[2] + 6 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 3 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] - 5 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[1] = true;
 			}
 			else
@@ -602,7 +613,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 
 		}
-		else if (characterType[1] == true)
+		else if (c.characterType[1] == true)
 		{
 			printf("UNIQUE:\n");
 			printf("4. Lamellar Armor\n5. Ring Mail\n");
@@ -617,16 +628,16 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			{
 				printf("Lamellar Armor Selected:\nStrength: + 1\nPerception: + 2\nEndurance: + 1\nCharisma: + 2\nIntelligence: + 0\nAgility: + 2\nLuck: + 0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 1 << endl << "Perception: " << characterStats[1] + 2 << endl << "Endurance: " << characterStats[2] + 1 << endl;
-				cout << "Charisma: " << characterStats[3] + 2 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 2 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 1 << endl << "Perception: " << c.characterStats[1] + 2 << endl << "Endurance: " << c.characterStats[2] + 1 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 2 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] + 2 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[2] = true;
 			}
 			else if (input == "5")
 			{
 				printf("Ring Mail Selected:\nStrength: + 0\nPerception: + 1\nEndurance: + 3\nCharisma: + 3\nIntelligence: + 0\nAgility: + 1\nLuck: + 0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 0 << endl << "Perception: " << characterStats[1] + 1 << endl << "Endurance: " << characterStats[2] + 3 << endl;
-				cout << "Charisma: " << characterStats[3] + 3 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 1 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 0 << endl << "Perception: " << c.characterStats[1] + 1 << endl << "Endurance: " << c.characterStats[2] + 3 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 3 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] + 1 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[3] = true;
 			}
 			else
@@ -637,7 +648,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 
 		}
-		else if (characterType[2] == true)
+		else if (c.characterType[2] == true)
 		{
 			printf("UNIQUE:\n");
 			printf("4. Light Plate\n5. Heavt Leather\n");
@@ -652,16 +663,16 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			{
 				printf("Light Plate Selected:\nStrength: +2\nPerception: -2\nEndurance: +3\nCharisma: +1\nIntelligence: +0\nAgility: -2\nLuck: + 0\n\n");
 				printf("Current Stats\n");
-				cout << "Strength: " << characterStats[0] + 2 << endl << "Perception: " << characterStats[1] - 2 << endl << "Endurance: " << characterStats[2] + 3 << endl;
-				cout << "Charisma: " << characterStats[3] + 1 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] - 2 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 2 << endl << "Perception: " << c.characterStats[1] - 2 << endl << "Endurance: " << c.characterStats[2] + 3 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 1 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] - 2 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[4] = true;
 			}
 			else if (input == "5")
 			{
 				printf("Heavy Leather Selected:\nStrength: +1\nPerception: -1\nEndurance: +3\nCharisma: +0\nIntelligence: +0\nAgility: +0\nLuck: +0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 1 << endl << "Perception: " << characterStats[1] - 1 << endl << "Endurance: " << characterStats[2] + 3 << endl;
-				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 1 << endl << "Perception: " << c.characterStats[1] - 1 << endl << "Endurance: " << c.characterStats[2] + 3 << endl;
+				cout << "Charisma: " << c.characterStats[3] << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[5] = true;
 			}
 			else
@@ -672,7 +683,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 
 		}
-		else if (characterType[3] == true)
+		else if (c.characterType[3] == true)
 		{
 			printf("UNIQUE:\n");
 			printf("4. Padded Leather\n5. Assasin's Robes\n");
@@ -688,16 +699,16 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			{
 				printf("Padded Leather Selected:\nStrength: -1\nPerception: +3\nEndurance: +1\nCharisma: +0\nIntelligence: + 0\nAgility: +1\nLuck: +0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] - 1 << endl << "Perception: " << characterStats[1] + 3 << endl << "Endurance: " << characterStats[2] + 1 << endl;
-				cout << "Charisma: " << characterStats[3] << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 1 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] - 1 << endl << "Perception: " << c.characterStats[1] + 3 << endl << "Endurance: " << c.characterStats[2] + 1 << endl;
+				cout << "Charisma: " << c.characterStats[3] << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] + 1 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[6] = true;
 			}
 			else if (input == "5")
 			{
 				printf("Assasin's Robes Selected:\nStrength: -2\nPerception: +2\nEndurance: -1\nCharisma: +3\nIntelligence: +0\nAgility: +3\nLuck: +2\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] - 2 << endl << "Perception: " << characterStats[1] + 2 << endl << "Endurance: " << characterStats[2] - 1 << endl;
-				cout << "Charisma: " << characterStats[3] + 3 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 3 << endl << "Luck: " << characterStats[6] + 2 << endl;
+				cout << "Strength: " << c.characterStats[0] - 2 << endl << "Perception: " << c.characterStats[1] + 2 << endl << "Endurance: " << c.characterStats[2] - 1 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 3 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] + 3 << endl << "Luck: " << c.characterStats[6] + 2 << endl;
 				uniqueSelected[7] = true;
 			}
 			else
@@ -708,7 +719,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			}
 
 		}
-		else if (characterType[4] == true)
+		else if (c.characterType[4] == true)
 		{
 			printf("UNIQUE:\n");
 			printf("4. Ebony Armor\n5. Peacekeeper Armor");
@@ -724,16 +735,16 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 			{
 				printf("Ebony Armor Selected:\nStrength: +3\nPerception: -3\nEndurance +4\nCharisma: +4\nIntelligence: +0\nAgility: -4\nLuck: +0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 3 << endl << "Perception: " << characterStats[1] - 3 << endl << "Endurance: " << characterStats[2] + 4 << endl;
-				cout << "Charisma: " << characterStats[3] + 4 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] - 4 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 3 << endl << "Perception: " << c.characterStats[1] - 3 << endl << "Endurance: " << c.characterStats[2] + 4 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 4 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] - 4 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[8] = true;
 			}
 			else if (input == "5")
 			{
 				printf("Peacekeeper Armor Selected:\nStrength: +1\nPerception: -2\nEndurance +2\nCharisma: +2\nIntelligence: +0\nAgility: +3\nLuck: +0\n\n");
 				printf("Current Stats:\n");
-				cout << "Strength: " << characterStats[0] + 1 << endl << "Perception: " << characterStats[1] - 2 << endl << "Endurance: " << characterStats[2] + 2 << endl;
-				cout << "Charisma: " << characterStats[3] + 2 << endl << "Intelligence: " << characterStats[4] << endl << "Agility: " << characterStats[5] + 3 << endl << "Luck: " << characterStats[6] << endl;
+				cout << "Strength: " << c.characterStats[0] + 1 << endl << "Perception: " << c.characterStats[1] - 2 << endl << "Endurance: " << c.characterStats[2] + 2 << endl;
+				cout << "Charisma: " << c.characterStats[3] + 2 << endl << "Intelligence: " << c.characterStats[4] << endl << "Agility: " << c.characterStats[5] + 3 << endl << "Luck: " << c.characterStats[6] << endl;
 				uniqueSelected[9] = true;
 			}
 			else
@@ -756,7 +767,7 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		
 		if (universal == true)
 		{
-			universalEquipment(input, characterType, characterStats, universalsSelected);
+			universalEquipment(c, input, universalsSelected);
 		}
 
 		printf("Press 1 to continue, 2 to go back\n");
@@ -767,106 +778,106 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 		{
 			if (universalsSelected[0] == true)
 			{
-				characterStats[1] -= 1;
-				characterStats[2] += 2;
-				characterStats[3] -= 1;
-				characterStats[5] += 1;
+				c.characterStats[1] -= 1;
+				c.characterStats[2] += 2;
+				c.characterStats[3] -= 1;
+				c.characterStats[5] += 1;
 
 			}
 			else if (universalsSelected[1] == true)
 			{
-				characterStats[0] += 1;
-				characterStats[1] -= 2;
-				characterStats[2] += 3;
-				characterStats[3] += 1;
-				characterStats[5] -= 1;
+				c.characterStats[0] += 1;
+				c.characterStats[1] -= 2;
+				c.characterStats[2] += 3;
+				c.characterStats[3] += 1;
+				c.characterStats[5] -= 1;
 			}
 			else if (universalsSelected[2] == true)
 			{
-				characterStats[0] += 2;
-				characterStats[1] -= 3;
-				characterStats[2] += 5;
-				characterStats[3] += 2;
-				characterStats[5] -= 3;
+				c.characterStats[0] += 2;
+				c.characterStats[1] -= 3;
+				c.characterStats[2] += 5;
+				c.characterStats[3] += 2;
+				c.characterStats[5] -= 3;
 			}
 			else if (uniqueSelected[0] == true)
 			{
-				characterStats[0] += 2;
-				characterStats[1] -= 1;
-				characterStats[2] += 4;
-				characterStats[3] += 4;
-				characterStats[4] += 1;
-				characterStats[5] -= 3;
-				characterStats[6] += 2;
+				c.characterStats[0] += 2;
+				c.characterStats[1] -= 1;
+				c.characterStats[2] += 4;
+				c.characterStats[3] += 4;
+				c.characterStats[4] += 1;
+				c.characterStats[5] -= 3;
+				c.characterStats[6] += 2;
 			}
 			else if (uniqueSelected[1] == true)
 			{
-				characterStats[0] += 4;
-				characterStats[1] -= 4;
-				characterStats[2] += 6;
-				characterStats[3] += 3;
-				characterStats[5] -= 5;
+				c.characterStats[0] += 4;
+				c.characterStats[1] -= 4;
+				c.characterStats[2] += 6;
+				c.characterStats[3] += 3;
+				c.characterStats[5] -= 5;
 			}
 			else if (uniqueSelected[2] == true)
 			{
-				characterStats[0] += 1;
-				characterStats[1] += 2;
-				characterStats[2] += 1;
-				characterStats[3] += 2;
-				characterStats[5] += 2;
+				c.characterStats[0] += 1;
+				c.characterStats[1] += 2;
+				c.characterStats[2] += 1;
+				c.characterStats[3] += 2;
+				c.characterStats[5] += 2;
 			}
 			else if (uniqueSelected[3] == true)
 			{
-				characterStats[1] += 1;
-				characterStats[2] += 3;
-				characterStats[3] += 3;
-				characterStats[5] += 1;
+				c.characterStats[1] += 1;
+				c.characterStats[2] += 3;
+				c.characterStats[3] += 3;
+				c.characterStats[5] += 1;
 			}
 			else if (uniqueSelected[4] == true)
 			{
-				characterStats[0] += 2;
-				characterStats[1] -= 2;
-				characterStats[2] += 3;
-				characterStats[3] += 1;
-				characterStats[5] -= 2;
+				c.characterStats[0] += 2;
+				c.characterStats[1] -= 2;
+				c.characterStats[2] += 3;
+				c.characterStats[3] += 1;
+				c.characterStats[5] -= 2;
 			}
 			else if (uniqueSelected[5] == true)
 			{
-				characterStats[0] += 1;
-				characterStats[1] -= 1;
-				characterStats[2] += 3;
+				c.characterStats[0] += 1;
+				c.characterStats[1] -= 1;
+				c.characterStats[2] += 3;
 			}
 			else if (uniqueSelected[6] == true)
 			{
-				characterStats[0] -= 2;
-				characterStats[1] += 3;
-				characterStats[2] += 1;
-				characterStats[5] += 1;
+				c.characterStats[0] -= 2;
+				c.characterStats[1] += 3;
+				c.characterStats[2] += 1;
+				c.characterStats[5] += 1;
 			}
 			else if (uniqueSelected[7] == true)
 			{
-				characterStats[0] -= 1;
-				characterStats[1] += 2;
-				characterStats[2] -= 1;
-				characterStats[3] += 3;
-				characterStats[5] += 3;
-				characterStats[7] += 2;
+				c.characterStats[0] -= 1;
+				c.characterStats[1] += 2;
+				c.characterStats[2] -= 1;
+				c.characterStats[3] += 3;
+				c.characterStats[5] += 3;
+				c.characterStats[7] += 2;
 			}
 			else if (uniqueSelected[8] == true)
 			{
-				characterStats[0] += 3;
-				characterStats[1] -= 3;
-				characterStats[2] += 4;
-				characterStats[3] += 4;
-				characterStats[5] -= 4;
+				c.characterStats[0] += 3;
+				c.characterStats[1] -= 3;
+				c.characterStats[2] += 4;
+				c.characterStats[3] += 4;
+				c.characterStats[5] -= 4;
 			}
 			else if (uniqueSelected[9] == true)
 			{
-				characterStats[0] += 1;
-				characterStats[1] -= 2;
-				characterStats[2] += 2;
-				characterStats[3] += 2;
-				characterStats[5] += 3;
+				c.characterStats[0] += 1;
+				c.characterStats[1] -= 2;
+				c.characterStats[2] += 2;
+				c.characterStats[3] += 2;
+				c.characterStats[5] += 3;
 			}
 			else
 			{
@@ -901,33 +912,51 @@ void equipmentSelection(string playerName, bool (characterType)[5], int (&charac
 	printf("OK! So now that we've picked out our armor we can move on to the fun part, weapons!\nPress any key to continue\n");
 	_getch();
 	system("CLS");
-	printf("Each weapon has its own characteristics, these include, peircing, blunt, or slash damage, weapon range, weapon accuracy (only applies to ranged weapons) and weight.\nPress any key to continue\n");
+	printf("Each weapon has its own characteristics, these include, peircing, blunt, or slash damage, weapon range, weapon accuracy and weight.\nPress any key to continue\n");
 	_getch();
 	system("CLS");
 	printf("You will have access to a primary and secondary weapon, each class will have their own choice of weapons\nPress any key to continue\n");
 	_getch();
 	system("CLS");
+	printf("Primary weapon:\n\n");
 
 do
 {
 	
-	if (characterType[0] = true)
+	if (c.characterType[0] = true)
 	{
-	
+		printf("1. Longsword\n2. Shortsword\n3. Greatsword\n");
+		cin >> input;
+
+		if (input == "1")
+		{
+			printf("Longsword selected:\n\n");
+
+		}
+		else if (input == "2")
+		{
+			printf("Shortsword selected:\n\n");
+
+		}
+		else if (input == "3")
+		{
+			printf("Greatsword selected:\n\n");
+
+		}
 	}
-	else if (characterType[1] = true)
+	else if (c.characterType[1] = true)
 	{
 		
 	}
-	else if (characterType[2] = true)
+	else if (c.characterType[2] = true)
 	{
 		
 	}
-	else if (characterType[3] = true)
+	else if (c.characterType[3] = true)
 	{
 		
 	}
-	else if (characterType[4] = true)
+	else if (c.characterType[4] = true)
 	{
 		
 	}
@@ -938,30 +967,25 @@ do
 	system("CLS");
 	}
 	
-} while(1)
+} while (1);
 	
 }
 
 int main()
 {
-	int baseStats[7] = { 0, 0, 0, 0, 0, 0, 0 };
-	int characterStats[7] = { 0, 0, 0, 0, 0, 0, 0 };
-	int characterHealth;
-	int level;
 	int gameDifficulty;
-	int xp;
-	bool characterType[5] = { false, false, false, false, false };
 	bool intro = true;	
-	string playerName;
-	string horseName;
 	string input;
+
+	struct characterInformation c;
 
 	srand(0);
 	srand((unsigned)time(NULL));
 
 	printf("Hello adventurer, what would you like to be known as?\n");
-	cin >> playerName;
-	if (playerName == "DEV.")
+	cin >> c.playerName;
+
+	if (c.playerName == "DEV.")
 	{
 		while (1)
 		{
@@ -970,9 +994,10 @@ int main()
 			printf("1. Introduction\n2. callBack\n3. callBackNoCLS\n4. statSelection\n5. statChecker\n6. characterSelection\n7. equipmentSelectin\n");
 			cin >> input;
 			system("CLS");
+
 			if (input == "1")
 			{
-				introduction(playerName);
+				introduction(c);
 			}
 			else if (input == "2")
 			{
@@ -984,19 +1009,19 @@ int main()
 			}
 			else if (input == "4")
 			{
-				statSelection(playerName, characterStats, baseStats);
+				statSelection(c);
 			}
 			else if (input == "5")
 			{
-				statChecker(characterStats);
+				statChecker(c);
 			}
 			else if (input == "6")
 			{
-				characterSelection(characterStats, playerName, characterType);
+				characterSelection(c);
 			}
 			else if (input == "7")
 			{
-				equipmentSelection(playerName, characterType, characterStats);
+				equipmentSelection(c);
 			}
 			else
 			{
@@ -1004,10 +1029,10 @@ int main()
 				continue;
 			}
 
-
 			system("CLS");
-			printf("Press 1 to exit, 2 to repeat\n");
+			printf("Press 1 to exit, 2 to visit new function\n");
 			cin >> input;
+
 			if (input == "1")
 			{
 				break;
@@ -1022,7 +1047,7 @@ int main()
 	
 	system("CLS");
 
-	cout << "Welcome to my RPG, " << playerName << ", this is a c++ text based game made by me, Joey Soroka.\n And before we start I would like to give credit to those who helped me with this amazing project.\nPress any key to continue" << endl;
+	cout << "Welcome to my RPG, " << c.playerName << ", this is a c++ text based game made by me, Joey Soroka.\n And before we start I would like to give credit to those who helped me with this amazing project.\nPress any key to continue" << endl;
 	_getch();
 	system("CLS");
 	printf("CREDITS:\n\nCODING SUPPORT:\nEric Pace\nSlater Swart\nTucker Norris\n\n");
@@ -1034,13 +1059,13 @@ int main()
 
 	if (intro = true)
 	{
-		introduction(playerName);
+		introduction(c);
 
-		statSelection(playerName, characterStats, baseStats);
+		statSelection(c);
 
-		characterSelection(characterStats, playerName, characterType);
+		characterSelection(c);
 		
-		equipmentSelection(playerName, characterType, characterStats);
+		equipmentSelection(c);
 
 		intro = false;
 
@@ -1049,42 +1074,41 @@ int main()
 	_getch();
 	system("CLS");
 	printf("Because you've chosen");
-	if (characterType[0] == true)
+	if (c.characterType[0] == true)
 	{
 		printf("knight as your class");
-		characterHealth = 12;
+		c.characterHealth = 12;
 	}
-	else if (characterType[1] == true)
+	else if (c.characterType[1] == true)
 	{
 		printf("calvary as your class");
-		characterHealth = 8;
+		c.characterHealth = 8;
 	}
-	else if (characterType[2] == true)
+	else if (c.characterType[2] == true)
 	{
 		printf("spearman as your class");
-		characterHealth = 8;
+		c.characterHealth = 8;
 	}
-	else if (characterType[3] == true)
+	else if (c.characterType[3] == true)
 	{
 		printf("archer as your class");
-		characterHealth = 6;
+		c.characterHealth = 6;
 	}
-	else if (characterType[4] == true)
+	else if (c.characterType[4] == true)
 	{
 		printf("swordsman as your class");
-		characterHealth = 10;
+		c.characterHealth = 10;
 	}
 	else
 	{
 		printf("ERROR NO CHARACTER TYPE SELECTED");
 	}
-	cout << " your character health is given a value of " << characterHealth;
+	cout << " your character health is given a value of " << c.characterHealth;
 	
 	_getch();
 	system("CLS");
 
 	printf("Now for damage, since you've chosen ");
-
 
 	return 0;
 } 

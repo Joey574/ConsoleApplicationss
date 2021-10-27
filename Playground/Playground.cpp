@@ -16,6 +16,25 @@ Maintenance Log:
 
 using namespace std;
 
+struct Testing
+{
+	int test_1;
+
+	int test_2;
+
+	int test_3;
+};
+
+void structureTesting(struct Testing &t)
+{
+
+	t.test_1 = 1;
+
+	t.test_2 = 2;
+
+	t.test_3 = 3;
+}
+
 void escapeTesting()
 {
 	
@@ -54,8 +73,19 @@ void vectorTesting()
 
 int main()
 {
-	vectorTesting();
-	
+	struct Testing t;
+
+	t.test_1 = 0;
+
+	t.test_2 = 0;
+
+	t.test_3 = 0;
+
+	structureTesting(t);
+
+	cout << "Test_1: " << t.test_1 << endl;
+	cout << "Test_2: " << t.test_2 << endl;
+	cout << "Test_3: " << t.test_3 << endl;
 
 	return 0;
 }
