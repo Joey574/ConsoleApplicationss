@@ -71,7 +71,7 @@ Maintenance Log:
 
 using namespace std;
 
-struct characterInformation
+struct characterInformation // contains information about character and weapon information
 {
 	int baseStats[7] = { 0, 0, 0, 0, 0, 0, 0 };
 	int characterStats[7] = { 0, 0, 0, 0, 0, 0, 0 };
@@ -95,7 +95,7 @@ void introduction(struct characterInformation c)  // Says hello to user and give
 	cout << "Hello " << c.playerName << "! We need your help. The world is in peril." << endl;
 	printf("You are our last hope.\nPress any key to continue\n");
 	_getch();	
-	system("CLS"); 
+	system("CLS");
 
 	printf("The year is 1257, hordes of goblins and ogres have swarmed a once peaceful realm, and only you, ");
 	cout << c.playerName << endl;
