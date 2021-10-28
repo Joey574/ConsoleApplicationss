@@ -57,7 +57,9 @@ Maintenance Log:
 			up the visual side of things and getting rid of walls of text... Added introductory text for weapon selection, as well as begining if statement for it
 
 10/27/21:	Set up struct containing player information, going to make it easier to pass all sorts of variables, also added a few comments on functions saying what they do, not exactly
-			much, but it's progress which is good, added weapon variables to the struct
+			much, but it's progress which is good, added weapon variables to the struct... added basic text for some weapons, no actual variables given values yet
+
+
 */
 
 #include <stdio.h>
@@ -85,6 +87,7 @@ struct characterInformation // contains information about character and weapon i
 	bool peircing;
 	bool blunt;
 	bool slash;
+	int damage;
 	int range;
 	int accuracy;
 	int weight;
@@ -562,6 +565,7 @@ void equipmentSelection(struct characterInformation &c)
 	bool universal = false;
 	bool universalsSelected[3] = { false, false, false };
 	bool uniqueSelected[10] = { false, false, false, false, false, false, false, false, false, false };
+	bool knightPrimary[5] = { false, false, false, false, false };
 
 		cout << "Welcome to the armory " << c.playerName << "!" << endl;
 		printf("Press any key to continue\n");
@@ -925,24 +929,54 @@ do
 	
 	if (c.characterType[0] = true)
 	{
-		printf("1. Longsword\n2. Shortsword\n3. Greatsword\n");
+		printf("1. Longsword\n2. Shortsword\n3. Mace\n4. Axe\n5. Pollaxe\n");
 		cin >> input;
+		system("CLS");
 
 		if (input == "1")
 		{
-			printf("Longsword selected:\n\n");
+			printf("Longsword Selected:\n\nSlash Damage: 6-8\nRange: 1 meter\nWeight: 4 lbs\nPress 1 to continue, 2 to go back\n");
+			cin  >> input;
+
+			if (input == "1")
+			{
+				knightPrimary[0] = true;
+			}
+			else if (input == "2")
+			{
+				continue;
+			}
+			else
+			{
+				callBack();
+				continue;
+			}
 
 		}
 		else if (input == "2")
 		{
-			printf("Shortsword selected:\n\n");
+			printf("Shortsword Selected:\n\n");
 
 		}
 		else if (input == "3")
 		{
-			printf("Greatsword selected:\n\n");
+			printf("Mace Selected:\n\n");
 
 		}
+		else if (input == "4")
+		{
+			printf("Axe Selected:\n\n");
+		}
+		else if (input == "5")
+		{
+			printf("Pollaxe Selected:\n\n");
+		}
+		else
+		{
+			callBack();
+			continue;
+		}
+
 	}
 	else if (c.characterType[1] = true)
 	{
@@ -1047,7 +1081,7 @@ int main()
 	
 	system("CLS");
 
-	cout << "Welcome to my RPG, " << c.playerName << ", this is a c++ text based game made by me, Joey Soroka.\n And before we start I would like to give credit to those who helped me with this amazing project.\nPress any key to continue" << endl;
+	cout << "Welcome to my RPG, " << c.playerName << ", this is a c++ text based game made by me, Joey Soroka.\nAnd before we start I would like to give credit to those who helped me with this amazing project.\nPress any key to continue" << endl;
 	_getch();
 	system("CLS");
 	printf("CREDITS:\n\nCODING SUPPORT:\nEric Pace\nSlater Swart\nTucker Norris\n\n");
