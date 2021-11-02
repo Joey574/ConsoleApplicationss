@@ -59,7 +59,8 @@ Maintenance Log:
 10/27/21:	Set up struct containing player information, going to make it easier to pass all sorts of variables, also added a few comments on functions saying what they do, not exactly
 			much, but it's progress which is good, added weapon variables to the struct... added basic text for some weapons, no actual variables given values yet
 
-
+11/2/21:	Added min and max damage ints to struct replacing just damage, added text for 5 knight primary weapons as well as bools identifying which weapon was selected, currently no
+			variable besides the bools are actually modified
 */
 
 #include <stdio.h>
@@ -87,8 +88,9 @@ struct characterInformation // contains information about character and weapon i
 	bool peircing;
 	bool blunt;
 	bool slash;
-	int damage;
-	int range;
+	int minDamage;
+	int maxDamage;
+	float range;
 	int accuracy;
 	int weight;
 };
@@ -574,9 +576,6 @@ void equipmentSelection(struct characterInformation &c)
 		printf("We'll first start off with armor, there are several universal armors, available to everyone, and there are some only available to specific classes\nPress any key to continue\n");
 		_getch();
 		system("CLS");
-		printf("Also note stats can have a maximum value of 25 and a minimum value of -10");
-		_getch();
-		system("CLS");
 
 		do
 	{
@@ -921,11 +920,12 @@ void equipmentSelection(struct characterInformation &c)
 	system("CLS");
 	printf("You will have access to a primary and secondary weapon, each class will have their own choice of weapons\nPress any key to continue\n");
 	_getch();
-	system("CLS");
-	printf("Primary weapon:\n\n");
+	
 
 do
 {
+	system("CLS");
+	printf("Primary weapon:\n\n");
 	
 	if (c.characterType[0] = true)
 	{
@@ -935,41 +935,33 @@ do
 
 		if (input == "1")
 		{
-			printf("Longsword Selected:\n\nSlash Damage: 6-8\nRange: 1 meter\nWeight: 4 lbs\nPress 1 to continue, 2 to go back\n");
-			cin  >> input;
-
-			if (input == "1")
-			{
-				knightPrimary[0] = true;
-			}
-			else if (input == "2")
-			{
-				continue;
-			}
-			else
-			{
-				callBack();
-				continue;
-			}
+			printf("Longsword Selected:\n\nSlash Damage: 6-8\nRange: 1 meter\nWeight: 4 lbs\n\n");
+			knightPrimary[0] = true;
 
 		}
 		else if (input == "2")
 		{
-			printf("Shortsword Selected:\n\n");
+			printf("Shortsword Selected:\n\nSlash Damage: 4-6\nRange: 0.5 meter\nWeight: 2 lbs\n\n");
+			knightPrimary[1] = true;
 
 		}
 		else if (input == "3")
 		{
-			printf("Mace Selected:\n\n");
+			printf("Mace Selected:\n\nBlunt Damage: 6-8\nRange: 1 meter\nWeight: 10 lbs\n\n");
+			knightPrimary[2] = true;
 
 		}
 		else if (input == "4")
 		{
-			printf("Axe Selected:\n\n");
+			printf("Axe Selected:\n\nSlash Damage: 4-8\nRange: 1 meter\nWeight: 5 lbs\n\n");
+			knightPrimary[3] = true;
+
 		}
 		else if (input == "5")
 		{
-			printf("Pollaxe Selected:\n\n");
+			printf("Pollaxe Selected:\n\nPiercing/Slash Damge: 4-6\nRange: 1.5 meters\nWeight: 5 lbs\n\n");
+			knightPrimary[4] = true;
+
 		}
 		else
 		{
@@ -999,6 +991,25 @@ do
 	printf("ERROR NO CHARACTER TYPE SELECTED");
 	_getch();
 	system("CLS");
+	}
+
+	printf("Press 1 to continue, 2 to go back\n");
+	cin >> input;
+
+	if (input == "1")
+	{
+
+	}
+	else if (input == "2")
+	{
+		continue;
+		bool knightPrimary[5] = { false, false, false, false, false };
+	}
+	else 
+	{
+		callBack();
+		continue;
+		bool knightPrimary[5] = { false, false, false, false, false };
 	}
 	
 } while (1);
