@@ -24,7 +24,7 @@ int main()
 	string input;
 	string name;
 
-	printf("Welcome! To this choose your own adventure game! Known as...\n\nTHE TERROR OF CHEIF PACE\n\nPress any key to start\n");
+	printf("Welcome! To this choose your own adventure game! Known as...\n\nTHE TERROR OF LIEUTENANT PACE\n\nPress any key to start\n");
 	_getch();
 	system("CLS");
 	
@@ -33,10 +33,10 @@ int main()
 	printf("Unknown: WHAT'S YOUR NAME RECRUIT?\n");
 	cin >> name;
 	system("CLS");
-	printf("Unknown: I'm Cheif Pace, your flight commander, today you'll be running through an obstacle course, of course civil air\npatrol isn't responsible for any \"accidents\" that may occur during this course\n");
+	printf("Unknown: I'm Lieutenant Pace, your flight commander, today you'll be running through an obstacle course, of course civil air\npatrol isn't responsible for any \"accidents\" that may occur during this course\n");
 	_getch();
 	system("CLS");
-	printf("Cheif Pace: Now then recruit, let's get started!\n");
+	printf("Lieutenant Pace: Now then recruit, let's get started!\n");
 	_getch();
 	system("CLS");
 	cout << name << ": You move into position in front of the obstacle course and look ahead, you see several different paths to choose\nfrom, on the left you see some tires to run through, however you think you see something moving in the tires in the" << endl;
@@ -49,10 +49,10 @@ int main()
 
 	if (input == "1")
 	{
-		cout << name << ": Decides to go left, towards the tires, you hear something moving around inside of them, a lot of somethings\nbut decide not to think about it you run through them going back and forth, however your legs and feet\nimmediately burst with pain, and as you look down you see the tires are filled with SNAKES!\n";
+		cout << name << ": You decide to go left, towards the tires, you hear something moving around inside of them, a lot of somethings\nbut decide not to think about it you run through them going back and forth, however your legs and feet\nimmediately burst with pain, and as you look down you see the tires are filled with SNAKES!\n";
 		_getch();
 		system("CLS");
-		cout << name << ": ";
+		cout << name << ": You keep going, however you're running out of breath, part because of the course, but mostly due to the searing pain in your legs, despite this you manage to make it through the tires and come out on the other end";
 	}
 	else if (input == "2")
 	{
