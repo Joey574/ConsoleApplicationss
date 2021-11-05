@@ -22,6 +22,7 @@ using namespace std;
 int main()
 {
 	string input;
+	string output = "";
 	int num;
 	int m = 0;
 	int d = 0;
@@ -50,71 +51,71 @@ int main()
 		}
 		while (num >= 1000)
 		{
-			printf("M");
+			output += "M";
 			num -= 1000;
 		}
 		while (num >= 900)
 		{
-			printf("CM");
+			output += "CM";
 			num -= 900;
 		}
 		while (num >= 500)
 		{
-			printf("D");
+			output += "D";
 			num -= 500;
 		}
 		while (num >= 400)
 		{
-			printf("CD");
+			output += "CD";
 			num -= 400;
 		}
 		while (num >= 100)
 		{
-			printf("C");
+			output += "C";
 			num -= 100;
 		}
 		while (num >= 90)
 		{
-			printf("XC");
+			output += "XC";
 			num -= 90;
 		}
 		while (num >= 50)
 		{
-			printf("L");
+			output += "L";
 			num -= 50;
 		}
 		while (num >= 40)
 		{
-			printf("XL");
+			output += "XL";
 			num -= 40;
 		}
 		while (num >= 10)
 		{
-			printf("X");
+			output += "X";
 			num -= 10;
 		}
 		while (num >= 9)
 		{
-			printf("IX");
+			output += "IX";
 			num -= 9;
 		}
 		while (num >= 5)
 		{
-			printf("V");
+			output += "V";
 			num -= 5;
 		}
 		while (num >= 4)
 		{
-			printf("IV");
+			output += "IV";
 			num -= 4;
 		}
 		while (num >= 1)
 		{
-			printf("I");
+			output += "I";
 			num -= 1;
 		}
 
-		printf("\n");
+		cout << output << "\n";
 		_getch();
 		system("CLS");
 		printf("Press 1 to exit, 2 to repeat\n");
