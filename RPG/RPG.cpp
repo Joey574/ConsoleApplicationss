@@ -1145,4 +1145,4 @@ int main()
 	printf("Now for damage, since you've chosen ");
 
 	return 0;
-} 
+}
