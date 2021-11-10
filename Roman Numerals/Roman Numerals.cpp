@@ -1,9 +1,10 @@
 /*
 Author: Joey Soroka
-File Name:
-Project Name:
-Purpose:
-Pseudocode:
+File Name: Roman Numerals.cpp
+Project Name: Roman Numerals
+Purpose: Create a program that can output the roman numerals for numbers 1-3999 inclusive of max and then output it in a string
+Pseudocode: First gets user input for what number they want to be outputed as a roman numeral, then checks against a chart of roman numerals and finds highest nunmber, subtracts that number, then moves down, saving the roman numeral to 
+			a string every time before finally outputting the roman numeral
 Maintenance Log:
 
 */
