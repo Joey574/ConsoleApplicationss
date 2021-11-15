@@ -74,7 +74,7 @@ int main()
 			{
 			case 1:
 				cout << name << ": Hatred fills your body as you charge Pace, by your second step you stop thinking, letting your body take over, charging forward as blood pounds in your eardrums, as your heart pounds against your chest, you keep going, and going, and going, 50 ft, 40 ft... 20 ft... ";
-				printf("And before you know it you're lunging at him, grabbing him by his throat and strangling him, however he just laughs, mocking you, the dark, sus figures that stood behind him");
+				printf("And before you know it you're lunging at him, grabbing him by his throat and strangling him, however he just laughs, mocking you, the dark, figures that stood behind him");
 				printf("begin to move surrounding you before they pounce, covering you in darkness, your vision begins to fade, you realize you've made a big mistake, one that will cost you your life, as your heart begins to stop, the last thing you see is a wicked smile on Pace's face\n");
 				_getch();
 				system("CLS");
