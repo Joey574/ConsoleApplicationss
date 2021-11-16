@@ -79,13 +79,17 @@ int main()
 				_getch();
 				system("CLS");
 				break;
+			case 2:
+				cout << name << ": You decide sheltering in the cave would be your best bet, you charge towards the entrance, however as you run you feel the presence of something behind you, you run faster, and dare not look back as you are fileld with terror, you tear through the entrane of the cave,";
+				printf(" you soon arrive at a junction and you choose a direction without even thinking, whatever is chasing you is getting closer, filled with adrenaline you run faster and faster... deeper and deeper into the cave, the only though on your mind is escaping what's behind you, this desire drives");
+				printf(" you forward, down and down, going through junction afer junction until finally you can go no farther. ");
 			}
 				
 
 		}
 		else if (input == "2")
 		{
-
+			
 		}
 		else if (input == "3")
 		{
