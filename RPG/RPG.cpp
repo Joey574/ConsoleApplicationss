@@ -568,6 +568,7 @@ void equipmentSelection(struct characterInformation &c)
 	bool universalsSelected[3] = { false, false, false };
 	bool uniqueSelected[10] = { false, false, false, false, false, false, false, false, false, false };
 	bool knightPrimary[5] = { false, false, false, false, false };
+	
 
 		cout << "Welcome to the armory " << c.playerName << "!" << endl;
 		printf("Press any key to continue\n");
