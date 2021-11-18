@@ -655,7 +655,7 @@ void equipmentSelection(struct characterInformation &c)
 		else if (c.characterType[2] == true)
 		{
 			printf("UNIQUE:\n");
-			printf("4. Light Plate\n5. Heavt Leather\n");
+			printf("4. Light Plate\n5. Heavy Leather\n");
 			cin >> input;
 			system("CLS");
 
