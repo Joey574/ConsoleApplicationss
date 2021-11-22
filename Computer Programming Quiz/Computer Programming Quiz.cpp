@@ -5,7 +5,7 @@ Project Name: Computer Programming Quiz using switch
 Purpose: A computer programming quiz that will use switch statements, it will have 3 multiple choice questions at least, and go over I/O, identifiers, operators
 		and branching, at least 4 answers for each question, each correct answer will give 1 point, and each incorrect answer will take 0.25 points. No answer
 		will not impact score in any direction
-Pseudocode:
+Pseudocode: Asks the user 10 questions about computers and grades them at the end
 Maintenance Log
 10/11/21:	Collected player name and added choices for first question
 10/12/21:	Added 5 questions, and 3 functions for when the player is correct, incorrect, or enters an incorrect input
@@ -355,4 +355,3 @@ int main()
 	}
 	return 0;
 }
-

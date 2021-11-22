@@ -107,6 +107,10 @@ int main()
 			_getch();
 			system("CLS");
 			printf("1. Go left\n2. Go straight\n3. Go right\n");
+			cin >> input;
+			system("CLS");
+			input2 = stoi(input);
+
 		}
 		else if (input == "3")
 		{
