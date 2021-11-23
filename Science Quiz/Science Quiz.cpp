@@ -213,7 +213,7 @@ int main()
 				continue;
 			}
 
-		} 	while (retakeTest = true);
+		} 	while (retakeTest == true);
 
 	}
 	else if (input == "2")
