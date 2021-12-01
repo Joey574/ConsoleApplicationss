@@ -6,7 +6,9 @@ Purpose: Create a program that can output the roman numerals for numbers 1-3999 
 Pseudocode: First gets user input for what number they want to be outputed as a roman numeral, then checks against a chart of roman numerals and finds highest nunmber, subtracts that number, then moves down, saving the roman numeral to 
 			a string every time before finally outputting the roman numeral
 Maintenance Log:
+11/12/21:	Added all calculations for this project, it will take the number inputed then subtract the highest value it can from it and then move on, continuing this until nothing is left
 
+11/13/21:	Made output a string instead of a bunch of printf
 */
 
 #include <stdio.h>
@@ -133,5 +135,3 @@ int main()
 	}
 	return 0;
 }
-
-
