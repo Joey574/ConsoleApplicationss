@@ -53,6 +53,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Looping quiz", "Looping qui
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Competency Test stuff", "Competency Test stuff\Competency Test stuff.vcxproj", "{A3CCEBAD-A23C-49CC-BD68-C63EDBCB07EC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GS04-03", "GS04-03\GS04-03.vcxproj", "{CA382DB0-236E-4DAA-BCC7-29565D2268DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -261,6 +263,14 @@ Global
 		{A3CCEBAD-A23C-49CC-BD68-C63EDBCB07EC}.Release|x64.Build.0 = Release|x64
 		{A3CCEBAD-A23C-49CC-BD68-C63EDBCB07EC}.Release|x86.ActiveCfg = Release|Win32
 		{A3CCEBAD-A23C-49CC-BD68-C63EDBCB07EC}.Release|x86.Build.0 = Release|Win32
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Debug|x64.ActiveCfg = Debug|x64
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Debug|x64.Build.0 = Debug|x64
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Debug|x86.ActiveCfg = Debug|Win32
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Debug|x86.Build.0 = Debug|Win32
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x64.ActiveCfg = Release|x64
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x64.Build.0 = Release|x64
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x86.ActiveCfg = Release|Win32
+		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

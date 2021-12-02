@@ -3,9 +3,10 @@ Author: Joey Soroka
 File Name: Looping quiz.cpp
 Project Name: GS04-01
 Purpose: A looping quiz where user MUST get a question correct before moving on
-Pseudocode:
+Pseudocode: A quiz with 3 question where the user must get a question right before continuing, asks user for name before starting quiz
 Maintenance Log:
-11/23/21:	
+11/23/21:	Copied code from non looping quiz to modify
+12/2/21:	Added loops to make sure user gets a question right before moving on
 */
 
 #include <stdio.h>
@@ -116,7 +117,7 @@ int main()
 			}
 		} while (questionThree == true);
 
-		printf("Congratulations, press 1 to repeat the test, or 2 to exit");
+		printf("Congratulations, press 1 to repeat the test, or 2 to exit\n");
 		cin >> input;
 		if (input == "1")
 		{
