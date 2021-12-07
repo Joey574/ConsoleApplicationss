@@ -1,14 +1,15 @@
 /*
 Author: Joey Soroka
-Partner: Slater Swart
-File Name: ASCII Art
+Partner: Eric Pace
+File Name: ASCII Art and animation
 Project Name: ASCII Art
-Purpose: To give the user a choice of what ASCII art they would like to be displayed to the screen
-Pseudocode: Asks what robot the user would like outputted before outputting the selected robot, all of which are from Jay Thaler, also gives the user an option to exit
-			after art is displayed and user gives input it will repeat the code
+Purpose: To give the user a choice of what ASCII art they would like to be displayed to the screen also offers a choice of a short animation
+Pseudocode: Asks what robot the user would like outputted before outputting the selected robot, all of which are from Jay Thaler, one of which is animated by me,
+			also gives the user an option to exit after art is displayed and user gives input it will repeat the code
 Maintenance Log:
 11/10/21:	Added first design to code, and halfway done with my second one
 11/12/21:	Finished my second robot, Slater showed me a much faster way of making the outputs, finished the project quick.
+12/7/21:	Added animation for the first robot
 */
 
 #include <stdio.h>
@@ -29,38 +30,148 @@ int main()
 	while (1)
 	{
 		system("CLS");
-		printf("Select which ASCII art you would like to see\n1. Tall robot\n2. Not as tall robot\n3. Mediocre height robot\n4. Exit\n");
+		printf("Select which ASCII art you would like to see\n1. Tall robot (animated)\n2. Not as tall robot\n3. Mediocre height robot\n4. Exit\n");
 
 		cin >> input;
 		system("CLS");
 
 		if (input == "1")
 		{
-			printf("   _____             _____\n");
-			printf("  |_____|___________|_____|\n");
-			printf("  |_____| / _____ \\ |_____|\n");
-			printf("  |_____|/ /\\___/\\ \\|_____|\n");
-			printf(" /|====|__/_/___\\_\\__|====|\\\n");
-			printf(" ||====|  _/_\\_/_\\_  |====||\n");
-			printf(" \\|====| | \\ ... / | |====|/\n");
-			printf("       |__\\ `---' /__|\n");
-			printf("        |==\\_____/==|\n");
-			printf("        |===|===|===|\n");
-			printf("        |===|+-+|===|\n");
-			printf("        >|||<   >|||<\n");
-			printf("        |---|   |---|\n");
-			printf("        || ||   || ||\n");
-			printf("        || ||   || ||\n");
-			printf("        >= =<   >= =<\n");
-			printf("        |===|   |===|\n");
-			printf("        >---/   \\---<\n");
-			printf("        ||#|     |#||\n");
-			printf("        ||-|\\   /|-||\n");
-			printf("        ||+||   ||+||\n");
-			printf("        ||-|/   \\|-||\n");
-			printf("        ||_|\\   /|_||     -- Jay Thaler \n");
-			printf("     ___|/-\\/   \\/-\\|___\n");
-			printf("    /________\\ /________\\\n");
+			
+				printf("   _____             _____\n");
+				printf("  |_____|___________|_____|\n");
+				printf("  |_____| / _____ \\ |_____|\n");
+				printf("  |_____|/ /\\___/\\ \\|_____|\n");
+				printf(" /|====|__/_/___\\_\\__|====|\\\n");
+				printf(" ||====|  _/_\\_/_\\_  |====||\n");
+				printf(" \\|====| | \\ ... / | |====|/\n");
+				printf("       |__\\ `---' /__|\n");
+				printf("        |==\\_____/==|\n");
+				printf("        |===|===|===|\n");
+				printf("        |===|+-+|===|\n");
+				printf("        >|||<   >|||<\n");
+				printf("        |---|   |---|\n");
+				printf("        || ||   || ||\n");
+				printf("        || ||   || ||\n");
+				printf("        >= =<   >= =<\n");
+				printf("        |===|   |===|\n");
+				printf("        >---/   \\---<\n");
+				printf("        ||#|     |#||\n");
+				printf("        ||-|\\   /|-||\n");
+				printf("        ||+||   ||+||\n");
+				printf("        ||-|/   \\|-||\n");
+				printf("        ||_|\\   /|_||     -- Jay Thaler \n");
+				printf("     ___|/-\\/   \\/-\\|___\n");
+				printf("    /________\\ /________\\\n");
+				Sleep(500);
+				system("CLS");
+				printf("   _____             _____\n");
+				printf("  |ooooo|___________|_____|\n");
+				printf("  |ooooo| / _____ \\ |_____|\n");
+				printf("  |ooooo|/ /\\___/\\ \\|_____|\n");
+				printf(" /|====|__/_/___\\_\\__|====|\\\n");
+				printf(" ||====|  _/_\\_/_\\_  |====||\n");
+				printf(" \\|====| | \\ ... / | |====|/\n");
+				printf("       |__\\ `---' /__|\n");
+				printf("        |==\\_____/==|\n");
+				printf("        |===|===|===|\n");
+				printf("        |===|+-+|===|\n");
+				printf("        >|||<   >|||<\n");
+				printf("        |---|   |---|\n");
+				printf("        || ||   || ||\n");
+				printf("        || ||   || ||\n");
+				printf("        >= =<   >= =<\n");
+				printf("        |===|   |===|\n");
+				printf("        >---/   \\---<\n");
+				printf("        ||#|     |#||\n");
+				printf("        ||-|\\   /|-||\n");
+				printf("        ||+||   ||+||\n");
+				printf("        ||-|/   \\|-||\n");
+				printf("        ||_|\\   /|_||     -- Jay Thaler \n");
+				printf("     ___|/-\\/   \\/-\\|___\n");
+				printf("    /________\\ /________\\\n");
+				Sleep(500);
+				system("CLS");
+				printf("   _____             _____\n");
+				printf("  |<><>|___________|ooooo|\n");
+				printf("  |<><>| / _____ \\ |ooooo|\n");
+				printf("  |<><>|/ /\\___/\\ \\|ooooo|\n");
+				printf(" /|====|__/_/___\\_\\__|====|\\\n");
+				printf(" ||====|  _/_\\_/_\\_  |====||\n");
+				printf(" \\|====| | \\ ... / | |====|/\n");
+				printf("       |__\\ `---' /__|\n");
+				printf("        |==\\_____/==|\n");
+				printf("        |===|===|===|\n");
+				printf("        |===|+-+|===|\n");
+				printf("        >|||<   >|||<\n");
+				printf("        |---|   |---|\n");
+				printf("        || ||   || ||\n");
+				printf("        || ||   || ||\n");
+				printf("        >= =<   >= =<\n");
+				printf("        |===|   |===|\n");
+				printf("        >---/   \\---<\n");
+				printf("        ||#|     |#||\n");
+				printf("        ||-|\\   /|-||\n");
+				printf("        ||+||   ||+||\n");
+				printf("        ||-|/   \\|-||\n");
+				printf("        ||_|\\   /|_||     -- Jay Thaler \n");
+				printf("     ___|/-\\/   \\/-\\|___\n");
+				printf("    /________\\ /________\\\n");
+				Sleep(500);
+				system("CLS");
+				printf("   _____             _____\n");
+				printf("  |_____|___________|<><>|\n");
+				printf("  |_____| / _____ \\ |<><>|\n");
+				printf("  |_____|/ /\\___/\\ \\|<><>|\n");
+				printf(" /|====|__/_/___\\_\\__|====|\\\n");
+				printf(" ||====|  _/_\\_/_\\_  |====||\n");
+				printf(" \\|====| | \\ ... / | |====|/\n");
+				printf("       |__\\ `---' /__|\n");
+				printf("        |==\\_____/==|\n");
+				printf("        |===|===|===|\n");
+				printf("        |===|+-+|===|\n");
+				printf("        >|||<   >|||<\n");
+				printf("        |---|   |---|\n");
+				printf("        || ||   || ||\n");
+				printf("        || ||   || ||\n");
+				printf("        >= =<   >= =<\n");
+				printf("        |===|   |===|\n");
+				printf("        >---/   \\---<\n");
+				printf("        ||#|     |#||\n");
+				printf("        ||-|\\   /|-||\n");
+				printf("        ||+||   ||+||\n");
+				printf("        ||-|/   \\|-||\n");
+				printf("        ||_|\\   /|_||     -- Jay Thaler \n");
+				printf("     ___|/-\\/   \\/-\\|___\n");
+				printf("    /________\\ /________\\\n");
+				Sleep(500);
+				system("CLS");
+				printf("   _____             _____\n");
+				printf("  |_____|___________|_____|\n");
+				printf("  |_____| / _____ \\ |_____|\n");
+				printf("  |_____|/ /\\___/\\ \\|_____|\n");
+				printf(" /|====|__/_/___\\_\\__|====|\\\n");
+				printf(" ||====|  _/_\\_/_\\_  |====||\n");
+				printf(" \\|====| | \\ ... / | |====|/\n");
+				printf("       |__\\ `---' /__|\n");
+				printf("        |==\\_____/==|\n");
+				printf("        |===|===|===|\n");
+				printf("        |===|+-+|===|\n");
+				printf("        >|||<   >|||<\n");
+				printf("        |---|   |---|\n");
+				printf("        || ||   || ||\n");
+				printf("        || ||   || ||\n");
+				printf("        >= =<   >= =<\n");
+				printf("        |===|   |===|\n");
+				printf("        >---/   \\---<\n");
+				printf("        ||#|     |#||\n");
+				printf("        ||-|\\   /|-||\n");
+				printf("        ||+||   ||+||\n");
+				printf("        ||-|/   \\|-||\n");
+				printf("        ||_|\\   /|_||     -- Jay Thaler \n");
+				printf("     ___|/-\\/   \\/-\\|___\n");
+				printf("    /________\\ /________\\\n");
+
 		}
 		else if (input == "2")
 		{
