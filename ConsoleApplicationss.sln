@@ -55,6 +55,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Competency Test stuff", "Co
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GS04-03", "GS04-03\GS04-03.vcxproj", "{CA382DB0-236E-4DAA-BCC7-29565D2268DB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GS04-05", "GS04-05\GS04-05.vcxproj", "{1F550AF5-94CD-4EAD-978D-026B220B22E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -271,6 +273,14 @@ Global
 		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x64.Build.0 = Release|x64
 		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x86.ActiveCfg = Release|Win32
 		{CA382DB0-236E-4DAA-BCC7-29565D2268DB}.Release|x86.Build.0 = Release|Win32
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Debug|x64.ActiveCfg = Debug|x64
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Debug|x64.Build.0 = Debug|x64
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Debug|x86.ActiveCfg = Debug|Win32
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Debug|x86.Build.0 = Debug|Win32
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Release|x64.ActiveCfg = Release|x64
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Release|x64.Build.0 = Release|x64
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Release|x86.ActiveCfg = Release|Win32
+		{1F550AF5-94CD-4EAD-978D-026B220B22E0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
