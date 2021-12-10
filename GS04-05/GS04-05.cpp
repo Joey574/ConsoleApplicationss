@@ -3,9 +3,10 @@ Author: Joey Soroka
 File Name: GS04-05.cpp
 Project Name: GS04-05 (looping maze)
 Purpose: Similar to the maze project the looping maze will funciton the same however won't close the doors behind you
-Pseudocode:
+Pseudocode: Has a while loop that will repeatedly check what room the player is in and then using variables to go back and repeat the process
 Maintenance Log:
 12/9/21:    Started the project
+12/10/21:	Finished project, set up all 9 rooms
 */
 
 #include <stdio.h>
