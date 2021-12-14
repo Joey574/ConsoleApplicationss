@@ -2,10 +2,12 @@
 Author: Joey Soroka
 File Name: GS06-03.cpp
 Project Name: GS06-03 (fortune cookie)
-Purpose:
-Pseudocode:
+Purpose: A fortune teller that passes a number to a function before returning a fortune
+Pseudocode: Asks user to enter a number (1-10) and then passes the number to a function before returning a fortune for the user, finally asks user if they want to
+            try again or not
 Maintenance Log:
 12/10/21:   Started project
+12/14/21:   Added all the fortunes and main loop, just need to test and print now
 */
 
 #include <iostream>
@@ -22,15 +24,26 @@ string fortune(num);
 int main()
 {
     int num;
+    
     while(1)
     {
         
-    printf("Enter a number from 1-10");
-    cin >> num;
-    
-    string fort = fortune(num);
-    cout << fort;
+        printf("Enter a number from 1-10");
+        cin >> num;
+        
+        string fort = fortune(num);
+        cout << fort;
+        
+        printf("Press 1 to exit, 2 to loop");
+        cin >> num; // reuse num variable, code won't be affected
+        
+        if (num = 1)
+        {
+         break;   
+        }
+       
     }
+    return 0;
 }
 
 string fortune(num)
