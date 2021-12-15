@@ -8,84 +8,34 @@ Maintenance Log:
 9/27/21:	Testing how to check string input in if statements
 */
 
+#include <stdio.h>
 #include <iostream>
-#include <conio.h>
- #include <windows.h>
-#include <string>
+#include <string> // Needed for string
+#include <stdlib.h> // Needed for srand
+#include <time.h> // Needed for srand
+#include <conio.h> 
 #include <vector>
+#include <windows.h>
+using namespace std;
 
 using namespace std;
 
-struct Testing
-{
-	int test_1;
-
-	int test_2;
-
-	int test_3;
-};
-
-void structureTesting(struct Testing &t)
-{
-
-	t.test_1 = 1;
-
-	t.test_2 = 2;
-
-	t.test_3 = 3;
-}
-
-void escapeTesting()
-{
-	
-	_getch();
-
-	char input = _getch();
-
-	if (input ==  VK_ESCAPE)
-	{
-		printf("escape key detected\n");
-
-		_getch();
-
-		if (input == VK_ESCAPE)
-		{
-			printf("somethings up");
-		}
-		else
-		{
-			printf("WOOHOO IT WORKS");
-		}
-			
-
-	}
-
-
-}
-
-void vectorTesting()
-{
-	vector <int> testing;
-
-	testing.assign(1, 10);
-
-}
-
 int main()
 {
-	struct Testing t;
+	enum Supercars {Valkyrie =240, Roadster =250 };
 
-	t.test_1 = 0;
+	Supercars speed1;
+	Supercars speed2;
 
-	t.test_2 = 0;
+	spped1 = Valkyrie;
+	speed2 = Roadster;
 
-	t.test_3 = 0;
-
-	structureTesting(t);
-
-	cout << "Test_1: " << t.test_1 << endl;
-	cout << "Test_2: " << t.test_2 << endl;
-	cout << "Test_3: " << t.test_3 << endl;
-
-	return 0;
+	if (speed1 < speed2)
+	{
+		cout << "Roadster wins with a speed of " << speed2
+	}
+	else
+	{
+		cout << "Valkyrie wins with a speed of " << speed1
+	}
 }
