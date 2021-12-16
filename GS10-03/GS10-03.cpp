@@ -30,16 +30,15 @@ int main()
 	
 	for (int i = 0; i < 360; i++)
 	{
-		cosineTable.assign(i, cos(i * M_PI / 180.0));
-		sineTable.assign(i, sin(i * M_PI / 180.0));
-		cout << "hello\n";
+		cosineTable.push_back(cos(i * M_PI / 180));
+		sineTable.push_back(sin(i * M_PI / 180));
 	}
 
 	while (1)
 	{
 		system("CLS");
 		printf("Enter the angle you want the sine and cosine of: ");
-		cin >> input;
+		cin >> input;	
 		cout << "Cosine: " << cosineTable.at(input) << "\nSine: " << sineTable.at(input) << endl;
 		printf("Press SPACE to exit or any other key to repeat\n");
 
