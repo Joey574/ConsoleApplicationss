@@ -8,6 +8,7 @@ Maintenance Log:
 
 */
 
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <iostream>
 #include <string> // Needed for string
