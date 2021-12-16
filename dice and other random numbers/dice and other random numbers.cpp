@@ -36,7 +36,8 @@ int main()
 	srand(0); //only initiate this once at the beginning of the program, any more times will cause errors
 	srand((unsigned)time(NULL)); // ^
 	
-	sixFacedDie = min + rand() % (max - min + 1); //use this for ints, the plus one means it is inclusive of max, no + 1 means exclusive of max
+	sixFacedDie = min + rand() % (max - min + 1);
+	//use this for ints, the plus one means it is inclusive of max, no + 1 means exclusive of max
 	printf("Six sided die:%d\n", sixFacedDie);
 	
 	_12SidedDie = min + rand() % (secondMax - min + 1);

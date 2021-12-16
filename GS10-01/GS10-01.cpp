@@ -22,6 +22,25 @@ using namespace std;
 
 int main()
 {
+	int input;
+	vector <int> whoKnowWhatThisIs;
 
+
+	for (int i = 0; i < 50; i++)
+	{
+		whoKnowWhatThisIs.push_back(i);
+	}
+	printf("Enter the number you want to multiply by: ");
+	cin >> input;
+	for (int i = 0; i < 50; i++)
+	{
+		whoKnowWhatThisIs.at(i) = i * input;
+	}
+	for (int i = 0; i < 50; i++)
+	{
+		cout << whoKnowWhatThisIs.at(i) << endl;
+	}
+
+	return 0;
 }
 
