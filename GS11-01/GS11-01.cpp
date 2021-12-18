@@ -23,6 +23,13 @@ using namespace std;
 
 int main()
 {
-
+	ofstream out;
+	out.open("test.txt");
+	if (!out.is_open())
+	{
+		printf("File not found");
+	}
+	out << "Hello";
+	cout << "hello";
 }
 
