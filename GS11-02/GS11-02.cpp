@@ -24,6 +24,24 @@ using namespace std;
 
 int main()
 {
+	string temp;
+	string line;
+	string output = "";
 
+	ifstream in;
+	ofstream out;
+	in.open("input.txt");
+	out.open("output.txt");
+
+	if (!in.is_open())
+	{
+		printf("File not found");
+	}
+	while (getline(in, temp, ','))
+	{
+		out << temp << "\t";
+	}
+
+	return 0;
 }
 
