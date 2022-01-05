@@ -8,6 +8,8 @@ Maintenance Log:
 9/27/21:	Testing how to check string input in if statements
 */
 
+#pragma once
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <iostream>
 #include <string> // Needed for string
@@ -18,28 +20,69 @@ Maintenance Log:
 #include <windows.h>
 using namespace std;
 
-using namespace std;
+class Circle
+{
+public:
+	Circle();		// default constructor
+	Circle(float r);// constructor with radius argument
+	Circle(Circle& c);	// copy constructor
+	// accessors
+	void setRadius(float r);	// setter
+	float getRadius();		// getter
+	// methods
+	float circumference();
+	float area();
+private:
+	float radius;
+};
+
+// default constructor
+Circle::Circle()
+{
+	radius = 0;
+}
+
+// constructor with radius argument
+Circle::Circle(float r)
+{
+	radius = r;
+}
+// copy constructor
+Circle::Circle(Circle& c)
+{
+	radius = c.radius;
+}
+
+// setter
+void Circle::setRadius(float r)
+{
+	radius = r;
+}
+
+// getter
+float Circle::getRadius()
+{
+	return radius;
+}
+
+// find perimeter/circumference
+float Circle::circumference()
+{
+	return 2.0 * M_PI * radius;
+}
+
+// find area
+float Circle::area()
+{
+	return M_PI * radius * radius;
+}
+
 
 int main()
 {
-	enum Supercars {Valkyrie = 240, Roadster = 250 };
-
-	Supercars speed1;
-	Supercars speed2;
-
-	spped1 = Valkyrie;
-	speed2 = Roadster;
-
-	if (speed1 < speed2)
-	{
-		cout << "Roadster wins with a speed of " << speed2
-	}
-	else
-	{
-		cout << "Valkyrie wins with a speed of " << speed1
-	}
-
-	vector <int> t;
-
-
+	Circle test;
+	float r;
+	cin >> r;
+	test.setRadius(r);
+	cout << test.getRadius();
 }
