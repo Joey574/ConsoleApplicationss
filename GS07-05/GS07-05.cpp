@@ -70,6 +70,8 @@ int main()
     float output = slope(p);
     system("CLS");
     cout << "Slope: " << output;
+
+    return 0;
 }
 
 float slope(struct points p)

@@ -1,9 +1,9 @@
 /*
 Author: Joey Soroka
-File Name:
-Project Name:
-Purpose:
-Pseudocode:
+File Name: GS12-01.cpp
+Project Name: GS12-01 (ellipse class)
+Purpose: Create an ellipse class and calculate area and circumfrence
+Pseudocode: using a header file to store the class it asks user for the radii before calculating area and circumference
 Maintenance Log:
 
 */
@@ -17,79 +17,17 @@ Maintenance Log:
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
-#include <windows.h>
+//#include <windows.h>
+#include <chrono>
+#include <thread>
 #include <math.h>
 #include <sstream>
 #include <fstream>
 using namespace std;
+using namespace std::this_thread;
+using namespace std::chrono;
 
-class Ellipse
-{
-	public:
-		Ellipse();
-		Ellipse(float r1, float r2);
-		Ellipse(Ellipse& c);
-
-		void setRadius1(float r1);
-		void setRadius2(float r2);
-		float getRadius1();
-		float getRadius2();
-
-		float circumference();
-		float area();
-
-	private:
-		float radius1;
-		float radius2;
-};
-
-Ellipse::Ellipse()
-{
-	radius1 = 0;
-	radius2 = 0;
-}
-
-Ellipse::Ellipse(float r1, float r2)
-{
-	radius1 = r1;
-	radius2 = r2;
-}
-
-Ellipse::Ellipse(Ellipse& c)
-{
-	radius1 = c.radius1;
-	radius2 = c.radius2;
-}
-
-void Ellipse::setRadius1(float r1)
-{
-	radius1 = r1;
-}
-
-void Ellipse::setRadius2(float r2)
-{
-	radius2 = r2;
-}
-
-float Ellipse::getRadius1()
-{
-	return radius1;
-}
-
-float Ellipse::getRadius2()
-{
-	return radius2;
-}
-
-float Ellipse::circumference()
-{
-	return 2 * M_PI * sqrt(radius1 * radius2);
-}
-
-float Ellipse::area()
-{
-	return M_PI * radius1* radius2;
-}
+#include "Ellipse.h"
 
 int main()
 {
@@ -103,42 +41,67 @@ int main()
 	cin >> r1;
 	printf("Enter value of second radius: ");
 	cin >> r2;
-	Sleep(500);
+	e.setRadius1(r1);
+	e.setRadius2(r2);
+	sleep_for(500000000ns);
 
 	for (int i = 0; i < 5; i++)
 	{
 		system("CLS");
 		printf(".");
-		Sleep(250);
+		sleep_for(250000000ns);
 		printf(".");
-		Sleep(250);
+		sleep_for(250000000ns);
 		printf(".");
-		Sleep(250);
+		sleep_for(250000000ns);
 	}
-	system("CLS");
 
-	printf("What would you like to know?\n");
-	printf("1. Radii?\n");
-	printf("2. Area?\n");
-	printf("3. Circumfrence?\n");
-	cin >> input;
 
-	if (input == "1")
+	while (1)
 	{
+		system("CLS");
+		printf("What would you like to know?\n");
+		printf("1. Radii?\n");
+		printf("2. Area?\n");
+		printf("3. Circumfrence?\n");
+		printf("4. EXIT\n");
+		cin >> input;
+		system("CLS");
 
+		if (input == "1")
+		{
+			cout << "Radius 1: " << e.getRadius1() << endl;
+			cout << "Radius 2: " << e.getRadius2() << endl;
+			_getch();
+		}
+		else if (input == "2")
+		{
+			cout << "Area: " << e.area() << endl;
+			_getch();
+		}
+		else if (input == "3")
+		{
+			cout << "Circumfrence: " << e.circumference() << endl;
+			_getch();
+		}
+		else if (input == "4")
+		{
+			break;
+		}
+		else
+		{
+			printf("Incorrect input");
+			printf(".");
+			sleep_for(250000000ns);
+			printf(".");
+			sleep_for(250000000ns);
+			printf(".");
+			sleep_for(500000000ns);
+			system("CLS");
+			continue;
+		}
 	}
-	else if (input == "2")
-	{
 
-	}
-	else if (input == "3")
-	{
-
-	}
-	else
-	{
-
-	}
-
+	return 0;
 }
 
