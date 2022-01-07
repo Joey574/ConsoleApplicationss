@@ -26,87 +26,93 @@ using namespace std;
 using namespace std::this_thread; // needed for sleep for
 using namespace std::chrono; // needed for sleep for
 
-class Rectangle
+class rightTriangle
 {
 public:
-	Rectangle();
-	Rectangle(float l, float w);
-	Rectangle(Rectangle& c);
+	rightTriangle();
+	rightTriangle(float l, float w);
+	rightTriangle(rightTriangle& c);
 
-	void setlength(float l);
-	void setwidth(float w);
-	float getlength();
-	float getwidth();
+	void setA(float l);
+	void setB(float w);
+	float getA();
+	float getB();
 
 	float perimeter();
 	float area();
+	float hypotenuse();
 
 private:
-	float length;
-	float width;
+	float a;
+	float b;
 };
 
-Rectangle::Rectangle()
+rightTriangle::rightTriangle()
 {
-	length = 0;
-	width = 0;
+	a = 0;
+	b = 0;
 }
 
-Rectangle::Rectangle(float l, float w)
+rightTriangle::rightTriangle(float l, float w)
 {
-	length = l;
-	width = w;
+	a = l;
+	b = w;
 }
 
-Rectangle::Rectangle(Rectangle& c)
+rightTriangle::rightTriangle(rightTriangle& c)
 {
-	length = c.length;
-	width = c.width;
+	a = c.a;
+	b = c.b;
 }
 
-void Rectangle::setlength(float l)
+void rightTriangle::setA(float l)
 {
-	length = l;
+	a = l;
 }
 
-void Rectangle::setwidth(float w)
+void rightTriangle::setB(float w)
 {
-	width = w;
+	b = w;
 }
 
-float Rectangle::getlength()
+float rightTriangle::getA()
 {
-	return length;
+	return a;
 }
 
-float Rectangle::getwidth()
+float rightTriangle::getB()
 {
-	return width;
+	return b;
 }
 
-float Rectangle::perimeter()
+float rightTriangle::perimeter()
 {
-	return 2 * (length + width);
+	return a + b + sqrt((a * a) + (b * b));
 }
 
-float Rectangle::area()
+float rightTriangle::area()
 {
-	return length * width;
+	return (a * b) / 2;
+}
+
+float rightTriangle::hypotenuse()
+{
+	return sqrt((a * a) + (b * b));
 }
 
 int main()
 {
-	Rectangle r;
+	rightTriangle r;
 	string input;
-	float length;
-	float width;
+	float a;
+	float b;
 
-	printf("Enter value of length: ");
-	cin >> length;
-	printf("Enter value of width: ");
-	cin >> width;
-	r.setlength(length);
-	r.setwidth(width);
+	printf("Enter length of side a: ");
+	cin >> a;
+	printf("Enter length of side b: ");
+	cin >> b;
+	r.setA(a);
+	r.setB(b);
 	sleep_for(500000000ns);
 
 	for (int i = 0; i < 5; i++)
@@ -125,7 +131,7 @@ int main()
 	{
 		system("CLS");
 		printf("What would you like to know?\n");
-		printf("1. Length and Width?\n");
+		printf("1. Length of all sides?\n");
 		printf("2. Area?\n");
 		printf("3. Perimeter?\n");
 		printf("4. EXIT\n");
@@ -134,8 +140,9 @@ int main()
 
 		if (input == "1")
 		{
-			cout << "Length: " << r.getlength() << endl;
-			cout << "Width: " << r.getwidth() << endl;
+			cout << "Side A: " << r.getA() << endl;
+			cout << "Side B: " << r.getB() << endl;
+			cout << "Side C (hypotenuse): " << r.hypotenuse() << endl;
 			_getch();
 		}
 		else if (input == "2")
