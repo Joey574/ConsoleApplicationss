@@ -16,13 +16,15 @@ Maintenance Log:
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
-#include <windows.h> // Uses function called Ellipse beware for classes
+#include <windows.h> // Uses functions named after shapes beware for classes
 #include <chrono>
 #include <thread>
 #include <math.h>
 #include <sstream>
 #include <fstream>
 using namespace std;
+using namespace std::this_thread;
+using namespace std::chrono;
 
 int main()
 {
