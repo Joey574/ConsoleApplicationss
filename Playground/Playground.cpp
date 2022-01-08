@@ -20,47 +20,44 @@ Maintenance Log:
 #include <windows.h>
 using namespace std;
 
-class Circle
+using namespace std;
+
+// default constructor
+Circle::Circle()
 {
-public:
-	Circle();
-	Circle(float r);
-	Circle(Circle & c);
+	radius = 0;
+}
 
-	void setRadius(float r);
-	float getRadius();
-
-	float circumfrence();
-	float area();
-private:
-	float radius;
-};
-
+// constructor with radius argument
 Circle::Circle(float r)
 {
 	radius = r;
 }
-
+// copy constructor
 Circle::Circle(Circle& c)
 {
 	radius = c.radius;
 }
 
+// setter
 void Circle::setRadius(float r)
 {
 	radius = r;
 }
 
+// getter
 float Circle::getRadius()
 {
 	return radius;
 }
 
-float Circle::circumfrence()
+// find perimeter/circumference
+float Circle::circumference()
 {
 	return 2.0 * M_PI * radius;
 }
 
+// find area
 float Circle::area()
 {
 	return M_PI * radius * radius;
@@ -70,11 +67,8 @@ float Circle::area()
 int main()
 {
 	Circle test;
-
 	float r;
 	cin >> r;
 	test.setRadius(r);
 	cout << test.getRadius();
-
-
 }

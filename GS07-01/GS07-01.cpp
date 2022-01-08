@@ -1,11 +1,11 @@
 /*
 Author: Joey Soroka
-File Name:
-Project Name:
-Purpose:
-Pseudocode:
+File Name: GS07-01.cpp
+Project Name: GS07-01 (concession stand)
+Purpose: Using an enum program a concession stand that calculates cost + tax of items that user purchases
+Pseudocode: Using an enum to determine size code will ask user to input # of items they wish and size of drink they want then calculates cost + tax
 Maintenance Log:
-
+12/15/21:	Started and finished project
 */
 
 #define _USE_MATH_DEFINES

@@ -1,11 +1,11 @@
 /*
 Author: Joey Soroka
-File Name:
-Project Name:
-Purpose:
-Pseudocode:
+File Name: GS11-04+-5.cpp
+Project Name: Problem GS11-04&05 (encrypt and decrypt files)
+Purpose: To encrypt and decrypt text files based on a value given by the user
+Pseudocode: Asks user for encryption value and uses that to change ascii value of characters to encrypt and then decrpyt a file
 Maintenance Log:
-
+12/20/21:	Started and completed project
 */
 
 #define _USE_MATH_DEFINES

@@ -16,11 +16,15 @@ Maintenance Log:
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
-#include <windows.h>
+#include <windows.h> // Uses functions named after shapes beware for classes
+#include <chrono> // needed for sleep for
+#include <thread>
 #include <math.h>
-#include <sstream>
-#include <fstream>
+#include <sstream> // needed for files
+#include <fstream> // needed for files
 using namespace std;
+using namespace std::this_thread; // needed for sleep for
+using namespace std::chrono; // needed for sleep for
 
 int main()
 {
