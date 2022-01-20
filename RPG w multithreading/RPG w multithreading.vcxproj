@@ -144,6 +144,10 @@
   <ItemGroup>
     <ClInclude Include="Player.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="highScores.txt" />
+    <Text Include="save.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
