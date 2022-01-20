@@ -28,18 +28,18 @@ using namespace std::chrono; // needed for sleep for
 
 #include "Player.h"
 
-string firstTimeIntroduction();
+string Introduction();
 
 int main()
 {
 	player p;
 	string input;
 
-	printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nYou Pick: ");
+	printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: ");
 	cin >> input;
 	if (input == "1")
 	{
-
+		
 	}
 	else if (input == "2")
 	{
@@ -68,7 +68,7 @@ int main()
 	
 }
 
-string firstTimeIntroduction()
+string Introduction()
 {
 	string input;
 	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart...\n");

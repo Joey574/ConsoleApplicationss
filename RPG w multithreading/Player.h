@@ -22,6 +22,7 @@ struct ship
 	int shieldRegeneration;
 	int actionPoints, actionPointsMax;
 	int modules, modulesMax;
+	int fuel;
 	int shipID;
 
 	bool alive;
