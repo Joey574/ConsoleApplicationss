@@ -24,7 +24,7 @@
     <ProjectGuid>{aef5e266-4e06-47e2-aa74-37b444c60b79}</ProjectGuid>
     <RootNamespace>RPGwmultithreading</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Space RPG</ProjectName>
+    <ProjectName>RPG w multithreading</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
