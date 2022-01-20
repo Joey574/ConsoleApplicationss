@@ -23,6 +23,8 @@ Maintenance Log:
 #include <sstream> // needed for files
 #include <fstream> // needed for files
 #include <cwchar>
+#include<algorithm>
+
 using namespace std;
 using namespace std::this_thread; // needed for sleep for
 using namespace std::chrono; // needed for sleep for
@@ -38,6 +40,10 @@ int main()
 	module module[1];
 	string input; 
 	string temp;
+
+	int score;
+
+	vector <int> vectorScore;
 
 	fstream saveFile;
 	fstream highScores;
@@ -55,6 +61,8 @@ int main()
 		}
 		else if (input == "2") // high scores
 		{
+			printf("Top 10 High Scores:\n");
+
 			highScores.open("highScores.txt");
 
 			if (!highScores.is_open())
@@ -62,16 +70,86 @@ int main()
 				printf("File not found");
 			}
 
+			vectorScore.clear();
 			while (getline(highScores, temp))
 			{
+				score = stoi(temp); // turns temp line from highScores.txt into int
+				vectorScore.push_back(score);
+			}
+			sort(vectorScore.rbegin(), vectorScore.rend()); // sorts the scores in vector from highest to lowest
 
+			for (int i = 1; i < 11; i++)
+			{
+				cout << i << ") " << vectorScore[i - 1] << endl;
 			}
 
 			highScores.close();
+			_getch();
 		}
 		else if (input == "3") // help
 		{
+			printf("Menu:\n1: Account\n2: Difficulty\n3: Reset High Scores\n4: Back\nInput: ");
+			cin >> input;
+			system("CLS");
+			if (input == "1")
+			{
 
+			}
+			else if (input == "2")
+			{
+
+			}
+			else if (input == "3")
+			{
+				printf("Are you sure you want to reset your high scores?\n1: Yes\n2: No\nInput: ");
+				cin >> input;
+				if (input == "1")
+				{
+					highScores.open("highScores.txt", ios::out | ios::trunc);
+					
+					for (int i = 0; i < 9; i++)
+					{
+						highScores << "0\n";
+					}
+					highScores << "0";
+
+					highScores.close();
+
+				}
+				else if (input == "2")
+				{
+					continue;
+				}
+				else
+				{
+					printf("Invalid input");
+					Sleep(200);
+					printf(".");
+					Sleep(200);
+					printf(".");
+					Sleep(200);
+					printf(".");
+					Sleep(500);
+					continue;
+				}
+
+			}
+			else if (input == "4")
+			{
+				continue;
+			}
+			else
+			{
+				printf("Invalid input");
+				Sleep(200);
+				printf(".");
+				Sleep(200);
+				printf(".");
+				Sleep(200);
+				printf(".");
+				Sleep(500);
+				continue;
+			}
 		}
 		else if (input == "4") // credits
 		{
@@ -81,7 +159,7 @@ int main()
 		else if (input == "5") // save / load
 		{
 
-			printf("Menu:\n1: Save\n2: Load\nInput: ");
+			printf("Menu:\n1: Save\n2: Load\n3: Back\nInput: ");
 			cin >> input;
 			if (input == "1") // save
 			{
@@ -104,6 +182,22 @@ int main()
 				}
 
 				saveFile.close();
+			}
+			else if (input == "3")
+			{
+				continue;
+			}
+			else
+			{
+				printf("Invalid input");
+				Sleep(200);
+				printf(".");
+				Sleep(200);
+				printf(".");
+				Sleep(200);
+				printf(".");
+				Sleep(500);
+				continue;
 			}
 		
 		}
@@ -129,7 +223,7 @@ int main()
 	return 0;
 }
 
-void Introduction(struct player &p, struct ship& s)
+void Introduction(struct player &p, struct ship &s)
 {
 	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart...\n");
 	_getch();
@@ -140,11 +234,13 @@ void Introduction(struct player &p, struct ship& s)
 	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth...\n");
 	_getch();
 	system("CLS");
-	printf("So what say you captain? What shall your callsign be?\n");
+	printf("So what say you captain? What shall your callsign be? You can change it later\n");
 	cin >> p.name;
 	system("CLS");
 	cout << "Captain " << p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?";
 	cin >> s.name;
 	system("CLS");
+	printf("As the captain of your ship it's your responsibility to keep your ship and your crew alive. On top of this you must explore unknown space to discover a colonization candidate.");
+
 
 }
