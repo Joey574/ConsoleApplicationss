@@ -6,6 +6,7 @@ Purpose:
 Pseudocode:
 Maintenance Log:
 12/15/21:   Added struct for points, and function to calculate slope between two points
+1/18/22:    Changed struct to be more efficient
 */
 
 #include <stdio.h>
@@ -21,46 +22,44 @@ using namespace std;
 
 struct points
 {
-    float x1;
-    float y1;
-    float x2;
-    float y2;
+    float x;
+    float y;
 };
 
-float slope(struct points p);
+float slope(struct points p[2]);
 
 int main()
 {
-    struct points p;
+    struct points p[2];
 
     printf("Point One:\nX: ");
-    cin >> p.x1;
+    cin >> p[0].x;
     printf("Y: ");
-    cin >> p.y1;
+    cin >> p[0].y;
     printf("Point Two:\nX: ");
-    cin >> p.x2;
+    cin >> p[1].x;
     printf("Y: ");
-    cin >> p.y2;
+    cin >> p[1].y;
 
     while (1)
     {
         system("CLS");
-        if (p.x1 == p.x2 && p.y1 == p.y2)
+        if (p[0].x == p[1].x && p[0].y == p[1].y)
         {
             printf("Error: Points are the same... Please reenter the second point...\n");
             printf("Point Two:\nX: ");
-            cin >> p.x2;
+            cin >> p[1].x;
             printf("Y: ");
-            cin >> p.y2;
+            cin >> p[1].y;
             continue;
         }
-        else if (p.x1 == p.x2)
+        else if (p[0].x == p[1].x)
         {
             printf("Error: X values are the same, slope is infinite... Please reenter the second point...\n");
             printf("Point Two:\nX: ");
-            cin >> p.x2;
+            cin >> p[1].x;
             printf("Y: ");
-            cin >> p.y2;
+            cin >> p[1].y;
             continue;
         }
         break;
@@ -74,8 +73,8 @@ int main()
     return 0;
 }
 
-float slope(struct points p)
+float slope(struct points p[2])
 {
-    float slope = (p.y2 - p.y1) / (p.x2 - p.x1);
+    float slope = (p[1].y - p[0].y) / (p[1].x - p[0].x);
     return slope;
 }

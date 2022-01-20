@@ -21,7 +21,7 @@ using namespace std;
 
 struct personalData
 {
-    string age;
+    int age;
     string phoneNumber;
     string firstName;
     string middleName;
