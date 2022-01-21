@@ -31,33 +31,86 @@ using namespace std::chrono; // needed for sleep for
 
 #include "Player.h"
 
+void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &firstIntroduction);
 void Introduction(struct player &p, struct ship &s);
 
 int main()
 {
 	player player;
-	ship ship[4];
-	module module[1];
+	ship ship;
+	module module;
 	string input; 
-	string temp;
 
 	int score;
+
+	bool firstIntroduction = true;
 
 	vector <int> vectorScore;
 
 	fstream saveFile;
 	fstream highScores;
 
+	 printf("                     `. ___\n");
+	 printf("                   __,' __`.                _..----....____\n");
+	 printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'\n");
+	 printf("  _..-''-------'   `'   `'   `'     O ``-''._   (,;') _,'\n");
+	 printf(",'________________                          \\`-._`-','\n");
+	 printf(" `._              ```````````------...___   '-.._'-:\n");
+	 printf("    ```--.._      ,.                     ````--...__\\-.\n");
+	 printf("            `.--. `-`                       ____    |  |`\n");
+	 printf("              `. `.                       ,'`````.  ;  ;`\n");
+	 printf("                `._`.        __________   `.      \\'__/`\n");
+	 printf("                   `-:._____/______/___/____`.     \\  `\n");
+	 printf("                              |       `._    `.    \\\n");
+	 printf("                              `._________`-.   `.   `.___\n");
+	 printf("                                                 `------'`\n");
+	 printf("\n  _________                                   __________ __________   ________ \n");
+	 printf(" /   _____/______           ____    ____      \\______   \\\\______   \\ /  _____/ \n");
+	 printf(" \\_____  \\ \\____ \\        _/ ___\\ _/ __ \\      |       _/ |     ___//   \\  ___ \n");
+	 printf(" /        \\|  |_> >       \\  \\___ \\  ___/       |    |   \\ |    |    \\    \\_\\  \\\n");
+	 printf("/_______  /|   __/  ______ \\___  > \\___  >     |____|_  / |____|     \\______  /\n");
+	 printf("        \\/ |__|    /_____/     \\/      \\/             \\/                    \\/ \n");
+	 printf("\nBy: Joey Soroka\n");
+	 _getch();
+
+
+	mainMenu(player, ship, vectorScore, score, firstIntroduction);
+	
+	
+	return 0;
+}
+
+void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore, int &score, bool &firstIntroduction)
+{
+	fstream saveFile;
+	fstream highScores;
+
+	string input;
+	string temp;
+
 	while (1)
 	{
 		system("CLS");
-		printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: ");
+		if (firstIntroduction == true) // check to see if game has already been started
+		{
+			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // not started
+		}
+		else
+		{
+			printf("Menu:\n1: Resume Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // has started
+		}
+
 		cin >> input;
 		system("CLS");
 
 		if (input == "1") // start game
 		{
-			Introduction(player, ship[4]);
+			if (firstIntroduction == true) // check to see if game has already been started
+			{
+				Introduction(player, ship);
+				firstIntroduction = false;
+			}
+			break;
 		}
 		else if (input == "2") // high scores
 		{
@@ -106,7 +159,7 @@ int main()
 				if (input == "1")
 				{
 					highScores.open("highScores.txt", ios::out | ios::trunc);
-					
+
 					for (int i = 0; i < 9; i++)
 					{
 						highScores << "0\n";
@@ -199,11 +252,11 @@ int main()
 				Sleep(500);
 				continue;
 			}
-		
+
 		}
 		else if (input == "6") // exit
 		{
-			return 0;
+			exit(0);
 		}
 		else
 		{
@@ -218,29 +271,41 @@ int main()
 			continue;
 		}
 	}
-	
-	
-	return 0;
 }
+
+
 
 void Introduction(struct player &p, struct ship &s)
 {
-	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart...\n");
+	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart.\n");
 	_getch();
 	system("CLS");
-	printf("You and a team of 3 others have been selected to go on a mission that could save the world...\n");
+	printf("You and a team of 3 others have been selected to go on a mission that could save the world.\n");
 	_getch();
 	system("CLS");
-	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth...\n");
+	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth.\n");
 	_getch();
 	system("CLS");
-	printf("So what say you captain? What shall your callsign be? You can change it later\n");
+	printf("So what say you Captain? What shall your callsign be? You can change it later.\n");
 	cin >> p.name;
 	system("CLS");
-	cout << "Captain " << p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?";
+	cout << "Captain " << p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?\n";
 	cin >> s.name;
 	system("CLS");
-	printf("As the captain of your ship it's your responsibility to keep your ship and your crew alive. On top of this you must explore unknown space to discover a colonization candidate.");
-
-
+	printf("As the captain of your ship it's your responsibility to keep your ship and your crew alive. On top of this you must explore unknown space to discover a colonization candidate.\n");
+	_getch();
+	system("CLS");
+	printf("We've sent many ships ahead of you, yet none have reported back sucessfully, keep your wits about you out there!\n");
+	_getch();
+	system("CLS");
+	printf("Your voyager starship is currently equiped with just the command module, the \"bridge\" of the starship, and should be protected at all costs. In the future when you've collected some resources you'll be able to build ");
+	printf("more modules with the blueprints we have supplied you with.\n");
+	_getch();
+	system("CLS");
+	printf("If you ever need help or want to save visit your ships onboard computer, located at your command module and reopen the menu.\n");
+	_getch();
+	system("CLS");
+	cout << "Good luck Captain " << p.name << ", and make sure you come home safe!" << endl;
+	_getch();
+	system("CLS");
 }

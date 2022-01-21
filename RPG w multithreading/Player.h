@@ -23,10 +23,10 @@ struct ship
 	int actionPoints, actionPointsMax;
 	int modules, modulesMax;
 	int fuel, fuelMax;
-	int shipID; // tells program which line of shipData to look at
+	int shipID = 0; // tells program which line of shipData to look at
 
 	vector <vector<int>> shipData { { 20, 50, 5, 8, 5, 50 }, // healthMax, shieldMax, shieldRegeneration, actionPointsMax, modulesMax, fuelMax
-									{ 25, 55, 8, 10, 8, 70 }, // each new row is a new ship, each row is a different shipID from 0-3
+									{ 25, 55, 8, 10, 8, 70 }, // each new row is a different ship, each row is a different shipID from 0-3
 									{ 30, 60, 10, 10, 10, 80},
 									{ 35, 65, 10, 12, 10, 100} };
 
@@ -35,6 +35,8 @@ struct ship
 
 struct module
 {
+	string name;
+
 	int health, healthMax;
 	int shield, shieldMax;
 	int shieldRegeneration;
