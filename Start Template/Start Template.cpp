@@ -23,6 +23,8 @@ Maintenance Log:
 #include <sstream> // needed for files
 #include <fstream> // needed for files
 #include <cwchar>
+#include <algorithm> // needed for vector sort
+
 using namespace std;
 using namespace std::this_thread; // needed for sleep for
 using namespace std::chrono; // needed for sleep for
