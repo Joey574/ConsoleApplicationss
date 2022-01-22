@@ -31,8 +31,9 @@ using namespace std::chrono; // needed for sleep for
 
 #include "Player.h"
 
-void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &firstIntroduction);
+void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
 void Introduction(struct player &p, struct ship &s);
+void invalidInput();
 
 int main()
 {
@@ -43,7 +44,7 @@ int main()
 
 	int score;
 
-	bool firstIntroduction = true;
+	bool inGame = false;
 
 	vector <int> vectorScore;
 
@@ -74,13 +75,25 @@ int main()
 	 _getch();
 
 
-	mainMenu(player, ship, vectorScore, score, firstIntroduction);
+	mainMenu(player, ship, vectorScore, score, inGame);
 	
 	
 	return 0;
 }
 
-void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore, int &score, bool &firstIntroduction)
+void invalidInput()
+{
+	printf("Invalid input");
+	Sleep(200);
+	printf(".");
+	Sleep(200);
+	printf(".");
+	Sleep(200);
+	printf(".");
+	Sleep(500);
+}
+
+void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore, int &score, bool &inGame)
 {
 	fstream saveFile;
 	fstream highScores;
@@ -91,7 +104,7 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 	while (1)
 	{
 		system("CLS");
-		if (firstIntroduction == true) // check to see if game has already been started
+		if (inGame == false) // check to see if game has already been started
 		{
 			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // not started
 		}
@@ -103,16 +116,16 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 		cin >> input;
 		system("CLS");
 
-		if (input == "1") // start game
+		if (input == "1") // start or resume game
 		{
-			if (firstIntroduction == true) // check to see if game has already been started
+			if (inGame == false) // check to see if game has already been started
 			{
 				Introduction(player, ship);
-				firstIntroduction = false;
+				inGame = true;
 			}
 			break;
 		}
-		else if (input == "2") // high scores
+		else if (input == "2") // high scores, add possibility to see details about high scores in the future
 		{
 			printf("Top 10 High Scores:\n");
 
@@ -133,7 +146,7 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 
 			for (int i = 1; i < 11; i++)
 			{
-				cout << i << ") " << vectorScore[i - 1] << endl;
+				cout << i << ") " << vectorScore[i - 1] << endl; // outputs top 10 high scores
 			}
 
 			highScores.close();
@@ -144,15 +157,15 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 			printf("Menu:\n1: Account\n2: Difficulty\n3: Reset High Scores\n4: Back\nInput: ");
 			cin >> input;
 			system("CLS");
-			if (input == "1")
+			if (input == "1") // account
 			{
 
 			}
-			else if (input == "2")
+			else if (input == "2") // difficulty
 			{
 
 			}
-			else if (input == "3")
+			else if (input == "3") // reset high scores
 			{
 				printf("Are you sure you want to reset your high scores?\n1: Yes\n2: No\nInput: ");
 				cin >> input;
@@ -167,7 +180,6 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 					highScores << "0";
 
 					highScores.close();
-
 				}
 				else if (input == "2")
 				{
@@ -175,14 +187,7 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 				}
 				else
 				{
-					printf("Invalid input");
-					Sleep(200);
-					printf(".");
-					Sleep(200);
-					printf(".");
-					Sleep(200);
-					printf(".");
-					Sleep(500);
+					invalidInput();
 					continue;
 				}
 
@@ -193,14 +198,7 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 			}
 			else
 			{
-				printf("Invalid input");
-				Sleep(200);
-				printf(".");
-				Sleep(200);
-				printf(".");
-				Sleep(200);
-				printf(".");
-				Sleep(500);
+				invalidInput();
 				continue;
 			}
 		}
@@ -242,38 +240,45 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 			}
 			else
 			{
-				printf("Invalid input");
-				Sleep(200);
-				printf(".");
-				Sleep(200);
-				printf(".");
-				Sleep(200);
-				printf(".");
-				Sleep(500);
+				invalidInput();
 				continue;
 			}
 
 		}
 		else if (input == "6") // exit
 		{
+		if (inGame == false)
+			{
 			exit(0);
+			}
+		else
+		{
+			printf("Are you sure? Unsaved progress will be lost. Consider saving first\n1: Exit without saving\n2: Cancel\nInput: "); // add "exit with saving" option in future that calls a save function
+			cin >> input;
+			if (input == "1") // exit without saving
+			{
+				inGame = false;
+			}
+			else if (input == "2")
+			{
+				break;
+			}
+			else
+			{
+				invalidInput();
+				continue;
+			}
+
+		}
+			
 		}
 		else
 		{
-			printf("Invalid input");
-			Sleep(200);
-			printf(".");
-			Sleep(200);
-			printf(".");
-			Sleep(200);
-			printf(".");
-			Sleep(500);
+			invalidInput();
 			continue;
 		}
 	}
 }
-
-
 
 void Introduction(struct player &p, struct ship &s)
 {
