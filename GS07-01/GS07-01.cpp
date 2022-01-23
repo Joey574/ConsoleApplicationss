@@ -23,15 +23,18 @@ using namespace std;
 
 float taxCalculator(float cost);
 
+enum sizes { none = 0, tiny, medium, large };
+
 int main()
 {
-	enum sizes { tiny = 8, medium = 16, large = 24 };
 	float popcorn;
 	float candy;
 	float chips;
 	float drinks;
-	float drinkSize;
 	float drinkPrice;
+	sizes size = none;
+	int ans;
+	
 
 	printf("Welcome to the theater, place your order below:\n# of popcorn ($5.00 ea.): ");
 	cin >> popcorn;
@@ -41,29 +44,41 @@ int main()
 	cin >> chips;
 	while (1)
 	{
-		printf("Drink Size: 8oz/16oz/24oz ($1.00, $1.50, $2.00): ");
-		cin >> drinkSize;
-		if (drinkSize == tiny)
+		printf("Drink Size: ($1.00, $1.50, $2.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
+		cin >> ans;
+		size = (sizes)ans;
+		
+		switch (size)
 		{
+		case none:
+			drinkPrice = 0;
+			break;
+		case tiny:
 			drinkPrice = 1;
-		}
-		else if (drinkSize == medium)
-		{
+			break;
+		case medium:
 			drinkPrice = 1.5;
-		}
-		else if (drinkSize == large)
-		{
+			break;
+		case large:
 			drinkPrice = 2;
-		}
-		else
-		{
-			printf("We don't offer that size please try again\n");
+			break;
+		default:
+			printf("That option isn't supported please try again...");
+			_getch();
 			continue;
 		}
 		break;
 	}
-	printf("# of drinks: ");
-	cin >> drinks;
+
+	if (size != none)
+	{
+		printf("# of drinks: ");
+		cin >> drinks;
+	}
+	else
+	{
+		drinks = 0;
+	}
 
 	system("CLS");
 	float cost = (5 * popcorn) + candy + (1.5 * chips) + (drinkPrice * drinks);
