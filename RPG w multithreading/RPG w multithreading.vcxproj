@@ -144,10 +144,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="WorldGeneration.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="highScores.txt" />
-    <Text Include="save.txt" />
+    <Text Include="save1.txt" />
+    <Text Include="save2.txt" />
+    <Text Include="save3.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -30,6 +30,7 @@ using namespace std::this_thread; // needed for sleep for
 using namespace std::chrono; // needed for sleep for
 
 #include "Player.h"
+#include "WorldGeneration.h"
 
 void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
 void Introduction(struct player &p, struct ship &s);
@@ -100,7 +101,8 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 
 	string input;
 	string temp;
-
+	string saveName;
+	
 	while (1)
 	{
 		system("CLS");
@@ -204,7 +206,7 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 		}
 		else if (input == "4") // credits
 		{
-			printf("Author:\nJoey Soroka\n\nProgramming Support:\nEric Pace\nSlater Swart\nIssac Morine\nTucker\n\nCreative Support:\nIssac Morine\n");
+			printf("Author:\nJoey Soroka\n\nProgramming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\n\nCreative Support:\nIssac Morine\n");
 			_getch();
 		}
 		else if (input == "5") // save / load
@@ -212,27 +214,109 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 
 			printf("Menu:\n1: Save\n2: Load\n3: Back\nInput: ");
 			cin >> input;
-			if (input == "1") // save
+			system("CLS");
+
+			if (input == "1" || input == "2")
 			{
-				saveFile.open("save.txt");
-
-
-			}
-			else if (input == "2") // load
-			{
-				saveFile.open("save.txt");
-
-				if (!saveFile.is_open())
+				if (input == "1")
 				{
-					printf("File not found");
+					printf("Save slots:\n");
+				}
+				else
+				{
+					printf("Load save:\n");
 				}
 
-				while (getline(saveFile, temp))
+				for (int i = 1; i < 4; i++)
 				{
+					if (i == 1)
+					{
+						saveFile.open("save1.txt");
+					}
+					else if (i == 2)
+					{
+						saveFile.open("save2.txt");
+					}
+					if (i == 3)
+					{
+						saveFile.open("save3.txt");
+					}
+					if (!saveFile.is_open())
+					{
+						printf("File not found\n");
+					}
+					for (int p = 0; p < 1; p++)
+					{
+						getline(saveFile, temp);
+						if (temp == "empty")
+						{
+							cout << i << ": Empty\n";
+						}
+						else
+						{
+							cout << i << "Save " << i;
+						}
+						saveFile.close();
+					}
+
+				}		
+
+				printf("4: Back\nInput: "); // no cin because branches were previously decided by input but shared first part of code and old input is still needed for if
+				if (input == "1") // save
+				{
+					cin >> input;
+					if (input == "1")
+					{
+						saveName = "save1.txt";
+					}
+					else if (input == "2")
+					{
+						saveName = "save2.txt";
+					}
+					else if (input == "3")
+					{
+						saveName = "save3.txt";
+					}
+					else if (input == "4")
+					{
+						continue;
+					}
+					else
+					{
+						invalidInput();
+						continue;
+					}
 
 				}
+				else // load
+				{
+					cin >> input;
+					if (input == "1")
+					{
+						saveName = "save1.txt";
+					}
+					else if (input == "2")
+					{
+						saveName = "save2.txt";
+					}
+					else if (input == "3")
+					{
+						saveName = "save3.txt";
+					}
+					else if (input == "4")
+					{
+						continue;
+					}
+					else
+					{
+						invalidInput();
+						continue;
+					}
 
-				saveFile.close();
+				}
+				
+
+					
 			}
 			else if (input == "3")
 			{

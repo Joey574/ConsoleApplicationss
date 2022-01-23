@@ -23,9 +23,14 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldGeneration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="save.txt" />
+    <Text Include="save1.txt" />
     <Text Include="highScores.txt" />
+    <Text Include="save3.txt" />
+    <Text Include="save2.txt" />
   </ItemGroup>
 </Project>
