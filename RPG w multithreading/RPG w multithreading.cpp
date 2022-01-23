@@ -30,6 +30,7 @@ using namespace std::this_thread; // needed for sleep for
 using namespace std::chrono; // needed for sleep for
 
 #include "Player.h"
+#include "WorldGeneration.h"
 
 void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
 void Introduction(struct player &p, struct ship &s);
@@ -41,7 +42,6 @@ int main()
 	ship ship;
 	module module;
 	string input; 
-	
 
 	int score;
 
