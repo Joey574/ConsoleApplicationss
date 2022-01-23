@@ -25,7 +25,7 @@ float taxCalculator(float cost);
 
 int main()
 {
-	enum sizes { tiny = 8, medium = 16, large = 24 };
+	enum sizes { none = 0, tiny, medium, large };
 	float popcorn;
 	float candy;
 	float chips;
@@ -41,7 +41,7 @@ int main()
 	cin >> chips;
 	while (1)
 	{
-		printf("Drink Size: 8oz/16oz/24oz ($1.00, $1.50, $2.00): ");
+		printf("Drink Size: 0/1/2/3 (none, small, medium, large) ($1.00, $1.50, $2.00): ");
 		cin >> drinkSize;
 		if (drinkSize == tiny)
 		{
@@ -54,6 +54,10 @@ int main()
 		else if (drinkSize == large)
 		{
 			drinkPrice = 2;
+		}
+		else if (drinkSize == none)
+		{
+			drinkPrice = 0;
 		}
 		else
 		{
