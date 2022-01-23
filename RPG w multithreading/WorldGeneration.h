@@ -6,6 +6,11 @@
 
 using namespace std;
 
+struct system
+{
+    int 
+};
+
 void world (int diffuculty)
 {
     string input;
@@ -30,5 +35,5 @@ void world (int diffuculty)
     worldSeed.erase(100);
     cout << worldSeed << "\n" << worldSeed.length();
 
-    exit(0);
+    
 }
