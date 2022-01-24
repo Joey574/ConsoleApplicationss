@@ -53,6 +53,6 @@ int main()
     cin >> p.lastName;
     printf("Please enter your age: ");
     cin >> p.age;
-    printf("Please enter your height (use a . to seperate feet and inches, ex. 5.10): ");
+    printf("Please enter your height (use a . to seperate feet and inches, ex. 5.11 for 5 feet 11 inches): ");
     cin >> p.height;
 }

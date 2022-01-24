@@ -31,74 +31,119 @@ int main()
 	float candy;
 	float chips;
 	float drinks;
-	float drinkPrice;
 	float popcorn;
+	sizes candy_size;
 	sizes popcorn_size;
-	sizes size = none;
+	sizes chips_size;
+	sizes drink_size;
 	int ans;
 	
-	while (1)
-	{
-		printf("Popcorn Size: ($1.00, $1.50, $2.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
+		printf("Welcome to the theater, place your order below: \n");
+		printf("Popcorn Size: ($5.00, $10.00, $15.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
 		cin >> ans;
-		size = (sizes)ans;
-
-		switch (size)
-		{
-		case none:
-			drinkPrice = 0;
-			break;
-		case tiny:
-			drinkPrice = 1;
-			break;
-		case medium:
-			drinkPrice = 1.5;
-			break;
-		case large:
-			drinkPrice = 2;
-			break;
-		default:
-			printf("That option isn't supported please try again...");
-			_getch();
-			continue;
-		}
-		break;
-	}
-	printf("Welcome to the theater, place your order below:\n# of popcorn ($5.00 ea.): ");
-	cin >> popcorn;
-	printf("# of m&ms ($1.00 ea.): ");
-	cin >> candy;
-	printf("# of chips ($1.50 ea.): ");
-	cin >> chips;
-	while (1)
-	{
-		printf("Drink Size: ($1.00, $1.50, $2.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
-		cin >> ans;
-		size = (sizes)ans;
 		
-		switch (size)
+		if (ans == 1)
 		{
-		case none:
-			drinkPrice = 0;
-			break;
-		case tiny:
-			drinkPrice = 1;
-			break;
-		case medium:
-			drinkPrice = 1.5;
-			break;
-		case large:
-			drinkPrice = 2;
-			break;
-		default:
-			printf("That option isn't supported please try again...");
-			_getch();
-			continue;
+			popcorn_size = tiny;
 		}
-		break;
+		else if (ans == 2)
+		{
+			popcorn_size = medium;
+		}
+		else if (ans == 3)
+		{
+			popcorn_size = large;
+		}
+		else if (ans == 0)
+		{
+			popcorn_size = none;
+		}
+
+		if (popcorn_size != none)
+		{
+			printf("# of popcorn: ");
+			cin >> popcorn;
+		}
+
+	printf("m&m size: ($1.50, $2.00, $3.50):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
+	cin >> ans;
+
+	if (ans == 1)
+	{
+		candy_size = tiny;
+	}
+	else if (ans == 2)
+	{
+		candy_size = medium;
+	}
+	else if (ans == 3)
+	{
+		candy_size = large;
+	}
+	else if (ans == 0)
+	{
+		candy_size = none;
 	}
 
-	if (size != none)
+	if (candy_size != none)
+	{
+		printf("# of m&ms: ");
+		cin >> candy;
+	}
+
+	printf("chips size: ($2.00, $3.00, $4.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
+	cin >> ans;
+
+	if (ans == 1)
+	{
+		chips_size = tiny;
+	}
+	else if (ans == 2)
+	{
+		chips_size = medium;
+	}
+	else if (ans == 3)
+	{
+		chips_size = large;
+	}
+	else if (ans == 0)
+	{
+		chips_size = none;
+	}
+
+	if (chips_size != none)
+	{
+		printf("# of m&ms: ");
+		cin >> chips;
+	}
+
+	printf("drink size: ($2.00, $3.00, $4.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
+	cin >> ans;
+
+	if (ans == 1)
+	{
+		drink_size = tiny;
+	}
+	else if (ans == 2)
+	{
+		drink_size = medium;
+	}
+	else if (ans == 3)
+	{
+		drink_size = large;
+	}
+	else if (ans == 0)
+	{
+		drink_size = none;
+	}
+
+	if (drink_size != none)
+	{
+		printf("# of drinks: ");
+		cin >> drinks;
+	}
+
+	if (drink_size != none)
 	{
 		printf("# of drinks: ");
 		cin >> drinks;
@@ -109,7 +154,7 @@ int main()
 	}
 
 	system("CLS");
-	float cost = (5 * popcorn) + candy + (1.5 * chips) + (drinkPrice * drinks);
+	float cost = ((popcorn_size * 5) * popcorn) + (candy * (candy_size + 0.5)) + (chips * (chips_size + 1)) + ((drink_size + 1) * drinks);
 	float tax = taxCalculator(cost);
 	cout << "Cost: " << cost << endl;
 	cout << "Tax: " << tax << endl;
