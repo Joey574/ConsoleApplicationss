@@ -32,8 +32,9 @@ using namespace std::chrono; // needed for sleep for
 #include "Player.h"
 #include "WorldGeneration.h"
 
+int stringToIntErrorChecker(string input);
 void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
-void Introduction(struct player &p, struct ship &s);
+void gameStart(struct player &p, struct ship &s);
 void invalidInput();
 
 int main()
@@ -51,8 +52,6 @@ int main()
 
 	fstream saveFile;
 	fstream highScores;
-
-	world(1);
 
 	 printf("                     `. ___\n");
 	 printf("                   __,' __`.                _..----....____\n");
@@ -77,11 +76,29 @@ int main()
 	 printf("\nBy: Joey Soroka\n");
 	 _getch();
 
-
 	mainMenu(player, ship, vectorScore, score, inGame);
 	
 	
 	return 0;
+}
+
+int stringToIntErrorChecker(string input) // BROKEN only checks once 
+{
+	int p;
+
+	for (int i = 0; i < input.length(); i++)
+	{
+		char c = input[i];
+		if (isdigit(c) == 0)
+		{
+			printf("Invalid input try again\nInput: ");
+			cin >> input;
+			continue;
+		}
+	}
+
+	p = stoi(input);
+	return p;
 }
 
 void invalidInput()
@@ -124,7 +141,7 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 		{
 			if (inGame == false) // check to see if game has already been started
 			{
-				Introduction(player, ship);
+				gameStart(player, ship);
 				inGame = true;
 			}
 			break;
@@ -366,8 +383,11 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 	}
 }
 
-void Introduction(struct player &p, struct ship &s)
+void gameStart(struct player &p, struct ship &s)
 {
+	string input;
+	int difficulty;
+
 	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart.\n");
 	_getch();
 	system("CLS");
@@ -399,4 +419,17 @@ void Introduction(struct player &p, struct ship &s)
 	cout << "Good luck Captain " << p.name << ", and make sure you come home safe!" << endl;
 	_getch();
 	system("CLS");
+	printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
+	cin >> input;
+
+
+	while (input != "1" && input != "2" && input != "3")
+	{
+		printf("Invalid input try again\nInput: ");
+		cin >> input;
+	}
+	
+	difficulty = stoi(input);
+
+	world(difficulty);
 }

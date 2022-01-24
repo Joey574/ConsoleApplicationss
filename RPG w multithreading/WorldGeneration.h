@@ -17,8 +17,6 @@
 #include <algorithm> // needed for vector sort
 #include <iterator>
 
-
-
 using namespace std;
 
 struct system
@@ -55,6 +53,7 @@ void world (int diffuculty)
    }
     */ 
 
+   system("CLS");
     printf("World Seed: ");
     cin >> input;
 
@@ -75,7 +74,7 @@ void world (int diffuculty)
         worldSeed.push_back(worldSeedInserter);
     }
 
-    /*  World Seed vector error checking
+    /*  //World Seed vector error checking
     for (int i = 0; i < worldSeed.size(); i++) 
     {
         for (int j = 0; j < worldSeed[i].size(); j++)
@@ -86,7 +85,7 @@ void world (int diffuculty)
     
     xy = 0;
 
-    for (int y = 0; y < 10; y++) // BROKEN
+    for (int y = 0; y < 10; y++)
     {
         for (int x = 0; x < 10; x++)
         {
@@ -112,12 +111,20 @@ void world (int diffuculty)
             }
             xy++;
         }
-
-        for (int i = 0; i < 100; i++)
-        {
-            cout << i << ":\t" << s[i].x << ", " << s[i].y << " Danger Level: " << s[i].dangerLevel << " Supplies: " << s[i].supplies << endl;
-        }
     }
+
+    /*  //system danger level and supplies error checking
+    for (int i = 0; i < 100; i++)
+    {
+        cout << i << ":\t" << s[i].x << ", " << s[i].y << " Danger Level: " << s[i].dangerLevel << " Supplies: " << s[i].supplies << endl;
+    }
+    */
+
+    s[0].dangerLevel = 0; // setting adjacent tiles to safe to avoid death on spawn
+    s[1].dangerLevel = 0;
+    s[10].dangerLevel = 0;
+    s[11].dangerLevel = 0;
+
 
     _getch();
     exit(0);
