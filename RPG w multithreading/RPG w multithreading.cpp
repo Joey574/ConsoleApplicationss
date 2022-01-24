@@ -41,7 +41,7 @@ int main()
 	player player;
 	ship ship;
 	module module;
-	string input; 
+	string input;
 
 	int score;
 
@@ -52,6 +52,7 @@ int main()
 	fstream saveFile;
 	fstream highScores;
 
+	world(1);
 
 	 printf("                     `. ___\n");
 	 printf("                   __,' __`.                _..----....____\n");
