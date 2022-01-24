@@ -27,15 +27,43 @@ enum sizes { none = 0, tiny, medium, large };
 
 int main()
 {
-	float popcorn;
+
 	float candy;
 	float chips;
 	float drinks;
 	float drinkPrice;
+	float popcorn;
+	sizes popcorn_size;
 	sizes size = none;
 	int ans;
 	
+	while (1)
+	{
+		printf("Popcorn Size: ($1.00, $1.50, $2.00):\n0: None\n1: Tiny\n2: Medium\n3: Large \n");
+		cin >> ans;
+		size = (sizes)ans;
 
+		switch (size)
+		{
+		case none:
+			drinkPrice = 0;
+			break;
+		case tiny:
+			drinkPrice = 1;
+			break;
+		case medium:
+			drinkPrice = 1.5;
+			break;
+		case large:
+			drinkPrice = 2;
+			break;
+		default:
+			printf("That option isn't supported please try again...");
+			_getch();
+			continue;
+		}
+		break;
+	}
 	printf("Welcome to the theater, place your order below:\n# of popcorn ($5.00 ea.): ");
 	cin >> popcorn;
 	printf("# of m&ms ($1.00 ea.): ");

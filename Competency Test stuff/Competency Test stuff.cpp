@@ -1,53 +1,58 @@
 // Competency Test stuff.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+#include <stdio.h>
 #include <iostream>
+#include <string> // Needed for string
+#include <stdlib.h> // Needed for srand
+#include <time.h> // Needed for srand
+#include <conio.h> 
+#include <vector>
+#include <windows.h> // Uses functions named after shapes beware for classes
+#include <chrono> // needed for sleep for
+#include <thread>
+#include <math.h>
+#include <sstream> // needed for files
+#include <fstream> // needed for files
+#include <cwchar>
+#include <algorithm> // needed for vector sort
+/*
+enum size {each = 1, dozen = 12, gross = 144 };
 
 int main()
 {
-    int i1 = 5;
-    int i2 = -2;
-    int i3 = 1;
+    size boxes;
+    size envelopes;
 
-    if (i1 >= 0 && i2 >= 0 && i3 >= 0)
-    {
-        printf("all numbers are positive");
-    }
-    else if (i1 <= 0 && i2 <= 0 && i3 <= 0)
-    {
-        printf("no numbers are positive");
-    }
-    else
-    {
-        printf("some numbers are positive");
-    }
-    // return 0;
-    // 
-    // --------------------------------
+    envelopes = dozen;
+    boxes = each;
+}
+*/
 
-    int iAns;
-    std::cin >> iAns;
+struct person
+{
+    string firstName;
+    string lastName;
 
-    switch (iAns)
-    {
-    case 3:
-        printf("correct you inputed 3!");
-        break;
-    case 5:
-        printf("correct you inputed 5!");
-        break;
-    case 11:
-        printf("correct you inputed 11!");
-        break;
-    case 13:
-        printf("correct you inputed 13!");
-        break;
-    case 17:
-        printf("correct you inputed 17!");
-        break;
-    default:
-        printf("man some people are unteachable *dissapointed eye roll*");
-        break;
-    }
-    return 0;
+    char middleInitial;
+
+    int age;
+
+    float height;
+};
+
+int main()
+{
+    person p;
+
+    printf("Please enter your first name: ");
+    cin >> p.firstName;
+    printf("Please enter your middle initial: ");
+    cin >> p.middleInitial;
+    printf("Please enter your last name: ");
+    cin >> p.lastName;
+    printf("Please enter your age: ");
+    cin >> p.age;
+    printf("Please enter your height (use a . to seperate feet and inches, ex. 5.10): ");
+    cin >> p.height;
 }

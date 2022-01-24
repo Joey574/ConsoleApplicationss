@@ -53,7 +53,7 @@ void world (int diffuculty)
    }
     */ 
 
-   system("CLS");
+    system("CLS");
     printf("World Seed: ");
     cin >> input;
 
@@ -113,17 +113,19 @@ void world (int diffuculty)
         }
     }
 
-    /*  //system danger level and supplies error checking
-    for (int i = 0; i < 100; i++)
-    {
-        cout << i << ":\t" << s[i].x << ", " << s[i].y << " Danger Level: " << s[i].dangerLevel << " Supplies: " << s[i].supplies << endl;
-    }
-    */
-
     s[0].dangerLevel = 0; // setting adjacent tiles to safe to avoid death on spawn
     s[1].dangerLevel = 0;
     s[10].dangerLevel = 0;
     s[11].dangerLevel = 0;
+
+  /*    //system danger level and supplies error checking
+    for (int i = 0; i < 100; i++)
+    {
+        cout << i << ":\t" << s[i].x << ", " << s[i].y << " Danger Level: " << s[i].dangerLevel << " Supplies: " << s[i].supplies << endl;
+    }
+  */  
+
+
 
 
     _getch();
