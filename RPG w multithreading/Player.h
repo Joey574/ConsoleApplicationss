@@ -8,6 +8,7 @@ struct player
 
 	int health, healthMax;
 	int actionPoints, actionPointsMax;
+	int difficulty;
 	
 	bool captain;
 	bool alive;

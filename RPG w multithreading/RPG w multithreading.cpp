@@ -180,11 +180,41 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 			system("CLS");
 			if (input == "1") // account
 			{
-
+				printf("Menu:\n1: Change name\n2: Back\nInput: ");
+				cin >> input;
+				if (input == "1") // change name
+				{
+					printf("Please enter new name: ");
+					cin >> player.name;
+					continue;
+				}
+				else if (input == "2")
+				{
+					continue;
+				}
+				else
+				{
+					invalidInput();
+					continue;
+				}
 			}
 			else if (input == "2") // difficulty
 			{
+				printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
+				cin >> input;
 
+
+				while (input != "1" && input != "2" && input != "3" && input != "4")
+				{
+					printf("Invalid input try again\nInput: ");
+					cin >> input;
+				}
+				if (input == "4")
+				{
+					continue;
+				}
+				player.difficulty = stoi(input);
+				continue;
 			}
 			else if (input == "3") // reset high scores
 			{
@@ -386,7 +416,6 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 void gameStart(struct player &p, struct ship &s)
 {
 	string input;
-	int difficulty;
 
 	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart.\n");
 	_getch();
@@ -429,7 +458,7 @@ void gameStart(struct player &p, struct ship &s)
 		cin >> input;
 	}
 	
-	difficulty = stoi(input);
+	p.difficulty = stoi(input);
 
-	world(difficulty);
+	world(p.difficulty);
 }
