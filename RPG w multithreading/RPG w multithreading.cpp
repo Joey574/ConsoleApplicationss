@@ -52,6 +52,7 @@ int main()
 	fstream saveFile;
 	fstream highScores;
 
+
 	 printf("                     `. ___\n");
 	 printf("                   __,' __`.                _..----....____\n");
 	 printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'\n");
