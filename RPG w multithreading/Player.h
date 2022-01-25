@@ -30,7 +30,7 @@ struct ship
 									{ 25, 55, 8, 10, 8, 70 }, // each new row is a different ship, each row is a different shipID from 0-3
 									{ 30, 60, 10, 10, 10, 80},
 									{ 35, 65, 10, 12, 10, 100} };
-
+	
 	bool alive;
 };
 

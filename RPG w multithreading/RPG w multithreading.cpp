@@ -32,10 +32,12 @@ using namespace std::chrono; // needed for sleep for
 #include "Player.h"
 #include "WorldGeneration.h"
 
-int stringToIntErrorChecker(string input);
 void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
+void worldBuilder();
 void gameStart(struct player &p, struct ship &s);
+int stringToIntErrorChecker(string input);
 void invalidInput();
+
 
 int main()
 {
@@ -82,19 +84,24 @@ int main()
 	return 0;
 }
 
-int stringToIntErrorChecker(string input) // BROKEN only checks once 
+int stringToIntErrorChecker(string input) // BROKEN 
 {
 	int p;
 
-	for (int i = 0; i < input.length(); i++)
+	while (1)
 	{
-		char c = input[i];
-		if (isdigit(c) == 0)
+		for (int i = 0; i < input.length(); i++)
 		{
-			printf("Invalid input try again\nInput: ");
-			cin >> input;
-			continue;
+			char c = input[i];
+			if (isdigit(c) == 0)
+			{
+				printf("Invalid input try again\nInput: ");
+				cin >> input;
+				continue;
+			}
+			break;
 		}
+		break;
 	}
 
 	p = stoi(input);

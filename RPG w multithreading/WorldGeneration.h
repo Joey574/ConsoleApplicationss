@@ -24,13 +24,14 @@ struct system
     int dangerLevel;
     int supplies;
     int x, y;
+    bool explored;
 };
 
 void world (int diffuculty)
 {
     string input;
-    vector<vector <int> > worldSeed;
-    vector <int> worldSeedInserter;
+    vector <int> worldSeed;
+  
     int seed;
     int xy = 0;
 
@@ -64,23 +65,18 @@ void world (int diffuculty)
   
 	srand(seed);
 
-    for (int p = 0; p < 10; p++)
+    for (int p = 0; p < 100; p++)
     {
-        worldSeedInserter.clear();
-        for (int i = 0; i < 10; i++)
-        {
-            worldSeedInserter.push_back(rand() % (10));
-        }
-        worldSeed.push_back(worldSeedInserter);
+        worldSeed.push_back(rand() % (10));
     }
 
-    /*  //World Seed vector error checking
+
+   /*   //World Seed vector error checking
     for (int i = 0; i < worldSeed.size(); i++) 
     {
-        for (int j = 0; j < worldSeed[i].size(); j++)
-            cout << worldSeed[i][j] << " ";
-        cout << endl;
+       cout << worldSeed[i] << "\n";
     }
+    cout << "Vector size: " << worldSeed.size();
     */
     
     xy = 0;
@@ -89,22 +85,22 @@ void world (int diffuculty)
     {
         for (int x = 0; x < 10; x++)
         {
-            if (worldSeed[x][y] <= 2) // safe / no danger
+            if (worldSeed[xy] <= 2) // safe / no danger
             {
                 s[xy].dangerLevel = 0;
                 s[xy].supplies = rand() % (5);
             }
-            else if (worldSeed[x][y] <= 5 && worldSeed[x][y] > 2) // low danger
+            else if (worldSeed[xy] <= 5 && worldSeed[xy] > 2) // low danger
             {
                 s[xy].dangerLevel = 1;
                 s[xy].supplies = rand() % (8);
             }
-            else if (worldSeed[x][y] <= 8 && worldSeed[x][y] > 5) // medium danger
+            else if (worldSeed[xy] <= 8 && worldSeed[xy] > 5) // medium danger
             {
                 s[xy].dangerLevel = 2;
                 s[xy].supplies = rand() % (10);
             }
-            else if (worldSeed[x][y] = 9) // lots of danger
+            else if (worldSeed[xy] = 9) // lots of danger
             {
                 s[xy].dangerLevel = 3;
                 s[xy].supplies = rand() % (15);
@@ -118,16 +114,19 @@ void world (int diffuculty)
     s[10].dangerLevel = 0;
     s[11].dangerLevel = 0;
 
-  /*    //system danger level and supplies error checking
+   /*  //system danger level and supplies error checking
     for (int i = 0; i < 100; i++)
     {
         cout << i << ":\t" << s[i].x << ", " << s[i].y << " Danger Level: " << s[i].dangerLevel << " Supplies: " << s[i].supplies << endl;
     }
-  */  
+  */
 
+}
 
+void worldBuilder(struct system s, int difficulty, vector<int> worldSeed)
+{
+    for (int i = 0; i < 10; i++)
+    {
 
-
-    _getch();
-    exit(0);
+    }
 }
