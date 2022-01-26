@@ -26,7 +26,9 @@ struct system
     int dangerLevel;
     int supplies;
     int x, y;
+    int systemID;
     bool explored;
+    bool objective;
 };
 
 void gotoxy(int x, int y)
@@ -42,9 +44,10 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
     int line = 196;
     int upLine = 179;
     int temp = 1;
+    int vertSep = 10;
 
     cout << (char)218;
-    for (int i = 0; i < 108; i++)
+    for (int i = 0; i < 99; i++)
     {
         cout << (char)line;
     }
@@ -86,8 +89,36 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
         temp += 1;
         gotoxy(109, temp);
     }
+    gotoxy(110, 60);
+    cout << (char)217 << endl;
     
+    temp = 1;
 
+
+    for (int a = 0; a < 10; a++)
+    {
+        gotoxy(vertSep, 0);
+        cout << (char)194;
+        gotoxy(vertSep, 1);
+        for (int p = 0; p < 10; p++)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                cout << (char)upLine << endl;
+                temp += 1;
+                gotoxy(vertSep, temp);
+            }
+            cout << (char)197 << endl;
+            temp += 1;
+            gotoxy(vertSep, temp);
+        }
+        gotoxy(vertSep, 60);
+        cout << (char)193 << endl;
+        vertSep += 10;
+        temp = 1;
+    }
+    gotoxy(100, 0);
+    cout << (char)191;
 
     _getch();
     exit(0);
@@ -103,14 +134,13 @@ void world (int difficulty)
 
    struct system s[100];
 
-   worldConstructor(s, difficulty, worldSeed);
-
    for (int y = 0; y < 10; y++)
    {
        for (int x = 0; x < 10; x++)
        {
            s[xy].x = x;
            s[xy].y = y;
+           s[xy].systemID = xy;
            xy++;
        }
    }
@@ -125,6 +155,7 @@ void world (int difficulty)
     system("CLS");
     printf("World Seed: ");
     cin >> input;
+    system("CLS");
 
     for (int i = 0; i < input.length(); i++)
     {
@@ -189,5 +220,8 @@ void world (int difficulty)
     }
   */
 
-}
+    s[50 + rand() % 99].objective = true;
 
+    worldConstructor(s, difficulty, worldSeed);
+
+}
