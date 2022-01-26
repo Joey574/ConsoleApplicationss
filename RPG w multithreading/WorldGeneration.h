@@ -19,6 +19,8 @@
 
 using namespace std;
 
+
+
 struct system
 {
     int dangerLevel;
@@ -27,7 +29,71 @@ struct system
     bool explored;
 };
 
-void world (int diffuculty)
+void gotoxy(int x, int y)
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void worldConstructor(struct system s[100], int difficulty, vector<int> worldSeed)
+{
+    int line = 196;
+    int upLine = 179;
+    int temp = 1;
+
+    cout << (char)218;
+    for (int i = 0; i < 108; i++)
+    {
+        cout << (char)line;
+    }
+    cout << (char)191;
+    cout << endl;
+
+    for (int i = 0; i < 59; i++)
+    {
+        cout << (char)upLine << endl;
+    }
+
+    for (int i = 0; i < 54; i += 6)
+    {
+        gotoxy(0, i + 6);
+        cout << char(195);
+        for (int i = 0; i < 108; i++)
+        {
+            cout << (char)line;
+        }
+    }
+
+    gotoxy(0, 60);
+    cout << char(192);
+    for (int i = 0; i < 108; i++)
+    {
+        cout << (char)line;
+    }
+   
+    gotoxy(109, 1);
+    for (int p = 0; p < 10; p++)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            cout << (char)upLine << endl;
+            temp += 1;
+            gotoxy(109, temp);
+        }
+        cout << (char)180 << endl;
+        temp += 1;
+        gotoxy(109, temp);
+    }
+    
+
+
+    _getch();
+    exit(0);
+}
+
+void world (int difficulty)
 {
     string input;
     vector <int> worldSeed;
@@ -36,6 +102,8 @@ void world (int diffuculty)
     int xy = 0;
 
    struct system s[100];
+
+   worldConstructor(s, difficulty, worldSeed);
 
    for (int y = 0; y < 10; y++)
    {
@@ -123,10 +191,3 @@ void world (int diffuculty)
 
 }
 
-void worldBuilder(struct system s, int difficulty, vector<int> worldSeed)
-{
-    for (int i = 0; i < 10; i++)
-    {
-
-    }
-}

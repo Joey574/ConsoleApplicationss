@@ -33,7 +33,6 @@ using namespace std::chrono; // needed for sleep for
 #include "WorldGeneration.h"
 
 void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
-void worldBuilder();
 void gameStart(struct player &p, struct ship &s);
 int stringToIntErrorChecker(string input);
 void invalidInput();
@@ -55,6 +54,8 @@ int main()
 	fstream saveFile;
 	fstream highScores;
 
+	world(1);
+
 	 printf("                     `. ___\n");
 	 printf("                   __,' __`.                _..----....____\n");
 	 printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'\n");
@@ -69,7 +70,7 @@ int main()
 	 printf("                              |       `._    `.    \\\n");
 	 printf("                              `._________`-.   `.   `.___\n");
 	 printf("                                                 `------'`\n");
-	 printf("\n  _________                                   __________ __________   ________ \n");
+	 printf("\n  _________                                   __________ __________   ________ \n"); // need a new name, Sp_ce RPG isn't original, it's trails RPG name
 	 printf(" /   _____/______           ____    ____      \\______   \\\\______   \\ /  _____/ \n");
 	 printf(" \\_____  \\ \\____ \\        _/ ___\\ _/ __ \\      |       _/ |     ___//   \\  ___ \n");
 	 printf(" /        \\|  |_> >       \\  \\___ \\  ___/       |    |   \\ |    |    \\    \\_\\  \\\n");
