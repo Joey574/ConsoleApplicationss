@@ -31,12 +31,35 @@ struct system
     bool objective;
 };
 
-void gotoxy(int x, int y)
+void gotoxy(int x, int y) // credit: Miyoshi
 {
     COORD coord;
     coord.X = x;
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void exploredUpdater(struct system s[100])
+{
+    int xy = 0;
+    for (int i = 0; i < 100; i++)
+    {
+        if (s[xy].explored == true)
+        {
+            gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 1);
+            cout << "Danger: " << s[xy].dangerLevel;
+            gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 2);
+            cout << "Supplies:";
+            gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 3);
+            cout << s[xy].supplies;
+        }
+        else
+        {
+            gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
+            printf("No Data");
+        }
+        xy++;
+    }
 }
 
 void worldConstructor(struct system s[100], int difficulty, vector<int> worldSeed)
@@ -110,6 +133,7 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
     cout << (char)topRightCorner;
     gotoxy(0, 61);
 
+    /* // World Building Error Checking
     for (int p = 1; p < vertDist; p += 6)
     {
         for (int i = 1; i <= horDist; i += 10)
@@ -125,8 +149,9 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
             xy++;
         }
     }
-    
+    */
 
+    exploredUpdater(s);
 
     _getch();
     exit(0);
@@ -220,6 +245,11 @@ void world (int difficulty)
     s[1].dangerLevel = 0;
     s[10].dangerLevel = 0;
     s[11].dangerLevel = 0;
+
+    s[0].explored = true; // setting adjacent tiles to explored
+    s[1].explored = true;
+    s[10].explored = true;
+    s[11].explored = true;
 
    /*  //system danger level and supplies error checking
     for (int i = 0; i < 100; i++)
