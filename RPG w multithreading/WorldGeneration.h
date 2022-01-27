@@ -43,82 +43,73 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
 {
     int line = 196;
     int upLine = 179;
+    int horSep = 10;
+    int vertSep = 6;
     int temp = 1;
-    int vertSep = 10;
-
-    cout << (char)218;
-    for (int i = 0; i < 99; i++)
+    int horDist = 100;
+    int vertDist = 61;
+    int topLeftCorner = 218;
+    int topRightCorner = 191;
+    int botLeftCorner = 192;
+    int botRightCorner = 217;
+    int rightT = 195;
+    int leftT = 180;
+    int bottomT = 193;
+    int upT = 194;
+    int junction = 197;
+    
+    for (int x = 0; x < 10; x++)
     {
-        cout << (char)line;
-    }
-    cout << (char)191;
-    cout << endl;
-
-    for (int i = 0; i < 59; i++)
-    {
-        cout << (char)upLine << endl;
-    }
-
-    for (int i = 0; i < 54; i += 6)
-    {
-        gotoxy(0, i + 6);
-        cout << char(195);
-        for (int i = 0; i < 108; i++)
+        cout << (char)topLeftCorner;
+        for (int i = 1; i < horDist; i++)
         {
             cout << (char)line;
         }
+        cout << (char)topRightCorner << endl;
+        for (int p = 1; p < vertSep; p++)
+        {
+            for (int i = 0; i <= horDist; i += horSep)
+            {
+                gotoxy(i, p + (x * 6));
+                cout << (char)upLine;
+            }
+        }
+        cout << endl;
     }
-
-    gotoxy(0, 60);
-    cout << char(192);
-    for (int i = 0; i < 108; i++)
+    cout << (char)botLeftCorner;
+    for (int p = 6; p < 60; p += 6)
     {
-        cout << (char)line;
+        gotoxy(0, p);
+        cout << (char)rightT;
+        for (int i = 10; i < horDist; i += 10)
+        {
+            gotoxy(i, p);
+            cout << (char)junction;
+        }
+        gotoxy(100, p);
+        cout << (char)leftT;
     }
-   
-    gotoxy(109, 1);
+    gotoxy(1, 60);
     for (int p = 0; p < 10; p++)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 9; i++)
         {
-            cout << (char)upLine << endl;
-            temp += 1;
-            gotoxy(109, temp);
+            cout << (char)line;
         }
-        cout << (char)180 << endl;
-        temp += 1;
-        gotoxy(109, temp);
+        cout << (char)bottomT;
     }
-    gotoxy(110, 60);
-    cout << (char)217 << endl;
-    
-    temp = 1;
-
-
-    for (int a = 0; a < 10; a++)
+    gotoxy(100, 60);
+    cout << (char)botRightCorner;
+    for (int i = 10; i < horDist; i += 10)
     {
-        gotoxy(vertSep, 0);
-        cout << (char)194;
-        gotoxy(vertSep, 1);
-        for (int p = 0; p < 10; p++)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                cout << (char)upLine << endl;
-                temp += 1;
-                gotoxy(vertSep, temp);
-            }
-            cout << (char)197 << endl;
-            temp += 1;
-            gotoxy(vertSep, temp);
-        }
-        gotoxy(vertSep, 60);
-        cout << (char)193 << endl;
-        vertSep += 10;
-        temp = 1;
+        gotoxy(i, 0);
+        cout << (char)upT;
     }
     gotoxy(100, 0);
-    cout << (char)191;
+    cout << (char)topRightCorner;
+    gotoxy(0, 61);
+
+
 
     _getch();
     exit(0);
