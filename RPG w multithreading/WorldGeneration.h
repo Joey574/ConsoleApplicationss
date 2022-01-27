@@ -110,14 +110,22 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
     cout << (char)topRightCorner;
     gotoxy(0, 61);
 
-    
-    gotoxy(1, 1);
-    for (int i = 11; i < horDist; i += 11) // not working
+    for (int p = 1; p < vertDist; p += 6)
     {
-        cout << "Danger: " << s[xy].dangerLevel;
-        xy++;
-        gotoxy(i, 1);
+        for (int i = 1; i <= horDist; i += 10) // not working
+        {
+            gotoxy(i, p);
+            cout << "Danger: " << s[xy].dangerLevel;
+            gotoxy(i, p + 1);
+            cout << "(" << s[xy].x << ", " << s[xy].y << ")";
+            gotoxy(i, p + 2);
+            cout << "Supplies:";
+            gotoxy(i, p + 3);
+            cout << s[xy].supplies;
+            xy++;
+        }
     }
+    
 
 
     _getch();

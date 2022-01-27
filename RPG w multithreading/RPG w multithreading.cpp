@@ -55,7 +55,6 @@ int main()
 	fstream highScores;
 
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
-	world(1);
 
 	 printf("                     `. ___\n");
 	 printf("                   __,' __`.                _..----....____\n");
