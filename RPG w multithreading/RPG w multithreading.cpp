@@ -135,10 +135,82 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 	string input;
 	string temp;
 	string saveName;
+
+	int ascX = 25;
+	int ascY = 5;
 	
 	while (1)
 	{
 		system("CLS");
+		gotoxy(ascX, ascY);
+		printf("                                ....");
+		gotoxy(ascX, ascY + 1);
+		printf("                                /   `.");
+		gotoxy(ascX, ascY + 2);
+		printf("                               |      `,");
+		gotoxy(ascX, ascY + 3);
+		printf("		                 -.   ,'		  ");
+		gotoxy(ascX, ascY + 4);
+		printf("                                   `-/ \\				  ");
+		gotoxy(ascX, ascY + 5);
+		printf("                                  ,'    ;				  ");
+		gotoxy(ascX, ascY + 6);
+		printf("                                ,'     /      ____		  ");
+		gotoxy(ascX, ascY + 7);
+		printf("                        ______,i     __-  ,'''__  `._	  ");
+		gotoxy(ascX, ascY + 8);
+		printf("                       /        `-,-'  `-+ /''XX`-.. `.	  ");
+		gotoxy(ascX, ascY + 9);
+		printf("                      /    ,'-._    ``-.i,'XXXXXXXX`.  :  ");
+		gotoxy(ascX, ascY + 10);
+		printf("                     /  .--  ._ `-,_     \\XXXXXXXXXX/ |	  ");
+		gotoxy(ascX, ascY + 11);
+		printf("                     |   `.  `.  /XX`..   \\XXXXXXXX| .'	  ");
+		gotoxy(ascX, ascY + 12);
+		printf("                   ,'|  .i> `. .'XXXXXX/-. -._XXX_/ ,'	  ");
+		gotoxy(ascX, ascY + 13);
+		printf("                 ,'  ',.:>_.'','XXXXXX/  ,`-. `. _,'\\  _  ");
+		gotoxy(ascX, ascY + 14);
+		printf("               ,'    /   _ `./XXXXXX,'  / /  `. '.  ,+' `.");
+		gotoxy(ascX, ascY + 15);
+		printf("             ,'     /   -_` /XXXXXX/  ,',',- , `.<-'    ,'");
+		gotoxy(ascX, ascY + 16);
+		printf("           ,'      /   :- ;'XXXXXX/  /,',' ,',  ,-.   ,'  ");
+		gotoxy(ascX, ascY + 17);
+		printf("         ,'       :  ._ `,'XXXXXX/ ,'/,'_,',',-'XX,-,'	  ");
+		gotoxy(ascX, ascY + 18);
+		printf("       ,'        _ `-.  /XXXXXXX/ /,;',',-','XXX,:`		  ");
+		gotoxy(ascX, ascY + 19);
+		printf("      `    _,'-,- `-..i`.XXXXX,' /`/,',',-'XX_X'  `,	  ");
+		gotoxy(ascX, ascY + 20);
+		printf("       `.,'   ,'      \\  `=.X,',' ;',','XX,,'\\\\  ,:		  ");
+		gotoxy(ascX, ascY + 21);
+		printf("            ,'`.       |,;' `-.  - i,'XXX,'    -' |		  ");
+		gotoxy(ascX, ascY + 22);
+		printf("          ,'    `    ,' .i     `-,'XXXX,'`.    ,-'		  ");
+		gotoxy(ascX, ascY + 23);
+		printf("         /         ,' ,'  `-..    ;-,,;'   `,,'			  ");
+		gotoxy(ascX, ascY + 24);
+		printf("       ,'    `.  ,' ,-        \\ ,'  ,:    ,'			  ");
+		gotoxy(ascX, ascY + 25);
+		printf("      |        ,' ,'       .  ,'  ,'  `-<'				  ");
+		gotoxy(ascX, ascY + 26);
+		printf("    ,-._     ,' ,'     -.  ,-'  ,'						  ");
+		gotoxy(ascX, ascY + 27);
+		printf("  ,'       ,'_,'   _    ,`'    |						  ");
+		gotoxy(ascX, ascY + 28);
+		printf(" \\       ,','       `,-:    _,/							  ");
+		gotoxy(ascX, ascY + 29);
+		printf(" \\     ,' '       ,-'   --''							  ");
+		gotoxy(ascX, ascY + 30);
+		printf("  '`-<' ,'   \\ ,-'										  ");
+		gotoxy(ascX, ascY + 31);
+		printf("        |    ,'											  ");
+		gotoxy(ascX, ascY + 32);
+		printf("        \\  _'											  ");
+		gotoxy(ascX, ascY + 33);
+		printf("         '-												  ");
+		gotoxy(0, 0);
 		if (inGame == false) // check to see if game has already been started
 		{
 			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // not started

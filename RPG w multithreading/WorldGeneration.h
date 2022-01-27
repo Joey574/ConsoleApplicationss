@@ -112,7 +112,7 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
 
     for (int p = 1; p < vertDist; p += 6)
     {
-        for (int i = 1; i <= horDist; i += 10) // not working
+        for (int i = 1; i <= horDist; i += 10)
         {
             gotoxy(i, p);
             cout << "Danger: " << s[xy].dangerLevel;
@@ -231,5 +231,4 @@ void world (int difficulty)
     s[50 + rand() % 99].objective = true;
 
     worldConstructor(s, difficulty, worldSeed);
-
 }
