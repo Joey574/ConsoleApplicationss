@@ -57,6 +57,7 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
     int bottomT = 193;
     int upT = 194;
     int junction = 197;
+    int xy = 0;
     
     for (int x = 0; x < 10; x++)
     {
@@ -109,6 +110,14 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
     cout << (char)topRightCorner;
     gotoxy(0, 61);
 
+    
+    gotoxy(1, 1);
+    for (int i = 11; i < horDist; i += 11) // not working
+    {
+        cout << "Danger: " << s[xy].dangerLevel;
+        xy++;
+        gotoxy(i, 1);
+    }
 
 
     _getch();
