@@ -34,35 +34,43 @@ int main()
 	vector<vector<int>> a
 	{
 		{9, 5, 7},
-		{1, 2, 3},
-		{1, 2, 3}	
+		{10, 2, 5},
+		{12, 67, 4}	
 	};
 
 	vector<vector<int>> b
 	{
-		{1, 2, 3},
-		{1, 2, 3},
-		{1, 2, 3}
+		{9, 23, 35},
+		{18, 26, 67},
+		{15, 43, 24}
 	};
 
 	vector<vector<int>> c;
 
-	for (int i = 0; i < 3; i++)
-	{
-		vector<int> ans;
-		for (int p = 0; p < 3; p++)
-		{
-			for (int c = 0; c < 3; c++)
-			{
-				ans.push_back(a[p][c] * b[c][i]);
-				cout << ans[c] << endl;
-			}
-			ans[0] = ans[0] + ans[1] + ans[2];
-			cout << ans[0];
-			_getch();
-		}
-	}
+	vector<int> test;
 
+	for (int x = 0; x < 3; x++)
+	{
+		vector <int> temp = {0, 0, 0};
+		for (int i = 0; i < 3; i++)
+		{
+			for (int p = 0; p < 3; p++)
+			{
+				temp[i] += a[x][p] * b[p][i];
+			}
+		}
+		c.push_back(temp);
+	}
+	
+
+	for (int i = 0; i < c.size(); i++)
+	{
+		for (int p = 0; p < c[i].size(); p++)
+		{
+			cout << c[i][p] << "\t";
+		}
+		cout << endl;
+	}
 
 	return 0;
 }
