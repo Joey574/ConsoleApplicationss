@@ -38,7 +38,7 @@ int main()
 	while (1)
 	{
 		system("CLS");
-		int i = 0 + rand() % (19 - 0 + 1);
+		int i = rand() % (20);
 		cout << "Fortune: " << fortunes.at(i) << endl;
 		printf("Press 1 to exit, or any other key for a new fortune\n");
 
