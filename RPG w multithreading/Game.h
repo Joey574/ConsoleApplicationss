@@ -28,5 +28,4 @@ void mapMovement(struct system s[100])
 			
 		}
 	}
-		
 }
