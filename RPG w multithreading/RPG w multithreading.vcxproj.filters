@@ -26,6 +26,9 @@
     <ClInclude Include="WorldGeneration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="save1.txt" />
