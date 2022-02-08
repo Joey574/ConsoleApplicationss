@@ -19,3 +19,71 @@
 
 using namespace std;
 
+struct person
+{
+	string name;
+	string phone;
+
+	int age;
+	int height;
+	int weight;
+};
+
+int main()
+{
+	string input;
+	vector <person> p;
+	string temp;
+	
+	int t = 0;
+
+	fstream f;
+
+	f.open("names.txt");
+	if (!f.is_open())
+	{
+		printf("File not found");
+	}
+
+	while (1)
+	{
+		system("CLS");
+		printf("Enter name: ");
+		cin >> input;
+		f << input;
+		printf("Enter age: ");
+		cin >> input;
+		f << "," << input;
+		printf("Enter height (in): ");
+		cin >> input;
+		f << "," << input;
+		printf("Enter weight: ");
+		cin >> input;
+		f << "," << input;
+		printf("Enter phone #: ");
+		cin >> input;
+		f << "," << input << endl;
+		system("CLS");
+		printf("Is that all y/n?\n");
+		input = _getche();
+		if (input == "y")
+		{
+			break;
+		}
+	}
+
+	system("CLS");
+
+	while (getline(f, temp))
+	{
+		
+	}
+
+	f.close();
+
+	for (int i = 0; i < p.size(); i++)
+	{
+		cout << "Name: " << p[i].name << " Age: " << p[i].age << " Height: " << p[i].height << " Weight: " << p[i].weight << " Phone #: " << p[i].phone << endl;
+	}
+}
+
