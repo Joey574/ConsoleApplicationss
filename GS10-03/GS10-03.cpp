@@ -92,8 +92,8 @@ DWORD WINAPI InputThread(LPVOID data)
 {
 	for (int i = 0; i < 360; i++)
 	{
-		cosineTable.push_back(cos(i * M_PI / 180));
-		sineTable.push_back(sin(i * M_PI / 180));
+		cosineTable.push_back(cos(i * M_PI / 180.0));
+		sineTable.push_back(sin(i * M_PI / 180.0));
 	}
 	loading = false;
 

@@ -17,9 +17,9 @@
 #include <algorithm> // needed for vector sort
 #include <iterator>
 
+#include "Game.h"
+
 using namespace std;
-
-
 
 struct system
 {
@@ -28,6 +28,7 @@ struct system
     int x, y;
     int systemID;
     bool explored;
+    bool current = false;
     bool objective;
 };
 
@@ -41,8 +42,19 @@ void gotoxy(int x, int y) // credit: Miyoshi
 
 void exploredUpdater(struct system s[100])
 {
-    int xy = 0;
-    for (int i = 0; i < 100; i++)
+    for (int xy = 0; xy < 100; xy++)
+    {
+        if (s[xy].current = true)
+        {
+            s[xy].explored = true;
+            s[xy + 1].explored = true;
+            s[xy + 10].explored = true;
+            s[xy + 11].explored = true;
+            break;
+        }
+    }
+
+    for (int xy = 0; xy < 100; xy++)
     {
         if (s[xy].explored == true)
         {
@@ -58,7 +70,6 @@ void exploredUpdater(struct system s[100])
             gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
             printf("No Data");
         }
-        xy++;
     }
 }
 
@@ -153,6 +164,8 @@ void worldConstructor(struct system s[100], int difficulty, vector<int> worldSee
 
     exploredUpdater(s);
 
+    mapMovement(s);
+
     _getch();
     exit(0);
 }
@@ -246,10 +259,7 @@ void world (int difficulty)
     s[10].dangerLevel = 0;
     s[11].dangerLevel = 0;
 
-    s[0].explored = true; // setting adjacent tiles to explored
-    s[1].explored = true;
-    s[10].explored = true;
-    s[11].explored = true;
+    s[0].current = true; // setting current system
 
    /*  //system danger level and supplies error checking
     for (int i = 0; i < 100; i++)

@@ -47,8 +47,6 @@ int main()
 
 	vector<vector<int>> c;
 
-	vector<int> test;
-
 	for (int x = 0; x < 3; x++)
 	{
 		vector <int> temp = {0, 0, 0};
