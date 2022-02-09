@@ -36,6 +36,7 @@ int main()
 	string temp;
 	
 	int t = 0;
+	int x = 0;
 
 	fstream f;
 
@@ -74,9 +75,30 @@ int main()
 
 	system("CLS");
 
-	while (getline(f, temp))
+	p.push_back(person());
+
+	while (getline(f, temp, ','))
 	{
-		
+
+		p[x].name = temp;
+
+		getline(f, temp, ',');
+		t = stoi(temp);
+		p[x].age = t;
+
+		getline(f, temp, ',');
+		t = stoi(temp);
+		p[x].height = t;
+
+		getline(f, temp, ',');
+		t = stoi(temp);
+		p[x].weight = t;
+
+		getline(f, temp);
+		p[x].phone = temp;
+		x++;
+
+		p.push_back(person());
 	}
 
 	f.close();
