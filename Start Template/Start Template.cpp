@@ -26,8 +26,8 @@ Maintenance Log:
 #include <algorithm> // needed for vector sort
 
 using namespace std;
-using namespace std::this_thread; // needed for sleep for
-using namespace std::chrono; // needed for sleep for
+using namespace this_thread; // needed for sleep for
+using namespace chrono; // needed for sleep for
 
 int main()
 {

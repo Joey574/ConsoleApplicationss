@@ -23,8 +23,8 @@ Maintenance Log:
 #include <sstream> // needed for files
 #include <fstream> // needed for files
 using namespace std;
-using namespace std::this_thread; // needed for sleep for
-using namespace std::chrono; // needed for sleep for
+using namespace this_thread; // needed for sleep for
+using namespace chrono; // needed for sleep for
 
 bool loading = true;
 vector <double> cosineTable;

@@ -27,6 +27,7 @@ int main()
 	string temp;
 	string line;
 	string output = "";
+	vector <string> info;
 
 	ifstream in;
 	ofstream out;
@@ -39,9 +40,9 @@ int main()
 	}
 	while (getline(in, temp, ','))
 	{
+		info.push_back(temp);
 		out << temp << "\t";
 	}
 
 	return 0;
 }
-
