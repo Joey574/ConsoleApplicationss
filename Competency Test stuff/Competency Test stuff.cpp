@@ -34,7 +34,10 @@ int main()
 	string input;
 	vector <person> p;
 	string temp;
-	
+	string push;
+
+	int x;
+	int tem = 0;
 	int t = 0;
 
 	fstream f;
@@ -45,30 +48,35 @@ int main()
 		printf("File not found");
 	}
 
-	while (1)
+	printf("Would you like to enter information?(y/n)\n");
+	input = _getche();
+	if (input == "y")
 	{
-		system("CLS");
-		printf("Enter name: ");
-		cin >> input;
-		f << input;
-		printf("Enter age: ");
-		cin >> input;
-		f << "," << input;
-		printf("Enter height (in): ");
-		cin >> input;
-		f << "," << input;
-		printf("Enter weight: ");
-		cin >> input;
-		f << "," << input;
-		printf("Enter phone #: ");
-		cin >> input;
-		f << "," << input << endl;
-		system("CLS");
-		printf("Is that all y/n?\n");
-		input = _getche();
-		if (input == "y")
+		while (1)
 		{
-			break;
+			system("CLS");
+			printf("Enter name: ");
+			cin >> input;
+			f << input;
+			printf("Enter age: ");
+			cin >> input;
+			f << "," << input;
+			printf("Enter height (in): ");
+			cin >> input;
+			f << "," << input;
+			printf("Enter weight: ");
+			cin >> input;
+			f << "," << input;
+			printf("Enter phone #: ");
+			cin >> input;
+			f << "," << input << endl;
+			system("CLS");
+			printf("Is that all y/n?\n");
+			input = _getche();
+			if (input == "y")
+			{
+				break;
+			}
 		}
 	}
 
@@ -76,7 +84,51 @@ int main()
 
 	while (getline(f, temp))
 	{
-		
+		t = 0;
+
+		p.push_back(person());
+		push.clear();
+ 
+		for (int i = 0; i < temp.length(); i++)
+		{
+			if (temp[i] != ',')
+			{
+				push += temp[i];
+				cout << push << endl;
+			}
+			if (temp[i] == ',' || i == temp.length() - 1)
+			{
+				if (t == 0)
+				{
+					p[tem].name = push;
+				}
+				else if (t == 1)
+				{
+					x = stoi(push);
+					p[tem].age = x;
+				}
+				else if (t == 2)
+				{
+					x = stoi(push);
+					p[tem].height = x;
+				}
+				else if (t == 3)
+				{
+					x = stoi(push);
+					p[tem].weight = x;
+				}
+				else if (t == 4)
+				{
+					p[tem].phone = push;
+				}
+				push.clear();
+				t++; // used to check what type of data is being read
+				cout << "t = " << t << endl;
+			}
+		}
+		cout << endl;
+
+		tem++; // used to check what persons data is being read
 	}
 
 	f.close();
