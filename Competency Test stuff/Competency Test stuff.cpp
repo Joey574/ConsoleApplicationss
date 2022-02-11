@@ -34,7 +34,10 @@ int main()
 	string input;
 	vector <person> p;
 	string temp;
-	
+	string push;
+
+	int x;
+	int tem = 0;
 	int t = 0;
 	int x = 0;
 
@@ -46,30 +49,35 @@ int main()
 		printf("File not found");
 	}
 
-	while (1)
+	printf("Would you like to enter information?(y/n)\n");
+	input = _getche();
+	if (input == "y")
 	{
-		system("CLS");
-		printf("Enter name: ");
-		cin >> input;
-		f << input;
-		printf("Enter age: ");
-		cin >> input;
-		f << "," << input;
-		printf("Enter height (in): ");
-		cin >> input;
-		f << "," << input;
-		printf("Enter weight: ");
-		cin >> input;
-		f << "," << input;
-		printf("Enter phone #: ");
-		cin >> input;
-		f << "," << input << endl;
-		system("CLS");
-		printf("Is that all y/n?\n");
-		input = _getche();
-		if (input == "y")
+		while (1)
 		{
-			break;
+			system("CLS");
+			printf("Enter name: ");
+			cin >> input;
+			f << input;
+			printf("Enter age: ");
+			cin >> input;
+			f << "," << input;
+			printf("Enter height (in): ");
+			cin >> input;
+			f << "," << input;
+			printf("Enter weight: ");
+			cin >> input;
+			f << "," << input;
+			printf("Enter phone #: ");
+			cin >> input;
+			f << "," << input << endl;
+			system("CLS");
+			printf("Is that all y/n?\n");
+			input = _getche();
+			if (input == "y")
+			{
+				break;
+			}
 		}
 	}
 

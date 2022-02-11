@@ -79,35 +79,3 @@ DWORD WINAPI InputThread(LPVOID data)
 	return 0;
 }
 
-/*
-void thread_task(int i)
-{
-	const char ESC = 27;
-	char input;
-	while (1)
-	{
-		input = _getche();
-
-		if (input == ESC)
-		{
-			printf("Escape detected");
-
-		}
-	}
-}
-
-
-int main()
-{
-	int i = 1;
-	while (i = 1)
-	{
-		thread t1(thread_task, ref(i));
-		t1.join();
-		printf("Testing easier ways to multithread!");
-		Sleep(500);
-		system("CLS");
-		Sleep(500);
-	}
-}
-*/
