@@ -39,6 +39,7 @@ int main()
 	int x;
 	int tem = 0;
 	int t = 0;
+	int x = 0;
 
 	fstream f;
 
@@ -82,53 +83,30 @@ int main()
 
 	system("CLS");
 
-	while (getline(f, temp))
+	p.push_back(person());
+
+	while (getline(f, temp, ','))
 	{
-		t = 0;
+
+		p[x].name = temp;
+
+		getline(f, temp, ',');
+		t = stoi(temp);
+		p[x].age = t;
+
+		getline(f, temp, ',');
+		t = stoi(temp);
+		p[x].height = t;
+
+		getline(f, temp, ',');
+		t = stoi(temp);
+		p[x].weight = t;
+
+		getline(f, temp);
+		p[x].phone = temp;
+		x++;
 
 		p.push_back(person());
-		push.clear();
- 
-		for (int i = 0; i < temp.length(); i++)
-		{
-			if (temp[i] != ',')
-			{
-				push += temp[i];
-				cout << push << endl;
-			}
-			if (temp[i] == ',' || i == temp.length() - 1)
-			{
-				if (t == 0)
-				{
-					p[tem].name = push;
-				}
-				else if (t == 1)
-				{
-					x = stoi(push);
-					p[tem].age = x;
-				}
-				else if (t == 2)
-				{
-					x = stoi(push);
-					p[tem].height = x;
-				}
-				else if (t == 3)
-				{
-					x = stoi(push);
-					p[tem].weight = x;
-				}
-				else if (t == 4)
-				{
-					p[tem].phone = push;
-				}
-				push.clear();
-				t++; // used to check what type of data is being read
-				cout << "t = " << t << endl;
-			}
-		}
-		cout << endl;
-
-		tem++; // used to check what persons data is being read
 	}
 
 	f.close();

@@ -23,7 +23,7 @@ Maintenance Log:
 #include <sstream> // needed for files
 #include <fstream> // needed for files
 #include <cwchar>
-#include <algorithm> // needed for vector sort
+#include <algorithm> // needed for vector sort and other cool things
 
 using namespace std;
 using namespace std::this_thread; // needed for sleep for
@@ -528,7 +528,7 @@ void gameStart(struct player &p, struct ship &s)
 	printf("more modules with the blueprints we have supplied you with.\n");
 	_getch();
 	system("CLS");
-	printf("If you ever need help or want to save visit your ships onboard computer, located at your command module and reopen the menu.\n");
+	printf("If you ever need help or want to save visit your ships onboard computer, located in your command module, and reopen the menu.\n");
 	_getch();
 	system("CLS");
 	cout << "Good luck Captain " << p.name << ", and make sure you come home safe!" << endl;
