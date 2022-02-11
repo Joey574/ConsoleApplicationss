@@ -21,12 +21,12 @@
 
 void mapMovement(struct system s[100])
 {
-	/*for (int xy = 0; xy < 100; xy++)
+	for (int xy = 0; xy < 100; xy++)
 	{
 		if (s[xy].current == true)
 		{
 			
 		}
 	}
-	*/
+	
 }

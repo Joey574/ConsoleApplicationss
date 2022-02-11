@@ -21,8 +21,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Global Variables Testing", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Getters and Setters Testing", "Getters and Setters Testing\Getters and Setters Testing.vcxproj", "{1F769CD2-8925-4633-91C0-DDFF24282567}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RPG Introction", "RPG Introction\RPG Introction.vcxproj", "{3E596C05-B166-4C2D-81AB-3F552E9E08A9}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground", "Playground\Playground.vcxproj", "{843366B6-8B7C-479C-9DC0-12D518A29ECB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common Commands", "Common Commands\Common Commands.vcxproj", "{249F7093-9221-4A92-8170-5EBE8E5EDE05}"
@@ -167,14 +165,6 @@ Global
 		{1F769CD2-8925-4633-91C0-DDFF24282567}.Release|x64.Build.0 = Release|x64
 		{1F769CD2-8925-4633-91C0-DDFF24282567}.Release|x86.ActiveCfg = Release|Win32
 		{1F769CD2-8925-4633-91C0-DDFF24282567}.Release|x86.Build.0 = Release|Win32
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Debug|x64.ActiveCfg = Debug|x64
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Debug|x64.Build.0 = Debug|x64
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Debug|x86.ActiveCfg = Debug|Win32
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Debug|x86.Build.0 = Debug|Win32
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Release|x64.ActiveCfg = Release|x64
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Release|x64.Build.0 = Release|x64
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Release|x86.ActiveCfg = Release|Win32
-		{3E596C05-B166-4C2D-81AB-3F552E9E08A9}.Release|x86.Build.0 = Release|Win32
 		{843366B6-8B7C-479C-9DC0-12D518A29ECB}.Debug|x64.ActiveCfg = Debug|x64
 		{843366B6-8B7C-479C-9DC0-12D518A29ECB}.Debug|x64.Build.0 = Debug|x64
 		{843366B6-8B7C-479C-9DC0-12D518A29ECB}.Debug|x86.ActiveCfg = Debug|Win32
