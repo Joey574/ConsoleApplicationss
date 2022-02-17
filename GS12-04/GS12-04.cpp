@@ -33,13 +33,15 @@ class animal
 {
 public:
 	animal();
-	animal(string name, int age, int level);
+	animal(string name, int age, int level, string d);
 	animal(animal& c);
 
 	void setName(string name);
 	void setAge(int age);
 	void setLevel(int level);
+	void setDialouge(string dialouge);
 	string getName();
+	string getDialouge();
 	int getAge();
 	int getLevel();
 
@@ -48,6 +50,7 @@ public:
 
 private:
 	string n;
+	string d;
 	int a;
 	int l;
 };
@@ -55,13 +58,15 @@ private:
 animal::animal()
 {
 	n = "";
+	d = "";
 	a = 0;
 	l = 0;
 }
 
-animal::animal(string name, int age, int level)
+animal::animal(string name, int age, int level, string dialouge)
 {
 	n = name;
+	d = dialouge;
 	a = age;
 	l = level;
 }
@@ -69,6 +74,7 @@ animal::animal(string name, int age, int level)
 animal::animal(animal& c)
 {
 	n = c.n;
+	d = c.d;
 	a = c.a;
 	l = c.l;
 }
@@ -76,6 +82,11 @@ animal::animal(animal& c)
 void animal::setName(string name)
 {
 	n = name;
+}
+
+void animal::setDialouge(string dialouge)
+{
+	d = dialouge;
 }
 
 void animal::setAge(int age)
@@ -93,6 +104,11 @@ string animal::getName()
 	return n;
 }
 
+string animal::getDialouge()
+{
+	return d;
+}
+
 int animal::getAge()
 {
 	return a;
@@ -105,21 +121,21 @@ int animal::getLevel()
 
 int animal::health()
 {
-	if (100 + (l * 10) > 200)
+	if (100 + (l * 5) > 200)
 	{
 		return 200;
 	}
 	else
 	{
-		return 100 + (l * 10);
+		return 100 + (l * 5);
 	}
 }
 
 int animal::speed()
 {
-	if (100 - (a * 2) < 10)
+	if (100 - (a * 2) < 20)
 	{
-		return 10;
+		return 20;
 	}
 	else
 	{
@@ -132,9 +148,12 @@ int main()
 	animal a;
 	string input;
 	string name;
+	string dialouge;
 	int age;
 	int level;
 
+	printf("Enter dialouge: ");
+	getline(cin, dialouge, '\n');
 	printf("Enter name of animal: ");
 	cin >> name;
 	printf("Enter age of animal: ");
@@ -142,13 +161,14 @@ int main()
 	printf("Enter level of animal: ");
 	cin >> level;
 	a.setName(name);
+	a.setDialouge(dialouge);
 	a.setAge(age);
 	a.setLevel(level);
 
 	while (1)
 	{
 		system("CLS");
-		printf("What would you like to know?\n1: Name\n2: Age\n3: Level\n4: Health\n5: Speed\n6: Exit\nInput: ");
+		printf("What would you like to know?\n1: Name\n2: Dialouge\n3: Age\n4: Level\n5: Health\n6: Speed\n7: Exit\nInput: ");
 		cin >> input;
 		system("CLS");
 		if (input == "1")
@@ -157,21 +177,25 @@ int main()
 		}
 		else if (input == "2")
 		{
-			cout << "Age: " << a.getAge() << endl;
+			cout << "Dialouge: " << a.getDialouge() << endl;
 		}
 		else if (input == "3")
 		{
-			cout << "Level: " << a.getLevel() << endl;
+			cout << "Age: " << a.getAge() << endl;
 		}
 		else if (input == "4")
 		{
-			cout << "Health: " << a.health() << endl;
+			cout << "Level: " << a.getLevel() << endl;
 		}
 		else if (input == "5")
 		{
-			cout << "Speed: " << a.speed() << endl;
+			cout << "Health: " << a.health() << endl;
 		}
 		else if (input == "6")
+		{
+			cout << "Speed: " << a.speed() << endl;
+		}
+		else if (input == "7")
 		{
 			break;
 		}
