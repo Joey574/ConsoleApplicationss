@@ -18,6 +18,7 @@
 #include <algorithm> // needed for vector sort
 
 #include "WorldGeneration.h"
+#include "Player.h"
 
 void mapMovement(vector<systems>& s)
 {

@@ -17,8 +17,6 @@
 #include <algorithm> // needed for vector sort
 #include <iterator>
 
-#include "Game.h"
-
 using namespace std;
 
 struct systems

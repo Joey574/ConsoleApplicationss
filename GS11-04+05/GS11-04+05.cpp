@@ -28,13 +28,8 @@ int main()
 	string temp;
 	string encrypted;
 	string output;
-	string original;
 
 	int encryptionValue;
-
-	printf("Please enter name of original text file: ");
-	cin >> original;
-	original += ".txt";
 
 	printf("Please enter name of encryption file: ");
 	cin >> encrypted;
@@ -56,8 +51,8 @@ int main()
 			ifstream ori;
 			ofstream enc;
 
-			ori.open(original);
-			enc.open(encrypted);
+			ori.open("original.txt");
+			enc.open(encrypted, ios::out | ios::trunc);
 
 			if (!ori.is_open())
 			{
@@ -98,6 +93,8 @@ int main()
 					enc << c;
 					cout << c;
 				}
+				enc << "\n";
+				cout << "\n";
 			}
 
 			ori.close();
@@ -112,7 +109,7 @@ int main()
 
 			encin.open(encrypted);
 
-			out.open(output);
+			out.open(output, ios::out | ios::trunc);
 
 			while (getline(encin, temp))
 			{
@@ -131,6 +128,8 @@ int main()
 					out << c;
 					cout << c;
 				}
+				out << "\n";
+				cout << "\n";
 			}
 
 			out.close();
@@ -141,9 +140,10 @@ int main()
 		else if (input == "3")
 		{
 			ofstream ori;
-			ori.open(original);
+			ori.open("original.txt", ios::out | ios::trunc);
 
 			printf("Please enter text to encrypt/decrypt: ");
+			cin.ignore();
 			getline(cin, input);
 
 			ori << input;
@@ -161,4 +161,3 @@ int main()
 	
 	return 0;
 }
-
