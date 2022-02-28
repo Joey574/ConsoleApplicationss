@@ -18,15 +18,16 @@
 #include <algorithm> // needed for vector sort
 
 #include "WorldGeneration.h"
+#include "Player.h"
 
-void mapMovement(struct system s[100])
+void mapMovement(vector<systems>& s)
 {
 	for (int xy = 0; xy < 100; xy++)
 	{
 		if (s[xy].current == true)
 		{
-			
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 4);
+			printf("Current POS");
 		}
 	}
-	
 }

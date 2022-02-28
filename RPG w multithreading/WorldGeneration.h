@@ -17,11 +17,9 @@
 #include <algorithm> // needed for vector sort
 #include <iterator>
 
-#include "Game.h"
-
 using namespace std;
 
-struct system
+struct systems
 {
     int dangerLevel;
     int supplies;
@@ -40,7 +38,7 @@ void gotoxy(int x, int y) // credit: Miyoshi
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void exploredUpdater(struct system s[100])
+void exploredUpdater(vector<systems>& s)
 {
     for (int xy = 0; xy < 100; xy++)
     {
@@ -73,7 +71,7 @@ void exploredUpdater(struct system s[100])
     }
 }
 
-void worldConstructor(struct system s[100], int difficulty, vector<int> worldSeed)
+void worldConstructor(vector<systems>& s, int difficulty, vector<int> worldSeed)
 {
     int line = 196;
     int upLine = 179;
@@ -174,11 +172,10 @@ void world (int difficulty)
 {
     string input;
     vector <int> worldSeed;
+    vector <systems> s(100);
   
     int seed;
     int xy = 0;
-
-   struct system s[100];
 
    for (int y = 0; y < 10; y++)
    {

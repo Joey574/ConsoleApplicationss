@@ -132,16 +132,17 @@ int person::getAge()
 	return a;
 }
 
-int main()
+void changeClass (person &p)
 {
-	person p;
-	string input;
 	string fN;
 	string mN;
 	string lN;
 	string pN;
 	int a;
 
+	fstream dat;
+
+	system("CLS");
 	printf("Enter your first name: ");
 	cin >> fN;
 	printf("Enter you middle name: ");
@@ -158,10 +159,63 @@ int main()
 	p.setPNumber(pN);
 	p.setAge(a);
 
+	dat.open("info.txt", ios::out | ios::trunc);
+	if (!dat.is_open())
+	{
+		printf("FILE NOT FOUND");
+	}
+
+	dat << fN << "," << mN << "," << lN << "," << pN << "," << a;
+}
+
+int main()
+{
+	person p;
+	string input;
+
+	ifstream dat;
+	dat.open("info.txt");
+	if (!dat.is_open())
+	{
+		printf("FILE NOT FOUND");
+	}
+
+	while (getline(dat, input, ','))
+	{
+		p.setFName(input);
+		getline(dat, input, ',');
+		p.setMName(input);
+		getline(dat, input, ',');
+		p.setLName(input);
+		getline(dat, input, ',');
+		p.setPNumber(input);
+		getline(dat, input);
+		p.setAge(stoi(input));
+	}
+
+	while (1)
+	{
+		printf("1: Enter new info\n2: Use info from file\nInput: ");
+		cin >> input;
+		if (input == "1")
+		{
+			changeClass(p);
+			break;
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			continue;
+		}
+	}
+	
 	while (1)
 	{
 		system("CLS");
-		printf("What information would you like to know?\n1: First name\n2: Middle name\n3: Last name\n4: Phone number\n5: Age\n6: Exit\nInput: ");
+		printf("What information would you like to know?\n1: First name\n2: Middle name\n3: Last name\n4: Phone number\n5: Age\n6: Change Info\n7: Exit\nInput: ");
 		cin >> input;
 		system("CLS");
 		if (input == "1")
@@ -186,6 +240,10 @@ int main()
 		}
 		else if (input == "6")
 		{
+			changeClass(p);
+		}
+		else if (input == "7")
+		{
 			break;
 		}
 		else
@@ -197,4 +255,3 @@ int main()
 
 	return 0;
 }
-

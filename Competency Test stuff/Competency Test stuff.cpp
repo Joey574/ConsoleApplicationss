@@ -36,7 +36,6 @@ int main()
 	string temp;
 	string push;
 
-	int x;
 	int tem = 0;
 	int t = 0;
 	int x = 0;
@@ -83,11 +82,9 @@ int main()
 
 	system("CLS");
 
-	p.push_back(person());
-
 	while (getline(f, temp, ','))
 	{
-
+		p.push_back(person());
 		p[x].name = temp;
 
 		getline(f, temp, ',');
@@ -104,9 +101,8 @@ int main()
 
 		getline(f, temp);
 		p[x].phone = temp;
-		x++;
 
-		p.push_back(person());
+		x++;
 	}
 
 	f.close();

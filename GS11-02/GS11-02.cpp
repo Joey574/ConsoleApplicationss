@@ -22,12 +22,19 @@ Maintenance Log:
 #include <fstream>
 using namespace std;
 
+struct info
+{
+	int a;
+	float b;
+	string c;
+	char d;
+};
+
 int main()
 {
 	string temp;
-	string line;
-	string output = "";
-	vector <string> info;
+
+	vector <info> vec;
 
 	ifstream in;
 	ofstream out;
@@ -38,11 +45,40 @@ int main()
 	{
 		printf("File not found");
 	}
+
 	while (getline(in, temp, ','))
 	{
-		info.push_back(temp);
-		out << temp << "\t";
+		info i;
+
+		i.a = stoi(temp);
+
+		out << i.a << "\t";
+		cout << i.a << "\t";
+
+		getline(in, temp, ',');
+		i.b = stof(temp);
+
+		out << i.b << "\t";
+		cout << i.b << "\t";
+
+		getline(in, temp, ',');
+		i.c = temp;
+
+		out << i.c << "\t";
+		cout << i.c << "\t";
+		
+		getline(in, temp);
+		i.d = temp[0];
+
+		out << i.d << "\n";
+		cout << i.d << "\n";
+
+		vec.push_back(i);
 	}
+
+	in.close();
+	out.close();
+
 
 	return 0;
 }

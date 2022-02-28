@@ -87,6 +87,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GS10-05a", "GS10-05a\GS10-0
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multithreadting on my own", "Multithreadting on my own\Multithreadting on my own.vcxproj", "{18DD7FC3-6567-441D-BE79-C8926FF8D004}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hyperbola Calculator_2", "Hyperbola Calculator_2\Hyperbola Calculator_2.vcxproj", "{57BE2514-58FE-455D-B618-A89AF4EF4747}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Start Template", "Start Template\Start Template.vcxproj", "{871B7611-429E-4067-857E-562ACF706186}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -431,6 +435,22 @@ Global
 		{18DD7FC3-6567-441D-BE79-C8926FF8D004}.Release|x64.Build.0 = Release|x64
 		{18DD7FC3-6567-441D-BE79-C8926FF8D004}.Release|x86.ActiveCfg = Release|Win32
 		{18DD7FC3-6567-441D-BE79-C8926FF8D004}.Release|x86.Build.0 = Release|Win32
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Debug|x64.ActiveCfg = Debug|x64
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Debug|x64.Build.0 = Debug|x64
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Debug|x86.ActiveCfg = Debug|Win32
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Debug|x86.Build.0 = Debug|Win32
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Release|x64.ActiveCfg = Release|x64
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Release|x64.Build.0 = Release|x64
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Release|x86.ActiveCfg = Release|Win32
+		{57BE2514-58FE-455D-B618-A89AF4EF4747}.Release|x86.Build.0 = Release|Win32
+		{871B7611-429E-4067-857E-562ACF706186}.Debug|x64.ActiveCfg = Debug|x64
+		{871B7611-429E-4067-857E-562ACF706186}.Debug|x64.Build.0 = Debug|x64
+		{871B7611-429E-4067-857E-562ACF706186}.Debug|x86.ActiveCfg = Debug|Win32
+		{871B7611-429E-4067-857E-562ACF706186}.Debug|x86.Build.0 = Debug|Win32
+		{871B7611-429E-4067-857E-562ACF706186}.Release|x64.ActiveCfg = Release|x64
+		{871B7611-429E-4067-857E-562ACF706186}.Release|x64.Build.0 = Release|x64
+		{871B7611-429E-4067-857E-562ACF706186}.Release|x86.ActiveCfg = Release|Win32
+		{871B7611-429E-4067-857E-562ACF706186}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

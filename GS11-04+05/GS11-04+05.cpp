@@ -24,74 +24,140 @@ using namespace std;
 
 int main()
 {
+	string input;
 	string temp;
-	char c;
-	char outs;
+	string encrypted;
+	string output;
+
 	int encryptionValue;
 
-	ifstream original;
-	fstream encrypted;
-	original.open("original.txt");
-	encrypted.open("encrypted.txt");
-	if (!original.is_open())
-	{
-		printf("File not found");
-	}
+	printf("Please enter name of encryption file: ");
+	cin >> encrypted;
+	encrypted += ".txt";
+	
+	printf("Pleae enter name of decryption file: ");
+	cin >> output;
+	output += ".txt";
 
-	printf("Encyrption Value: ");
-	cin >> encryptionValue;
-
-	while (getline(original, temp))
+	while (1)
 	{
-		for (int i = 0; i < temp.length(); i++)
+		system("CLS");
+		printf("1: Encrypt(make sure to change text before encrypting)\n2: Decrypt (make sure to encrypt file before decrypting)\n3: Change Text\n4: Exit\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
 		{
-			c = temp[i];
-			if ((int)c + encryptionValue > 127)
+			ifstream ori;
+			ofstream enc;
+
+			ori.open("original.txt");
+			enc.open(encrypted, ios::out | ios::trunc);
+
+			if (!ori.is_open())
 			{
-				for (int i = 0; (int)c + i < 127; i++, encryptionValue--)
+				printf("File not found");
+			}
+
+			printf("Please enter an encryption value: ");
+			cin >> encryptionValue;
+
+			while (encryptionValue > 94 || encryptionValue < -94)
+			{
+				if (encryptionValue > 94)
 				{
-					outs = 32 + encryptionValue;
+					encryptionValue -= 94;
+
+				}
+				else if (encryptionValue < 94)
+				{
+					encryptionValue += 94;
+
 				}
 			}
-			else
-			{
-				outs = (int)c + encryptionValue;
-			}	
-			encrypted << outs;
-		}
-		encrypted << "\n";
-	}
-	original.close();
-	encrypted.close();
 
-	ofstream output;
-	encrypted.open("encrypted.txt");
-	output.open("output.txt");
-	if (!encrypted.is_open())
-	{
-		printf("File not found");
-	}
-
-	while (getline(encrypted, temp))
-	{
-		for (int i = 0; i < temp.length(); i++)
-		{
-			c = temp[i];
-			if ((int)c + encryptionValue > 127)
+			while (getline(ori, temp))
 			{
-				for (int i = 0; (int)c - i < 32; i++, encryptionValue++)
+				for (int i = 0; i < temp.length(); i++)
 				{
-					outs = 127 - encryptionValue;
+					unsigned char c = temp[i];
+
+					if (int(c) + encryptionValue > 127)
+					{
+						c = (int)c + encryptionValue - 95;
+					}
+					else
+					{
+						c = (int)c + encryptionValue;
+					}
+					enc << c;
+					cout << c;
 				}
+				enc << "\n";
+				cout << "\n";
 			}
-			else
-			{
-				outs = (int)c - encryptionValue;
-			}
-			output << outs;
+
+			ori.close();
+			enc.close();
+
+			_getch();
 		}
-		output << "\n";
+		else if (input == "2")
+		{
+			ifstream encin;
+			ofstream out;
+
+			encin.open(encrypted);
+
+			out.open(output, ios::out | ios::trunc);
+
+			while (getline(encin, temp))
+			{
+				for (int i = 0; i < temp.length(); i++)
+				{
+					unsigned char c = temp[i];
+
+					if (int(c) - encryptionValue < 32)
+					{
+						c = (int)c - encryptionValue + 95;
+					}
+					else
+					{
+						c = (int)c - encryptionValue;
+					}
+					out << c;
+					cout << c;
+				}
+				out << "\n";
+				cout << "\n";
+			}
+
+			out.close();
+			encin.close();
+
+			_getch();
+		}
+		else if (input == "3")
+		{
+			ofstream ori;
+			ori.open("original.txt", ios::out | ios::trunc);
+
+			printf("Please enter text to encrypt/decrypt: ");
+			cin.ignore();
+			getline(cin, input);
+
+			ori << input;
+		}
+		else if (input == "4")
+		{
+			break;
+		}
+		else
+		{
+		printf("Invalid input...");
+		_getch();
+		}
 	}
+	
 	return 0;
 }
-
