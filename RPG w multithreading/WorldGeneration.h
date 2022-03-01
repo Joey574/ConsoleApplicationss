@@ -19,58 +19,6 @@
 
 using namespace std;
 
-struct systems
-{
-    int dangerLevel;
-    int supplies;
-    int x, y;
-    int systemID;
-    bool explored;
-    bool current = false;
-    bool objective;
-};
-
-void gotoxy(int x, int y) // credit: Miyoshi
-{
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
-void exploredUpdater(vector<systems>& s)
-{
-    for (int xy = 0; xy < 100; xy++)
-    {
-        if (s[xy].current = true)
-        {
-            s[xy].explored = true;
-            s[xy + 1].explored = true;
-            s[xy + 10].explored = true;
-            s[xy + 11].explored = true;
-            break;
-        }
-    }
-
-    for (int xy = 0; xy < 100; xy++)
-    {
-        if (s[xy].explored == true)
-        {
-            gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 1);
-            cout << "Danger: " << s[xy].dangerLevel;
-            gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 2);
-            cout << "Supplies:";
-            gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 3);
-            cout << s[xy].supplies;
-        }
-        else
-        {
-            gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
-            printf("No Data");
-        }
-    }
-}
-
 void worldConstructor(vector<systems>& s, int difficulty, vector<int> worldSeed)
 {
     int line = 196;
@@ -159,20 +107,11 @@ void worldConstructor(vector<systems>& s, int difficulty, vector<int> worldSeed)
         }
     }
     */
-
-    exploredUpdater(s);
-
-    mapMovement(s);
-
-    _getch();
-    exit(0);
 }
 
-void world (int difficulty)
+void world (int difficulty, vector <int>& worldSeed, vector <systems> &s)
 {
     string input;
-    vector <int> worldSeed;
-    vector <systems> s(100);
   
     int seed;
     int xy = 0;
@@ -266,6 +205,4 @@ void world (int difficulty)
   */
 
     s[50 + rand() % 99].objective = true;
-
-    worldConstructor(s, difficulty, worldSeed);
 }

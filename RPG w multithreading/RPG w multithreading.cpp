@@ -30,13 +30,11 @@ using namespace std::this_thread; // needed for sleep for
 using namespace std::chrono; // needed for sleep for
 
 #include "Player.h"
+#include "Functions.h"
 #include "WorldGeneration.h"
 
 void mainMenu(struct player& player, struct ship& ship, vector <int> vectorScore, int& score, bool &inGame);
 void gameStart(struct player &p, struct ship &s);
-int stringToIntErrorChecker(string input);
-void invalidInput();
-
 
 int main()
 {
@@ -89,42 +87,6 @@ int main()
 	
 	
 	return 0;
-}
-
-int stringToIntErrorChecker(string input) // BROKEN 
-{
-	int p;
-
-	while (1)
-	{
-		for (int i = 0; i < input.length(); i++)
-		{
-			char c = input[i];
-			if (isdigit(c) == 0)
-			{
-				printf("Invalid input try again\nInput: ");
-				cin >> input;
-				continue;
-			}
-			break;
-		}
-		break;
-	}
-
-	p = stoi(input);
-	return p;
-}
-
-void invalidInput()
-{
-	printf("Invalid input");
-	Sleep(200);
-	printf(".");
-	Sleep(200);
-	printf(".");
-	Sleep(200);
-	printf(".");
-	Sleep(500);
 }
 
 void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore, int &score, bool &inGame)
@@ -499,9 +461,28 @@ void mainMenu(struct player &player, struct ship &ship, vector <int> vectorScore
 	}
 }
 
+void mapMenu(vector <systems>& s)
+{
+	gotoxy(101, 2);
+	printf("Menu: ");
+
+	for (int xy = 0; xy < 100; xy++)
+	{
+		if (s[xy].current == true)
+		{
+			gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 4);
+			printf("Current");
+			gotoxy((s[xy].x * 10) + 4, (s[xy].y * 6) + 5);
+			printf("POS");
+		}
+	}
+}
+
 void gameStart(struct player &p, struct ship &s)
 {
 	string input;
+	vector <int> worldSeed;
+	vector <systems> sy(100);
 
 	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart.\n");
 	_getch();
@@ -546,5 +527,9 @@ void gameStart(struct player &p, struct ship &s)
 	
 	p.difficulty = stoi(input);
 
-	world(p.difficulty);
+	world(p.difficulty, worldSeed, sy);
+
+	worldConstructor(sy, p.difficulty, worldSeed);
+
+	exploredUpdater(sy);
 }

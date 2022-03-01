@@ -1,4 +1,12 @@
-#pragma once
+/*
+Author: Joey Soroka
+File Name: RPG w multithreading.cpp
+Project Name: RPG
+Purpose:
+Pseudocode:
+Maintenance Log:
+1/8/22:	Started project from scratch
+*/
 
 #define _USE_MATH_DEFINES
 #include <stdio.h>
@@ -15,19 +23,20 @@
 #include <sstream> // needed for files
 #include <fstream> // needed for files
 #include <cwchar>
-#include <algorithm> // needed for vector sort
+#include <algorithm> // needed for vector sort and other cool things
 
-#include "WorldGeneration.h"
-#include "Player.h"
+#include "Functions.h"
+#include "Structs.h"
 
-void mapMovement(vector<systems>& s)
+using namespace std;
+
+int main()
 {
-	for (int xy = 0; xy < 100; xy++)
-	{
-		if (s[xy].current == true)
-		{
-			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 4);
-			printf("Current POS");
-		}
-	}
+	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+
+	introArt();
+	
+	menuArt();
+
+
 }
