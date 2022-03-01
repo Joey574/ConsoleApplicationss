@@ -39,23 +39,30 @@ int main()
 	string denom;
 	string temp;
 
+
+
 	printf("Enter numerator (use ^ to signal an exponent): ");
 
 	getline(cin, num);
 	
 	for (int i = 0; i < num.length(); i++)
 	{
-		if (num[i] == 'x' || num[i] == 'X')
+		if (num[i] == ' ')
+		{
+
+		}
+		else if (num[i] == 'x' || num[i] == 'X')
 		{ 
 			h.setNumVa(true);
 			if (num[i + 1] == '^')
 			{
 				temp = num[i] + 2;
-				stoi(temp);
-
-
+				h.setNumEx(stoi(temp));
 			}
-
+		}
+		else if (num[i] + 1 != 'x'  && num[i] + 1 != 'X')
+		{
+			h.setNum(num[i]);
 		}
 	}
 }
