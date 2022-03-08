@@ -25,8 +25,8 @@ Maintenance Log:
 #include <cwchar>
 #include <algorithm> // needed for vector sort and other cool things
 
-#include "Functions.h"
 #include "Structs.h"
+#include "Functions.h"
 
 using namespace std;
 
@@ -34,9 +34,10 @@ int main()
 {
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
+	player p;
+	ship s;
+
 	introArt();
-	
-	menuArt();
 
-
+	mainMenu(false, p, s);
 }

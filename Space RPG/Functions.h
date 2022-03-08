@@ -1,13 +1,23 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
+#include <stdio.h>
+#include <iostream>
 #include <string> // Needed for string
 #include <stdlib.h> // Needed for srand
 #include <time.h> // Needed for srand
 #include <conio.h> 
 #include <vector>
 #include <windows.h> // Uses functions named after shapes beware for classes
-#include <algorithm>
+#include <chrono> // needed for sleep for
+#include <thread>
+#include <math.h>
+#include <sstream> // needed for files
+#include <fstream> // needed for files
+#include <cwchar>
+#include <algorithm> // needed for vector sort and other cool things
 
+using namespace std;
 
 void gotoxy(int x, int y) // credit: Miyoshi
 {
@@ -67,224 +77,217 @@ void menuArt()
 	int ascX = 25;
 	int ascY = 5;
 
-		system("CLS");
-		gotoxy(ascX, ascY);
-		printf("                                ....");
-		gotoxy(ascX, ascY + 1);
-		printf("                                /   `.");
-		gotoxy(ascX, ascY + 2);
-		printf("                               |      `,");
-		gotoxy(ascX, ascY + 3);
-		printf("		                 -.   ,'		  ");
-		gotoxy(ascX, ascY + 4);
-		printf("                                   `-/ \\				  ");
-		gotoxy(ascX, ascY + 5);
-		printf("                                  ,'    ;				  ");
-		gotoxy(ascX, ascY + 6);
-		printf("                                ,'     /      ____		  ");
-		gotoxy(ascX, ascY + 7);
-		printf("                        ______,i     __-  ,'''__  `._	  ");
-		gotoxy(ascX, ascY + 8);
-		printf("                       /        `-,-'  `-+ /''XX`-.. `.	  ");
-		gotoxy(ascX, ascY + 9);
-		printf("                      /    ,'-._    ``-.i,'XXXXXXXX`.  :  ");
-		gotoxy(ascX, ascY + 10);
-		printf("                     /  .--  ._ `-,_     \\XXXXXXXXXX/ |	  ");
-		gotoxy(ascX, ascY + 11);
-		printf("                     |   `.  `.  /XX`..   \\XXXXXXXX| .'	  ");
-		gotoxy(ascX, ascY + 12);
-		printf("                   ,'|  .i> `. .'XXXXXX/-. -._XXX_/ ,'	  ");
-		gotoxy(ascX, ascY + 13);
-		printf("                 ,'  ',.:>_.'','XXXXXX/  ,`-. `. _,'\\  _  ");
-		gotoxy(ascX, ascY + 14);
-		printf("               ,'    /   _ `./XXXXXX,'  / /  `. '.  ,+' `.");
-		gotoxy(ascX, ascY + 15);
-		printf("             ,'     /   -_` /XXXXXX/  ,',',- , `.<-'    ,'");
-		gotoxy(ascX, ascY + 16);
-		printf("           ,'      /   :- ;'XXXXXX/  /,',' ,',  ,-.   ,'  ");
-		gotoxy(ascX, ascY + 17);
-		printf("         ,'       :  ._ `,'XXXXXX/ ,'/,'_,',',-'XX,-,'	  ");
-		gotoxy(ascX, ascY + 18);
-		printf("       ,'        _ `-.  /XXXXXXX/ /,;',',-','XXX,:`		  ");
-		gotoxy(ascX, ascY + 19);
-		printf("      `    _,'-,- `-..i`.XXXXX,' /`/,',',-'XX_X'  `,	  ");
-		gotoxy(ascX, ascY + 20);
-		printf("       `.,'   ,'      \\  `=.X,',' ;',','XX,,'\\\\  ,:		  ");
-		gotoxy(ascX, ascY + 21);
-		printf("            ,'`.       |,;' `-.  - i,'XXX,'    -' |		  ");
-		gotoxy(ascX, ascY + 22);
-		printf("          ,'    `    ,' .i     `-,'XXXX,'`.    ,-'		  ");
-		gotoxy(ascX, ascY + 23);
-		printf("         /         ,' ,'  `-..    ;-,,;'   `,,'			  ");
-		gotoxy(ascX, ascY + 24);
-		printf("       ,'    `.  ,' ,-        \\ ,'  ,:    ,'			  ");
-		gotoxy(ascX, ascY + 25);
-		printf("      |        ,' ,'       .  ,'  ,'  `-<'				  ");
-		gotoxy(ascX, ascY + 26);
-		printf("    ,-._     ,' ,'     -.  ,-'  ,'						  ");
-		gotoxy(ascX, ascY + 27);
-		printf("  ,'       ,'_,'   _    ,`'    |						  ");
-		gotoxy(ascX, ascY + 28);
-		printf(" \\       ,','       `,-:    _,/							  ");
-		gotoxy(ascX, ascY + 29);
-		printf(" \\     ,' '       ,-'   --''							  ");
-		gotoxy(ascX, ascY + 30);
-		printf("  '`-<' ,'   \\ ,-'										  ");
-		gotoxy(ascX, ascY + 31);
-		printf("        |    ,'											  ");
-		gotoxy(ascX, ascY + 32);
-		printf("        \\  _'											  ");
-		gotoxy(ascX, ascY + 33);
-		printf("         '-												  ");
-		gotoxy(0, 0);
-
+	system("CLS");
+	gotoxy(ascX, ascY);
+	printf("                                ....");
+	gotoxy(ascX, ascY + 1);
+	printf("                                /   `.");
+	gotoxy(ascX, ascY + 2);
+	printf("                               |      `,");
+	gotoxy(ascX, ascY + 3);
+	printf("		                 -.   ,'		  ");
+	gotoxy(ascX, ascY + 4);
+	printf("                                   `-/ \\				  ");
+	gotoxy(ascX, ascY + 5);
+	printf("                                  ,'    ;				  ");
+	gotoxy(ascX, ascY + 6);
+	printf("                                ,'     /      ____		  ");
+	gotoxy(ascX, ascY + 7);
+	printf("                        ______,i     __-  ,'''__  `._	  ");
+	gotoxy(ascX, ascY + 8);
+	printf("                       /        `-,-'  `-+ /''XX`-.. `.	  ");
+	gotoxy(ascX, ascY + 9);
+	printf("                      /    ,'-._    ``-.i,'XXXXXXXX`.  :  ");
+	gotoxy(ascX, ascY + 10);
+	printf("                     /  .--  ._ `-,_     \\XXXXXXXXXX/ |	  ");
+	gotoxy(ascX, ascY + 11);
+	printf("                     |   `.  `.  /XX`..   \\XXXXXXXX| .'	  ");
+	gotoxy(ascX, ascY + 12);
+	printf("                   ,'|  .i> `. .'XXXXXX/-. -._XXX_/ ,'	  ");
+	gotoxy(ascX, ascY + 13);
+	printf("                 ,'  ',.:>_.'','XXXXXX/  ,`-. `. _,'\\  _  ");
+	gotoxy(ascX, ascY + 14);
+	printf("               ,'    /   _ `./XXXXXX,'  / /  `. '.  ,+' `.");
+	gotoxy(ascX, ascY + 15);
+	printf("             ,'     /   -_` /XXXXXX/  ,',',- , `.<-'    ,'");
+	gotoxy(ascX, ascY + 16);
+	printf("           ,'      /   :- ;'XXXXXX/  /,',' ,',  ,-.   ,'  ");
+	gotoxy(ascX, ascY + 17);
+	printf("         ,'       :  ._ `,'XXXXXX/ ,'/,'_,',',-'XX,-,'	  ");
+	gotoxy(ascX, ascY + 18);
+	printf("       ,'        _ `-.  /XXXXXXX/ /,;',',-','XXX,:`		  ");
+	gotoxy(ascX, ascY + 19);
+	printf("      `    _,'-,- `-..i`.XXXXX,' /`/,',',-'XX_X'  `,	  ");
+	gotoxy(ascX, ascY + 20);
+	printf("       `.,'   ,'      \\  `=.X,',' ;',','XX,,'\\\\  ,:		  ");
+	gotoxy(ascX, ascY + 21);
+	printf("            ,'`.       |,;' `-.  - i,'XXX,'    -' |		  ");
+	gotoxy(ascX, ascY + 22);
+	printf("          ,'    `    ,' .i     `-,'XXXX,'`.    ,-'		  ");
+	gotoxy(ascX, ascY + 23);
+	printf("         /         ,' ,'  `-..    ;-,,;'   `,,'			  ");
+	gotoxy(ascX, ascY + 24);
+	printf("       ,'    `.  ,' ,-        \\ ,'  ,:    ,'			  ");
+	gotoxy(ascX, ascY + 25);
+	printf("      |        ,' ,'       .  ,'  ,'  `-<'				  ");
+	gotoxy(ascX, ascY + 26);
+	printf("    ,-._     ,' ,'     -.  ,-'  ,'						  ");
+	gotoxy(ascX, ascY + 27);
+	printf("  ,'       ,'_,'   _    ,`'    |						  ");
+	gotoxy(ascX, ascY + 28);
+	printf(" \\       ,','       `,-:    _,/							  ");
+	gotoxy(ascX, ascY + 29);
+	printf(" \\     ,' '       ,-'   --''							  ");
+	gotoxy(ascX, ascY + 30);
+	printf("  '`-<' ,'   \\ ,-'										  ");
+	gotoxy(ascX, ascY + 31);
+	printf("        |    ,'											  ");
+	gotoxy(ascX, ascY + 32);
+	printf("        \\  _'											  ");
+	gotoxy(ascX, ascY + 33);
+	printf("         '-												  ");
+	gotoxy(0, 0);
 }
 
-void mainMenu(bool inGame)
+void difficultySet(string input, struct player &p)
+{
+	if (input == "1")
+	{
+		p.difficulty = 0; // easy
+	}
+	else if (input == "2")
+	{
+		p.difficulty = 1; // easy
+	}
+	else if (input == "3")
+	{
+		p.difficulty = 2; // easy
+	}
+}
+
+void gameStart(struct player &p, struct ship &s)
 {
 	string input;
+
+	printf("Welcome adventurer! The year is 2130 and the Earth is falling apart.\n");
+	_getch();
+	system("CLS");
+	printf("You and a team of 3 others have been selected to go on a mission that could save the world.\n");
+	_getch();
+	system("CLS");
+	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth.\n");
+	_getch();
+	system("CLS");
+	printf("So what say you Captain? What shall your callsign be? You can change it later.\n");
+	cin >> p.name;
+	system("CLS");
+	cout << "Captain " << p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?\n";
+	cin >> s.name;
+	system("CLS");
+	printf("As the captain of your ship it's your responsibility to keep your ship and your crew alive. On top of this you must explore unknown space to discover a colonization candidate.\n");
+	_getch();
+	system("CLS");
+	printf("We've sent many ships ahead of you, yet none have reported back sucessfully, keep your wits about you out there!\n");
+	_getch();
+	system("CLS");
+	printf("Your voyager starship is currently equiped with just the command module, the \"bridge\" of the starship, and should be protected at all costs. In the future when you've collected some resources you'll be able to build ");
+	printf("more modules with the blueprints we have supplied you with.\n");
+	_getch();
+	system("CLS");
+	printf("If you ever need help or want to save visit your ships onboard computer, located in your command module, and reopen the menu.\n");
+	_getch();
+	system("CLS");
+	cout << "Good luck Captain " << p.name << ", and make sure you come home safe!" << endl;
+	_getch();
+	system("CLS");
+	printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
+	cin >> input;
+
+	difficultySet(input, p);
+}
+
+void scores()
+{
+	ifstream highScores;
+	highScores.open("highScores.txt");
+	if (!highScores.is_open())
+	{
+		printf("High scores file not found");
+	}
+
 	string temp;
 
-	int iTemp;
+	vector <int> vecScore;
+
+	int score;
+
+	printf("Top 10 High Scores:\n");
+
+	highScores.open("highScores.txt");
+
+	if (!highScores.is_open())
+	{
+		printf("File not found");
+	}
+
+	vecScore.clear();
+	while (getline(highScores, temp))
+	{
+		score = stoi(temp); // turns temp line from highScores.txt into int
+		vecScore.push_back(score);
+	}
+	sort(vecScore.rbegin(), vecScore.rend()); // sorts the scores in vector from highest to lowest
+
+	for (int i = 1; i < 11; i++)
+	{
+		cout << i << ") " << vecScore[i - 1] << endl; // outputs top 10 high scores
+	}
+
+	highScores.close();
+	_getch();
+}
+
+void help(struct player &p)
+{
+	string input;
 
 	while (1)
 	{
-
-
-		if (inGame == false) // check to see if game has already been started
-		{
-			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // not started
-		}
-		else
-		{
-			printf("Menu:\n1: Resume Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // has started
-		}
-
+		printf("Menu:\n1: Change Name\n2: Change Difficulty\n3: Reset Highscores\n4: Back\nInput: ");
 		cin >> input;
-		system("CLS");
 
-		if (input == "1") // start or resume game
+		if (input == "1")
 		{
-			if (inGame == false) // check to see if game has already been started
-			{
-				gameStart(player, ship);
-				inGame = true;
-			}
-			break;
-		}
-
-		else if (input == "2") // high scores, add possibility to see details about high scores in the future
-		{
-			printf("Top 10 High Scores:\n");
-
-			ifstream highScores;
-
-			highScores.open("highScores.txt");
-
-			if (!highScores.is_open())
-			{
-				printf("File not found");
-			}
-
-			vectorScore.clear(); // clear vector from any information from earlier use
-
-			while (getline(highScores, temp))
-			{
-				iTemp = stoi(temp); // turns temp line from highScores.txt into int temp
-				vectorScore.push_back(iTemp);
-			}
-			sort(vectorScore.rbegin(), vectorScore.rend()); // sorts the scores in vector from highest to lowest
-
-			for (int i = 1; i < 11; i++) // runs 10 times
-			{
-				cout << i << ") " << vectorScore[i - 1] << endl; // outputs top 10 high scores
-			}
-
-			highScores.close();
-			_getch();
-		}
-
-		else if (input == "3") // help
-		{
-			printf("Menu:\n1: Account\n2: Difficulty\n3: Reset High Scores\n4: Back\nInput: "); // help menu
+			printf("Enter new name: ");
 			cin >> input;
-			system("CLS");
+			p.name = input;
+		}
+		else if (input == "2")
+		{
+			printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
+			cin >> input;
 
-			if (input == "1") // account
+			difficultySet(input, p);
+		}
+		else if (input == "3")
+		{
+			ofstream highScores;
+
+			printf("Are you sure you want to reset your high scores?\n1: Yes\n2: No\nInput: ");
+			cin >> input;
+			if (input == "1")
 			{
-				printf("Menu:\n1: Change name\n2: Back\nInput: "); // account menu
-				cin >> input;
+				highScores.open("highScores.txt", ios::out | ios::trunc);
 
-				if (input == "1") // change name
+				for (int i = 0; i < 9; i++)
 				{
-					printf("Please enter new name: ");
-					cin >> player.name;
-					continue;
+					highScores << "0\n";
 				}
+				highScores << "0";
 
-				else if (input == "2") // back
-				{
-					continue;
-				}
-
-				else
-				{
-					invalidInput();
-					continue;
-				}
-
+				highScores.close();
 			}
-
-			else if (input == "2") // change difficulty
-			{
-				printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\n4: Back\nInput: "); // change difficulty menu
-				cin >> input;
-
-
-				while (input != "1" && input != "2" && input != "3" && input != "4")
-				{
-					printf("Invalid input try again\nInput: ");
-					cin >> input;
-				}
-
-				if (input == "4") // back
-				{
-					continue;
-				}
-
-				player.difficulty = stoi(input);
-				continue;
-			}
-			else if (input == "3") // reset high scores
-			{
-				printf("Are you sure you want to reset your high scores?\n1: Yes\n2: No\nInput: ");
-				cin >> input;
-				if (input == "1")
-				{
-					ofstream highScores;
-
-					highScores.open("highScores.txt", ios::out | ios::trunc); // opens highscores.txt and resets data
-
-					for (int i = 0; i < 9; i++) // runs 9 times
-					{
-						highScores << "0\n";
-					}
-					highScores << "0";
-
-					highScores.close();
-				}
-				else if (input == "2") // back
-				{
-					continue;
-				}
-				else
-				{
-					invalidInput();
-					continue;
-				}
-
-			}
-			else if (input == "4") // back
+			else if (input == "2")
 			{
 				continue;
 			}
@@ -294,132 +297,86 @@ void mainMenu(bool inGame)
 				continue;
 			}
 		}
-
-		else if (input == "4") // credits
+		else if (input == "4")
 		{
-		printf("Author:\nJoey Soroka\n\nProgramming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\n\nCreative Support:\nIssac Morine\n");
-		_getch();
-		}
-
-		else if (input == "5") // save / load
-		{
-
-		printf("Menu:\n1: Save\n2: Load\n3: Back\nInput: ");
-		cin >> input;
-		system("CLS");
-
-		if (input == "1" || input == "2")
-		{
-			if (input == "1")
-			{
-				printf("Save slots:\n");
-			}
-			else
-			{
-				printf("Load save:\n");
-			}
-
-			for (int i = 1; i < 4; i++)
-			{
-				if (i == 1)
-				{
-					saveFile.open("save1.txt");
-				}
-				else if (i == 2)
-				{
-					saveFile.open("save2.txt");
-				}
-				if (i == 3)
-				{
-					saveFile.open("save3.txt");
-				}
-				if (!saveFile.is_open())
-				{
-					printf("File not found\n");
-				}
-				for (int p = 0; p < 1; p++)
-				{
-					getline(saveFile, temp);
-					if (temp == "empty")
-					{
-						cout << i << ": Empty\n";
-					}
-					else
-					{
-						cout << i << "Save " << i;
-					}
-					saveFile.close();
-				}
-
-			}
-
-			printf("4: Back\nInput: "); // no cin because branches were previously decided by input but shared first part of code and old input is still needed for if
-			if (input == "1") // save
-			{
-				cin >> input;
-				if (input == "1")
-				{
-					saveName = "save1.txt";
-				}
-				else if (input == "2")
-				{
-					saveName = "save2.txt";
-				}
-				else if (input == "3")
-				{
-					saveName = "save3.txt";
-				}
-				else if (input == "4")
-				{
-					continue;
-				}
-				else
-				{
-					invalidInput();
-					continue;
-				}
-
-			}
-			else // load
-			{
-				cin >> input;
-				if (input == "1")
-				{
-					saveName = "save1.txt";
-				}
-				else if (input == "2")
-				{
-					saveName = "save2.txt";
-				}
-				else if (input == "3")
-				{
-					saveName = "save3.txt";
-				}
-				else if (input == "4")
-				{
-					continue;
-				}
-				else
-				{
-					invalidInput();
-					continue;
-				}
-
-			}
-
-
-
-		}
-		else if (input == "3")
-		{
-			continue;
+			break;
 		}
 		else
 		{
 			invalidInput();
 			continue;
 		}
+	}
+}
 
+void credits()
+{
+	printf("Author:\nJoey Soroka\n\n");
+	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\n\n");
+	printf("Creative Support:\nIssac Morine\n");
+	_getch();
+}
+
+void saveAndLoad()
+{
+	string input;
+
+	printf("Menu:\n1: Save\n2: Load\n3: Back\nInput: ");
+	cin >> input;
+	system("CLS");
+}
+
+void mainMenu(bool inGame, struct player &p, struct ship &s)
+{
+	string input;
+
+	while (1) // menu loop
+	{
+		system("CLS");
+
+		menuArt();
+
+		if (inGame == false) // check to see if game has already been started
+		{
+			printf("Menu:\n1: Start Game\n"); // not started
+		}
+		else
+		{
+			printf("Menu:\n1: Resume Game\n"); // has started
+		}
+		printf("2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // default menus
+
+		cin >> input;
+		system("CLS");
+
+		if (input == "1") // start/resume game
+		{
+			gameStart(p, s);
+		}
+		else if (input == "2") // High scores
+		{
+			scores();
+		}
+		else if (input == "3") // help
+		{
+			help(p);
+		}
+		else if (input == "4") // credits
+		{
+			credits();
+		}
+		else if (input == "5") // save/load
+		{
+			saveAndLoad();
+		}
+		else if (input == "6") // exit
+		{
+			break;
+		}
+		else // invalid input
+		{
+			invalidInput();
+			continue;
 		}
 	}
 }
