@@ -142,7 +142,8 @@
     <ClCompile Include="Space RPG.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Functions.h" />
+    <ClInclude Include="Functions.cpp" />
+    <ClInclude Include="Player Class.h" />
     <ClInclude Include="Structs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

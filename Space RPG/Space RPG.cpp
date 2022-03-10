@@ -25,8 +25,9 @@ Maintenance Log:
 #include <cwchar>
 #include <algorithm> // needed for vector sort and other cool things
 
+#include "Player Class.h"
 #include "Structs.h"
-#include "Functions.h"
+#include "Functions.cpp"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ int main()
 
 	player p;
 	ship s;
+	systems t;
 
 	introArt();
 

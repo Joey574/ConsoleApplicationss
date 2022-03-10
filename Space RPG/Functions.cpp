@@ -19,6 +19,12 @@
 
 using namespace std;
 
+// Function Prototypes
+
+void worldRan();
+
+// Useful Functions
+
 void gotoxy(int x, int y) // credit: Miyoshi
 {
 	COORD coord;
@@ -38,6 +44,10 @@ void invalidInput()
 	printf(".");
 	Sleep(500);
 }
+
+//
+
+// Art Functions
 
 void introArt()
 {
@@ -149,6 +159,10 @@ void menuArt()
 	gotoxy(0, 0);
 }
 
+//
+
+// Main Menu Functions
+
 void difficultySet(string input, struct player &p)
 {
 	if (input == "1")
@@ -204,6 +218,8 @@ void gameStart(struct player &p, struct ship &s)
 	cin >> input;
 
 	difficultySet(input, p);
+
+	worldRan();
 }
 
 void scores()
@@ -379,4 +395,16 @@ void mainMenu(bool inGame, struct player &p, struct ship &s)
 			continue;
 		}
 	}
+}
+
+//
+
+// World Constructor Functions
+
+void worldRan()
+{
+	string input;
+
+	vector <systems> t (100);
+
 }
