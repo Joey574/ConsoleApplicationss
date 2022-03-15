@@ -21,7 +21,7 @@ using namespace std;
 
 // Function Prototypes
 
-void worldRan();
+void worldRan(int difficulty);
 
 // Useful Functions
 
@@ -45,7 +45,54 @@ void invalidInput()
 	Sleep(500);
 }
 
-//
+void exploredUpdater(vector<systems>& s)
+{
+	for (int xy = 0; xy < 100; xy++)
+	{
+		if (s[xy].current == true)
+		{
+			s[xy].explored == true;
+			if (s[xy].x > 0)
+			{
+				s[xy - 1].explored = true;
+			}
+			if (s[xy].x < 9)
+			{
+				s[xy + 1].explored = true;
+			}
+			if (s[xy].y > 0)
+			{
+				s[xy - 10].explored = true;
+			}
+			if (s[xy].y < 9)
+			{
+				s[xy + 10].explored = true;
+			}
+			break;
+		}
+	}
+}
+
+void systemInfo(vector<systems>& s)
+{
+	for (int xy = 0; xy < 100; xy++)
+	{
+		if (s[xy].explored == true)
+		{
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 1);
+			cout << "Danger: " << s[xy].dangerLevel;
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 2);
+			cout << "Supplies:";
+			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 3);
+			cout << s[xy].supplies;
+		}
+		else
+		{
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
+			printf("No Data");
+		}
+	}
+}
 
 // Art Functions
 
@@ -159,8 +206,6 @@ void menuArt()
 	gotoxy(0, 0);
 }
 
-//
-
 // Main Menu Functions
 
 void difficultySet(string input, struct player &p)
@@ -171,11 +216,11 @@ void difficultySet(string input, struct player &p)
 	}
 	else if (input == "2")
 	{
-		p.difficulty = 1; // easy
+		p.difficulty = 1; // medium
 	}
 	else if (input == "3")
 	{
-		p.difficulty = 2; // easy
+		p.difficulty = 2; // hard
 	}
 }
 
@@ -219,7 +264,7 @@ void gameStart(struct player &p, struct ship &s)
 
 	difficultySet(input, p);
 
-	worldRan();
+	worldRan(p.difficulty);
 }
 
 void scores()
@@ -397,14 +442,228 @@ void mainMenu(bool inGame, struct player &p, struct ship &s)
 	}
 }
 
-//
-
 // World Constructor Functions
 
-void worldRan()
+void worldConstructor()
+{
+	int line = 196;
+	int upLine = 179;
+	int horSep = 10;
+	int vertSep = 6;
+	int temp = 1;
+	int horDist = 100;
+	int vertDist = 61;
+	int topLeftCorner = 218;
+	int topRightCorner = 191;
+	int botLeftCorner = 192;
+	int botRightCorner = 217;
+	int rightT = 195;
+	int leftT = 180;
+	int bottomT = 193;
+	int upT = 194;
+	int junction = 197;
+	int xy = 0;
+
+	for (int x = 0; x < 10; x++)
+	{
+		cout << (char)topLeftCorner;
+		for (int i = 1; i < horDist; i++)
+		{
+			cout << (char)line;
+		}
+		cout << (char)topRightCorner << endl;
+		for (int p = 1; p < vertSep; p++)
+		{
+			for (int i = 0; i <= horDist; i += horSep)
+			{
+				gotoxy(i, p + (x * 6));
+				cout << (char)upLine;
+			}
+		}
+		cout << endl;
+	}
+	cout << (char)botLeftCorner;
+	for (int p = 6; p < 60; p += 6)
+	{
+		gotoxy(0, p);
+		cout << (char)rightT;
+		for (int i = 10; i < horDist; i += 10)
+		{
+			gotoxy(i, p);
+			cout << (char)junction;
+		}
+		gotoxy(100, p);
+		cout << (char)leftT;
+	}
+	gotoxy(1, 60);
+	for (int p = 0; p < 10; p++)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			cout << (char)line;
+		}
+		cout << (char)bottomT;
+	}
+	gotoxy(100, 60);
+	cout << (char)botRightCorner;
+	for (int i = 10; i < horDist; i += 10)
+	{
+		gotoxy(i, 0);
+		cout << (char)upT;
+	}
+	gotoxy(100, 0);
+	cout << (char)topRightCorner;
+	gotoxy(0, 61);
+}
+
+void worldRan(int difficulty)
 {
 	string input;
 
 	vector <systems> t (100);
 
+	vector <int> worldSeed;
+
+	int seed = 0;
+	int xy = 0;
+
+	for (int y = 0; y < 10; y++) // will run total of 100 times assinging some basic values to the systems
+	{
+		for (int x = 0; x < 10; x++)
+		{
+			t[xy].x = x; // system x value
+			t[xy].y = y; // system y value
+			t[xy].systemID = xy; // systemID for ease of access
+			xy++;
+		}
+	}
+
+	xy = 0; // resetting for later use
+
+	system("CLS");
+	printf("World Seed: "); // getting user inputted value for world seed
+	cin >> input;
+	system("CLS");
+
+	for (int i = 0; i < input.length(); i++) // runs for length of world seed, changes input into its ascii value
+	{
+		seed += (int)input[i];
+	}
+
+
+	srand(seed); // uses ascii value of seed for srand
+
+
+	for (int p = 0; p < 100; p++) // runs 100 times, getting random # 0-9, 1 for each system
+	{
+		worldSeed.push_back(rand() % (10));
+	}
+
+
+	// sets danger level and supplies for each system
+	if (difficulty == 0) // easy
+	{
+		for (int y = 0; y < 10; y++)
+		{
+			for (int x = 0; x < 10; x++)
+			{
+				if (worldSeed[xy] <= 2) // safe / no danger
+				{
+					t[xy].dangerLevel = 0;
+					t[xy].supplies = rand() % (5);
+				}
+				else if (worldSeed[xy] <= 5 && worldSeed[xy] > 2) // low danger
+				{
+					t[xy].dangerLevel = 1;
+					t[xy].supplies = rand() % (8);
+				}
+				else if (worldSeed[xy] <= 8 && worldSeed[xy] > 5) // medium danger
+				{
+					t[xy].dangerLevel = 2;
+					t[xy].supplies = rand() % (10);
+				}
+				else if (worldSeed[xy] == 9) // lots of danger
+				{
+					t[xy].dangerLevel = 3;
+					t[xy].supplies = rand() % (15);
+				}
+				xy++;
+			}
+		}
+	}
+	else if (difficulty == 1) // medium 
+	{
+		for (int y = 0; y < 10; y++)
+		{
+			for (int x = 0; x < 10; x++)
+			{
+				if (worldSeed[xy] == 0) // safe / no danger
+				{
+					t[xy].dangerLevel = 0;
+					t[xy].supplies = rand() % (5);
+				}
+				else if (worldSeed[xy] <= 4 && worldSeed[xy] > 0) // low danger
+				{
+					t[xy].dangerLevel = 1;
+					t[xy].supplies = rand() % (8);
+				}
+				else if (worldSeed[xy] <= 8 && worldSeed[xy] > 4) // medium danger
+				{
+					t[xy].dangerLevel = 2;
+					t[xy].supplies = rand() % (10);
+				}
+				else if (worldSeed[xy] == 9) // lots of danger
+				{
+					t[xy].dangerLevel = 3;
+					t[xy].supplies = rand() % (15);
+				}
+				xy++;
+			}
+		}
+	}
+	else if (difficulty == 2) // hard
+	{
+		for (int y = 0; y < 10; y++)
+		{
+			for (int x = 0; x < 10; x++)
+			{
+				if (worldSeed[xy] <= 3) // low danger
+				{
+					t[xy].dangerLevel = 1;
+					t[xy].supplies = rand() % (8);
+				}
+				else if (worldSeed[xy] <= 7 && worldSeed[xy] > 3) // medium danger
+				{
+					t[xy].dangerLevel = 2;
+					t[xy].supplies = rand() % (10);
+				}
+				else if (worldSeed[xy] >= 8) // lots of danger
+				{
+					t[xy].dangerLevel = 3;
+					t[xy].supplies = rand() % (15);
+				}
+				xy++;
+			}
+		}
+	}
+	else
+	{
+		printf("Difficulty out of range");
+	}
+
+	xy = 0; // resetting for later use
+
+	t[0].dangerLevel = 0; // setting adjacent tiles to safe to avoid death on spawn
+	t[1].dangerLevel = 0;
+	t[10].dangerLevel = 0;
+	t[11].dangerLevel = 0;
+
+	t[0].current = true; // setting current system
+
+	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
+
+	worldConstructor();
 }
+
+// Game Functions
+
