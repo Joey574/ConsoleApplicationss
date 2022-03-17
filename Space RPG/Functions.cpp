@@ -79,6 +79,8 @@ void systemInfo(vector<systems>& s)
 	{
 		if (s[xy].explored == true)
 		{
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
+			printf("       ");
 			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 1);
 			cout << "Danger: " << s[xy].dangerLevel;
 			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 2);
@@ -666,4 +668,3 @@ void worldRan(int difficulty)
 }
 
 // Game Functions
-
