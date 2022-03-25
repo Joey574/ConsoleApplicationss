@@ -35,11 +35,13 @@ int main()
 {
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
+	_getch();
+
 	player p;
 	ship s;
-	systems t;
+	vector <systems> t(100);
 
 	introArt();
 
-	mainMenu(false, p, s);
+	mainMenu(false, p, s, t);
 }

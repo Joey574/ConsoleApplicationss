@@ -9,13 +9,14 @@ public:
 	person();
 
 	void setN(int name);
-	void setH(int hhealth);
+	void setH(int health);
 	void setHM(int healthMax);
 	void setAxP(int actionPoints);
 	void setAxM(int actionPointsMax);
 	void setD(int difficulty);
 
 private:
+
 	string name;
 
 	int health, healthMax;

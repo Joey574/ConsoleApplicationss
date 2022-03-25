@@ -16,14 +16,30 @@
 #include <fstream> // needed for files
 #include <cwchar>
 #include <algorithm> // needed for vector sort and other cool things
+#include "wtypes.h"
 
 using namespace std;
 
 // Function Prototypes
 
-void worldRan(int difficulty);
+void worldRan(int difficulty, vector <systems>& t);
+void gameManager(struct player& p, struct ship& s, struct system& t, bool inGame);
 
 // Useful Functions
+
+void GetDesktopResolution(int& horizontal, int& vertical)
+{
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
+}
 
 void gotoxy(int x, int y) // credit: Miyoshi
 {
@@ -101,33 +117,33 @@ void systemInfo(vector<systems>& s)
 void introArt()
 {
 	system("CLS");
-	printf("                     `. ___\n");
-	printf("                   __,' __`.                _..----....____\n");
-	printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'\n");
-	printf("  _..-''-------'   `'   `'   `'     O ``-''._   (,;') _,'\n");
-	printf(",'________________                          \\`-._`-','\n");
-	printf(" `._              ```````````------...___   '-.._'-:\n");
-	printf("    ```--.._      ,.                     ````--...__\\-.\n");
-	printf("            `.--. `-`                       ____    |  |`\n");
-	printf("              `. `.                       ,'`````.  ;  ;`\n");
-	printf("                `._`.        __________   `.      \\'__/`\n");
-	printf("                   `-:._____/______/___/____`.     \\  `\n");
-	printf("                              |       `._    `.    \\\n");
-	printf("                              `._________`-.   `.   `.___\n");
-	printf("                                                 `------'`\n");
-	printf("\n  _________  __           .__   .__                   \n");
-	printf(" /   _____/_/  |_   ____  |  |  |  |  _____   _______ \n");
-	printf(" \\_____  \\ \\   __\\_/ __ \\ |  |  |  |  \\__  \\  \\_  __ \\\n");
-	printf(" /        \\ |  |  \\  ___/ |  |__|  |__ / __ \\_ |  | \\/\n");
-	printf("/_______  / |__|   \\___  >|____/|____/(____  / |__|   \n");
-	printf("        \\/             \\/                  \\/         \n");
-	printf("__________                                            __           \n");
-	printf("\\______   \\  ____    _____    ____  _____     ____  _/  |_   ______\n");
-	printf(" |       _/_/ __ \\  /     \\  /    \\ \\__  \\   /    \\ \\   __\\ /  ___/\n");
-	printf(" |    |   \\\\  ___/ |  Y Y  \\|   |  \\ / __ \\_|   |  \\ |  |   \\___ \\ \n");
-	printf(" |____|_  / \\___  >|__|_|  /|___|  /(____  /|___|  / |__|  /____  >\n");
-	printf("        \\/      \\/       \\/      \\/      \\/      \\/             \\/ \n");
-	printf("\nBy: Joey Soroka\n");
+	printf("                     `. ___");
+	printf("                   __,' __`.                _..----....____");
+	printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'");
+	printf("  _..-''-------'   `'   `'   `'     O ``-''._   (,;') _,'");
+	printf(",'________________                          \\`-._`-','");
+	printf(" `._              ```````````------...___   '-.._'-:");
+	printf("    ```--.._      ,.                     ````--...__\\-.");
+	printf("            `.--. `-`                       ____    |  |`");
+	printf("              `. `.                       ,'`````.  ;  ;`");
+	printf("                `._`.        __________   `.      \\'__/`");
+	printf("                   `-:._____/______/___/____`.     \\  `");
+	printf("                              |       `._    `.    \\");
+	printf("                              `._________`-.   `.   `.___");
+	printf("                                                 `------'`");
+	printf("\n  _________  __           .__   .__                   ");
+	printf(" /   _____/_/  |_   ____  |  |  |  |  _____   _______ ");
+	printf(" \\_____  \\ \\   __\\_/ __ \\ |  |  |  |  \\__  \\  \\_  __ \\");
+	printf(" /        \\ |  |  \\  ___/ |  |__|  |__ / __ \\_ |  | \\/");
+	printf("/_______  / |__|   \\___  >|____/|____/(____  / |__|   ");
+	printf("        \\/             \\/                  \\/         ");
+	printf("__________                                            __           ");
+	printf("\\______   \\  ____    _____    ____  _____     ____  _/  |_   ______");
+	printf(" |       _/_/ __ \\  /     \\  /    \\ \\__  \\   /    \\ \\   __\\ /  ___/");
+	printf(" |    |   \\\\  ___/ |  Y Y  \\|   |  \\ / __ \\_|   |  \\ |  |   \\___ \\ ");
+	printf(" |____|_  / \\___  >|__|_|  /|___|  /(____  /|___|  / |__|  /____  >");
+	printf("        \\/      \\/       \\/      \\/      \\/      \\/             \\/ ");
+	printf("By: Joey Soroka");
 	_getch();
 }
 
@@ -226,7 +242,7 @@ void difficultySet(string input, struct player &p)
 	}
 }
 
-void gameStart(struct player &p, struct ship &s)
+void gameStart(struct player &p, struct ship &s, vector <systems>& t)
 {
 	string input;
 
@@ -266,7 +282,7 @@ void gameStart(struct player &p, struct ship &s)
 
 	difficultySet(input, p);
 
-	worldRan(p.difficulty);
+	worldRan(p.difficulty, t);
 }
 
 void scores()
@@ -389,7 +405,7 @@ void saveAndLoad()
 	system("CLS");
 }
 
-void mainMenu(bool inGame, struct player &p, struct ship &s)
+void mainMenu(bool inGame, struct player &p, struct ship &s, vector <systems>& t)
 {
 	string input;
 
@@ -414,7 +430,7 @@ void mainMenu(bool inGame, struct player &p, struct ship &s)
 
 		if (input == "1") // start/resume game
 		{
-			gameStart(p, s);
+			gameManager(p, s, t, inGame);
 		}
 		else if (input == "2") // High scores
 		{
@@ -515,14 +531,13 @@ void worldConstructor()
 	}
 	gotoxy(100, 0);
 	cout << (char)topRightCorner;
-	gotoxy(0, 61);
+
+	mapMovement();
 }
 
-void worldRan(int difficulty)
+void worldRan(int difficulty, vector <systems> &t)
 {
 	string input;
-
-	vector <systems> t (100);
 
 	vector <int> worldSeed;
 
@@ -653,8 +668,6 @@ void worldRan(int difficulty)
 		printf("Difficulty out of range");
 	}
 
-	xy = 0; // resetting for later use
-
 	t[0].dangerLevel = 0; // setting adjacent tiles to safe to avoid death on spawn
 	t[1].dangerLevel = 0;
 	t[10].dangerLevel = 0;
@@ -668,3 +681,18 @@ void worldRan(int difficulty)
 }
 
 // Game Functions
+
+void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGame)
+{
+	if (inGame == false)
+	{
+
+	}
+}
+
+void mapMovement()
+{
+	gotoxy(0, 61);
+
+	if ()
+}
