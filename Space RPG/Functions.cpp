@@ -16,30 +16,16 @@
 #include <fstream> // needed for files
 #include <cwchar>
 #include <algorithm> // needed for vector sort and other cool things
-#include "wtypes.h"
 
 using namespace std;
 
 // Function Prototypes
 
 void worldRan(int difficulty, vector <systems>& t);
-void gameManager(struct player& p, struct ship& s, struct system& t, bool inGame);
+void gameManager(struct player& p, struct ship& s, vector <systems>& t, bool inGame);
+void mapMovement(vector <systems>& t);
 
 // Useful Functions
-
-void GetDesktopResolution(int& horizontal, int& vertical)
-{
-	RECT desktop;
-	// Get a handle to the desktop window
-	const HWND hDesktop = GetDesktopWindow();
-	// Get the size of screen to the variable desktop
-	GetWindowRect(hDesktop, &desktop);
-	// The top left corner will have coordinates (0,0)
-	// and the bottom right corner will have coordinates
-	// (horizontal, vertical)
-	horizontal = desktop.right;
-	vertical = desktop.bottom;
-}
 
 void gotoxy(int x, int y) // credit: Miyoshi
 {
@@ -531,8 +517,6 @@ void worldConstructor()
 	}
 	gotoxy(100, 0);
 	cout << (char)topRightCorner;
-
-	mapMovement();
 }
 
 void worldRan(int difficulty, vector <systems> &t)
@@ -684,15 +668,55 @@ void worldRan(int difficulty, vector <systems> &t)
 
 void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGame)
 {
-	if (inGame == false)
+	if (!inGame)
 	{
-
+		gameStart(p, s, t);
 	}
+	else
+	{
+		worldConstructor();
+	}
+	exploredUpdater(t);
+	systemInfo(t);
+	mapMovement(t);
 }
 
-void mapMovement()
+void mapMovement(vector <systems>& t)
 {
-	gotoxy(0, 61);
+	int current;
+	bool left = false;
+	bool right = false;
+	bool up = false;
+	bool down = false;
 
-	if ()
+	string input;
+
+	for (int xy = 0; xy < 100; xy++) // finding current system and saving value for later use
+	{
+		if (t[xy].current == true)
+		{
+			current = xy;
+		}
+	}
+
+	gotoxy(0, 61);
+	printf("Menu: ");
+	gotoxy(0, 62);
+
+	if (t[current].x > 0)
+	{
+		printf("1: Go left");
+		left = true;
+		gotoxy(0, 63);
+		printf("2: ");
+	}
+	if (t[current].x < 9)
+	{
+		printf("Go right");
+		right = true;
+	}
+
+	cin >> input;
+
+
 }

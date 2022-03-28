@@ -21,7 +21,6 @@ struct player
 	int actionPoints, actionPointsMax;
 	int difficulty;
 
-	bool captain;
 	bool alive;
 };
 
