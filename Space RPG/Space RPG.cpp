@@ -35,8 +35,6 @@ int main()
 {
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
-	_getch();
-
 	player p;
 	ship s;
 	vector <systems> t(100);

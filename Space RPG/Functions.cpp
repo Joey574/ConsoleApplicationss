@@ -21,6 +21,8 @@ using namespace std;
 
 // Function Prototypes
 
+void gotoxy(int x, int y);
+void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
 void gameManager(struct player& p, struct ship& s, vector <systems>& t, bool inGame);
 void mapMovement(vector <systems>& t);
@@ -54,6 +56,7 @@ void exploredUpdater(vector<systems>& s)
 		if (s[xy].current == true)
 		{
 			s[xy].explored == true;
+
 			if (s[xy].x > 0)
 			{
 				s[xy - 1].explored = true;
@@ -70,6 +73,22 @@ void exploredUpdater(vector<systems>& s)
 			{
 				s[xy + 10].explored = true;
 			}
+			if (s[xy].x < 9 && s[xy].y < 9)
+			{
+				s[xy + 11].explored = true;
+			}
+			if (s[xy].x > 0 && s[xy].y < 9)
+			{
+				s[xy + 9].explored = true;
+			}
+			if (s[xy].x > 0 && s[xy].y > 0)
+			{
+				s[xy + 11].explored = true;
+			}
+			if (s[xy].x < 9 && s[xy].y > 0)
+			{
+				s[xy - 9].explored = true;
+			}
 			break;
 		}
 	}
@@ -79,9 +98,22 @@ void systemInfo(vector<systems>& s)
 {
 	for (int xy = 0; xy < 100; xy++)
 	{
-		if (s[xy].explored == true)
+		if (s[xy].current == true)
 		{
-			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
+			gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 3);
+			printf("       ");
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 1);
+			cout << "Danger: " << s[xy].dangerLevel;
+			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 2);
+			cout << "Supplies:";
+			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 3);
+			cout << s[xy].supplies;
+			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 4);
+			printf("Here");
+		}
+		else if (s[xy].explored == true)
+		{
+			gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 3);
 			printf("       ");
 			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 1);
 			cout << "Danger: " << s[xy].dangerLevel;
@@ -92,7 +124,7 @@ void systemInfo(vector<systems>& s)
 		}
 		else
 		{
-			gotoxy((s[xy].x * 10) + 1, (s[xy].y * 6) + 3);
+			gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 3);
 			printf("No Data");
 		}
 	}
@@ -103,32 +135,32 @@ void systemInfo(vector<systems>& s)
 void introArt()
 {
 	system("CLS");
-	printf("                     `. ___");
-	printf("                   __,' __`.                _..----....____");
-	printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'");
-	printf("  _..-''-------'   `'   `'   `'     O ``-''._   (,;') _,'");
-	printf(",'________________                          \\`-._`-','");
-	printf(" `._              ```````````------...___   '-.._'-:");
-	printf("    ```--.._      ,.                     ````--...__\\-.");
-	printf("            `.--. `-`                       ____    |  |`");
-	printf("              `. `.                       ,'`````.  ;  ;`");
-	printf("                `._`.        __________   `.      \\'__/`");
-	printf("                   `-:._____/______/___/____`.     \\  `");
-	printf("                              |       `._    `.    \\");
-	printf("                              `._________`-.   `.   `.___");
-	printf("                                                 `------'`");
-	printf("\n  _________  __           .__   .__                   ");
-	printf(" /   _____/_/  |_   ____  |  |  |  |  _____   _______ ");
-	printf(" \\_____  \\ \\   __\\_/ __ \\ |  |  |  |  \\__  \\  \\_  __ \\");
-	printf(" /        \\ |  |  \\  ___/ |  |__|  |__ / __ \\_ |  | \\/");
-	printf("/_______  / |__|   \\___  >|____/|____/(____  / |__|   ");
-	printf("        \\/             \\/                  \\/         ");
-	printf("__________                                            __           ");
-	printf("\\______   \\  ____    _____    ____  _____     ____  _/  |_   ______");
-	printf(" |       _/_/ __ \\  /     \\  /    \\ \\__  \\   /    \\ \\   __\\ /  ___/");
-	printf(" |    |   \\\\  ___/ |  Y Y  \\|   |  \\ / __ \\_|   |  \\ |  |   \\___ \\ ");
-	printf(" |____|_  / \\___  >|__|_|  /|___|  /(____  /|___|  / |__|  /____  >");
-	printf("        \\/      \\/       \\/      \\/      \\/      \\/             \\/ ");
+	printf("                     `. ___\n");
+	printf("                   __,' __`.                _..----....____\n");
+	printf("       __...--.'``;.   ,.   ;``--..__     .'    ,-._    _.-'\n");
+	printf("  _..-''-------'   `'   `'   `'     O ``-''._   (,;') _,'\n");
+	printf(",'________________                          \\`-._`-','\n");
+	printf(" `._              ```````````------...___   '-.._'-:\n");
+	printf("    ```--.._      ,.                     ````--...__\\-.\n");
+	printf("            `.--. `-`                       ____    |  |`\n");
+	printf("              `. `.                       ,'`````.  ;  ;`\n");
+	printf("                `._`.        __________   `.      \\'__/`\n");
+	printf("                   `-:._____/______/___/____`.     \\  `\n");
+	printf("                              |       `._    `.    \\\n");
+	printf("                              `._________`-.   `.   `.___\n");
+	printf("                                                 `------'`\n");
+	printf("\n  _________  __           .__   .__                   \n");
+	printf(" /   _____/_/  |_   ____  |  |  |  |  _____   _______ \n");
+	printf(" \\_____  \\ \\   __\\_/ __ \\ |  |  |  |  \\__  \\  \\_  __ \\\n");
+	printf(" /        \\ |  |  \\  ___/ |  |__|  |__ / __ \\_ |  | \\/\n");
+	printf("/_______  / |__|   \\___  >|____/|____/(____  / |__|   \n");
+	printf("        \\/             \\/                  \\/         \n");
+	printf("__________                                            __           \n");
+	printf("\\______   \\  ____    _____    ____  _____     ____  _/  |_   ______\n");
+	printf(" |       _/_/ __ \\  /     \\  /    \\ \\__  \\   /    \\ \\   __\\ /  ___/\n");
+	printf(" |    |   \\\\  ___/ |  Y Y  \\|   |  \\ / __ \\_|   |  \\ |  |   \\___ \\ \n");
+	printf(" |____|_  / \\___  >|__|_|  /|___|  /(____  /|___|  / |__|  /____  >\n");
+	printf("        \\/      \\/       \\/      \\/      \\/      \\/             \\/ \n");
 	printf("By: Joey Soroka");
 	_getch();
 }
@@ -267,8 +299,6 @@ void gameStart(struct player &p, struct ship &s, vector <systems>& t)
 	cin >> input;
 
 	difficultySet(input, p);
-
-	worldRan(p.difficulty, t);
 }
 
 void scores()
@@ -519,7 +549,7 @@ void worldConstructor()
 	cout << (char)topRightCorner;
 }
 
-void worldRan(int difficulty, vector <systems> &t)
+void worldRan(int difficulty, vector <systems>& t)
 {
 	string input;
 
@@ -661,7 +691,6 @@ void worldRan(int difficulty, vector <systems> &t)
 
 	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
 
-	worldConstructor();
 }
 
 // Game Functions
@@ -671,6 +700,8 @@ void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGam
 	if (!inGame)
 	{
 		gameStart(p, s, t);
+		worldRan(p.difficulty, t);
+		worldConstructor();
 	}
 	else
 	{
