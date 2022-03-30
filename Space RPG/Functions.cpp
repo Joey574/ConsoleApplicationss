@@ -109,7 +109,7 @@ void systemInfo(vector<systems>& s)
 			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 3);
 			cout << s[xy].supplies;
 			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 4);
-			printf("Here");
+			cout << char(234);
 		}
 		else if (s[xy].explored == true)
 		{
@@ -715,6 +715,9 @@ void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGam
 void mapMovement(vector <systems>& t)
 {
 	int current;
+	int move = 1;
+	vector <int> moveV = { 0, 0, 0, 0 };
+
 	bool left = false;
 	bool right = false;
 	bool up = false;
@@ -730,24 +733,81 @@ void mapMovement(vector <systems>& t)
 		}
 	}
 
-	gotoxy(0, 61);
+	gotoxy(101, 0);
 	printf("Menu: ");
-	gotoxy(0, 62);
+	gotoxy(101, move);
 
 	if (t[current].x > 0)
 	{
-		printf("1: Go left");
+		cout << move << ": ";
+		printf("Go left");
 		left = true;
-		gotoxy(0, 63);
-		printf("2: ");
+		moveV.at(move - 1) = move;
+		move++;
 	}
+
+	gotoxy(101, move);
+
 	if (t[current].x < 9)
 	{
+		cout << move << ": ";
 		printf("Go right");
 		right = true;
+		moveV.at(move - 1) = move;
+		move++;
 	}
 
+	gotoxy(101, move);
+
+	if (t[current].y > 0)
+	{
+		cout << move << ": ";
+		printf("Go up");
+		up = true;
+		moveV.at(move - 1) = move;
+		move++;
+	}
+
+	gotoxy(101, move);
+
+	if (t[current].y < 9)
+	{
+		cout << move << ": ";
+		printf("Go down");
+		down = true;
+		moveV.at(move - 1) = move;
+		move++;
+	}
+
+	gotoxy(101, move);
+	printf("Input: ");
 	cin >> input;
+	
 
+	for (int i = 0; i < 4; i++)
+	{
+		if (stoi(input) == moveV[i])
+		{
+			if (i == 0)
+			{
+				t[current - 1].current = true;
+			}
+			else if (i == 1)
+			{
+				t[current + 1].current = true;
+			}
+			else if (i == 2)
+			{
+				t[current - 10].current = true;
+			}
+			else if (i == 3)
+			{
+				t[current + 10].current = true;
+			}
+		}
+	}
+	t[current].current = false;
 
+	exploredUpdater(t);
+	systemInfo(t);
 }
