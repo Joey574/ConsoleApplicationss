@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 using namespace std;
 
 struct systems
@@ -8,7 +10,9 @@ struct systems
     int supplies;
     int x, y;
     int systemID;
+	int enemies = 0;
     bool explored;
+	bool encountered = false;
     bool current = false;
     bool objective;
 };
@@ -60,4 +64,11 @@ struct module
 	bool boardable;
 	bool powered;
 	bool crewed;
+};
+
+struct gm
+{
+	player p;
+	ship s;
+	struct module m;
 };

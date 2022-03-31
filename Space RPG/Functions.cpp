@@ -24,10 +24,12 @@ using namespace std;
 void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
-void gameManager(struct player& p, struct ship& s, vector <systems>& t, bool inGame);
+void gameManager(struct gm &gm, vector <systems>& t, bool inGame);
 void mapMovement(vector <systems>& t);
-void objectiveFound(struct player& p);
-void gameRestart(struct player& p);
+void objectiveFound(struct gm& gm);
+void gameRestart(struct gm& gm);
+void combat(struct gm& gm, vector <systems>& t);
+bool encounterChance(vector <systems>& t);
 
 // Useful Functions
 
@@ -96,7 +98,7 @@ void exploredUpdater(vector<systems>& s)
 	}
 }
 
-void systemInfo(vector<systems>& s, struct player &p)
+void systemInfo(vector<systems>& s, struct gm& gm)
 {
 	for (int xy = 0; xy < 100; xy++)
 	{
@@ -116,7 +118,7 @@ void systemInfo(vector<systems>& s, struct player &p)
 			{
 				gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 5);
 				printf("       ");
-				p.victory = true;
+				gm.p.victory = true;
 				gotoxy(0, 0);
 			}
 		}
@@ -258,23 +260,28 @@ void menuArt()
 
 // Main Menu Functions
 
-void difficultySet(string input, struct player &p)
+void difficultySet(struct gm& gm)
 {
+	string input;
+	
+	printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
+	cin >> input;
+
 	if (input == "1")
 	{
-		p.difficulty = 0; // easy
+		gm.p.difficulty = 0; // easy
 	}
 	else if (input == "2")
 	{
-		p.difficulty = 1; // medium
+		gm.p.difficulty = 1; // medium
 	}
 	else if (input == "3")
 	{
-		p.difficulty = 2; // hard
+		gm.p.difficulty = 2; // hard
 	}
 }
 
-void gameStart(struct player &p, struct ship &s, vector <systems>& t)
+void gameStart(struct gm& gm, vector <systems>& t)
 {
 	string input;
 
@@ -288,10 +295,10 @@ void gameStart(struct player &p, struct ship &s, vector <systems>& t)
 	_getch();
 	system("CLS");
 	printf("So what say you Captain? What shall your callsign be? You can change it later.\n");
-	cin >> p.name;
+	cin >> gm.p.name;
 	system("CLS");
-	cout << "Captain " << p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?\n";
-	cin >> s.name;
+	cout << "Captain " << gm.p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?\n";
+	cin >> gm.s.name;
 	system("CLS");
 	printf("As the captain of your ship it's your responsibility to keep your ship and your crew alive. On top of this you must explore unknown space to discover a colonization candidate.\n");
 	_getch();
@@ -306,13 +313,9 @@ void gameStart(struct player &p, struct ship &s, vector <systems>& t)
 	printf("If you ever need help or want to save visit your ships onboard computer, located in your command module, and reopen the menu.\n");
 	_getch();
 	system("CLS");
-	cout << "Good luck Captain " << p.name << ", and make sure you come home safe!" << endl;
+	cout << "Good luck Captain " << gm.p.name << ", and make sure you come home safe!" << endl;
 	_getch();
 	system("CLS");
-	printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
-	cin >> input;
-
-	difficultySet(input, p);
 }
 
 void scores()
@@ -356,7 +359,7 @@ void scores()
 	_getch();
 }
 
-void help(struct player &p)
+void help(struct gm& gm)
 {
 	string input;
 
@@ -369,14 +372,14 @@ void help(struct player &p)
 		{
 			printf("Enter new name: ");
 			cin >> input;
-			p.name = input;
+			gm.p.name = input;
 		}
 		else if (input == "2")
 		{
 			printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
 			cin >> input;
 
-			difficultySet(input, p);
+			difficultySet(gm);
 		}
 		else if (input == "3")
 		{
@@ -435,7 +438,7 @@ void saveAndLoad()
 	system("CLS");
 }
 
-void mainMenu(bool inGame, struct player &p, struct ship &s, vector <systems>& t)
+void mainMenu(bool inGame, struct gm &gm, vector <systems>& t)
 {
 	string input;
 
@@ -460,7 +463,7 @@ void mainMenu(bool inGame, struct player &p, struct ship &s, vector <systems>& t
 
 		if (input == "1") // start/resume game
 		{
-			gameManager(p, s, t, inGame);
+			gameManager(gm, t, inGame);
 		}
 		else if (input == "2") // High scores
 		{
@@ -468,7 +471,7 @@ void mainMenu(bool inGame, struct player &p, struct ship &s, vector <systems>& t
 		}
 		else if (input == "3") // help
 		{
-			help(p);
+			help(gm);
 		}
 		else if (input == "4") // credits
 		{
@@ -511,6 +514,8 @@ void worldConstructor()
 	int upT = 194;
 	int junction = 197;
 	int xy = 0;
+
+	gotoxy(0, 0);
 
 	for (int x = 0; x < 10; x++)
 	{
@@ -709,12 +714,15 @@ void worldRan(int difficulty, vector <systems>& t)
 
 // Game Functions
 
-void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGame)
+void gameManager(struct gm& gm, vector <systems> &t, bool inGame)
 {
+	bool encounter;
+
 	if (!inGame)
 	{
-		gameStart(p, s, t);
-		worldRan(p.difficulty, t);
+		gameStart(gm, t);
+		difficultySet(gm);
+		worldRan(gm.p.difficulty, t);
 		worldConstructor();
 	}
 	else
@@ -723,28 +731,57 @@ void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGam
 	}
 	inGame = true;
 	exploredUpdater(t);
-	systemInfo(t, p);
-	while (!p.victory && p.alive)
+	systemInfo(t, gm);
+	while (!gm.p.victory && gm.p.alive)
 	{
 		mapMovement(t);
 		exploredUpdater(t);
-		systemInfo(t, p);
+		systemInfo(t, gm);
+		encounter = encounterChance(t);
+		if (encounter == true)
+		{
+			combat(gm, t);
+			worldConstructor();
+			systemInfo(t, gm);
+		}
 	}
-	if (p.victory == true)
+	if (gm.p.victory == true)
 	{
-		objectiveFound(p);
+		objectiveFound(gm);
 	}
-	else if (p.alive == false)
+	else if (gm.p.alive == false)
 	{
 
 	}
-	gameRestart(p);
+	gameRestart(gm);
 }
 
-void encounterChance(vector <systems>& t)
+void combat(struct gm& gm, vector <systems>& t)
+{
+	int current;
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (t[i].current == true)
+		{
+			current = i;
+		}
+	}
+
+	if (t[current].enemies > 0)
+	{
+		system("CLS");
+		cout << "You have encountered " << t[current].enemies << " enemy combatants, brace for combat!";
+		_getch();
+	}
+
+}
+
+bool encounterChance(vector <systems>&t)
 {
 	int current;
 	int enemies = 0;
+	int ran;
 
 	bool encounter;
 
@@ -756,17 +793,38 @@ void encounterChance(vector <systems>& t)
 		}
 	}
 
-	if (t[current].dangerLevel == 0)
+	ran = rand() % (11);
+
+	if (t[current].dangerLevel == 1 && ran >= 7 && t[current].encountered == false)
+	{
+		t[current].enemies = 1 + rand() % (2);
+		encounter = true;
+	}
+	else if (t[current].dangerLevel == 2 && ran >= 5 && t[current].encountered == false)
+	{
+		t[current].enemies = 2 + rand() % (3);
+		encounter = true;
+	}
+	else if (t[current].dangerLevel == 3 && ran >= 3 && t[current].encountered == false)
+	{
+		t[current].enemies = 3 + rand() % (4);
+		encounter = true;
+	}
+	else
 	{
 		encounter = false;
 	}
+
+	t[current].encountered = true;
+
+	return encounter;
 }
 
-void objectiveFound(struct player &p)
+void objectiveFound(struct gm& gm)
 {
 	system("CLS");
 	printf("There it is, from the bridge of your ship you see it... A new hope, a candidate for life, \"I did it...\" you think to yourself.\n");
-	cout << "Your name... Captain " << p.name << " will be written in the history books, forever remembered as the one who saved humanity.";
+	cout << "Your name... Captain " << gm.p.name << " will be written in the history books, forever remembered as the one who saved humanity.";
 	_getch();
 }
 
@@ -803,7 +861,6 @@ void mapMovement(vector <systems>& t)
 		cout << move << ": ";
 		printf("Go left");
 		left = move;
-		l = to_string(move);
 		move++;
 	}
 
@@ -814,7 +871,6 @@ void mapMovement(vector <systems>& t)
 		cout << move << ": ";
 		printf("Go right");
 		right = move;
-		r = to_string(move);
 		move++;
 	}
 
@@ -825,7 +881,6 @@ void mapMovement(vector <systems>& t)
 		cout << move << ": ";
 		printf("Go up");
 		up = move;
-		u = to_string(move);
 		move++;
 	}
 
@@ -836,13 +891,46 @@ void mapMovement(vector <systems>& t)
 		cout << move << ": ";
 		printf("Go down");
 		down = move;
-		d = to_string(move);
 		move++;
 	}
 
-	gotoxy(101, move);
-	printf("Input: ");
-	cin >> input;
+	while (1)
+	{
+		gotoxy(101, move);
+		printf("                ");
+		gotoxy(101, move);
+		printf("Input: ");
+		cin >> input;
+
+		if (move - 1 == 2)
+		{
+			if (input != "1" && input != "2")
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
+		else if (move - 1 == 3)
+		{
+			if (input != "1" && input != "2" && input != "3")
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
+		else if (move - 1 == 4)
+		{
+			if (input != "1" && input != "2" && input != "3" && input != "4")
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
+		break;
+	}
 
 	gotoxy(101, 1);
 	printf("           ");
@@ -877,8 +965,8 @@ void mapMovement(vector <systems>& t)
 	printf(" ");
 }
 
-void gameRestart(struct player& p)
+void gameRestart(struct gm& gm)
 {
-	p.victory = false;
-	p.alive = true;
+	gm.p.victory = false;
+	gm.p.alive = true;
 }
