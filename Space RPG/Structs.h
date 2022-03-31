@@ -21,7 +21,8 @@ struct player
 	int actionPoints, actionPointsMax;
 	int difficulty;
 
-	bool alive;
+	bool alive = true;
+	bool victory = false;
 };
 
 struct ship

@@ -24,4 +24,5 @@ private:
 	int difficulty;
 
 	bool alive = true;
+	bool victory = false;
 };

@@ -26,6 +26,8 @@ void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
 void gameManager(struct player& p, struct ship& s, vector <systems>& t, bool inGame);
 void mapMovement(vector <systems>& t);
+void objectiveFound(struct player& p);
+void gameRestart(struct player& p);
 
 // Useful Functions
 
@@ -83,7 +85,7 @@ void exploredUpdater(vector<systems>& s)
 			}
 			if (s[xy].x > 0 && s[xy].y > 0)
 			{
-				s[xy + 11].explored = true;
+				s[xy - 11].explored = true;
 			}
 			if (s[xy].x < 9 && s[xy].y > 0)
 			{
@@ -94,7 +96,7 @@ void exploredUpdater(vector<systems>& s)
 	}
 }
 
-void systemInfo(vector<systems>& s)
+void systemInfo(vector<systems>& s, struct player &p)
 {
 	for (int xy = 0; xy < 100; xy++)
 	{
@@ -110,6 +112,13 @@ void systemInfo(vector<systems>& s)
 			cout << s[xy].supplies;
 			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 4);
 			cout << char(234);
+			if (s[xy].objective == true)
+			{
+				gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 5);
+				printf("       ");
+				p.victory = true;
+				gotoxy(0, 0);
+			}
 		}
 		else if (s[xy].explored == true)
 		{
@@ -121,6 +130,11 @@ void systemInfo(vector<systems>& s)
 			cout << "Supplies:";
 			gotoxy((s[xy].x * 10) + 5, (s[xy].y * 6) + 3);
 			cout << s[xy].supplies;
+			if (s[xy].objective == true)
+			{
+				gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 5);
+				printf("GENESIS");
+			}
 		}
 		else
 		{
@@ -407,7 +421,7 @@ void help(struct player &p)
 void credits()
 {
 	printf("Author:\nJoey Soroka\n\n");
-	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\n\n");
+	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\nBrooks Sammarco\n\n");
 	printf("Creative Support:\nIssac Morine\n");
 	_getch();
 }
@@ -707,23 +721,70 @@ void gameManager(struct player&p, struct ship&s, vector <systems> &t, bool inGam
 	{
 		worldConstructor();
 	}
+	inGame = true;
 	exploredUpdater(t);
-	systemInfo(t);
-	mapMovement(t);
+	systemInfo(t, p);
+	while (!p.victory && p.alive)
+	{
+		mapMovement(t);
+		exploredUpdater(t);
+		systemInfo(t, p);
+	}
+	if (p.victory == true)
+	{
+		objectiveFound(p);
+	}
+	else if (p.alive == false)
+	{
+
+	}
+	gameRestart(p);
+}
+
+void encounterChance(vector <systems>& t)
+{
+	int current;
+	int enemies = 0;
+
+	bool encounter;
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (t[i].current == true)
+		{
+			current = i;
+		}
+	}
+
+	if (t[current].dangerLevel == 0)
+	{
+		encounter = false;
+	}
+}
+
+void objectiveFound(struct player &p)
+{
+	system("CLS");
+	printf("There it is, from the bridge of your ship you see it... A new hope, a candidate for life, \"I did it...\" you think to yourself.\n");
+	cout << "Your name... Captain " << p.name << " will be written in the history books, forever remembered as the one who saved humanity.";
+	_getch();
 }
 
 void mapMovement(vector <systems>& t)
 {
 	int current;
 	int move = 1;
-	vector <int> moveV = { 0, 0, 0, 0 };
 
-	bool left = false;
-	bool right = false;
-	bool up = false;
-	bool down = false;
+	int left = 0;
+	int right = 0;
+	int up = 0;
+	int down = 0;
 
 	string input;
+	string l;
+	string r;
+	string u;
+	string d;
 
 	for (int xy = 0; xy < 100; xy++) // finding current system and saving value for later use
 	{
@@ -741,8 +802,8 @@ void mapMovement(vector <systems>& t)
 	{
 		cout << move << ": ";
 		printf("Go left");
-		left = true;
-		moveV.at(move - 1) = move;
+		left = move;
+		l = to_string(move);
 		move++;
 	}
 
@@ -752,8 +813,8 @@ void mapMovement(vector <systems>& t)
 	{
 		cout << move << ": ";
 		printf("Go right");
-		right = true;
-		moveV.at(move - 1) = move;
+		right = move;
+		r = to_string(move);
 		move++;
 	}
 
@@ -763,8 +824,8 @@ void mapMovement(vector <systems>& t)
 	{
 		cout << move << ": ";
 		printf("Go up");
-		up = true;
-		moveV.at(move - 1) = move;
+		up = move;
+		u = to_string(move);
 		move++;
 	}
 
@@ -774,40 +835,50 @@ void mapMovement(vector <systems>& t)
 	{
 		cout << move << ": ";
 		printf("Go down");
-		down = true;
-		moveV.at(move - 1) = move;
+		down = move;
+		d = to_string(move);
 		move++;
 	}
 
 	gotoxy(101, move);
 	printf("Input: ");
 	cin >> input;
-	
 
-	for (int i = 0; i < 4; i++)
+	gotoxy(101, 1);
+	printf("           ");
+	gotoxy(101, 2);
+	printf("           ");
+	gotoxy(101, 3);
+	printf("           ");
+	gotoxy(101, 4);
+	printf("           ");
+	gotoxy(101, 5);
+	printf("           ");
+
+	if (left == stoi(input))
 	{
-		if (stoi(input) == moveV[i])
-		{
-			if (i == 0)
-			{
-				t[current - 1].current = true;
-			}
-			else if (i == 1)
-			{
-				t[current + 1].current = true;
-			}
-			else if (i == 2)
-			{
-				t[current - 10].current = true;
-			}
-			else if (i == 3)
-			{
-				t[current + 10].current = true;
-			}
-		}
+		t[current - 1].current = true;
 	}
-	t[current].current = false;
+	else if (right == stoi(input))
+	{
+		t[current + 1].current = true;
+	}
+	else if (up == stoi(input))
+	{
+		t[current - 10].current = true;
+	}
+	else if (down == stoi(input))
+	{
+		t[current + 10].current = true;
+	}
 
-	exploredUpdater(t);
-	systemInfo(t);
+	t[current].current = false;
+	gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+	printf(" ");
+}
+
+void gameRestart(struct player& p)
+{
+	p.victory = false;
+	p.alive = true;
 }
