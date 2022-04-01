@@ -24,10 +24,10 @@ using namespace std;
 void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
-void gameManager(struct gm &gm, vector <systems>& t, bool inGame);
+void gameManager(struct gm &gm, vector <systems>& t);
 void mapMovement(vector <systems>& t);
 void objectiveFound(struct gm& gm);
-void gameRestart(struct gm& gm);
+void gameRestart(struct gm& gm, vector <systems>& t);
 void combat(struct gm& gm, vector <systems>& t);
 bool encounterChance(vector <systems>& t);
 
@@ -429,16 +429,49 @@ void credits()
 	_getch();
 }
 
+void save()
+{
+
+}
+
+void load()
+{
+
+}
+
 void saveAndLoad()
 {
 	string input;
 
-	printf("Menu:\n1: Save\n2: Load\n3: Back\nInput: ");
-	cin >> input;
-	system("CLS");
+	while (1)
+	{
+		system("CLS");
+		printf("Menu:\n1: Save\n2: Load\n3: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			save();
+		}
+		else if (input == "2")
+		{
+			load();
+		}
+		else if (input == "3")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+	}
+	
 }
 
-void mainMenu(bool inGame, struct gm &gm, vector <systems>& t)
+void mainMenu(struct gm &gm, vector <systems>& t)
 {
 	string input;
 
@@ -448,7 +481,7 @@ void mainMenu(bool inGame, struct gm &gm, vector <systems>& t)
 
 		menuArt();
 
-		if (inGame == false) // check to see if game has already been started
+		if (gm.inGame == false) // check to see if game has already been started
 		{
 			printf("Menu:\n1: Start Game\n"); // not started
 		}
@@ -463,7 +496,7 @@ void mainMenu(bool inGame, struct gm &gm, vector <systems>& t)
 
 		if (input == "1") // start/resume game
 		{
-			gameManager(gm, t, inGame);
+			gameManager(gm, t);
 		}
 		else if (input == "2") // High scores
 		{
@@ -714,11 +747,11 @@ void worldRan(int difficulty, vector <systems>& t)
 
 // Game Functions
 
-void gameManager(struct gm& gm, vector <systems> &t, bool inGame)
+void gameManager(struct gm& gm, vector <systems> &t)
 {
 	bool encounter;
 
-	if (!inGame)
+	if (!gm.inGame)
 	{
 		gameStart(gm, t);
 		difficultySet(gm);
@@ -729,7 +762,7 @@ void gameManager(struct gm& gm, vector <systems> &t, bool inGame)
 	{
 		worldConstructor();
 	}
-	inGame = true;
+	gm.inGame = true;
 	exploredUpdater(t);
 	systemInfo(t, gm);
 	while (!gm.p.victory && gm.p.alive)
@@ -753,7 +786,7 @@ void gameManager(struct gm& gm, vector <systems> &t, bool inGame)
 	{
 
 	}
-	gameRestart(gm);
+	gameRestart(gm, t);
 }
 
 void combat(struct gm& gm, vector <systems>& t)
@@ -965,8 +998,18 @@ void mapMovement(vector <systems>& t)
 	printf(" ");
 }
 
-void gameRestart(struct gm& gm)
+void gameRestart(struct gm& gm, vector <systems>& t)
 {
 	gm.p.victory = false;
 	gm.p.alive = true;
+	gm.inGame = false;
+	
+	for (int i = 0; i < 100; i++)
+	{
+		t[i].explored = false;
+		t[i].encountered = false;
+		t[i].current = false;
+		t[i].objective = false;
+		t[i].enemies = 0;
+	}
 }

@@ -71,4 +71,6 @@ struct gm
 	player p;
 	ship s;
 	struct module m;
+
+	bool inGame = false;
 };
