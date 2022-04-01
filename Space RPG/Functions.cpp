@@ -25,11 +25,12 @@ void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
 void gameManager(struct gm &gm, vector <systems>& t);
-void mapMovement(vector <systems>& t);
+void mapMovement(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
-void combat(struct gm& gm, vector <systems>& t);
-bool encounterChance(vector <systems>& t);
+void combat(struct gm& gm, vector <systems>& t, int encounter);
+int encounterChance(vector <systems>& t);
+void friendlyShip(vector <systems>& t);
 
 // Useful Functions
 
@@ -549,6 +550,7 @@ void worldConstructor()
 	int xy = 0;
 
 	gotoxy(0, 0);
+	system("CLS");
 
 	for (int x = 0; x < 10; x++)
 	{
@@ -749,7 +751,7 @@ void worldRan(int difficulty, vector <systems>& t)
 
 void gameManager(struct gm& gm, vector <systems> &t)
 {
-	bool encounter;
+	int encounter;
 
 	if (!gm.inGame)
 	{
@@ -767,15 +769,25 @@ void gameManager(struct gm& gm, vector <systems> &t)
 	systemInfo(t, gm);
 	while (!gm.p.victory && gm.p.alive)
 	{
-		mapMovement(t);
+		mapMovement(t, gm);
 		exploredUpdater(t);
 		systemInfo(t, gm);
 		encounter = encounterChance(t);
-		if (encounter == true)
+		if (encounter == 1 || encounter == 2)
 		{
-			combat(gm, t);
+			combat(gm, t, encounter);
 			worldConstructor();
 			systemInfo(t, gm);
+		}
+		else if (encounter == 3)
+		{
+			friendlyShip(t);
+			worldConstructor();
+			systemInfo(t, gm);
+		}
+		else if (encounter == 4)
+		{
+
 		}
 	}
 	if (gm.p.victory == true)
@@ -789,7 +801,7 @@ void gameManager(struct gm& gm, vector <systems> &t)
 	gameRestart(gm, t);
 }
 
-void combat(struct gm& gm, vector <systems>& t)
+void friendlyShip(vector <systems>& t)
 {
 	int current;
 
@@ -801,22 +813,47 @@ void combat(struct gm& gm, vector <systems>& t)
 		}
 	}
 
-	if (t[current].enemies > 0)
+	system("CLS");
+	printf("You have encounted a friendly vessle which has given you ");
+	cout << t[current].addedSup;
+	printf(" supplies in hopes that you succeed in your jounrey!");
+	_getch();
+}
+
+void combat(struct gm& gm, vector <systems>& t, int encounter)
+{
+	int current;
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (t[i].current == true)
+		{
+			current = i;
+		}
+	}
+
+	if (encounter == 1)
 	{
 		system("CLS");
-		cout << "You have encountered " << t[current].enemies << " enemy combatants, brace for combat!";
+		cout << "You have been boarded by " << t[current].enemies << " enemy combatants, brace for combat!";
+		_getch();
+	}
+	else if (encounter == 2)
+	{
+		system("CLS");
+		cout << t[current].enemies << " enemy ship has dropped out of hyperspace and engaged! brace for combat!";
 		_getch();
 	}
 
 }
 
-bool encounterChance(vector <systems>&t)
+int encounterChance(vector <systems>&t)
 {
 	int current;
 	int enemies = 0;
 	int ran;
 
-	bool encounter;
+	int encounter;
 
 	for (int i = 0; i < 100; i++)
 	{
@@ -826,26 +863,54 @@ bool encounterChance(vector <systems>&t)
 		}
 	}
 
-	ran = rand() % (11);
+	ran = 1 + rand() % (10);
 
-	if (t[current].dangerLevel == 1 && ran >= 7 && t[current].encountered == false)
+	if (t[current].shop == true) // shop
 	{
-		t[current].enemies = 1 + rand() % (2);
-		encounter = true;
+		encounter = 4;
 	}
-	else if (t[current].dangerLevel == 2 && ran >= 5 && t[current].encountered == false)
+	else if (ran <= 9 && ran > 7 && t[current].encountered == false && t[current].dangerLevel > 0) // enemies attack
 	{
-		t[current].enemies = 2 + rand() % (3);
-		encounter = true;
+		ran = rand() % (2);
+
+		if (ran == 0) // boarded
+		{
+			if (t[current].dangerLevel == 1)
+			{
+				t[current].enemies = 1 + rand() % (2);
+			}
+			else if (t[current].dangerLevel == 2)
+			{
+				t[current].enemies = 2 + rand() % (3);
+			}
+			else if (t[current].dangerLevel == 3)
+			{
+				t[current].enemies = 3 + rand() % (4);	
+			}
+			encounter = 1;
+		}
+		else if (ran == 1) // ship attack
+		{
+			if (t[current].dangerLevel == 3)
+			{
+				t[current].enemies = 1 + rand() % (2);
+			}
+			else
+			{
+				t[current].enemies = 1;
+			}
+			encounter = 2;
+		}
+		
 	}
-	else if (t[current].dangerLevel == 3 && ran >= 3 && t[current].encountered == false)
+	else if (ran <= 10 && ran > 9 && t[current].encountered == false) // friendly ships with supplies
 	{
-		t[current].enemies = 3 + rand() % (4);
-		encounter = true;
+		t[current].addedSup = 2 + rand() % (6);
+		encounter = 3;
 	}
-	else
+	else // no encounter
 	{
-		encounter = false;
+		encounter = 0;
 	}
 
 	t[current].encountered = true;
@@ -861,7 +926,7 @@ void objectiveFound(struct gm& gm)
 	_getch();
 }
 
-void mapMovement(vector <systems>& t)
+void mapMovement(vector <systems>& t, struct gm& gm)
 {
 	int current;
 	int move = 1;
@@ -872,10 +937,6 @@ void mapMovement(vector <systems>& t)
 	int down = 0;
 
 	string input;
-	string l;
-	string r;
-	string u;
-	string d;
 
 	for (int xy = 0; xy < 100; xy++) // finding current system and saving value for later use
 	{
@@ -887,6 +948,13 @@ void mapMovement(vector <systems>& t)
 
 	gotoxy(101, 0);
 	printf("Menu: ");
+	gotoxy(120, 0);
+	printf("Stats: ");
+	gotoxy(120, 1);
+	cout << gm.p.supplies;
+	gotoxy(120, 2);
+	cout << gm.p.health << " / " << gm.p.healthMax;
+
 	gotoxy(101, move);
 
 	if (t[current].x > 0)
@@ -1010,6 +1078,8 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 		t[i].encountered = false;
 		t[i].current = false;
 		t[i].objective = false;
+		t[i].shop = false;
 		t[i].enemies = 0;
+		t[i].addedSup = 0;
 	}
 }

@@ -11,9 +11,11 @@ struct systems
     int x, y;
     int systemID;
 	int enemies = 0;
+	int addedSup = 0;
     bool explored;
 	bool encountered = false;
     bool current = false;
+	bool shop = false;
     bool objective;
 };
 
@@ -21,9 +23,10 @@ struct player
 {
 	string name;
 
-	int health, healthMax;
+	int health = 10, healthMax = 10;
 	int actionPoints, actionPointsMax;
 	int difficulty;
+	int supplies = 10;
 
 	bool alive = true;
 	bool victory = false;
