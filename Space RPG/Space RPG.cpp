@@ -25,7 +25,7 @@ Maintenance Log:
 #include <cwchar>
 #include <algorithm> // needed for vector sort and other cool things
 
-#include "Player Class.h"
+#include "Classes.h"
 #include "Structs.h"
 #include "Functions.cpp"
 

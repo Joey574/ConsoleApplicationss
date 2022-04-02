@@ -25,12 +25,15 @@ void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
 void gameManager(struct gm &gm, vector <systems>& t);
-void mapMovement(vector <systems>& t, struct gm& gm);
+void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
 void combat(struct gm& gm, vector <systems>& t, int encounter);
 int encounterChance(vector <systems>& t);
-void friendlyShip(vector <systems>& t);
+void friendlyShip(struct gm& gm, vector <systems>& t);
+void gameOver();
+void moveUpdate(struct gm& gm);
+void shipValues(struct gm& gm);
 
 // Useful Functions
 
@@ -745,6 +748,14 @@ void worldRan(int difficulty, vector <systems>& t)
 
 	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
 
+	for (int i = 0; i < 3; i++) // finding 3 random systems from ID 19-99 to be used for shops
+	{
+		int q = 20 + rand() % 80;
+		if (t[q].shop == false)
+		{
+			t[q].shop = true;
+		}
+	}
 }
 
 // Game Functions
@@ -758,37 +769,37 @@ void gameManager(struct gm& gm, vector <systems> &t)
 		gameStart(gm, t);
 		difficultySet(gm);
 		worldRan(gm.p.difficulty, t);
-		worldConstructor();
-	}
-	else
-	{
-		worldConstructor();
+		shipValues(gm);
 	}
 	gm.inGame = true;
+	worldConstructor();
 	exploredUpdater(t);
 	systemInfo(t, gm);
 	while (!gm.p.victory && gm.p.alive)
 	{
-		mapMovement(t, gm);
+		mapMenu(t, gm);
+		moveUpdate(gm);
 		exploredUpdater(t);
 		systemInfo(t, gm);
 		encounter = encounterChance(t);
-		if (encounter == 1 || encounter == 2)
+		if (encounter > 0)
 		{
-			combat(gm, t, encounter);
-			worldConstructor();
-			systemInfo(t, gm);
-		}
-		else if (encounter == 3)
-		{
-			friendlyShip(t);
-			worldConstructor();
-			systemInfo(t, gm);
-		}
-		else if (encounter == 4)
-		{
+			if (encounter == 1 || encounter == 2)
+			{
+				combat(gm, t, encounter);
+			}
+			else if (encounter == 3)
+			{
+				friendlyShip(gm, t);
+			}
+			else if (encounter == 4)
+			{
 
+			}
+			worldConstructor();
+			systemInfo(t, gm);
 		}
+		
 	}
 	if (gm.p.victory == true)
 	{
@@ -796,12 +807,47 @@ void gameManager(struct gm& gm, vector <systems> &t)
 	}
 	else if (gm.p.alive == false)
 	{
-
+		gameOver();
 	}
 	gameRestart(gm, t);
 }
 
-void friendlyShip(vector <systems>& t)
+void moveUpdate(struct gm& gm)
+{
+	gm.s.fuel--;
+
+	if (gm.s.fuel <= 0)
+	{
+		gm.p.alive = false;
+	}
+
+	if (gm.s.shield < gm.s.shieldMax)
+	{
+		gm.s.shield += gm.s.shieldRegeneration;
+	}
+}
+
+void gameOver()
+{
+	system("CLS");
+	printf("You have failed your mission, and as you and your crew slowly succumb to the dangers of space, you realize you shall never know the fate of Earth, and along with it... Humanity");
+	_getch();
+}
+
+void shipValues(struct gm& gm)
+{
+	gm.s.health = gm.s.shipData[gm.s.shipID][0];
+	gm.s.healthMax = gm.s.shipData[gm.s.shipID][1];
+	gm.s.shield = gm.s.shipData[gm.s.shipID][2];
+	gm.s.shieldMax = gm.s.shipData[gm.s.shipID][3];
+	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
+	gm.s.modules = gm.s.shipData[gm.s.shipID][5];
+	gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
+	gm.s.fuel = gm.s.shipData[gm.s.shipID][7];
+	gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
+}
+
+void friendlyShip(struct gm& gm, vector <systems>& t)
 {
 	int current;
 
@@ -817,6 +863,9 @@ void friendlyShip(vector <systems>& t)
 	printf("You have encounted a friendly vessle which has given you ");
 	cout << t[current].addedSup;
 	printf(" supplies in hopes that you succeed in your jounrey!");
+
+	gm.p.supplies += t[current].addedSup;
+
 	_getch();
 }
 
@@ -926,7 +975,7 @@ void objectiveFound(struct gm& gm)
 	_getch();
 }
 
-void mapMovement(vector <systems>& t, struct gm& gm)
+void mapMenu(vector <systems>& t, struct gm& gm)
 {
 	int current;
 	int move = 1;
@@ -951,9 +1000,17 @@ void mapMovement(vector <systems>& t, struct gm& gm)
 	gotoxy(120, 0);
 	printf("Stats: ");
 	gotoxy(120, 1);
-	cout << gm.p.supplies;
+	cout << gm.p.supplies << " Supplies";
 	gotoxy(120, 2);
-	cout << gm.p.health << " / " << gm.p.healthMax;
+	cout << gm.p.health << " / " << gm.p.healthMax << " Player HP";
+	gotoxy(120, 3);
+	cout << gm.s.shield << " / " << gm.s.shieldMax << " Ship Shield";
+	gotoxy(120, 4);
+	cout << gm.s.health << " / " << gm.s.healthMax << " Ship Hull";
+	gotoxy(120, 5);
+	cout << gm.s.fuel << " / " << gm.s.fuelMax << " Ship Fuel";
+	gotoxy(120, 6);
+	cout << gm.s.modules << " / " << gm.s.modulesMax << " Ship Modules";
 
 	gotoxy(101, move);
 

@@ -39,14 +39,13 @@ struct ship
 	int health, healthMax;
 	int shield, shieldMax;
 	int shieldRegeneration;
-	int actionPoints, actionPointsMax;
 	int modules, modulesMax;
 	int fuel, fuelMax;
 	int shipID = 0; // tells program which line of shipData to look at
 
 	vector <vector<int>> shipData
 	{
-		{},
+		{10, 10, 10, 10, 1, 1, 2, 20, 20}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
 		{},
 		{},
 

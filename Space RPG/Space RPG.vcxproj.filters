@@ -18,6 +18,9 @@
     <ClCompile Include="Space RPG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Classes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structs.h">
@@ -26,7 +29,7 @@
     <ClInclude Include="Functions.cpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player Class.h">
+    <ClInclude Include="Classes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
