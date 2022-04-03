@@ -37,8 +37,9 @@ int main()
 
 	vector <systems> t(100);
 	gm gm;
+	NPC n;
 
 	introArt();
 
-	mainMenu(gm, t);
+	mainMenu(gm, t, n);
 }

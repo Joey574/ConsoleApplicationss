@@ -17,10 +17,6 @@
 #include "Classes.h"
 #include "Structs.h"
 
-NPC::NPC()
-{
-
-}
 
 // setters
 
@@ -42,7 +38,6 @@ void NPC::shopMenu(struct gm& gm)
 {
 	string input;
 
-
 	while (1)
 	{
 		system("CLS");
@@ -53,7 +48,19 @@ void NPC::shopMenu(struct gm& gm)
 
 		if (input == "1")
 		{
-
+			printf("Please enter how much fuel you want to buy (1 fuel for 1 supply)\nInput: ");
+			cin >> input;
+			if (stoi(input) <= gm.p.supplies && gm.s.fuel + stoi(input) <= gm.s.fuelMax)
+			{
+				gm.s.fuel += stoi(input);
+				gm.p.supplies -= stoi(input);
+			}
+			else
+			{
+				printf("Error, either no supplies or not enough room");
+				_getch();
+				continue;
+			}
 		}
 		else if (input == "2")
 		{
@@ -67,15 +74,18 @@ void NPC::shopMenu(struct gm& gm)
 				if (gm.p.supplies >= 20 && gm.s.shipID <= 2)
 				{
 					gm.s.shipID += 1;
+					gm.p.supplies -= 20;
 				}
 				else
 				{
-					printf("")
+					printf("Error, either no supplies or maximum level");
+					_getch();
+					continue;
 				}
 			}
 			else if (input == "2")
 			{
-
+				continue;
 			}
 			else
 			{

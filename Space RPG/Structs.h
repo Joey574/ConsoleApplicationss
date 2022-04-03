@@ -26,7 +26,7 @@ struct player
 	int health = 10, healthMax = 10;
 	int actionPoints, actionPointsMax;
 	int difficulty;
-	int supplies = 10;
+	int supplies = 20;
 
 	bool alive = true;
 	bool victory = false;
@@ -45,8 +45,8 @@ struct ship
 
 	vector <vector<int>> shipData
 	{
-		{10, 10, 10, 10, 1, 1, 2, 20, 20}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
-		{},
+		{10, 10, 10, 10, 1, 1, 2, 25, 25}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
+		{health, 15, shield, 15, 3, modules, 3, fuel, 40},
 		{},
 
 	};
@@ -74,5 +74,6 @@ struct gm
 	ship s;
 	struct module m;
 
+	bool inMenu = false;
 	bool inGame = false;
 };

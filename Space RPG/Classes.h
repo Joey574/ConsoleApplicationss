@@ -6,9 +6,6 @@ class NPC
 {
 public:
 
-	NPC();
-
-
 	//setters
 	void setShopID(int s);
 

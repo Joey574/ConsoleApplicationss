@@ -24,7 +24,7 @@ using namespace std;
 void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
 void worldRan(int difficulty, vector <systems>& t);
-void gameManager(struct gm &gm, vector <systems>& t);
+void gameManager(struct gm &gm, vector <systems>& t, class NPC &n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
@@ -34,6 +34,8 @@ void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
 void moveUpdate(struct gm& gm);
 void shipValues(struct gm& gm);
+void shop(struct gm& gm, class NPC &n);
+void mapStats(struct gm& gm);
 
 // Useful Functions
 
@@ -63,7 +65,7 @@ void exploredUpdater(vector<systems>& s)
 	{
 		if (s[xy].current == true)
 		{
-			s[xy].explored == true;
+			s[xy].explored = true;
 
 			if (s[xy].x > 0)
 			{
@@ -148,6 +150,19 @@ void systemInfo(vector<systems>& s, struct gm& gm)
 			printf("No Data");
 		}
 	}
+}
+
+int systemCurrent(vector<systems>& t)
+{
+	int current;
+	for (int xy = 0; xy < 100; xy++) // finding current system and saving value for later use
+	{
+		if (t[xy].current == true)
+		{
+			current = xy;
+		}
+	}
+	return current;
 }
 
 // Art Functions
@@ -295,7 +310,7 @@ void gameStart(struct gm& gm, vector <systems>& t)
 	printf("You and a team of 3 others have been selected to go on a mission that could save the world.\n");
 	_getch();
 	system("CLS");
-	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth.\n");
+	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth. (The Genesis)\n");
 	_getch();
 	system("CLS");
 	printf("So what say you Captain? What shall your callsign be? You can change it later.\n");
@@ -310,7 +325,7 @@ void gameStart(struct gm& gm, vector <systems>& t)
 	printf("We've sent many ships ahead of you, yet none have reported back sucessfully, keep your wits about you out there!\n");
 	_getch();
 	system("CLS");
-	printf("Your voyager starship is currently equiped with just the command module, the \"bridge\" of the starship, and should be protected at all costs. In the future when you've collected some resources you'll be able to build ");
+	printf("Your voyager starship is currently equiped with just the command module, the \"bridge\" of the starship, and should be protected at all costs. \nIn the future when you've collected some resources you'll be able to build ");
 	printf("more modules with the blueprints we have supplied you with.\n");
 	_getch();
 	system("CLS");
@@ -475,7 +490,7 @@ void saveAndLoad()
 	
 }
 
-void mainMenu(struct gm &gm, vector <systems>& t)
+void mainMenu(struct gm &gm, vector <systems>& t, class NPC &n)
 {
 	string input;
 
@@ -500,7 +515,7 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 
 		if (input == "1") // start/resume game
 		{
-			gameManager(gm, t);
+			gameManager(gm, t, n);
 		}
 		else if (input == "2") // High scores
 		{
@@ -760,7 +775,7 @@ void worldRan(int difficulty, vector <systems>& t)
 
 // Game Functions
 
-void gameManager(struct gm& gm, vector <systems> &t)
+void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 {
 	int encounter;
 
@@ -772,34 +787,44 @@ void gameManager(struct gm& gm, vector <systems> &t)
 		shipValues(gm);
 	}
 	gm.inGame = true;
+	gm.inMenu = false;
 	worldConstructor();
 	exploredUpdater(t);
 	systemInfo(t, gm);
 	while (!gm.p.victory && gm.p.alive)
 	{
+		mapStats(gm);
 		mapMenu(t, gm);
-		moveUpdate(gm);
-		exploredUpdater(t);
-		systemInfo(t, gm);
-		encounter = encounterChance(t);
-		if (encounter > 0)
+		if (gm.inMenu == true)
 		{
-			if (encounter == 1 || encounter == 2)
-			{
-				combat(gm, t, encounter);
-			}
-			else if (encounter == 3)
-			{
-				friendlyShip(gm, t);
-			}
-			else if (encounter == 4)
-			{
-
-			}
-			worldConstructor();
-			systemInfo(t, gm);
+			mainMenu(gm, t, n);
+			gm.inMenu = false;
 		}
-		
+		else
+		{
+			moveUpdate(gm);
+			exploredUpdater(t);
+			systemInfo(t, gm);
+			encounter = encounterChance(t);
+			if (encounter > 0)
+			{
+				if (encounter == 1 || encounter == 2)
+				{
+					combat(gm, t, encounter);
+				}
+				else if (encounter == 3)
+				{
+					friendlyShip(gm, t);
+				}
+				else if (encounter == 4)
+				{
+					shop(gm, n);
+					shipValues(gm);
+				}
+				worldConstructor();
+				systemInfo(t, gm);
+			}
+		}
 	}
 	if (gm.p.victory == true)
 	{
@@ -810,6 +835,33 @@ void gameManager(struct gm& gm, vector <systems> &t)
 		gameOver();
 	}
 	gameRestart(gm, t);
+}
+
+void shop(struct gm& gm, class NPC & n)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+		printf("You've encountered a trader, would you like to enter dialouge?\nMenu:\n1: Yes\n2: No\nInput: ");
+		cin >> input;
+
+		if (input == "1")
+		{
+			n.shopMenu(gm);
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+	}
+	
 }
 
 void moveUpdate(struct gm& gm)
@@ -851,13 +903,7 @@ void friendlyShip(struct gm& gm, vector <systems>& t)
 {
 	int current;
 
-	for (int i = 0; i < 100; i++)
-	{
-		if (t[i].current == true)
-		{
-			current = i;
-		}
-	}
+	current = systemCurrent(t);
 
 	system("CLS");
 	printf("You have encounted a friendly vessle which has given you ");
@@ -873,13 +919,7 @@ void combat(struct gm& gm, vector <systems>& t, int encounter)
 {
 	int current;
 
-	for (int i = 0; i < 100; i++)
-	{
-		if (t[i].current == true)
-		{
-			current = i;
-		}
-	}
+	current = systemCurrent(t);
 
 	if (encounter == 1)
 	{
@@ -904,13 +944,7 @@ int encounterChance(vector <systems>&t)
 
 	int encounter;
 
-	for (int i = 0; i < 100; i++)
-	{
-		if (t[i].current == true)
-		{
-			current = i;
-		}
-	}
+	current = systemCurrent(t);
 
 	ran = 1 + rand() % (10);
 
@@ -975,6 +1009,23 @@ void objectiveFound(struct gm& gm)
 	_getch();
 }
 
+void mapStats(struct gm& gm)
+{
+	printf("Stats: ");
+	gotoxy(120, 1);
+	cout << gm.p.supplies << " Supplies";
+	gotoxy(120, 2);
+	cout << gm.p.health << " / " << gm.p.healthMax << " Player HP";
+	gotoxy(120, 3);
+	cout << gm.s.health << " / " << gm.s.healthMax << " Ship Hull";
+	gotoxy(120, 4);
+	cout << gm.s.shield << " / " << gm.s.shieldMax << " Ship Shield";
+	gotoxy(120, 5);
+	cout << gm.s.fuel << " / " << gm.s.fuelMax << " Ship Fuel";
+	gotoxy(120, 6);
+	cout << gm.s.modules << " / " << gm.s.modulesMax << " Ship Modules";
+}
+
 void mapMenu(vector <systems>& t, struct gm& gm)
 {
 	int current;
@@ -987,30 +1038,10 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 	string input;
 
-	for (int xy = 0; xy < 100; xy++) // finding current system and saving value for later use
-	{
-		if (t[xy].current == true)
-		{
-			current = xy;
-		}
-	}
+	current = systemCurrent(t);
 
 	gotoxy(101, 0);
 	printf("Menu: ");
-	gotoxy(120, 0);
-	printf("Stats: ");
-	gotoxy(120, 1);
-	cout << gm.p.supplies << " Supplies";
-	gotoxy(120, 2);
-	cout << gm.p.health << " / " << gm.p.healthMax << " Player HP";
-	gotoxy(120, 3);
-	cout << gm.s.shield << " / " << gm.s.shieldMax << " Ship Shield";
-	gotoxy(120, 4);
-	cout << gm.s.health << " / " << gm.s.healthMax << " Ship Hull";
-	gotoxy(120, 5);
-	cout << gm.s.fuel << " / " << gm.s.fuelMax << " Ship Fuel";
-	gotoxy(120, 6);
-	cout << gm.s.modules << " / " << gm.s.modulesMax << " Ship Modules";
 
 	gotoxy(101, move);
 
@@ -1052,6 +1083,11 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 		move++;
 	}
 
+	gotoxy(101, move);
+	cout << move << ": ";
+	printf("Return to Menu");
+	move++;
+
 	while (1)
 	{
 		gotoxy(101, move);
@@ -1087,19 +1123,31 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 				continue;
 			}
 		}
+		else if (move - 1 == 5)
+		{
+			if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5")
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
 		break;
 	}
 
 	gotoxy(101, 1);
-	printf("           ");
+	printf("                 ");
 	gotoxy(101, 2);
-	printf("           ");
+	printf("                 ");
 	gotoxy(101, 3);
-	printf("           ");
+	printf("                 ");
 	gotoxy(101, 4);
-	printf("           ");
+	printf("                 ");
 	gotoxy(101, 5);
-	printf("           ");
+	printf("                 ");
+	gotoxy(101, 5);
+	printf("                 ");
+
 
 	if (left == stoi(input))
 	{
@@ -1117,10 +1165,18 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	{
 		t[current + 10].current = true;
 	}
+	else
+	{
+		gm.inMenu = true;
+	}
 
-	t[current].current = false;
-	gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
-	printf(" ");
+	if (left == stoi(input) || right == stoi(input) || up == stoi(input) || down == stoi(input))
+	{
+		t[current].current = false;
+		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+		printf(" ");
+	}
+	
 }
 
 void gameRestart(struct gm& gm, vector <systems>& t)
@@ -1128,6 +1184,10 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	gm.p.victory = false;
 	gm.p.alive = true;
 	gm.inGame = false;
+	gm.s.alive = true;
+
+	gm.p.supplies = 20;
+	gm.s.shipID = 0;
 	
 	for (int i = 0; i < 100; i++)
 	{
