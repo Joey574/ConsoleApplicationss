@@ -535,7 +535,7 @@ void mainMenu(struct gm &gm, vector <systems>& t, class NPC &n)
 		}
 		else if (input == "6") // exit
 		{
-			break;
+			exit(0);
 		}
 		else // invalid input
 		{
@@ -1011,6 +1011,7 @@ void objectiveFound(struct gm& gm)
 
 void mapStats(struct gm& gm)
 {
+	gotoxy(120, 0);
 	printf("Stats: ");
 	gotoxy(120, 1);
 	cout << gm.p.supplies << " Supplies";
@@ -1091,7 +1092,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	while (1)
 	{
 		gotoxy(101, move);
-		printf("                ");
+		//printf("                ");
 		gotoxy(101, move);
 		printf("Input: ");
 		cin >> input;
@@ -1146,6 +1147,8 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	gotoxy(101, 5);
 	printf("                 ");
 	gotoxy(101, 5);
+	printf("                 ");
+	gotoxy(101, 6);
 	printf("                 ");
 
 
