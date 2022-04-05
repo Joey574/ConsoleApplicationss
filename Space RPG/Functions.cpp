@@ -25,8 +25,8 @@ using namespace std;
 
 void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
-void worldRan(int difficulty, vector <systems>& t);
-void gameManager(struct gm &gm, vector <systems>& t, class NPC &n);
+void worldRan(int difficulty, vector <systems>& t, vector<NPC>& n);
+void gameManager(struct gm &gm, vector <systems>& t, vector<NPC>& n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
@@ -36,7 +36,7 @@ void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
 void moveUpdate(struct gm& gm);
 void shipValues(struct gm& gm);
-void shop(struct gm& gm, class NPC &n);
+void shop(struct gm& gm, vector <NPC> &n, vector <systems>& t);
 void mapStats(struct gm& gm);
 
 // Useful Functions
@@ -509,7 +509,7 @@ void saveAndLoad()
 	
 }
 
-void mainMenu(struct gm &gm, vector <systems>& t, class NPC &n)
+void mainMenu(struct gm &gm, vector <systems>& t, vector<NPC>& n)
 {
 	string input;
 
@@ -640,7 +640,7 @@ void worldConstructor()
 	cout << (char)topRightCorner;
 }
 
-void worldRan(int difficulty, vector <systems>& t)
+void worldRan(int difficulty, vector <systems>& t, vector<NPC>& n)
 {
 	string input;
 
@@ -782,19 +782,40 @@ void worldRan(int difficulty, vector <systems>& t)
 
 	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
 
-	for (int i = 0; i < 3; i++) // finding 3 random systems from ID 19-99 to be used for shops
+	int i = 0;
+
+	while (i < 3)  // finding 3 random systems from ID 19-99 to be used for shops
 	{
 		int q = 20 + rand() % 80;
 		if (t[q].shop == false && t[q].objective == false)
 		{
 			t[q].shop = true;
+			int ran = 1 + rand() % 100;
+			if (ran <= 33)
+			{
+				n[i].setShopID(0);
+			}
+			else if (ran <= 66)
+			{
+				n[i].setShopID(1);
+			}
+			else if (ran <= 99)
+			{
+				n[i].setShopID(2);
+			}
+			else if (ran == 100)
+			{
+				n[i].setShopID(3);
+			}
+			n[i].setCurrent(q);
+			i++;
 		}
 	}
 }
 
 // Game Functions
 
-void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
+void gameManager(struct gm& gm, vector <systems> &t, vector<NPC>& n)
 {
 	int encounter;
 
@@ -802,7 +823,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 	{
 		gameStart(gm, t);
 		difficultySet(gm);
-		worldRan(gm.p.difficulty, t);
+		worldRan(gm.p.difficulty, t, n);
 		shipValues(gm);
 	}
 	gm.inGame = true;
@@ -821,7 +842,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 		}
 		else if (gm.inShop == true)
 		{
-			shop(gm, n);
+			shop(gm, n, t);
 			shipValues(gm);
 			worldConstructor();
 			systemInfo(t, gm);
@@ -845,7 +866,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 				}
 				else if (encounter == 4)
 				{
-					shop(gm, n);
+					shop(gm, n, t);
 					shipValues(gm);
 				}
 				worldConstructor();
@@ -864,9 +885,13 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 	gameRestart(gm, t);
 }
 
-void shop(struct gm& gm, class NPC & n)
+void shop(struct gm& gm, vector<NPC>& n, vector <systems>& t)
 {
 	string input;
+
+	int current = systemCurrent(t);
+	int temp;
+	int shop;
 
 	while (1)
 	{
@@ -876,7 +901,15 @@ void shop(struct gm& gm, class NPC & n)
 
 		if (input == "1")
 		{
-			n.shopMenu(gm);
+			for (int i = 0; i < 3; i++)
+			{
+				temp = n[i].getCurrent();
+				if (temp == current)
+				{
+					shop = i;
+				}
+			}
+			n[shop].shopMenu(gm);
 		}
 		else if (input == "2")
 		{
@@ -1301,43 +1334,70 @@ void NPC::setShopID(int s)
 	shopID = s;
 }
 
+void NPC::setCurrent(int c)
+{
+	current = c;
+}
+
 int NPC::getShopID()
 {
 	return shopID;
 }
 
+int NPC::getCurrent()
+{
+	return current;
+}
+
 void NPC::shopMenu(struct gm& gm)
+{
+	system("CLS");
+	printf("Welcome to my shop! ");
+
+	if (shopID == 0)
+	{
+		generalShop(gm);
+	}
+	else if (shopID == 1)
+	{
+		shipShop(gm);
+	}
+	else if (shopID == 2)
+	{
+		weaponShop(gm);
+	}
+	else if (shopID == 3)
+	{
+		miyoshiShop(gm);
+	}
+}
+
+void NPC::generalShop(struct gm& gm)
 {
 	string input;
 
-	while (1)
-	{
-		system("CLS");
-		printf("Welcome to my shop! What would you like to purchase?\nMenu:\n");
-		printf("1: Fuel\n2: Better Ship\n3: Back\nInput: ");
-		cin >> input;
-		system("CLS");
+	printf("I sell all sorts of general appliances\n");
+}
 
-		if (input == "1")
-		{
-			fuelPurch(gm);
-		}
-		else if (input == "2")
-		{
-			shipPurch(gm);
-		}
-		else if (input == "3")
-		{
-			break;
-		}
-		else
-		{
-			system("CLS");
-			printf("INVALID INPUT...");
-			_getch();
-			continue;
-		}
-	}
+void NPC::shipShop(struct gm& gm)
+{
+	string input;
+
+	printf("I sell anything your space ship could ever need\n");
+}
+
+void NPC::weaponShop(struct gm& gm)
+{
+	string input;
+
+	printf("I sell all manners of destruction.\n");
+}
+
+void NPC::miyoshiShop(struct gm& gm)
+{
+	string input;
+
+	printf("I am Mr. Miyoshi, yes, the one and only\n1: Genesis location\n2: ");
 
 
 }
