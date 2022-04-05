@@ -36,19 +36,18 @@ struct ship
 {
 	string name;
 
-	int health, healthMax;
-	int shield, shieldMax;
+	int health = 10, healthMax;
+	int shield = 10, shieldMax;
 	int shieldRegeneration;
-	int modules, modulesMax;
-	int fuel, fuelMax;
+	int modules = 1, modulesMax;
+	int fuel = 25, fuelMax;
 	int shipID = 0; // tells program which line of shipData to look at
 
 	vector <vector<int>> shipData
 	{
-		{10, 10, 10, 10, 1, 1, 2, 25, 25}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
+		{health, 10, shield, 10, 1, modules, 2, fuel, 25}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
 		{health, 15, shield, 15, 3, modules, 3, fuel, 40},
-		{},
-
+		{health, 20, shield, 20, 5, modules, 5, fuel, 50},
 	};
 
 	bool alive;

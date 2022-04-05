@@ -14,10 +14,10 @@ public:
 
 	//accesories
 	void shopMenu(struct gm& gm);
+	void fuelPurch(struct gm& gm);
+	void shipPurch(struct gm& gm);
 
 private:
 
 	int shopID;
-
-
 };
