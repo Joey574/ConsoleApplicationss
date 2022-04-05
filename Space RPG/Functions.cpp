@@ -1115,7 +1115,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	while (1)
 	{
 		gotoxy(101, move);
-		//printf("                ");
+		printf("                ");
 		gotoxy(101, move);
 		printf("Input: ");
 		cin >> input;
@@ -1286,7 +1286,8 @@ void NPC::fuelPurch(struct gm& gm)
 	while (1)
 	{
 		system("CLS");
-		printf("Please enter how much fuel you want to buy (1 fuel for 1 supply)\nInput: ");
+		cout << "Please enter how much fuel you want to buy (1 fuel for 1 supply) " << gm.s.fuel << " / " << gm.s.fuelMax << endl;
+		printf("Menu:\nInput: ");
 		cin >> input;
 		system("CLS");
 
@@ -1326,5 +1327,64 @@ void NPC::fuelPurch(struct gm& gm)
 
 void NPC::shipPurch(struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		gotoxy(30, 0);
+		if (gm.s.shipID < 2)
+		{
+			printf("Stats: ");
+			gotoxy(30, 1);
+			cout << gm.s.shipData[1][gm.s.shipID] << " --> " << gm.s.shipData[1][gm.s.shipID + 1] << " Max Hull";
+			gotoxy(30, 2);
+			cout << gm.s.shipData[3][gm.s.shipID] << " --> " << gm.s.shipData[3][gm.s.shipID + 1] << " Max Shields";
+			gotoxy(30, 3);
+			cout << gm.s.shipData[4][gm.s.shipID] << " --> " << gm.s.shipData[4][gm.s.shipID + 1] << " Shield Regeneration";
+			gotoxy(30, 4);
+			cout << gm.s.shipData[8][gm.s.shipID] << " --> " << gm.s.shipData[8][gm.s.shipID + 1] << " Max Fuel";
+			gotoxy(30, 5);
+			cout << gm.s.shipData[6][gm.s.shipID] << " --> " << gm.s.shipData[6][gm.s.shipID + 1] << " Max Modules";
+			gotoxy(30, 6);
+			cout << gm.s.shipID + 1 << " / 3 Ship Levels";
+		}
+		else
+		{
+			printf("MAX LEVEL");
+		}
+		gotoxy(0, 0);
+		printf("Are you sure you want to upgrade your ship? it will cost 20 supplies\n1: Upgrade\n2: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			if (gm.s.shipID < 2)
+			{
+				if (gm.p.supplies >= 20)
+				{
+					gm.s.shipID += 1;
+					gm.p.supplies -= 20;
+				}
+				else
+				{
+					printf("Not enough supplies...");
+				}
+			}
+			else
+			{
+				printf("Maximum level...");
+			}
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		break;
+	}
 }
