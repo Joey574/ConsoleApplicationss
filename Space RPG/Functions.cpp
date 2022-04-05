@@ -17,6 +17,8 @@
 #include <cwchar>
 #include <algorithm> // needed for vector sort and other cool things
 
+#include "Structs.h"
+
 using namespace std;
 
 // Function Prototypes
@@ -149,6 +151,11 @@ void systemInfo(vector<systems>& s, struct gm& gm)
 			gotoxy((s[xy].x * 10) + 2, (s[xy].y * 6) + 3);
 			printf("No Data");
 		}
+		if (s[xy].shop == true && s[xy].explored == true)
+		{
+			gotoxy((s[xy].x * 10) + 3, (s[xy].y * 6) + 5);
+			printf("STORE");
+		}
 	}
 }
 
@@ -163,6 +170,18 @@ int systemCurrent(vector<systems>& t)
 		}
 	}
 	return current;
+}
+
+bool intCheck(string s)
+{
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (isdigit(s[i]) == false)
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 // Art Functions
@@ -766,7 +785,7 @@ void worldRan(int difficulty, vector <systems>& t)
 	for (int i = 0; i < 3; i++) // finding 3 random systems from ID 19-99 to be used for shops
 	{
 		int q = 20 + rand() % 80;
-		if (t[q].shop == false)
+		if (t[q].shop == false && t[q].objective == false)
 		{
 			t[q].shop = true;
 		}
@@ -799,6 +818,14 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 		{
 			mainMenu(gm, t, n);
 			gm.inMenu = false;
+		}
+		else if (gm.inShop == true)
+		{
+			shop(gm, n);
+			shipValues(gm);
+			worldConstructor();
+			systemInfo(t, gm);
+			gm.inShop = false;
 		}
 		else
 		{
@@ -868,14 +895,23 @@ void moveUpdate(struct gm& gm)
 {
 	gm.s.fuel--;
 
-	if (gm.s.fuel <= 0)
+	if (gm.s.fuel <= 0 || gm.s.health < 1)
 	{
 		gm.p.alive = false;
+	}
+
+	if (gm.s.health > gm.s.healthMax)
+	{
+		gm.s.health = gm.s.healthMax;
 	}
 
 	if (gm.s.shield < gm.s.shieldMax)
 	{
 		gm.s.shield += gm.s.shieldRegeneration;
+		if (gm.s.shield > gm.s.shieldMax)
+		{
+			gm.s.shield = gm.s.shieldMax;
+		}
 	}
 }
 
@@ -888,29 +924,33 @@ void gameOver()
 
 void shipValues(struct gm& gm)
 {
-	gm.s.health = gm.s.shipData[gm.s.shipID][0];
 	gm.s.healthMax = gm.s.shipData[gm.s.shipID][1];
-	gm.s.shield = gm.s.shipData[gm.s.shipID][2];
 	gm.s.shieldMax = gm.s.shipData[gm.s.shipID][3];
 	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
-	gm.s.modules = gm.s.shipData[gm.s.shipID][5];
 	gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
-	gm.s.fuel = gm.s.shipData[gm.s.shipID][7];
 	gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
 }
 
 void friendlyShip(struct gm& gm, vector <systems>& t)
 {
 	int current;
+	int ran = rand() % (2);
 
 	current = systemCurrent(t);
 
 	system("CLS");
 	printf("You have encounted a friendly vessle which has given you ");
 	cout << t[current].addedSup;
-	printf(" supplies in hopes that you succeed in your jounrey!");
-
-	gm.p.supplies += t[current].addedSup;
+	if (ran == 0)
+	{
+		printf(" supplies in hopes that you succeed in your jounrey!");
+		gm.p.supplies += t[current].addedSup;
+	}
+	else if (ran == 1)
+	{
+		printf(" fuel in hopes that you succeed in your jounrey!");
+		gm.s.fuel += t[current].addedSup;
+	}
 
 	_getch();
 }
@@ -952,7 +992,7 @@ int encounterChance(vector <systems>&t)
 	{
 		encounter = 4;
 	}
-	else if (ran <= 9 && ran > 7 && t[current].encountered == false && t[current].dangerLevel > 0) // enemies attack
+	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0) // enemies attack
 	{
 		ran = rand() % (2);
 
@@ -1036,6 +1076,9 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	int right = 0;
 	int up = 0;
 	int down = 0;
+	int menu = 0;
+	int store = 0;
+	int getSup = 0;
 
 	string input;
 
@@ -1085,8 +1128,29 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	}
 
 	gotoxy(101, move);
+
+	if (t[current].supplies > 0)
+	{
+		cout << move << ": ";
+		printf("Collect Sup");
+		getSup = move;
+		move++;
+	}
+
+	gotoxy(101, move);
+
+	if (t[current].shop == true)
+	{
+		cout << move << ": ";
+		printf("Enter shop");
+		store = move;
+		move++;
+	}
+
+	gotoxy(101, move);
 	cout << move << ": ";
 	printf("Return to Menu");
+	menu = move;
 	move++;
 
 	while (1)
@@ -1097,16 +1161,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 		printf("Input: ");
 		cin >> input;
 
-		if (move - 1 == 2)
-		{
-			if (input != "1" && input != "2")
-			{
-				gotoxy(101, move);
-				invalidInput();
-				continue;
-			}
-		}
-		else if (move - 1 == 3)
+		if (move - 1 == 3)
 		{
 			if (input != "1" && input != "2" && input != "3")
 			{
@@ -1133,6 +1188,24 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 				continue;
 			}
 		}
+		else if (move - 1 == 6)
+		{
+			if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5" && input != "6")
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
+		else if (move - 1 == 7)
+		{
+			if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5" && input != "6" && input != "7")
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
 		break;
 	}
 
@@ -1149,6 +1222,10 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	gotoxy(101, 5);
 	printf("                 ");
 	gotoxy(101, 6);
+	printf("                 ");
+	gotoxy(101, 7);
+	printf("                 ");
+	gotoxy(101, 8);
 	printf("                 ");
 
 
@@ -1168,9 +1245,18 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	{
 		t[current + 10].current = true;
 	}
-	else
+	else if (menu == stoi(input))
 	{
 		gm.inMenu = true;
+	}
+	else if (getSup == stoi(input))
+	{
+		gm.p.supplies += t[current].supplies;
+		t[current].supplies = 0;
+	}
+	else if (store == stoi(input))
+	{
+		gm.inShop = true;
 	}
 
 	if (left == stoi(input) || right == stoi(input) || up == stoi(input) || down == stoi(input))
@@ -1190,6 +1276,10 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	gm.s.alive = true;
 
 	gm.p.supplies = 20;
+	gm.s.fuel = 25;
+	gm.s.health = 10;
+	gm.s.shield = 10;
+	gm.s.modules = 1;
 	gm.s.shipID = 0;
 	
 	for (int i = 0; i < 100; i++)
@@ -1201,5 +1291,163 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 		t[i].shop = false;
 		t[i].enemies = 0;
 		t[i].addedSup = 0;
+	}
+}
+
+// Classes 
+
+void NPC::setShopID(int s)
+{
+	shopID = s;
+}
+
+int NPC::getShopID()
+{
+	return shopID;
+}
+
+void NPC::shopMenu(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+		printf("Welcome to my shop! What would you like to purchase?\nMenu:\n");
+		printf("1: Fuel\n2: Better Ship\n3: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			fuelPurch(gm);
+		}
+		else if (input == "2")
+		{
+			shipPurch(gm);
+		}
+		else if (input == "3")
+		{
+			break;
+		}
+		else
+		{
+			system("CLS");
+			printf("INVALID INPUT...");
+			_getch();
+			continue;
+		}
+	}
+
+
+}
+
+void NPC::fuelPurch(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+		cout << "Please enter how much fuel you want to buy (1 fuel for 1 supply) " << gm.s.fuel << " / " << gm.s.fuelMax << endl;
+		printf("Menu:\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		bool b = intCheck(input);
+
+		if (b == true)
+		{
+			if (stoi(input) <= gm.p.supplies)
+			{
+				if (gm.s.fuel + stoi(input) <= gm.s.fuelMax)
+				{
+					gm.s.fuel += stoi(input);
+					gm.p.supplies -= stoi(input);
+				}
+				else
+				{
+					printf("Not enough fuel capacity...\n");
+					_getch();
+					continue;
+				}
+			}
+			else
+			{
+				printf("Not enough supplies...\n");
+				_getch();
+				continue;
+			}
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		break;
+	}
+}
+
+void NPC::shipPurch(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		gotoxy(50, 0);
+		if (gm.s.shipID < 2)
+		{
+			printf("Stats: ");
+			gotoxy(50, 1);
+			cout << gm.s.shipData[gm.s.shipID][1] << " --> " << gm.s.shipData[gm.s.shipID + 1][1] << " Max Hull";
+			gotoxy(50, 2);
+			cout << gm.s.shipData[gm.s.shipID][3] << " --> " << gm.s.shipData[gm.s.shipID + 1][3] << " Max Shields";
+			gotoxy(50, 3);
+			cout << gm.s.shipData[gm.s.shipID][4] << " --> " << gm.s.shipData[gm.s.shipID + 1][4] << " Shield Regeneration";
+			gotoxy(50, 4);
+			cout << gm.s.shipData[gm.s.shipID][8] << " --> " << gm.s.shipData[gm.s.shipID + 1][8] << " Max Fuel";
+			gotoxy(50, 5);
+			cout << gm.s.shipData[gm.s.shipID][6] << " --> " << gm.s.shipData[gm.s.shipID + 1][6] << " Max Modules";
+			gotoxy(50, 6);
+			cout << "Ship Level "  <<gm.s.shipID + 1 << " / 3";
+		}
+		else
+		{
+			printf("MAX LEVEL");
+		}
+		gotoxy(0, 0);
+		printf("Are you sure you want to upgrade your ship?\nIt will cost 20 supplies\n1: Upgrade\n2: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			if (gm.s.shipID < 2)
+			{
+				if (gm.p.supplies >= 20)
+				{
+					gm.s.shipID += 1;
+					gm.p.supplies -= 20;
+				}
+				else
+				{
+					printf("Not enough supplies...");
+				}
+			}
+			else
+			{
+				printf("Maximum level...");
+			}
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		break;
 	}
 }
