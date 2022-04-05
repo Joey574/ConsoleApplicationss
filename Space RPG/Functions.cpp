@@ -1092,7 +1092,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	while (1)
 	{
 		gotoxy(101, move);
-		//printf("                ");
+		printf("                ");
 		gotoxy(101, move);
 		printf("Input: ");
 		cin >> input;
