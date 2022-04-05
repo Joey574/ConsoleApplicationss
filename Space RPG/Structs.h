@@ -75,4 +75,5 @@ struct gm
 
 	bool inMenu = false;
 	bool inGame = false;
+	bool inShop = false;
 };
