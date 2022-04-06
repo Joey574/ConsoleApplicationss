@@ -1397,8 +1397,27 @@ void NPC::miyoshiShop(struct gm& gm)
 {
 	string input;
 
-	printf("I am Mr. Miyoshi, yes, the one and only\n1: Genesis location\n2: ");
+	while (1)
+	{
+		system("CLS");
+		printf("I am Mr. Miyoshi, yes, the one and only.\n1: Genesis location\n2: \n3: \n4: Back");
+		cin >> input;
+		system("CLS");
 
+		if (input == "1")
+		{
+			printf("Ah yes... The Genesis, it's current location is \"over there\"...");
+			_getch();
+		}
+		else if (input == "4")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+		}
+	}
 
 }
 
