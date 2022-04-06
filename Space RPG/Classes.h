@@ -2,6 +2,16 @@
 
 using namespace std;
 
+struct enemyShip
+{
+	int health, healthMax;
+	int minDamge, maxDamage;
+	int ID;
+	int weapons;
+
+	bool alive = true;
+};
+
 class NPC
 {
 public:
@@ -27,4 +37,20 @@ private:
 
 	int current;
 	int shopID;
+};
+
+class combat
+{
+public:
+
+	// setters
+	void setComType(int c);
+	void setEnemies(int e);
+
+
+
+private:
+	int comType; // 0 = boarding, 1 = ship to ship
+	int enemies; // # of enemies
+	enemyShip enemyShip;
 };

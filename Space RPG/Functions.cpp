@@ -1327,7 +1327,7 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	}
 }
 
-// Classes 
+// Shop Class
 
 void NPC::setShopID(int s)
 {
@@ -1530,3 +1530,11 @@ void NPC::shipPurch(struct gm& gm)
 		break;
 	}
 }
+
+// Combat Class
+
+void combat::setComType(int c)
+{
+
+}
+

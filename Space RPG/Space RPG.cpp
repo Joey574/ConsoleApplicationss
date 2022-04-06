@@ -37,8 +37,8 @@ int main()
 
 	vector <systems> t(100);
 	vector <NPC> n(3);
+
 	gm gm;
-	
 
 	introArt();
 
