@@ -30,7 +30,6 @@ void gameManager(struct gm &gm, vector <systems>& t, vector<NPC>& n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
-void combat(struct gm& gm, vector <systems>& t, int encounter);
 int encounterChance(vector <systems>& t);
 void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
@@ -469,7 +468,37 @@ void credits()
 
 void save()
 {
+	string input;
+	string temp;
+	ifstream in;
 
+	system("CLS");
+	printf("Menu:\n");
+
+	in.open("save1.txt");
+
+	getline(in, temp, ' ');
+
+	cout << "1: " << temp << endl;
+
+	in.close();
+	in.open("save2.txt");
+
+	getline(in, temp, ' ');
+
+	cout << "2: " << temp << endl;
+
+	in.close();
+	in.open("save3.txt");
+
+	getline(in, temp, ' ');
+
+	cout << "3: " << temp << endl;
+
+	in.close();
+
+	printf("4: Back\nInput: ");
+	cin >> input;
 }
 
 void load()
@@ -817,6 +846,7 @@ void worldRan(int difficulty, vector <systems>& t, vector<NPC>& n)
 
 void gameManager(struct gm& gm, vector <systems> &t, vector<NPC>& n)
 {
+	combat c;
 	int encounter;
 
 	if (!gm.inGame)
@@ -858,7 +888,9 @@ void gameManager(struct gm& gm, vector <systems> &t, vector<NPC>& n)
 			{
 				if (encounter == 1 || encounter == 2)
 				{
-					combat(gm, t, encounter);
+					c.setComType(encounter);
+					c.setEnemies(t[systemCurrent(t)].enemies);
+					c.combatManager(gm);
 				}
 				else if (encounter == 3)
 				{
@@ -986,27 +1018,6 @@ void friendlyShip(struct gm& gm, vector <systems>& t)
 	}
 
 	_getch();
-}
-
-void combat(struct gm& gm, vector <systems>& t, int encounter)
-{
-	int current;
-
-	current = systemCurrent(t);
-
-	if (encounter == 1)
-	{
-		system("CLS");
-		cout << "You have been boarded by " << t[current].enemies << " enemy combatants, brace for combat!";
-		_getch();
-	}
-	else if (encounter == 2)
-	{
-		system("CLS");
-		cout << t[current].enemies << " enemy ship has dropped out of hyperspace and engaged! brace for combat!";
-		_getch();
-	}
-
 }
 
 int encounterChance(vector <systems>&t)
@@ -1534,6 +1545,89 @@ void NPC::shipPurch(struct gm& gm)
 // Combat Class
 
 void combat::setComType(int c)
+{
+	comType = c;
+}
+
+void combat::setEnemies(int e)
+{
+	enemies = e;
+}
+
+void combat::combatManager(struct gm& gm)
+{
+	system("CLS");
+	enemyTypes();
+	if (comType == 0) // ground
+	{
+		groundIntro();
+	}
+	else if (comType == 1) // space
+	{
+		spaceIntro();
+	}
+}
+
+void combat::enemyTypes()
+{
+	for (int i = 0; i < enemies; i++)
+	{
+		if (comType == 0) // ground
+		{
+			cm.eg.push_back(enemGround);
+		}
+		else if (comType == 1) // space
+		{
+			cm.es.push_back(enemShip);
+		}
+	}
+
+	enemyRace = rand() % 5;
+
+	if (enemyRace == 0)
+	{
+		enemRaceName = "Androidus";
+	}
+	else if (enemyRace == 1)
+	{
+		enemRaceName = "Zorgons";
+	}
+	else if (enemyRace == 2)
+	{
+		enemRaceName = "Nalites";
+	}
+	else if (enemyRace == 3)
+	{
+		enemRaceName = "Quotis";
+	}
+	else if (enemyRace == 4)
+	{
+		enemRaceName = "Refip";
+	}
+
+	for (int i = 0; i < enemies; i++)
+	{
+		if (comType == 0) // ground
+		{
+			cm.eg[i].type = rand() %  
+		}
+		else if (comType == 1) // space
+		{
+
+		}
+	}
+
+
+
+
+} 
+
+void combat::groundIntro()
+{
+	cout << "You are being boarded by " << enemies << 
+}
+
+void combat::spaceIntro()
 {
 
 }
