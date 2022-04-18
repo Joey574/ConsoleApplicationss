@@ -7,8 +7,8 @@ struct enemyShip
 	int health, healthMax;
 	int minDamge, maxDamage;
 	int ID;
-	int type;
 	int weapons;
+	int type;
 
 	string enemTypeName;
 
@@ -20,8 +20,8 @@ struct enemyGround
 	int health, healthMax;
 	int minDamge, maxDamage;
 	int ID;
-	int type;
 	int weapons;
+	int type;
 
 	string enemTypeName;
 
@@ -72,7 +72,7 @@ public:
 	// accessories
 	void combatManager(struct gm &gm);
 	void enemyTypes();
-	void statRan();
+	void stats();
 	void groundIntro();
 	void spaceIntro();
 
@@ -81,8 +81,11 @@ private:
 	int enemyRace;
 	int comType; // 0 = boarding, 1 = ship to ship
 	int enemies; // # of enemies
+
 	string enemRaceName;
+
 	cm cm;
+
 	enemyShip enemShip;
 	enemyGround enemGround;
 };

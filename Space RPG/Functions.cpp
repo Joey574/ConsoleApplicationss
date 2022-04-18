@@ -888,7 +888,7 @@ void gameManager(struct gm& gm, vector <systems> &t, vector<NPC>& n)
 			{
 				if (encounter == 1 || encounter == 2)
 				{
-					c.setComType(encounter);
+					c.setComType(encounter - 1);
 					c.setEnemies(t[systemCurrent(t)].enemies);
 					c.combatManager(gm);
 				}
@@ -1602,18 +1602,56 @@ void combat::enemyTypes()
 	}
 	else if (enemyRace == 4)
 	{
-		enemRaceName = "Refip";
+		enemRaceName = "Refips";
 	}
 
 	for (int i = 0; i < enemies; i++)
 	{
 		if (comType == 0) // ground
 		{
-			cm.eg[i].type = rand() %  
+			cm.eg[i].type = rand() % 4;
+
+			if (cm.eg[i].type == 0)
+			{
+				cm.eg[i].enemTypeName = "Trooper";
+			}
+			else if (cm.eg[i].type == 1)
+			{
+				cm.eg[i].enemTypeName = "Gunner";
+			}
+			else if (cm.eg[i].type == 2)
+			{
+				cm.eg[i].enemTypeName = "Warrior";
+			}
+			else if (cm.eg[i].type == 3)
+			{
+				cm.eg[i].enemTypeName = "Officer";
+			}
 		}
 		else if (comType == 1) // space
 		{
+			cm.es[i].type = rand() % 5;
 
+			if (cm.es[i].type == 0)
+			{
+				cm.es[i].enemTypeName = "Corvette";
+			}
+			else if (cm.es[i].type == 1)
+			{
+				cm.es[i].enemTypeName = "Destroyer";
+			}
+			if (cm.es[i].type == 2)
+			{
+				cm.es[i].enemTypeName = "Cruiser";
+			}
+			if (cm.es[i].type == 3)
+			{
+				cm.es[i].enemTypeName = "Battleship";
+			}
+			if (cm.es[i].type == 4)
+			{
+				cm.es[i].enemTypeName = "Assault Carrier";
+			}
 		}
 	}
 
@@ -1624,11 +1662,65 @@ void combat::enemyTypes()
 
 void combat::groundIntro()
 {
-	cout << "You are being boarded by " << enemies << 
+	int t = 0;
+	int g = 0;
+	int w = 0;
+	int o = 0;
+
+	cout << "You are being boarded by " << enemies << " " << enemRaceName << endl;
+	printf("Combatants:\n");
+	
+	for (int i = 0; i < enemies; i++)
+	{
+		if (cm.eg[i].type == 0)
+		{
+			t++;
+		}
+		else if (cm.eg[i].type== 1)
+		{
+			g++;
+		}
+		if (cm.eg[i].type == 2)
+		{
+			w++;
+		}
+		if (cm.eg[i].type == 3)
+		{
+			o++;
+		}
+	}
+
+	if (t > 0)
+	{
+		cout << t << " Troopers";
+	}
+	if (g > 0)
+	{
+		cout << g << " Gunners";
+	}
+	if (w > 0)
+	{
+		cout << w << " Warriors";
+	}
+	if (o > 0)
+	{
+		cout << o << " Officers";
+	}
+
+	_getch();
+	
 }
 
 void combat::spaceIntro()
 {
+	cout << enemies << " " << enemRaceName << " ships are dropping out of hyperspace, weapons hot!" << endl;
+	printf("Combatants:\n");
+
+	for (int i = 0; i < enemies; i++)
+	{
+		cout << cm.es[i].enemTypeName << endl;
+	}
+
+	_getch();
 
 }
-
