@@ -183,6 +183,17 @@ bool intCheck(string s)
 	return true;
 }
 
+string upper(string s)
+{
+	string p = "";
+
+	for (int i = 0; i < s.length(); i++)
+	{
+		p += toupper(s[i]);
+	}
+	return p;
+}
+
 // Art Functions
 
 void introArt()
@@ -847,6 +858,7 @@ void worldRan(int difficulty, vector <systems>& t, vector<NPC>& n)
 void gameManager(struct gm& gm, vector <systems> &t, vector<NPC>& n)
 {
 	combat c;
+
 	int encounter;
 
 	if (!gm.inGame)
@@ -965,6 +977,11 @@ void moveUpdate(struct gm& gm)
 		gm.p.alive = false;
 	}
 
+	if (gm.s.fuel > gm.s.fuelMax)
+	{
+		gm.s.fuel = gm.s.fuelMax;
+	}
+
 	if (gm.s.health > gm.s.healthMax)
 	{
 		gm.s.health = gm.s.healthMax;
@@ -977,7 +994,7 @@ void moveUpdate(struct gm& gm)
 		{
 			gm.s.shield = gm.s.shieldMax;
 		}
-	}
+	}	
 }
 
 void gameOver()
@@ -1115,14 +1132,15 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 {
 	int current;
 	int move = 1;
-
-	int left = 0;
-	int right = 0;
-	int up = 0;
-	int down = 0;
+	int aces = 1;
 	int menu = 0;
 	int store = 0;
 	int getSup = 0;
+
+	bool l = false;
+	bool r = false;
+	bool u = false;
+	bool d = false;
 
 	string input;
 
@@ -1135,9 +1153,9 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 	if (t[current].x > 0)
 	{
-		cout << move << ": ";
+		cout << "A: ";
 		printf("Go left");
-		left = move;
+		l = true;
 		move++;
 	}
 
@@ -1145,9 +1163,9 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 	if (t[current].x < 9)
 	{
-		cout << move << ": ";
+		cout << "D: ";
 		printf("Go right");
-		right = move;
+		r = true;
 		move++;
 	}
 
@@ -1155,9 +1173,9 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 	if (t[current].y > 0)
 	{
-		cout << move << ": ";
+		cout << "W: ";
 		printf("Go up");
-		up = move;
+		u = true;
 		move++;
 	}
 
@@ -1165,9 +1183,9 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 	if (t[current].y < 9)
 	{
-		cout << move << ": ";
+		cout << "S: ";
 		printf("Go down");
-		down = move;
+		d = true;
 		move++;
 	}
 
@@ -1175,24 +1193,26 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 	if (t[current].supplies > 0)
 	{
-		cout << move << ": ";
+		cout << aces << ": ";
 		printf("Collect Sup");
-		getSup = move;
+		getSup = aces;
 		move++;
+		aces++;
 	}
 
 	gotoxy(101, move);
 
 	if (t[current].shop == true)
 	{
-		cout << move << ": ";
+		cout << aces << ": ";
 		printf("Enter shop");
-		store = move;
+		store = aces;
 		move++;
+		aces++;
 	}
 
 	gotoxy(101, move);
-	cout << move << ": ";
+	cout << aces << ": ";
 	printf("Return to Menu");
 	menu = move;
 	move++;
@@ -1205,111 +1225,83 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 		printf("Input: ");
 		cin >> input;
 
-		if (move - 1 == 3)
+		if (input.size() > 1)
 		{
-			if (input != "1" && input != "2" && input != "3")
-			{
-				gotoxy(101, move);
-				invalidInput();
-				continue;
-			}
-		}
-		else if (move - 1 == 4)
-		{
-			if (input != "1" && input != "2" && input != "3" && input != "4")
-			{
-				gotoxy(101, move);
-				invalidInput();
-				continue;
-			}
-		}
-		else if (move - 1 == 5)
-		{
-			if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5")
-			{
-				gotoxy(101, move);
-				invalidInput();
-				continue;
-			}
-		}
-		else if (move - 1 == 6)
-		{
-			if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5" && input != "6")
-			{
-				gotoxy(101, move);
-				invalidInput();
-				continue;
-			}
-		}
-		else if (move - 1 == 7)
-		{
-			if (input != "1" && input != "2" && input != "3" && input != "4" && input != "5" && input != "6" && input != "7")
-			{
-				gotoxy(101, move);
-				invalidInput();
-				continue;
-			}
+			gotoxy(101, move);
+			invalidInput();
+			continue;
 		}
 		break;
 	}
 
-	gotoxy(101, 1);
-	printf("                 ");
-	gotoxy(101, 2);
-	printf("                 ");
-	gotoxy(101, 3);
-	printf("                 ");
-	gotoxy(101, 4);
-	printf("                 ");
-	gotoxy(101, 5);
-	printf("                 ");
-	gotoxy(101, 5);
-	printf("                 ");
-	gotoxy(101, 6);
-	printf("                 ");
-	gotoxy(101, 7);
-	printf("                 ");
-	gotoxy(101, 8);
-	printf("                 ");
+		gotoxy(101, 1);
+		printf("                   ");
+		gotoxy(101, 2);
+		printf("                   ");
+		gotoxy(101, 3);
+		printf("                   ");
+		gotoxy(101, 4);
+		printf("                   ");
+		gotoxy(101, 5);
+		printf("                   ");
+		gotoxy(101, 5);
+		printf("                   ");
+		gotoxy(101, 6);
+		printf("                   ");
+		gotoxy(101, 7);
+		printf("                   ");
+		gotoxy(101, 8);
+		printf("                   ");
 
+	if (intCheck(input) == false)
+	{
+		input = upper(input);
+	}
 
-	if (left == stoi(input))
-	{
-		t[current - 1].current = true;
-	}
-	else if (right == stoi(input))
-	{
-		t[current + 1].current = true;
-	}
-	else if (up == stoi(input))
+	if (input == "W" && u == true)
 	{
 		t[current - 10].current = true;
-	}
-	else if (down == stoi(input))
-	{
-		t[current + 10].current = true;
-	}
-	else if (menu == stoi(input))
-	{
-		gm.inMenu = true;
-	}
-	else if (getSup == stoi(input))
-	{
-		gm.p.supplies += t[current].supplies;
-		t[current].supplies = 0;
-	}
-	else if (store == stoi(input))
-	{
-		gm.inShop = true;
-	}
-
-	if (left == stoi(input) || right == stoi(input) || up == stoi(input) || down == stoi(input))
-	{
 		t[current].current = false;
 		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
 		printf(" ");
 	}
-	
+	else if (input == "A" && l == true)
+	{
+		t[current - 1].current = true;
+		t[current].current = false;
+		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+		printf(" ");
+	}
+	else if (input == "S" && d == true)
+	{
+		t[current + 10].current = true;
+		t[current].current = false;
+		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+		printf(" ");
+	}
+	else if (input == "D" && r == true)
+	{
+		t[current + 1].current = true;
+		t[current].current = false;
+		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+		printf(" ");
+	}
+	else if (input != "W" && input != "A" && input != "S" && input != "D")
+	{
+		if (menu == stoi(input))
+		{
+			gm.inMenu = true;
+		}
+		else if (getSup == stoi(input))
+		{
+			gm.p.supplies += t[current].supplies;
+			t[current].supplies = 0;
+		}
+		else if (store == stoi(input))
+		{
+			gm.inShop = true;
+		}
+	}
 }
 
 void gameRestart(struct gm& gm, vector <systems>& t)
@@ -1668,7 +1660,7 @@ void combat::groundIntro()
 	int o = 0;
 
 	cout << "You are being boarded by " << enemies << " " << enemRaceName << endl;
-	printf("Combatants:\n");
+	printf("\nCombatants:\n");
 	
 	for (int i = 0; i < enemies; i++)
 	{
@@ -1692,19 +1684,51 @@ void combat::groundIntro()
 
 	if (t > 0)
 	{
-		cout << t << " Troopers";
+		cout << t;
+		if (t > 1)
+		{
+			printf(" Troopers\n");
+		}
+		else
+		{
+			printf(" Trooper\n");
+		}
 	}
 	if (g > 0)
 	{
-		cout << g << " Gunners";
+		cout << g;
+		if (g > 1)
+		{
+			printf(" Gunners\n");
+		}
+		else
+		{
+			printf(" Gunner\n");
+		}
 	}
 	if (w > 0)
 	{
-		cout << w << " Warriors";
+		cout << w;
+		if (w > 1)
+		{
+			printf(" Warriors\n");
+		}
+		else
+		{
+			printf(" Warrior\n");
+		}
 	}
 	if (o > 0)
 	{
-		cout << o << " Officers";
+		cout << o;
+		if (o > 1)
+		{
+			printf(" Officers\n");
+		}
+		else
+		{
+			printf(" Officer\n");
+		}
 	}
 
 	_getch();
@@ -1713,12 +1737,98 @@ void combat::groundIntro()
 
 void combat::spaceIntro()
 {
+	int c = 0;
+	int d = 0;
+	int cr = 0;
+	int b = 0;
+	int ac = 0;
+
 	cout << enemies << " " << enemRaceName << " ships are dropping out of hyperspace, weapons hot!" << endl;
-	printf("Combatants:\n");
+	printf("\nCombatants:\n");
 
 	for (int i = 0; i < enemies; i++)
 	{
-		cout << cm.es[i].enemTypeName << endl;
+		if (cm.es[i].type == 0)
+		{
+			c++;
+		}
+		else if (cm.es[i].type == 1)
+		{
+			d++;
+		}
+		else if (cm.es[i].type == 2)
+		{
+			cr++;
+		}
+		else if (cm.es[i].type == 3)
+		{
+			b++;
+		}
+		else if (cm.es[i].type == 4)
+		{
+			ac++;
+		}
+	}
+
+	if (c > 0)
+	{
+		cout << c;
+		if (c > 1)
+		{
+			printf(" Corvettes\n");
+		}
+		else
+		{
+			printf(" Corvette\n");
+		}
+	}
+	if (d > 0)
+	{
+		cout << d;
+		if (d > 1)
+		{
+			printf(" Destroyers\n");
+		}
+		else
+		{
+			printf(" Destroyer\n");
+		}
+	}
+	if (cr > 0)
+	{
+		cout << cr;
+		if (cr > 1)
+		{
+			printf(" Cruisers\n");
+		}
+		else
+		{
+			printf(" Cruiser\n");
+		}
+	}
+	if (b > 0)
+	{
+		cout << b;
+		if (b > 1)
+		{
+			printf(" Battleships\n");
+		}
+		else
+		{
+			printf(" Battleship\n");
+		}
+	}
+	if (ac > 0)
+	{
+		cout << ac;
+		if (ac > 1)
+		{
+			printf(" Assault Carriers\n");
+		}
+		else
+		{
+			printf(" Assault Carrier\n");
+		}
 	}
 
 	_getch();
