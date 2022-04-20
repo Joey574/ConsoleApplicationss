@@ -10,7 +10,12 @@ struct enemyShip
 	int weapons;
 	int type;
 
+	float accuracy;
+	float evasion;
+
 	string enemTypeName;
+
+	vector <int> weaponType;
 
 	bool alive = true;
 };
@@ -22,6 +27,8 @@ struct enemyGround
 	int ID;
 	int weapons;
 	int type;
+	int evasion;
+	int accuracy;
 
 	string enemTypeName;
 
@@ -76,7 +83,8 @@ public:
 	void sStats();
 	void groundIntro();
 	void spaceIntro();
-
+	void sCombat(struct gm& gm);
+	void gCombat(struct gm& gm);
 
 private:
 	int enemyRace;

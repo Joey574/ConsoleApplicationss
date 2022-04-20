@@ -472,8 +472,8 @@ void help(struct gm& gm)
 void credits()
 {
 	printf("Author:\nJoey Soroka\n\n");
-	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\nBrooks Sammarco\n\n");
-	printf("Creative Support:\nIssac Morine\n");
+	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\nBrooks Sammarco\nMonte Long\n\n");
+	printf("Creative Support:\nIssac Morine\nMonte Long\n");
 	_getch();
 }
 
@@ -989,11 +989,7 @@ void moveUpdate(struct gm& gm)
 
 	if (gm.s.shield < gm.s.shieldMax)
 	{
-		gm.s.shield += gm.s.shieldRegeneration;
-		if (gm.s.shield > gm.s.shieldMax)
-		{
-			gm.s.shield = gm.s.shieldMax;
-		}
+			gm.s.shield = gm.s.shieldMax;	
 	}	
 }
 
@@ -1011,6 +1007,67 @@ void shipValues(struct gm& gm)
 	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
 	gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
 	gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
+
+	if (!gm.inGame)
+	{
+		weaponData temp;
+
+		for (int i = 0; i < 10; i++)
+		{
+			gm.wD.push_back(temp);
+			gm.wD[i].type = i;
+		}
+
+		gm.wD[0].minDamage = 2;
+		gm.wD[0].maxDamage = 2;
+		gm.wD[0].accuracy = 0.8;
+		gm.wD[0].name = "Machine Gun";
+
+		gm.wD[1].minDamage = 3;
+		gm.wD[1].maxDamage = 6;
+		gm.wD[1].accuracy = 0.6;
+		gm.wD[1].name = "Heavy Cannon";
+
+		gm.wD[2].minDamage = 2;
+		gm.wD[2].maxDamage = 4;
+		gm.wD[2].accuracy = 0.7;
+		gm.wD[2].name = "Light Cannon";
+
+		gm.wD[3].minDamage = 1;
+		gm.wD[3].maxDamage = 2;
+		gm.wD[3].accuracy = 0.4;
+		gm.wD[3].name = "PD Cannon";
+
+		gm.wD[4].minDamage = 3;
+		gm.wD[4].maxDamage = 4;
+		gm.wD[4].accuracy = 1;
+		gm.wD[4].name = "Missile Launcher";
+
+		gm.wD[5].minDamage = 1;
+		gm.wD[5].maxDamage = 3;
+		gm.wD[5].accuracy = 1;
+		gm.wD[5].name = "Phase Cannon";
+
+		gm.wD[6].minDamage = 3;
+		gm.wD[6].maxDamage = 4;
+		gm.wD[6].accuracy = 0.5;
+		gm.wD[6].name = "Coilgun";
+
+		gm.wD[7].minDamage = 5;
+		gm.wD[7].maxDamage = 7;
+		gm.wD[7].accuracy = 0.5;
+		gm.wD[7].name = "Torpedo";
+
+		gm.wD[8].minDamage = 2;
+		gm.wD[8].maxDamage = 3;
+		gm.wD[8].accuracy = 0.7;
+		gm.wD[8].name = "Railgun";
+
+		gm.wD[9].minDamage = 2;
+		gm.wD[9].maxDamage = 4;
+		gm.wD[9].accuracy = 1;
+		gm.wD[9].name = "Beam cannon";
+	}
 }
 
 void friendlyShip(struct gm& gm, vector <systems>& t)
@@ -1579,6 +1636,7 @@ void combat::combatManager(struct gm& gm)
 	{
 		spaceIntro();
 		sStats();
+		sCombat(gm);
 	}
 }
 
@@ -1586,7 +1644,10 @@ void combat::gStats()
 {
 	for (int i = 0; i < enemies; i++)
 	{
-		if (cm.eg[i].type)
+		if (cm.eg[i].type == 0)
+		{
+
+		}
 	}
 }
 
@@ -1594,10 +1655,58 @@ void combat::sStats()
 {
 	for (int i = 0; i < enemies; i++)
 	{
-		if (cm.eg[i].type)
+		if (cm.es[i].type == 0) // corvette
+		{
+			cm.es[i].health = 5;
+			cm.es[i].healthMax = 5;
+			cm.es[i].maxDamage = 2;
+			cm.es[i].minDamge = 0;
+			cm.es[i].weapons = 1;
+			cm.es[i].evasion = 0.4;
+			cm.es[i].accuracy = 0.7;
+		}
+		else if (cm.es[i].type == 1) // destroyer
+		{
+			cm.es[i].health = 10;
+			cm.es[i].healthMax = 10;
+			cm.es[i].maxDamage = 3;
+			cm.es[i].minDamge = 1;
+			cm.es[i].weapons = 2;
+			cm.es[i].evasion = 0.3;
+			cm.es[i].accuracy = 0.8;
+		}
+		else if (cm.es[i].type == 2) // cruiser
+		{
+			cm.es[i].health = 12;
+			cm.es[i].healthMax = 12;
+			cm.es[i].maxDamage = 2;
+			cm.es[i].minDamge = 0;
+			cm.es[i].weapons = 1;
+			cm.es[i].evasion = 0.3;
+			cm.es[i].accuracy = 1;
+		}
+		else if (cm.es[i].type == 3) // batleship
+		{
+			cm.es[i].health = 5;
+			cm.es[i].healthMax = 5;
+			cm.es[i].maxDamage = 2;
+			cm.es[i].minDamge = 0;
+			cm.es[i].weapons = 1;
+			cm.es[i].evasion = 0;
+			cm.es[i].accuracy = 0.8;
+		}
+		else if (cm.es[i].type == 4) // assault carrier
+		{
+			cm.es[i].health = 5;
+			cm.es[i].healthMax = 5;
+			cm.es[i].maxDamage = 1;
+			cm.es[i].minDamge = 1;
+			cm.es[i].weapons = 8;
+			cm.es[i].evasion = 0.1;
+			cm.es[i].accuracy = 0.8;
+		}
 	}
 }
-
 
 void combat::enemyTypes()
 {
@@ -1606,10 +1715,12 @@ void combat::enemyTypes()
 		if (comType == 0) // ground
 		{
 			cm.eg.push_back(enemGround);
+			cm.eg[i].ID = i + 1;
 		}
 		else if (comType == 1) // space
 		{
 			cm.es.push_back(enemShip);
+			cm.es[i].ID = i + 1;
 		}
 	}
 
@@ -1872,4 +1983,94 @@ void combat::spaceIntro()
 
 	_getch();
 
+}
+
+void combat::sCombat(struct gm& gm)
+{
+	string input;
+
+	int temp = 1;
+	int damage;
+	int enemyAttack;
+	int weaponU;
+	float cTH;
+
+	while (1)
+	{
+		system("CLS");
+		printf("Menu:\n\nAttack:\n");
+
+		for (int i = 0; i < enemies; i++)
+		{
+			cout << cm.es[i].ID << ": " << cm.es[i].enemTypeName << endl;
+		}
+
+		printf("Input: ");
+		cin >> input;
+
+		if (intCheck(input) == true)
+		{
+			for (int i = 0; i < enemies; i++)
+			{
+				if (stoi(input) == cm.es[i].ID)
+				{
+					enemyAttack = stoi(input);
+					while (1)
+					{
+						system("CLS");
+						printf("Menu:\n\nWeapons:\n");
+						for (int i = 0; i < gm.s.weapons; i++)
+						{
+							cout << i + 1 << ": " << gm.wD[gm.s.wID[i]].name << endl;
+						}
+						printf("Input: ");
+						cin >> input;
+
+						if (intCheck(input))
+						{
+							if (stoi(input) > gm.s.weapons)
+							{
+								invalidInput();
+								continue;
+							}
+
+							weaponU;
+							damage = gm.wD[stoi(input)].minDamage + rand() % (gm.wD[stoi(input)].maxDamage - gm.wD[stoi(input)].minDamage);
+
+						}
+						else
+						{
+							invalidInput();
+							continue;
+						}
+					}
+				}
+				else if (temp > enemies)
+				{
+					invalidInput();
+					continue;
+				}
+				else
+				{
+					temp++;
+				}
+			}
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		break;
+	}
+
+	cTH = gm.wD[gm.s.wID[weaponU]].accuracy - cm.es[enemyAttack].evasion;
+
+	temp = rand() % 101;
+	temp /= 100;
+
+	if (cTH >= temp)
+	{
+
+	}
 }

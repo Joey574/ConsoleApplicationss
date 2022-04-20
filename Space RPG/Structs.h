@@ -41,6 +41,12 @@ struct ship
 	int shieldRegeneration;
 	int modules = 1, modulesMax;
 	int fuel = 25, fuelMax;
+
+	int weapons = 1;
+	vector<int> wID{ 6 };
+
+	float evasion;
+
 	int shipID = 0; // tells program which line of shipData to look at
 
 	vector <vector<int>> shipData
@@ -51,6 +57,15 @@ struct ship
 	};
 
 	bool alive;
+};
+
+struct weaponData
+{
+	int minDamage, maxDamage;
+	int type;
+	float accuracy;
+
+	string name;
 };
 
 struct module
@@ -71,7 +86,8 @@ struct gm
 {
 	player p;
 	ship s;
-	struct module m;
+	vector <module> m;
+	vector <weaponData> wD;
 
 	bool inMenu = false;
 	bool inGame = false;
