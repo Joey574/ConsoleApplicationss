@@ -72,7 +72,8 @@ public:
 	// accessories
 	void combatManager(struct gm &gm);
 	void enemyTypes();
-	void stats();
+	void gStats();
+	void sStats();
 	void groundIntro();
 	void spaceIntro();
 
