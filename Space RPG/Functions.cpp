@@ -1214,7 +1214,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 	gotoxy(101, move);
 	cout << aces << ": ";
 	printf("Return to Menu");
-	menu = move;
+	menu = aces;
 	move++;
 
 	while (1)
@@ -1231,6 +1231,70 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 			invalidInput();
 			continue;
 		}
+
+		if (intCheck(input) == false)
+		{
+			input = upper(input);
+		}
+
+		if (input != "W" && input != "A" && input != "S" && input != "D")
+		{
+			if (stoi(input) > aces || stoi(input) < 0)
+			{
+				gotoxy(101, move);
+				invalidInput();
+				continue;
+			}
+		}
+
+		if (input == "W" && u == true)
+		{
+			t[current - 10].current = true;
+			t[current].current = false;
+			gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+			printf(" ");
+		}
+		else if (input == "A" && l == true)
+		{
+			t[current - 1].current = true;
+			t[current].current = false;
+			gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+			printf(" ");
+		}
+		else if (input == "S" && d == true)
+		{
+			t[current + 10].current = true;
+			t[current].current = false;
+			gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+			printf(" ");
+		}
+		else if (input == "D" && r == true)
+		{
+			t[current + 1].current = true;
+			t[current].current = false;
+			gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
+			printf(" ");
+		}
+		else if (menu == stoi(input))
+		{
+			gm.inMenu = true;
+		}
+		else if (getSup == stoi(input))
+		{
+			gm.p.supplies += t[current].supplies;
+			t[current].supplies = 0;
+		}
+		else if (store == stoi(input))
+		{
+			gm.inShop = true;
+		}
+		else
+		{
+			gotoxy(101, move);
+			invalidInput();
+			continue;
+		}
+
 		break;
 	}
 
@@ -1252,56 +1316,6 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 		printf("                   ");
 		gotoxy(101, 8);
 		printf("                   ");
-
-	if (intCheck(input) == false)
-	{
-		input = upper(input);
-	}
-
-	if (input == "W" && u == true)
-	{
-		t[current - 10].current = true;
-		t[current].current = false;
-		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
-		printf(" ");
-	}
-	else if (input == "A" && l == true)
-	{
-		t[current - 1].current = true;
-		t[current].current = false;
-		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
-		printf(" ");
-	}
-	else if (input == "S" && d == true)
-	{
-		t[current + 10].current = true;
-		t[current].current = false;
-		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
-		printf(" ");
-	}
-	else if (input == "D" && r == true)
-	{
-		t[current + 1].current = true;
-		t[current].current = false;
-		gotoxy((t[current].x * 10) + 5, (t[current].y * 6) + 4);
-		printf(" ");
-	}
-	else if (input != "W" && input != "A" && input != "S" && input != "D")
-	{
-		if (menu == stoi(input))
-		{
-			gm.inMenu = true;
-		}
-		else if (getSup == stoi(input))
-		{
-			gm.p.supplies += t[current].supplies;
-			t[current].supplies = 0;
-		}
-		else if (store == stoi(input))
-		{
-			gm.inShop = true;
-		}
-	}
 }
 
 void gameRestart(struct gm& gm, vector <systems>& t)
@@ -1379,7 +1393,9 @@ void NPC::generalShop(struct gm& gm)
 {
 	string input;
 
-	printf("I sell all sorts of general appliances\n");
+	printf("I sell all sorts of general appliances\nMenu\n1: Fuel");
+
+	cin >> input;
 }
 
 void NPC::shipShop(struct gm& gm)
@@ -1387,6 +1403,8 @@ void NPC::shipShop(struct gm& gm)
 	string input;
 
 	printf("I sell anything your space ship could ever need\n");
+
+	cin >> input;
 }
 
 void NPC::weaponShop(struct gm& gm)
@@ -1394,6 +1412,8 @@ void NPC::weaponShop(struct gm& gm)
 	string input;
 
 	printf("I sell all manners of destruction.\n");
+
+	cin >> input;
 }
 
 void NPC::miyoshiShop(struct gm& gm)
@@ -1553,12 +1573,31 @@ void combat::combatManager(struct gm& gm)
 	if (comType == 0) // ground
 	{
 		groundIntro();
+		gStats();
 	}
 	else if (comType == 1) // space
 	{
 		spaceIntro();
+		sStats();
 	}
 }
+
+void combat::gStats()
+{
+	for (int i = 0; i < enemies; i++)
+	{
+		if (cm.eg[i].type)
+	}
+}
+
+void combat::sStats()
+{
+	for (int i = 0; i < enemies; i++)
+	{
+		if (cm.eg[i].type)
+	}
+}
+
 
 void combat::enemyTypes()
 {
