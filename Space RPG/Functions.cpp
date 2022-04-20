@@ -1713,12 +1713,58 @@ void combat::groundIntro()
 
 void combat::spaceIntro()
 {
+	int c = 0;
+	int d = 0;
+	int cr = 0;
+	int b = 0;
+	int a = 0;
+
 	cout << enemies << " " << enemRaceName << " ships are dropping out of hyperspace, weapons hot!" << endl;
 	printf("Combatants:\n");
 
 	for (int i = 0; i < enemies; i++)
 	{
-		cout << cm.es[i].enemTypeName << endl;
+		if (cm.es[i].type == 0)
+		{
+			c++;
+		}
+		else if (cm.es[i].type == 1)
+		{
+			d++;
+		}
+		else if (cm.es[i].type == 2)
+		{
+			cr++;
+		}
+		else if (cm.es[i].type == 3)
+		{
+			b++;
+		}
+		else if (cm.es[i].type == 3)
+		{
+			a++;
+		}
+	}
+
+	if (c > 0)
+	{
+		cout << c << " Corvettes";
+	}
+	if (d > 0)
+	{
+		cout << d << " Destroyers";
+	}
+	if (cr > 0)
+	{
+		cout << cr << " Cruisers";
+	}
+	if (b > 0)
+	{
+		cout << b << " Battleships";
+	}
+	if (a > 0)
+	{
+		cout << a << " Assault Carriers";
 	}
 
 	_getch();
