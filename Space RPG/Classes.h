@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Structs.h"
+
 using namespace std;
 
 struct enemyShip
@@ -53,10 +55,10 @@ public:
 
 	//setters
 	void setShopID(vector <int> s);
-	void setCurrent(int c);
+	void setCurrent(vector <int> c);
 
 	//accesories
-	void shopManager(struct gm& gm);
+	void shopManager(struct gm& gm, vector <systems>& t);
 	void generalShop(struct gm& gm);
 	void shipShop(struct gm& gm);
 	void weaponShop(struct gm& gm);

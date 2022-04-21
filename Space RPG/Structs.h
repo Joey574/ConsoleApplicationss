@@ -44,7 +44,7 @@ struct ship
 
 	int weapons = 1;
 	int maxWeap;
-	vector<int> wID{ 6 };
+	vector<int> wID{ 3 };
 
 	float evasion;
 
@@ -76,7 +76,6 @@ struct module
 	string name;
 
 	int health, healthMax;
-	int shield, shieldMax;
 	int shieldRegeneration;
 	int moduleID;
 

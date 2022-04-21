@@ -35,7 +35,7 @@ void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
 void moveUpdate(struct gm& gm);
 void shipValues(struct gm& gm);
-void shopRan(vector <NPC> &n, vector <systems>& t);
+void shopRan(class NPC& n, vector <systems>& t);
 void mapStats(struct gm& gm);
 void weaponValues(struct gm& gm);
 
@@ -845,6 +845,9 @@ void shopRan(class NPC &n, vector <systems>& t)
 {
 	int i = 0;
 
+	vector <int> id;
+	vector <int> c;
+
 	while (i < 6)  // finding 3 random systems from ID 19-99 to be used for shops
 	{
 		int q = 20 + rand() % 80;
@@ -854,24 +857,27 @@ void shopRan(class NPC &n, vector <systems>& t)
 			int ran = 1 + rand() % 100;
 			if (ran <= 33)
 			{
-				n[i].setShopID(0);
+				id.push_back(0);
 			}
 			else if (ran <= 66)
 			{
-				n[i].setShopID(1);
+				id.push_back(1);
 			}
 			else if (ran <= 99)
 			{
-				n[i].setShopID(2);
+				id.push_back(2);
 			}
 			else if (ran == 100)
 			{
-				n[i].setShopID(3);
+				id.push_back(3);
 			}
-			n[i].setCurrent(q);
+			c.push_back(q);
 			i++;
 		}
 	}
+	n.setShopID(id);
+	n.setCurrent(c);
+
 }
 
 // Game Functions
@@ -903,13 +909,12 @@ void gameManager(struct gm& gm, vector <systems> &t)
 		mapMenu(t, gm);
 		if (gm.inMenu == true)
 		{
-			mainMenu(gm, t, n);
+			mainMenu(gm, t);
 			gm.inMenu = false;
 		}
 		else if (gm.inShop == true)
 		{
-			shop(gm, n, t);
-			shipValues(gm);
+			n.shopManager(gm, t);
 			worldConstructor();
 			systemInfo(t, gm);
 			gm.inShop = false;
@@ -934,7 +939,7 @@ void gameManager(struct gm& gm, vector <systems> &t)
 				}
 				else if (encounter == 4)
 				{
-
+					n.shopManager(gm, t);
 				}
 				worldConstructor();
 				systemInfo(t, gm);
@@ -1009,8 +1014,8 @@ void weaponValues(struct gm& gm)
 	gm.wD[0].shots = 5;
 	gm.wD[0].name = "Machine Gun";
 
-	gm.wD[1].minDamage = 3;
-	gm.wD[1].maxDamage = 6;
+	gm.wD[1].minDamage = 4;
+	gm.wD[1].maxDamage = 8;
 	gm.wD[1].accuracy = 0.6;
 	gm.wD[1].shots = 1;
 	gm.wD[1].name = "Heavy Cannon";
@@ -1022,8 +1027,8 @@ void weaponValues(struct gm& gm)
 	gm.wD[2].name = "Light Cannon";
 
 	gm.wD[3].minDamage = 1;
-	gm.wD[3].maxDamage = 2;
-	gm.wD[3].accuracy = 0.2;
+	gm.wD[3].maxDamage = 1;
+	gm.wD[3].accuracy = 0.1;
 	gm.wD[3].shots = 50;
 	gm.wD[3].name = "PD Cannon";
 
@@ -1403,20 +1408,52 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 
 void NPC::setShopID(vector <int> s)
 {
-	for (int i; i < s.size(); i++)
+	for (int i = 0; i < s.size(); i++)
 	{
 		sh.push_back(temp);
-
+		sh[i].shopID = s[i];
 	}
 }
 
-void NPC::setCurrent(int c)
+void NPC::setCurrent(vector <int> c)
 {
-	current = c;
+	for (int i = 0; i < c.size(); i++)
+	{
+		sh[i].shopID = c[i];
+	}
 }
 
-void NPC::shopManager(struct gm& gm)
+void NPC::shopManager(struct gm &gm, vector<systems> &t)
 {
+	int current = systemCurrent(t);
+	int shopCID;
+
+
+	for (int i = 0; i < 6; i++)
+	{
+		if (current == sh[i].current)
+		{
+			shopCID = i;
+		}
+	}
+
+	if (sh[shopCID].shopID == 0)
+	{
+		generalShop(gm);
+	}
+	else if (sh[shopCID].shopID == 1)
+	{
+		shipShop(gm);
+	}
+	else if (sh[shopCID].shopID == 2)
+	{
+		weaponShop(gm);
+	}
+	else if (sh[shopCID].shopID == 3)
+	{
+		miyoshiShop(gm);
+	}
+
 
 }
 
@@ -1625,7 +1662,7 @@ void combat::sStats()
 			cm.es[i].maxDamage = 2;
 			cm.es[i].minDamge = 0;
 			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 0.3;
+			cm.es[i].evasion = 0.2;
 			cm.es[i].accuracy = 1;
 		}
 		else if (cm.es[i].type == 3) // batleship
@@ -2019,9 +2056,9 @@ void combat::sCombat(struct gm& gm)
 		break;
 	}
 
-	for (int i = 0; i < gm.wD[weaponU].shots; i++)
+	for (float i = 0; i < gm.wD[weaponU].shots; i+= 1)
 	{
-		cTH = gm.wD[weaponU].accuracy - cm.es[enemyAttack].evasion + i;
+		cTH = (gm.wD[weaponU].accuracy - cm.es[enemyAttack].evasion) + (i / 100);
 
 		fTemp = rand() % 101;
 		fTemp /= 100;
