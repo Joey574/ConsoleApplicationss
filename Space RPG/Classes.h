@@ -41,31 +41,36 @@ struct cm
 	vector <enemyGround> eg;
 };
 
+struct shops
+{
+	int shopID;
+	int current;
+};
+
 class NPC
 {
 public:
 
 	//setters
-	void setShopID(int s);
+	void setShopID(vector <int> s);
 	void setCurrent(int c);
 
-	//getters
-	int getShopID();
-	int getCurrent();
-
 	//accesories
-	void shopMenu(struct gm& gm);
+	void shopManager(struct gm& gm);
 	void generalShop(struct gm& gm);
 	void shipShop(struct gm& gm);
 	void weaponShop(struct gm& gm);
 	void miyoshiShop(struct gm& gm);
+
+	//purchases
 	void fuelPurch(struct gm& gm);
 	void shipPurch(struct gm& gm);
 
+
 private:
 
-	int current;
-	int shopID;
+	vector <shops> sh;
+	shops temp;
 };
 
 class combat

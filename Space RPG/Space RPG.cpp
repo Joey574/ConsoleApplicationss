@@ -36,11 +36,10 @@ int main()
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 
 	vector <systems> t(100);
-	vector <NPC> n(3);
 
 	gm gm;
 
 	introArt();
 
-	mainMenu(gm, t, n);
+	mainMenu(gm, t);
 }
