@@ -37,6 +37,7 @@ void moveUpdate(struct gm& gm);
 void shipValues(struct gm& gm);
 void shop(struct gm& gm, vector <NPC> &n, vector <systems>& t);
 void mapStats(struct gm& gm);
+void weaponValues(struct gm& gm);
 
 // Useful Functions
 
@@ -312,20 +313,37 @@ void difficultySet(struct gm& gm)
 {
 	string input;
 	
-	printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
-	cin >> input;
+	while (1)
+	{
+		printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
+		cin >> input;
 
-	if (input == "1")
-	{
-		gm.p.difficulty = 0; // easy
-	}
-	else if (input == "2")
-	{
-		gm.p.difficulty = 1; // medium
-	}
-	else if (input == "3")
-	{
-		gm.p.difficulty = 2; // hard
+		if (input.size() > 1)
+		{
+			invalidInput();
+			system("CLS");
+			continue;
+		}
+
+		if (input == "1")
+		{
+			gm.p.difficulty = 0; // easy
+		}
+		else if (input == "2")
+		{
+			gm.p.difficulty = 1; // medium
+		}
+		else if (input == "3")
+		{
+			gm.p.difficulty = 2; // hard
+		}
+		else
+		{
+			invalidInput();
+			system("CLS");
+			continue;
+		}
+		break;
 	}
 }
 
@@ -867,6 +885,7 @@ void gameManager(struct gm& gm, vector <systems> &t, vector<NPC>& n)
 		difficultySet(gm);
 		worldRan(gm.p.difficulty, t, n);
 		shipValues(gm);
+		weaponValues(gm);
 	}
 	gm.inGame = true;
 	gm.inMenu = false;
@@ -1007,67 +1026,77 @@ void shipValues(struct gm& gm)
 	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
 	gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
 	gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
+}
 
-	if (!gm.inGame)
+void weaponValues(struct gm& gm)
+{
+	weaponData temp;
+
+	for (int i = 0; i < 10; i++)
 	{
-		weaponData temp;
-
-		for (int i = 0; i < 10; i++)
-		{
-			gm.wD.push_back(temp);
-			gm.wD[i].type = i;
-		}
-
-		gm.wD[0].minDamage = 2;
-		gm.wD[0].maxDamage = 2;
-		gm.wD[0].accuracy = 0.8;
-		gm.wD[0].name = "Machine Gun";
-
-		gm.wD[1].minDamage = 3;
-		gm.wD[1].maxDamage = 6;
-		gm.wD[1].accuracy = 0.6;
-		gm.wD[1].name = "Heavy Cannon";
-
-		gm.wD[2].minDamage = 2;
-		gm.wD[2].maxDamage = 4;
-		gm.wD[2].accuracy = 0.7;
-		gm.wD[2].name = "Light Cannon";
-
-		gm.wD[3].minDamage = 1;
-		gm.wD[3].maxDamage = 2;
-		gm.wD[3].accuracy = 0.4;
-		gm.wD[3].name = "PD Cannon";
-
-		gm.wD[4].minDamage = 3;
-		gm.wD[4].maxDamage = 4;
-		gm.wD[4].accuracy = 1;
-		gm.wD[4].name = "Missile Launcher";
-
-		gm.wD[5].minDamage = 1;
-		gm.wD[5].maxDamage = 3;
-		gm.wD[5].accuracy = 1;
-		gm.wD[5].name = "Phase Cannon";
-
-		gm.wD[6].minDamage = 3;
-		gm.wD[6].maxDamage = 4;
-		gm.wD[6].accuracy = 0.5;
-		gm.wD[6].name = "Coilgun";
-
-		gm.wD[7].minDamage = 5;
-		gm.wD[7].maxDamage = 7;
-		gm.wD[7].accuracy = 0.5;
-		gm.wD[7].name = "Torpedo";
-
-		gm.wD[8].minDamage = 2;
-		gm.wD[8].maxDamage = 3;
-		gm.wD[8].accuracy = 0.7;
-		gm.wD[8].name = "Railgun";
-
-		gm.wD[9].minDamage = 2;
-		gm.wD[9].maxDamage = 4;
-		gm.wD[9].accuracy = 1;
-		gm.wD[9].name = "Beam cannon";
+		gm.wD.push_back(temp);
+		gm.wD[i].type = i;
 	}
+
+	gm.wD[0].minDamage = 2;
+	gm.wD[0].maxDamage = 2;
+	gm.wD[0].accuracy = 0.8;
+	gm.wD[0].shots = 5;
+	gm.wD[0].name = "Machine Gun";
+
+	gm.wD[1].minDamage = 3;
+	gm.wD[1].maxDamage = 6;
+	gm.wD[1].accuracy = 0.6;
+	gm.wD[1].shots = 1;
+	gm.wD[1].name = "Heavy Cannon";
+
+	gm.wD[2].minDamage = 2;
+	gm.wD[2].maxDamage = 4;
+	gm.wD[2].accuracy = 0.7;
+	gm.wD[2].shots = 2;
+	gm.wD[2].name = "Light Cannon";
+
+	gm.wD[3].minDamage = 1;
+	gm.wD[3].maxDamage = 2;
+	gm.wD[3].accuracy = 0.2;
+	gm.wD[3].shots = 50;
+	gm.wD[3].name = "PD Cannon";
+
+	gm.wD[4].minDamage = 3;
+	gm.wD[4].maxDamage = 4;
+	gm.wD[4].accuracy = 1;
+	gm.wD[4].shots = 4;
+	gm.wD[4].name = "Missile Launcher";
+
+	gm.wD[5].minDamage = 1;
+	gm.wD[5].maxDamage = 3;
+	gm.wD[5].accuracy = 1;
+	gm.wD[5].shots = 2;
+	gm.wD[5].name = "Phase Cannon";
+
+	gm.wD[6].minDamage = 3;
+	gm.wD[6].maxDamage = 4;
+	gm.wD[6].accuracy = 0.7;
+	gm.wD[6].shots = 2;
+	gm.wD[6].name = "Coilgun";
+
+	gm.wD[7].minDamage = 5;
+	gm.wD[7].maxDamage = 7;
+	gm.wD[7].accuracy = 0.5;
+	gm.wD[7].shots = 1;
+	gm.wD[7].name = "Torpedo";
+
+	gm.wD[8].minDamage = 2;
+	gm.wD[8].maxDamage = 3;
+	gm.wD[8].accuracy = 0.7;
+	gm.wD[8].shots = 1;
+	gm.wD[8].name = "Railgun";
+
+	gm.wD[9].minDamage = 2;
+	gm.wD[9].maxDamage = 4;
+	gm.wD[9].accuracy = 1;
+	gm.wD[9].shots = 2;
+	gm.wD[9].name = "Beam cannon";
 }
 
 void friendlyShip(struct gm& gm, vector <systems>& t)
@@ -1636,7 +1665,11 @@ void combat::combatManager(struct gm& gm)
 	{
 		spaceIntro();
 		sStats();
-		sCombat(gm);
+
+		while (enemies >= 1 && gm.s.alive)
+		{
+			sCombat(gm);
+		}
 	}
 }
 
@@ -1687,8 +1720,8 @@ void combat::sStats()
 		}
 		else if (cm.es[i].type == 3) // batleship
 		{
-			cm.es[i].health = 5;
-			cm.es[i].healthMax = 5;
+			cm.es[i].health = 15;
+			cm.es[i].healthMax = 15;
 			cm.es[i].maxDamage = 2;
 			cm.es[i].minDamge = 0;
 			cm.es[i].weapons = 1;
@@ -1697,8 +1730,8 @@ void combat::sStats()
 		}
 		else if (cm.es[i].type == 4) // assault carrier
 		{
-			cm.es[i].health = 5;
-			cm.es[i].healthMax = 5;
+			cm.es[i].health = 12;
+			cm.es[i].healthMax = 12;
 			cm.es[i].maxDamage = 1;
 			cm.es[i].minDamge = 1;
 			cm.es[i].weapons = 8;
@@ -1989,11 +2022,16 @@ void combat::sCombat(struct gm& gm)
 {
 	string input;
 
+	vector <int> d;
+	vector <bool> h;
+
 	int temp = 1;
-	int damage;
+	int damage = 0;
 	int enemyAttack;
 	int weaponU;
+	int shotsHit = 0;
 	float cTH;
+	float fTemp;
 
 	while (1)
 	{
@@ -2008,13 +2046,13 @@ void combat::sCombat(struct gm& gm)
 		printf("Input: ");
 		cin >> input;
 
-		if (intCheck(input) == true)
+		if (intCheck(input))
 		{
 			for (int i = 0; i < enemies; i++)
 			{
 				if (stoi(input) == cm.es[i].ID)
 				{
-					enemyAttack = stoi(input);
+					enemyAttack = stoi(input) - 1;
 					while (1)
 					{
 						system("CLS");
@@ -2034,15 +2072,22 @@ void combat::sCombat(struct gm& gm)
 								continue;
 							}
 
-							weaponU;
-							damage = gm.wD[stoi(input)].minDamage + rand() % (gm.wD[stoi(input)].maxDamage - gm.wD[stoi(input)].minDamage);
+							weaponU = gm.wD[gm.s.wID[stoi(input) - 1]].type;
 
+							for (int i = 0; i < gm.wD[weaponU].shots; i++)
+							{
+
+								damage = gm.wD[weaponU].minDamage + rand() % 1 + (gm.wD[weaponU].maxDamage - gm.wD[weaponU].minDamage);
+
+								d.push_back(damage);
+							}
 						}
 						else
 						{
 							invalidInput();
 							continue;
 						}
+						break;
 					}
 				}
 				else if (temp > enemies)
@@ -2064,13 +2109,61 @@ void combat::sCombat(struct gm& gm)
 		break;
 	}
 
-	cTH = gm.wD[gm.s.wID[weaponU]].accuracy - cm.es[enemyAttack].evasion;
-
-	temp = rand() % 101;
-	temp /= 100;
-
-	if (cTH >= temp)
+	for (int i = 0; i < gm.wD[weaponU].shots; i++)
 	{
+		cTH = gm.wD[weaponU].accuracy - cm.es[enemyAttack].evasion + i;
 
+		fTemp = rand() % 101;
+		fTemp /= 100;
+
+		if (cTH > fTemp)
+		{
+			shotsHit += 1;
+			h.push_back(true);
+		}
+		else
+		{
+			h.push_back(false);
+		}
 	}
+
+	damage = 0;
+
+	system("CLS");
+	if (shotsHit >= 1)
+	{
+		cout << "Hit! ";
+		
+		if (shotsHit >= 2)
+		{
+			cout << shotsHit << " Shots hit their target! ";
+		}
+		else
+		{
+			cout << shotsHit << " Shot hit its target! ";
+		}
+
+		for (int i = 0; i < gm.wD[weaponU].shots; i++)
+		{
+			if (h[i] == true)
+			{
+				damage += d[i];
+			}
+		}
+
+		cout << "Dealing a total of " << damage << " damage.";
+		cm.es[enemyAttack].health -= damage;
+
+		if (cm.es[enemyAttack].health <= 0)
+		{
+			cout << " Destroying the " << cm.es[enemyAttack].enemTypeName << endl;
+			cm.es[enemyAttack].alive = false;
+			enemies--;
+		}
+	}
+	else
+	{
+		printf("Shot has missed, no damage dealt\n");
+	}
+	_getch();
 }

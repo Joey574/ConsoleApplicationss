@@ -63,6 +63,8 @@ struct weaponData
 {
 	int minDamage, maxDamage;
 	int type;
+	int shots;
+	int cost;
 	float accuracy;
 
 	string name;
