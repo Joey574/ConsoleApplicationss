@@ -875,6 +875,7 @@ void shopRan(class NPC &n, vector <systems>& t)
 			i++;
 		}
 	}
+
 	n.setShopID(id);
 	n.setCurrent(c);
 }
@@ -1418,12 +1419,13 @@ void NPC::setCurrent(vector <int> c)
 {
 	for (int i = 0; i < c.size(); i++)
 	{
-		sh[i].shopID = c[i];
+		sh[i].current = c[i];
 	}
 }
 
 void NPC::shopManager(struct gm &gm, vector<systems> &t)
 {
+
 	int current = systemCurrent(t);
 	int shopCID;
 
@@ -1457,22 +1459,69 @@ void NPC::shopManager(struct gm &gm, vector<systems> &t)
 
 void NPC::generalShop(struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		system("CLS");
+		
+		printf("This is a general shop for all your general purchasing needs!\nMenu:\n1: Fuel\n2: Weapons\n3: Back\nInput: ");
+		cin >> input;
+
+		if (input == "1")
+		{
+
+		}
+	}
 }
 
 void NPC::shipShop(struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		system("CLS");
+
+		printf("This is a ship shop for all your ship purchasing needs!\nMenu:\n1: Fuel\n2: Better Ship\n3: Back\nInput: ");
+		cin >> input;
+
+		if (input == "1")
+		{
+
+		}
+	}
 }
 
 void NPC::weaponShop(struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		system("CLS");
+
+		printf("This is a weapon shop for all your genocidal needs!\nMenu:\n1: Fuel\n2: Weapons\n3: Back\nInput: ");
+		cin >> input;
+
+		if (input == "1")
+		{
+
+		}
+	}
 }
 
 void NPC::miyoshiShop(struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		system("CLS");
+
+		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you desire young traveler?\nMenu: ");
+		cin >> input;
+	}
 }
 
 void NPC::fuelPurch(struct gm& gm)
@@ -1482,107 +1531,52 @@ void NPC::fuelPurch(struct gm& gm)
 	while (1)
 	{
 		system("CLS");
-		cout << "Please enter how much fuel you want to buy (1 fuel for 1 supply) " << gm.s.fuel << " / " << gm.s.fuelMax << endl;
-		printf("Menu:\nInput: ");
+
+		printf("Menu: (Enter how much fuel you want 1:1 purchase)\nBack: S\nInput: ");
 		cin >> input;
-		system("CLS");
 
-		bool b = intCheck(input);
-
-		if (b == true)
+		if (input.size() > 1)
 		{
-			if (stoi(input) <= gm.p.supplies)
+			invalidInput();
+			continue;
+		}
+		else if (intCheck(input) == false)
+		{
+			if (toupper(input[0]) == 'S')
 			{
-				if (gm.s.fuel + stoi(input) <= gm.s.fuelMax)
-				{
-					gm.s.fuel += stoi(input);
-					gm.p.supplies -= stoi(input);
-				}
-				else
-				{
-					printf("Not enough fuel capacity...\n");
-					_getch();
-					continue;
-				}
+				break;
 			}
 			else
 			{
-				printf("Not enough supplies...\n");
-				_getch();
+				invalidInput();
 				continue;
 			}
 		}
 		else
 		{
-			invalidInput();
-			continue;
+			if (stoi(input) > gm.p.supplies || stoi(input) + gm.s.fuel > gm.s.fuelMax)
+			{
+				invalidInput();
+				continue;
+			}
+			else
+			{
+				gm.s.fuel += stoi(input);
+				gm.p.supplies -= stoi(input);
+
+				system("CLS");
+				printf("Succesful Purchase! Press any key to continue");
+				_getch();
+				break;
+			}
 		}
-		break;
+		
 	}
 }
 
 void NPC::shipPurch(struct gm& gm)
 {
-	string input;
-
-	while (1)
-	{
-		gotoxy(50, 0);
-		if (gm.s.shipID < 2)
-		{
-			printf("Stats: ");
-			gotoxy(50, 1);
-			cout << gm.s.shipData[gm.s.shipID][1] << " --> " << gm.s.shipData[gm.s.shipID + 1][1] << " Max Hull";
-			gotoxy(50, 2);
-			cout << gm.s.shipData[gm.s.shipID][3] << " --> " << gm.s.shipData[gm.s.shipID + 1][3] << " Max Shields";
-			gotoxy(50, 3);
-			cout << gm.s.shipData[gm.s.shipID][4] << " --> " << gm.s.shipData[gm.s.shipID + 1][4] << " Shield Regeneration";
-			gotoxy(50, 4);
-			cout << gm.s.shipData[gm.s.shipID][8] << " --> " << gm.s.shipData[gm.s.shipID + 1][8] << " Max Fuel";
-			gotoxy(50, 5);
-			cout << gm.s.shipData[gm.s.shipID][6] << " --> " << gm.s.shipData[gm.s.shipID + 1][6] << " Max Modules";
-			gotoxy(50, 6);
-			cout << "Ship Level "  <<gm.s.shipID + 1 << " / 3";
-		}
-		else
-		{
-			printf("MAX LEVEL");
-		}
-		gotoxy(0, 0);
-		printf("Are you sure you want to upgrade your ship?\nIt will cost 20 supplies\n1: Upgrade\n2: Back\nInput: ");
-		cin >> input;
-		system("CLS");
-
-		if (input == "1")
-		{
-			if (gm.s.shipID < 2)
-			{
-				if (gm.p.supplies >= 20)
-				{
-					gm.s.shipID += 1;
-					gm.p.supplies -= 20;
-				}
-				else
-				{
-					printf("Not enough supplies...");
-				}
-			}
-			else
-			{
-				printf("Maximum level...");
-			}
-		}
-		else if (input == "2")
-		{
-			break;
-		}
-		else
-		{
-			invalidInput();
-			continue;
-		}
-		break;
-	}
+	
 }
 
 // Combat Class
