@@ -63,6 +63,7 @@ public:
 	void shipShop(struct gm& gm);
 	void weaponShop(struct gm& gm);
 	void miyoshiShop(struct gm& gm);
+	void statDisplay(struct gm& gm);
 
 	//purchases
 	void fuelPurch(struct gm& gm);

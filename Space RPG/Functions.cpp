@@ -1470,7 +1470,20 @@ void NPC::generalShop(struct gm& gm)
 
 		if (input == "1")
 		{
-
+			fuelPurch(gm);
+		}
+		else if (input == "2")
+		{
+			
+		}
+		else if (input == "3")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
 		}
 	}
 }
@@ -1535,12 +1548,8 @@ void NPC::fuelPurch(struct gm& gm)
 		printf("Menu: (Enter how much fuel you want 1:1 purchase)\nBack: S\nInput: ");
 		cin >> input;
 
-		if (input.size() > 1)
-		{
-			invalidInput();
-			continue;
-		}
-		else if (intCheck(input) == false)
+		
+		if (intCheck(input) == false)
 		{
 			if (toupper(input[0]) == 'S')
 			{
@@ -1577,6 +1586,26 @@ void NPC::fuelPurch(struct gm& gm)
 void NPC::shipPurch(struct gm& gm)
 {
 	
+}
+
+void NPC::statDisplay(struct gm& gm)
+{
+	gotoxy(0, 50);
+	printf("Resources:");
+	gotoxy(1, 50);
+	cout << "Supplies: " << gm.p.supplies;
+	gotoxy(2, 50);
+	cout << "Fuel: " << gm.s.fuel << "/" << gm.s.fuelMax;
+	gotoxy(3, 50);
+	printf("Stats:");
+	gotoxy(4, 50);
+	cout << "HP: " << gm.s.health << "/" << gm.s.healthMax;
+	gotoxy(5, 50);
+	cout << "Shield: " << gm.s.shield << "/" << gm.s.shieldMax;
+	gotoxy(6, 50);
+	cout << "Shield Regen: " << gm.s.shieldRegeneration;
+	gotoxy(7, 50);
+	cout << "Modules: " << gm.s.modules << "/" << gm.s.modulesMax;
 }
 
 // Combat Class
