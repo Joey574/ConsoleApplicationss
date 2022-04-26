@@ -43,8 +43,8 @@ struct ship
 	int fuel = 25, fuelMax;
 
 	int weapons = 1;
-	int maxWeap;
-	vector<int> wID{ 3 };
+	int maxWeap = 5;
+	vector<int> wID{ 0 };
 
 	float evasion;
 

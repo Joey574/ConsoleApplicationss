@@ -387,11 +387,6 @@ void gameStart(struct gm& gm, vector <systems>& t)
 void scores()
 {
 	ifstream highScores;
-	highScores.open("highScores.txt");
-	if (!highScores.is_open())
-	{
-		printf("High scores file not found");
-	}
 
 	string temp;
 
@@ -409,11 +404,13 @@ void scores()
 	}
 
 	vecScore.clear();
+
 	while (getline(highScores, temp))
 	{
 		score = stoi(temp); // turns temp line from highScores.txt into int
 		vecScore.push_back(score);
 	}
+
 	sort(vecScore.rbegin(), vecScore.rend()); // sorts the scores in vector from highest to lowest
 
 	for (int i = 1; i < 11; i++)
@@ -433,6 +430,7 @@ void help(struct gm& gm)
 	{
 		printf("Menu:\n1: Change Name\n2: Change Difficulty\n3: Reset Highscores\n4: Back\nInput: ");
 		cin >> input;
+		system("CLS");
 
 		if (input == "1")
 		{
@@ -1012,60 +1010,70 @@ void weaponValues(struct gm& gm)
 	gm.wD[0].maxDamage = 2;
 	gm.wD[0].accuracy = 0.8;
 	gm.wD[0].shots = 5;
+	gm.wD[0].cost = 5;
 	gm.wD[0].name = "Machine Gun";
 
 	gm.wD[1].minDamage = 4;
 	gm.wD[1].maxDamage = 8;
 	gm.wD[1].accuracy = 0.6;
 	gm.wD[1].shots = 1;
+	gm.wD[1].cost = 6;
 	gm.wD[1].name = "Heavy Cannon";
 
 	gm.wD[2].minDamage = 2;
 	gm.wD[2].maxDamage = 4;
 	gm.wD[2].accuracy = 0.7;
 	gm.wD[2].shots = 2;
+	gm.wD[2].cost = 3;
 	gm.wD[2].name = "Light Cannon";
 
 	gm.wD[3].minDamage = 1;
 	gm.wD[3].maxDamage = 1;
 	gm.wD[3].accuracy = 0.1;
 	gm.wD[3].shots = 50;
+	gm.wD[3].cost = 3;
 	gm.wD[3].name = "PD Cannon";
 
 	gm.wD[4].minDamage = 3;
 	gm.wD[4].maxDamage = 4;
 	gm.wD[4].accuracy = 1;
 	gm.wD[4].shots = 4;
+	gm.wD[4].cost = 5;
 	gm.wD[4].name = "Missile Launcher";
 
 	gm.wD[5].minDamage = 1;
 	gm.wD[5].maxDamage = 3;
 	gm.wD[5].accuracy = 1;
 	gm.wD[5].shots = 2;
+	gm.wD[5].cost = 4;
 	gm.wD[5].name = "Phase Cannon";
 
 	gm.wD[6].minDamage = 3;
 	gm.wD[6].maxDamage = 4;
 	gm.wD[6].accuracy = 0.7;
 	gm.wD[6].shots = 2;
+	gm.wD[6].cost = 7;
 	gm.wD[6].name = "Coilgun";
 
 	gm.wD[7].minDamage = 5;
 	gm.wD[7].maxDamage = 7;
 	gm.wD[7].accuracy = 0.5;
 	gm.wD[7].shots = 1;
+	gm.wD[7].cost = 6;
 	gm.wD[7].name = "Torpedo";
 
 	gm.wD[8].minDamage = 2;
 	gm.wD[8].maxDamage = 3;
 	gm.wD[8].accuracy = 0.7;
 	gm.wD[8].shots = 1;
+	gm.wD[8].cost = 6;
 	gm.wD[8].name = "Railgun";
 
 	gm.wD[9].minDamage = 2;
 	gm.wD[9].maxDamage = 4;
 	gm.wD[9].accuracy = 1;
 	gm.wD[9].shots = 2;
+	gm.wD[9].cost = 3;
 	gm.wD[9].name = "Beam cannon";
 }
 
@@ -1465,7 +1473,11 @@ void NPC::generalShop(struct gm& gm)
 	{
 		system("CLS");
 		
-		printf("This is a general shop for all your general purchasing needs!\nMenu:\n1: Fuel\n2: Weapons\n3: Back\nInput: ");
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("This is a general shop for all your general purchasing needs!\nMenu:\n1: Fuel\n2: Space Weapons\n3: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
@@ -1474,7 +1486,7 @@ void NPC::generalShop(struct gm& gm)
 		}
 		else if (input == "2")
 		{
-			
+			sWeapons(gm);
 		}
 		else if (input == "3")
 		{
@@ -1496,12 +1508,29 @@ void NPC::shipShop(struct gm& gm)
 	{
 		system("CLS");
 
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
 		printf("This is a ship shop for all your ship purchasing needs!\nMenu:\n1: Fuel\n2: Better Ship\n3: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
 		{
 
+		}
+		else if (input == "2")
+		{
+			
+		}
+		else if (input == "3")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
 		}
 	}
 }
@@ -1514,12 +1543,29 @@ void NPC::weaponShop(struct gm& gm)
 	{
 		system("CLS");
 
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
 		printf("This is a weapon shop for all your genocidal needs!\nMenu:\n1: Fuel\n2: Weapons\n3: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
 		{
-
+			fuelPurch(gm);
+		}
+		else if (input == "2")
+		{
+			sWeapons(gm);
+		}
+		else if (input == "3")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
 		}
 	}
 }
@@ -1531,6 +1577,10 @@ void NPC::miyoshiShop(struct gm& gm)
 	while (1)
 	{
 		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
 
 		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you desire young traveler?\nMenu: ");
 		cin >> input;
@@ -1586,6 +1636,61 @@ void NPC::fuelPurch(struct gm& gm)
 void NPC::shipPurch(struct gm& gm)
 {
 	
+}
+
+void NPC::sWeapons(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu:\n");
+		for (int i = 0; i < 10; i++)
+		{
+			cout << i + 1 << ": " << gm.wD[i].name << " - " << gm.wD[i].cost << " Supplies" << endl;
+		}
+		printf("11: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (intCheck(input) == false)
+		{
+			invalidInput();
+			continue;
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (stoi(input) == gm.wD[i].type + 1)
+			{
+				if (gm.p.supplies >= gm.wD[i].cost && gm.s.weapons < gm.s.maxWeap)
+				{
+					gm.s.weapons++;
+					gm.p.supplies -= gm.wD[i].cost;
+					gm.s.wID.push_back(i);
+					printf("Purchase sucessful\n");
+					_getch();
+					break;
+				}
+			}
+		}
+		if (stoi(input) == 11)
+		{ 
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		
+	}
 }
 
 void NPC::statDisplay(struct gm& gm)
@@ -1663,7 +1768,7 @@ void combat::sStats()
 			cm.es[i].maxDamage = 2;
 			cm.es[i].minDamge = 0;
 			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 0.4;
+			cm.es[i].evasion = 0.7;
 			cm.es[i].accuracy = 0.7;
 		}
 		else if (cm.es[i].type == 1) // destroyer
@@ -1673,7 +1778,7 @@ void combat::sStats()
 			cm.es[i].maxDamage = 3;
 			cm.es[i].minDamge = 1;
 			cm.es[i].weapons = 2;
-			cm.es[i].evasion = 0.3;
+			cm.es[i].evasion = 0.8;
 			cm.es[i].accuracy = 0.8;
 		}
 		else if (cm.es[i].type == 2) // cruiser
@@ -1683,7 +1788,7 @@ void combat::sStats()
 			cm.es[i].maxDamage = 2;
 			cm.es[i].minDamge = 0;
 			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 0.2;
+			cm.es[i].evasion = 0.9;
 			cm.es[i].accuracy = 1;
 		}
 		else if (cm.es[i].type == 3) // batleship
@@ -1693,7 +1798,7 @@ void combat::sStats()
 			cm.es[i].maxDamage = 2;
 			cm.es[i].minDamge = 0;
 			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 0;
+			cm.es[i].evasion = 1;
 			cm.es[i].accuracy = 0.8;
 		}
 		else if (cm.es[i].type == 4) // assault carrier
@@ -1703,7 +1808,7 @@ void combat::sStats()
 			cm.es[i].maxDamage = 1;
 			cm.es[i].minDamge = 1;
 			cm.es[i].weapons = 8;
-			cm.es[i].evasion = 0.1;
+			cm.es[i].evasion = 0.9;
 			cm.es[i].accuracy = 0.8;
 		}
 	}
@@ -2079,7 +2184,7 @@ void combat::sCombat(struct gm& gm)
 
 	for (float i = 0; i < gm.wD[weaponU].shots; i+= 1)
 	{
-		cTH = (gm.wD[weaponU].accuracy - cm.es[enemyAttack].evasion) + (i / 100);
+		cTH = (gm.wD[weaponU].accuracy * cm.es[enemyAttack].evasion) + (i / 100);
 
 		fTemp = rand() % 101;
 		fTemp /= 100;
