@@ -4,45 +4,6 @@
 
 using namespace std;
 
-struct enemyShip
-{
-	int health, healthMax;
-	int minDamge, maxDamage;
-	int ID;
-	int weapons;
-	int type;
-
-	float accuracy;
-	float evasion;
-
-	string enemTypeName;
-
-	vector <int> weaponType;
-
-	bool alive = true;
-};
-
-struct enemyGround
-{
-	int health, healthMax;
-	int minDamge, maxDamage;
-	int ID;
-	int weapons;
-	int type;
-	int evasion;
-	int accuracy;
-
-	string enemTypeName;
-
-	bool alive = true;
-};
-
-struct cm
-{
-	vector <enemyShip> es;
-	vector <enemyGround> eg;
-};
-
 struct shops
 {
 	int shopID;

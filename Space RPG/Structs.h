@@ -95,3 +95,40 @@ struct gm
 	bool inGame = false;
 	bool inShop = false;
 };
+
+struct enemyShip
+{
+	int health, healthMax;
+	int minDamge, maxDamage;
+	int ID;
+	int weapons;
+	int type;
+
+	float accuracy;
+	float evasion;
+
+	string enemTypeName;
+
+	vector <int> weaponType;
+};
+
+struct enemyGround
+{
+	int health, healthMax;
+	int minDamge, maxDamage;
+	int ID;
+	int weapons;
+	int type;
+	int evasion;
+	int accuracy;
+
+	string enemTypeName;
+
+	bool alive = true;
+};
+
+struct cm
+{
+	vector <enemyShip> es;
+	vector <enemyGround> eg;
+};

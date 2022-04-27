@@ -61,6 +61,15 @@ void invalidInput()
 	Sleep(500);
 }
 
+void scrawlf(string s)
+{
+	for (int i = 0; i < s.size(); i++)
+	{
+		cout << s[i];
+		Sleep(50);
+	}
+}
+
 void exploredUpdater(vector<systems>& s)
 {
 	for (int xy = 0; xy < 100; xy++)
@@ -983,8 +992,16 @@ void moveUpdate(struct gm& gm)
 void gameOver()
 {
 	system("CLS");
-	printf("You have failed your mission, and as you and your crew slowly succumb to the dangers of space, you realize you shall never know the fate of Earth, and along with it... Humanity");
-	_getch();
+	scrawlf("You have failed your mission, and as you and your crew slowly succumb to the dangers of space, you realize you shall never know the fate of Earth, and along with it... \nHumanity");
+	Sleep(800);
+	printf(".");
+	Sleep(300);
+	printf(".");
+	Sleep(300);
+	printf(".");
+	Sleep(800);
+	scrawlf("\nGoodbye");
+	Sleep(1200);
 }
 
 void shipValues(struct gm& gm)
@@ -1431,6 +1448,28 @@ void NPC::setCurrent(vector <int> c)
 	}
 }
 
+void NPC::statDisplay(struct gm& gm)
+{
+	gotoxy(100, 0);
+	printf("Resources:");
+	gotoxy(100, 1);
+	cout << "Supplies: " << gm.p.supplies;
+	gotoxy(100, 2);
+	cout << "Fuel: " << gm.s.fuel << " / " << gm.s.fuelMax;
+	gotoxy(100, 4);
+	printf("\nStats:");
+	gotoxy(100, 5);
+	cout << "HP: " << gm.s.health << " / " << gm.s.healthMax;
+	gotoxy(100, 6);
+	cout << "Shield: " << gm.s.shield << " / " << gm.s.shieldMax;
+	gotoxy(100, 7);
+	cout << "Shield Regen: " << gm.s.shieldRegeneration;
+	gotoxy(100, 8);
+	cout << "Weapons: " << gm.s.weapons << " / " << gm.s.maxWeap;
+	gotoxy(100, 9);
+	cout << "Modules: " << gm.s.modules << " / " << gm.s.modulesMax;
+}
+
 void NPC::shopManager(struct gm &gm, vector<systems> &t)
 {
 
@@ -1595,6 +1634,10 @@ void NPC::fuelPurch(struct gm& gm)
 	{
 		system("CLS");
 
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
 		printf("Menu: (Enter how much fuel you want 1:1 purchase)\nBack: S\nInput: ");
 		cin >> input;
 
@@ -1664,6 +1707,34 @@ void NPC::sWeapons(struct gm& gm)
 			invalidInput();
 			continue;
 		}
+		if (stoi(input) > 11)
+		{
+			invalidInput();
+			continue;
+		}
+
+		bool t = false;
+
+		for (int i = 0; i < gm.s.weapons; i++)
+		{
+			if (gm.s.wID[i] == stoi(input) - 1)
+			{
+				printf("You  already own this");
+				Sleep(200);
+				printf(".");
+				Sleep(200);
+				printf(".");
+				Sleep(200);
+				printf(".");
+				Sleep(500);
+				t = true;
+			}
+		}
+
+		if (t == true)
+		{
+			continue;
+		}
 
 		for (int i = 0; i < 10; i++)
 		{
@@ -1684,33 +1755,7 @@ void NPC::sWeapons(struct gm& gm)
 		{ 
 			break;
 		}
-		else
-		{
-			invalidInput();
-			continue;
-		}
-		
 	}
-}
-
-void NPC::statDisplay(struct gm& gm)
-{
-	gotoxy(0, 50);
-	printf("Resources:");
-	gotoxy(1, 50);
-	cout << "Supplies: " << gm.p.supplies;
-	gotoxy(2, 50);
-	cout << "Fuel: " << gm.s.fuel << "/" << gm.s.fuelMax;
-	gotoxy(3, 50);
-	printf("Stats:");
-	gotoxy(4, 50);
-	cout << "HP: " << gm.s.health << "/" << gm.s.healthMax;
-	gotoxy(5, 50);
-	cout << "Shield: " << gm.s.shield << "/" << gm.s.shieldMax;
-	gotoxy(6, 50);
-	cout << "Shield Regen: " << gm.s.shieldRegeneration;
-	gotoxy(7, 50);
-	cout << "Modules: " << gm.s.modules << "/" << gm.s.modulesMax;
 }
 
 // Combat Class
@@ -2111,9 +2156,12 @@ void combat::sCombat(struct gm& gm)
 		system("CLS");
 		printf("Menu:\n\nAttack:\n");
 
+		h.clear();
+		d.clear();
+
 		for (int i = 0; i < enemies; i++)
 		{
-			cout << cm.es[i].ID << ": " << cm.es[i].enemTypeName << " " << cm.es[i].health << "/" << cm.es[i].healthMax << " HP" << endl;
+				cout << cm.es[i].ID << ": " << cm.es[i].enemTypeName << " " << cm.es[i].health << "/" << cm.es[i].healthMax << " HP" << endl;
 		}
 
 		printf("Input: ");
@@ -2230,7 +2278,16 @@ void combat::sCombat(struct gm& gm)
 		if (cm.es[enemyAttack].health <= 0)
 		{
 			cout << " Destroying the " << cm.es[enemyAttack].enemTypeName << endl;
-			cm.es[enemyAttack].alive = false;
+
+			for (int i = 0; i < enemies; i++)
+			{
+				if (cm.es[i].ID > cm.es[enemyAttack].ID)
+				{
+					cm.es[i].ID--;
+				}
+			}
+
+			cm.es.erase(cm.es.begin() + enemyAttack);
 			enemies--;
 		}
 	}
