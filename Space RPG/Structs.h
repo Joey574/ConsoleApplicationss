@@ -24,9 +24,9 @@ struct player
 	string name;
 
 	int health = 10, healthMax = 10;
-	int actionPoints, actionPointsMax;
 	int difficulty;
 	int supplies = 20;
+	int score = 0;
 
 	bool alive = true;
 	bool victory = false;
@@ -46,7 +46,7 @@ struct ship
 	int maxWeap = 5;
 	vector<int> wID{ 0 };
 
-	float evasion;
+	float evasion = 0;
 
 	int shipID = 0; // tells program which line of shipData to look at
 
@@ -91,6 +91,8 @@ struct gm
 	vector <module> m;
 	vector <weaponData> wD;
 
+	string seed;
+
 	bool inMenu = false;
 	bool inGame = false;
 	bool inShop = false;
@@ -108,8 +110,6 @@ struct enemyShip
 	float evasion;
 
 	string enemTypeName;
-
-	vector <int> weaponType;
 };
 
 struct enemyGround
@@ -131,4 +131,10 @@ struct cm
 {
 	vector <enemyShip> es;
 	vector <enemyGround> eg;
+};
+
+struct shops
+{
+	int shopID;
+	int current;
 };

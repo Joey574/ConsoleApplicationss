@@ -25,8 +25,8 @@ using namespace std;
 
 void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
-void worldRan(int difficulty, vector <systems>& t);
-void gameManager(struct gm &gm, vector <systems>& t);
+void worldRan(int difficulty, vector <systems>& t, string input);
+void gameManager(struct gm &gm, vector <systems>& t, class NPC& n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
@@ -502,47 +502,357 @@ void credits()
 	_getch();
 }
 
-void save()
+void save(struct gm& gm, vector <systems>& t)
 {
 	string input;
 	string temp;
+	string s1;
+	string s2;
+	string s3;
+	fstream in;
+
+	while (1)
+	{
+		system("CLS");
+		printf("Menu:\n");
+
+		in.open("save1.txt");
+
+		getline(in, s1);
+
+		cout << "1: " << s1 << endl;
+
+		in.close();
+		in.open("save2.txt");
+
+		getline(in, s2);
+
+		cout << "2: " << s2 << endl;
+
+		in.close();
+		in.open("save3.txt");
+
+		getline(in, s3);
+
+		cout << "3: " << s3 << endl;
+
+		in.close();
+
+		printf("4: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			if (s1 != "Empty")
+			{
+				printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "1")
+				{
+					printf("Enter new file name\nInput: ");
+					cin >> input;
+					system("CLS");
+
+					if (input == "Empty")
+					{
+						printf("Nice try buddy, try something else");
+						_getch();
+						continue;
+					}
+
+					in.open("save1.txt", ios::out | ios::trunc);
+
+					in << input;
+				}
+				else if (input == "2")
+				{
+					continue;
+				}
+				else
+				{
+					invalidInput();
+					continue;
+				}
+			}
+			else
+			{
+				printf("Enter file name\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "Empty")
+				{
+					printf("Nice try buddy, try something else");
+					_getch();
+					continue;
+				}
+
+				in.open("save1.txt", ios::out | ios::trunc);
+
+				in << input;
+			}
+		}
+		else if (input == "2")
+		{
+			if (s1 != "Empty")
+			{
+				printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "1")
+				{
+					printf("Enter new file name\nInput: ");
+					cin >> input;
+					system("CLS");
+
+					if (input == "Empty")
+					{
+						printf("Nice try buddy, try something else");
+						_getch();
+						continue;
+					}
+
+					in.open("save2.txt", ios::out | ios::trunc);
+
+					in << input;
+				}
+			}
+			else
+			{
+				printf("Enter file name\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "Empty")
+				{
+					printf("Nice try buddy, try something else");
+					_getch();
+					continue;
+				}
+
+				in.open("save2.txt", ios::out | ios::trunc);
+
+				in << input;
+			}
+		}
+		else if (input == "3")
+		{
+			if (s1 != "Empty")
+			{
+				printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "1")
+				{
+					printf("Enter new file name\nInput: ");
+					cin >> input;
+					system("CLS");
+
+					if (input == "Empty")
+					{
+						printf("Nice try buddy, try something else");
+						_getch();
+						continue;
+					}
+
+					in.open("save3.txt", ios::out | ios::trunc);
+
+					in << input;
+				}
+			}
+			else
+			{
+				printf("Enter file name\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "Empty")
+				{
+					printf("Nice try buddy, try something else");
+					_getch();
+					continue;
+				}
+
+				in.open("save3.txt", ios::out | ios::trunc);
+
+				in << input;
+			}
+		}
+		else if (input == "4")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+		in << endl;
+		in << gm.seed << endl;
+		in << gm.p.difficulty << endl;
+		in << gm.p.name << "," << gm.p.health << "," << gm.p.healthMax << "," << gm.p.supplies << "," << gm.p.score << endl;
+		in << gm.s.name << "," << gm.s.health << "," << gm.s.shield << "," << gm.s.modules << "," << gm.s.fuel << "," << gm.s.weapons << "," << gm.s.evasion << "," << gm.s.shipID << endl;
+
+		for (int i = 0; i < gm.s.wID.size(); i++)
+		{
+			in << gm.s.wID[i] << ",";
+		}
+		in << endl;
+
+		for (int i = 0; i < 100; i++)
+		{
+			in << t[i].supplies << "," << t[i].explored << "," << t[i].encountered << "," << t[i].current << endl;
+		}
+
+	}
+}
+
+void load(struct gm& gm, vector <systems>& t, class NPC& n)
+{
 	ifstream in;
 
-	system("CLS");
-	printf("Menu:\n");
+	string temp;
+	string input;
+	string s1;
+	string s2;
+	string s3;
 
-	in.open("save1.txt");
+	while (1)
+	{
+		system("CLS");
+		printf("Menu:\n");
 
-	getline(in, temp, ' ');
+		in.open("save1.txt");
 
-	cout << "1: " << temp << endl;
+		getline(in, s1);
 
-	in.close();
-	in.open("save2.txt");
+		cout << "1: " << s1 << endl;
 
-	getline(in, temp, ' ');
+		in.close();
+		in.open("save2.txt");
 
-	cout << "2: " << temp << endl;
+		getline(in, s2);
 
-	in.close();
-	in.open("save3.txt");
+		cout << "2: " << s2 << endl;
 
-	getline(in, temp, ' ');
+		in.close();
+		in.open("save3.txt");
 
-	cout << "3: " << temp << endl;
+		getline(in, s3);
 
-	in.close();
+		cout << "3: " << s3 << endl;
 
-	printf("4: Back\nInput: ");
-	cin >> input;
+		in.close();
+
+		printf("4: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			in.open("save1.txt");
+			if (s1 == "Empty")
+			{
+				in.close();
+				invalidInput();
+				continue;
+			}
+
+			in.open("save1.txt");
+
+		}
+		else if (input == "2")
+		{
+			in.open("save2.txt");
+			if (s2 == "Empty")
+			{
+				in.close();
+				invalidInput();
+				continue;
+			}
+		}
+		else if (input == "3")
+		{
+			in.open("save3.txt");
+			if (s3 == "Empty")
+			{
+				in.close();
+				invalidInput();
+				continue;
+			}
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+		while (getline(in, temp))
+		{
+			getline(in, temp);
+			gm.seed = temp;
+			getline(in, temp);
+			gm.p.difficulty = stoi(temp);
+			getline(in, temp, ',');
+			gm.p.name = temp;
+			getline(in, temp, ',');
+			gm.p.health = stoi(temp);
+			getline(in, temp, ',');
+			gm.p.healthMax = stoi(temp);
+			getline(in, temp, ',');
+			gm.p.supplies = stoi(temp);
+			getline(in, temp);
+			gm.p.score = stoi(temp);
+			getline(in, temp, ',');
+			gm.s.name = temp;
+			getline(in, temp, ',');
+			gm.s.health = stoi(temp);
+			getline(in, temp, ',');
+			gm.s.shield = stoi(temp);
+			getline(in, temp, ',');
+			gm.s.modules = stoi(temp);
+			getline(in, temp, ',');
+			gm.s.fuel = stoi(input);
+			getline(in, temp, ',');
+			gm.s.weapons = stoi(temp);
+			getline(in, temp, ',');
+			gm.s.evasion = stof(temp);
+			getline(in, temp, ',');
+			gm.s.shipID = stoi(temp);
+			getline(in, temp);
+			for (int i = 0; i < temp.size(); i++)
+			{
+				if (temp[i] != ',')
+				{
+					gm.s.wID.push_back(stoi(temp));
+				}
+			}
+			for (int i = 0; i < 100; i++)
+			{
+				getline(in, temp, ',');
+				t[i].supplies = stoi(temp);
+				getline(in, temp, ',');
+				t[i].explored = stoi(temp);
+				getline(in, temp, ',');
+				t[i].encountered = stoi(temp);
+				getline(in, temp, ',');
+				t[i].current = stoi(temp);
+			}
+		}
+
+		worldRan(gm.p.difficulty, t, gm.seed);
+		shopRan(n, t);
+
+	}
 }
 
-void load()
-{
-
-}
-
-void saveAndLoad()
+void saveAndLoad(struct gm& gm, vector <systems>& t, class NPC& n)
 {
 	string input;
 
@@ -555,11 +865,11 @@ void saveAndLoad()
 
 		if (input == "1")
 		{
-			save();
+			save(gm, t);
 		}
 		else if (input == "2")
 		{
-			load();
+			load(gm, t, n);
 		}
 		else if (input == "3")
 		{
@@ -577,6 +887,8 @@ void saveAndLoad()
 void mainMenu(struct gm &gm, vector <systems>& t)
 {
 	string input;
+
+	NPC n;
 
 	while (1) // menu loop
 	{
@@ -599,7 +911,7 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 
 		if (input == "1") // start/resume game
 		{
-			gameManager(gm, t);
+			gameManager(gm, t, n);
 		}
 		else if (input == "2") // High scores
 		{
@@ -615,7 +927,7 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 		}
 		else if (input == "5") // save/load
 		{
-			saveAndLoad();
+			saveAndLoad(gm, t, n);
 		}
 		else if (input == "6") // exit
 		{
@@ -705,10 +1017,8 @@ void worldConstructor()
 	cout << (char)topRightCorner;
 }
 
-void worldRan(int difficulty, vector <systems>& t)
+void worldRan(int difficulty, vector <systems>& t, string input)
 {
-	string input;
-
 	vector <int> worldSeed;
 
 	int seed = 0;
@@ -726,11 +1036,6 @@ void worldRan(int difficulty, vector <systems>& t)
 	}
 
 	xy = 0; // resetting for later use
-
-	system("CLS");
-	printf("World Seed: "); // getting user inputted value for world seed
-	cin >> input;
-	system("CLS");
 
 	for (int i = 0; i < input.length(); i++) // runs for length of world seed, changes input into its ascii value
 	{
@@ -848,6 +1153,18 @@ void worldRan(int difficulty, vector <systems>& t)
 	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
 }
 
+string seed()
+{
+	string input;
+
+	system("CLS");
+	printf("World Seed: "); // getting user inputted value for world seed
+	cin >> input;
+	system("CLS");
+
+	return input;
+}
+
 void shopRan(class NPC &n, vector <systems>& t)
 {
 	int i = 0;
@@ -889,10 +1206,9 @@ void shopRan(class NPC &n, vector <systems>& t)
 
 // Game Functions
 
-void gameManager(struct gm& gm, vector <systems> &t)
+void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 {
 	combat c;
-	NPC n;
 
 	int encounter;
 
@@ -900,7 +1216,8 @@ void gameManager(struct gm& gm, vector <systems> &t)
 	{
 		gameStart(gm, t);
 		difficultySet(gm);
-		worldRan(gm.p.difficulty, t);
+		gm.seed = seed();
+		worldRan(gm.p.difficulty, t, gm.seed);
 		shopRan(n, t);
 		shipValues(gm);
 		weaponValues(gm);
@@ -1678,7 +1995,22 @@ void NPC::fuelPurch(struct gm& gm)
 
 void NPC::shipPurch(struct gm& gm)
 {
-	
+
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu:\n1: New ship - 20 supplies\n2: Back\nInput: ");
+		cin >> input;
+
+
+	}
 }
 
 void NPC::sWeapons(struct gm& gm)
@@ -1787,6 +2119,7 @@ void combat::combatManager(struct gm& gm)
 		while (enemies >= 1 && gm.s.alive)
 		{
 			sCombat(gm);
+			esCombat(gm);
 		}
 	}
 }
@@ -1808,53 +2141,268 @@ void combat::sStats()
 	{
 		if (cm.es[i].type == 0) // corvette
 		{
-			cm.es[i].health = 5;
-			cm.es[i].healthMax = 5;
-			cm.es[i].maxDamage = 2;
-			cm.es[i].minDamge = 0;
-			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 0.7;
-			cm.es[i].accuracy = 0.7;
+			if (enemyRace == 0) // Androidus
+			{
+				cm.es[i].health = 8;
+				cm.es[i].healthMax = 8;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 1) // Zorgons
+			{
+				cm.es[i].health = 5;
+				cm.es[i].healthMax = 5;
+				cm.es[i].maxDamage = 3;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 0.6;
+				cm.es[i].accuracy = 0.5;
+			}
+			else if (enemyRace == 2) // Nalites
+			{
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 3;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 3) // Quotis
+			{
+				cm.es[i].health = 5;
+				cm.es[i].healthMax = 5;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 4) // Refips
+			{
+				cm.es[i].health = 4;
+				cm.es[i].healthMax = 4;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 0.4;
+				cm.es[i].accuracy = 0.6;
+			}
 		}
 		else if (cm.es[i].type == 1) // destroyer
 		{
-			cm.es[i].health = 10;
-			cm.es[i].healthMax = 10;
-			cm.es[i].maxDamage = 3;
-			cm.es[i].minDamge = 1;
-			cm.es[i].weapons = 2;
-			cm.es[i].evasion = 0.8;
-			cm.es[i].accuracy = 0.8;
+			if (enemyRace == 0) // Androidus
+			{
+				cm.es[i].health = 15;
+				cm.es[i].healthMax = 15;
+				cm.es[i].maxDamage = 3;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 1) // Zorgons
+			{
+				cm.es[i].health = 8;
+				cm.es[i].healthMax = 8;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 3;
+				cm.es[i].evasion = 0.7;
+				cm.es[i].accuracy = 0.6;
+			}
+			else if (enemyRace == 2) // Nalites
+			{
+				cm.es[i].health = 18;
+				cm.es[i].healthMax = 18;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 4;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 3) // Quotis
+			{
+				cm.es[i].health = 10;
+				cm.es[i].healthMax = 10;
+				cm.es[i].maxDamage = 3;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 4) // Refips
+			{
+				cm.es[i].health = 6;
+				cm.es[i].healthMax = 6;
+				cm.es[i].maxDamage = 6;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 0.6;
+				cm.es[i].accuracy = 0.6;
+			}
 		}
 		else if (cm.es[i].type == 2) // cruiser
 		{
-			cm.es[i].health = 12;
-			cm.es[i].healthMax = 12;
-			cm.es[i].maxDamage = 2;
-			cm.es[i].minDamge = 0;
-			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 0.9;
-			cm.es[i].accuracy = 1;
+			if (enemyRace == 0) // Androidus
+			{
+				cm.es[i].health = 20;
+				cm.es[i].healthMax = 20;
+				cm.es[i].maxDamage = 3;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.9;
+			}
+			else if (enemyRace == 1) // Zorgons
+			{
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 5;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 0.7;
+				cm.es[i].accuracy = 0.6;
+			}
+			else if (enemyRace == 2) // Nalites
+			{
+				cm.es[i].health = 22;
+				cm.es[i].healthMax = 22;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 6;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 3) // Quotis
+			{
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 1;
+			}
+			else if (enemyRace == 4) // Refips
+			{
+				cm.es[i].health = 10;
+				cm.es[i].healthMax = 10;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 3;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.6;
+			}
 		}
 		else if (cm.es[i].type == 3) // batleship
 		{
-			cm.es[i].health = 15;
-			cm.es[i].healthMax = 15;
-			cm.es[i].maxDamage = 2;
-			cm.es[i].minDamge = 0;
-			cm.es[i].weapons = 1;
-			cm.es[i].evasion = 1;
-			cm.es[i].accuracy = 0.8;
+			if (enemyRace == 0) // Androidus
+			{
+				cm.es[i].health = 25;
+				cm.es[i].healthMax = 25;
+				cm.es[i].maxDamage = 8;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 1;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 1) // Zorgons
+			{
+				cm.es[i].health = 20;
+				cm.es[i].healthMax = 20;
+				cm.es[i].maxDamage = 8;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 1;
+				cm.es[i].accuracy = 0.6;
+			}
+			else if (enemyRace == 2) // Nalites
+			{
+				cm.es[i].health = 28;
+				cm.es[i].healthMax = 28;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 8;
+				cm.es[i].evasion = 1;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 3) // Quotis
+			{
+				cm.es[i].health = 15;
+				cm.es[i].healthMax = 15;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 1;
+				cm.es[i].evasion = 1;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 4) // Refips
+			{
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 6;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 2;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.6;
+			}
 		}
 		else if (cm.es[i].type == 4) // assault carrier
 		{
-			cm.es[i].health = 12;
-			cm.es[i].healthMax = 12;
-			cm.es[i].maxDamage = 1;
-			cm.es[i].minDamge = 1;
-			cm.es[i].weapons = 8;
-			cm.es[i].evasion = 0.9;
-			cm.es[i].accuracy = 0.8;
+			if (enemyRace == 0) // Androidus
+			{
+				cm.es[i].health = 18;
+				cm.es[i].healthMax = 18;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 8;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 1) // Zorgons
+			{
+				cm.es[i].health = 10;
+				cm.es[i].healthMax = 10;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 16;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.6;
+			}
+			else if (enemyRace == 2) // Nalites
+			{
+				cm.es[i].health = 20;
+				cm.es[i].healthMax = 20;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 0;
+				cm.es[i].weapons = 12;
+				cm.es[i].evasion = 0.8;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 3) // Quotis
+			{
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 8;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.8;
+			}
+			else if (enemyRace == 4) // Refips
+			{
+				cm.es[i].health = 8;
+				cm.es[i].healthMax = 8;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 6;
+				cm.es[i].evasion = 1;
+				cm.es[i].accuracy = 0.7;
+			}
 		}
 	}
 }
@@ -2177,6 +2725,34 @@ void combat::sCombat(struct gm& gm)
 					while (1)
 					{
 						system("CLS");
+
+						gotoxy(50, 0);
+						printf("Enemy Stats:");
+						gotoxy(50, 1);
+						cout << "Class: " << cm.es[enemyAttack].enemTypeName;
+						gotoxy(50, 2);
+						cout << "Race: " << enemyRace;
+						gotoxy(50, 3);
+						cout << cm.es[enemyAttack].health << " / " << cm.es[enemyAttack].healthMax << " HP";
+						gotoxy(50, 4);
+						cout << cm.es[enemyAttack].minDamge << " - " << cm.es[enemyAttack].maxDamage << " Damage Range";
+						gotoxy(50, 5);
+						cout << cm.es[enemyAttack].weapons;
+						if (cm.es[enemyAttack].weapons > 1)
+						{
+							cout << " Weapons";
+						}
+						else
+						{
+							cout << " Weapon";
+						}
+						gotoxy(50, 6);
+						cout << cm.es[enemyAttack].accuracy * 100 << "% Accuracy";
+						gotoxy(50, 7);
+						cout << (1 - cm.es[enemyAttack].evasion) * 100 << "% Evasion Chance";
+						
+						gotoxy(0, 0);
+
 						printf("Menu:\n\nWeapons:\n");
 						for (int i = 0; i < gm.s.weapons; i++)
 						{
@@ -2296,4 +2872,9 @@ void combat::sCombat(struct gm& gm)
 		printf("Shot has missed, no damage dealt\n");
 	}
 	_getch();
+}
+
+void combat::esCombat(struct gm& gm)
+{
+
 }

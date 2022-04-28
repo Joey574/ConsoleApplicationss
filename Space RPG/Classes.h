@@ -4,12 +4,6 @@
 
 using namespace std;
 
-struct shops
-{
-	int shopID;
-	int current;
-};
-
 class NPC
 {
 public:
@@ -54,6 +48,7 @@ public:
 	void groundIntro();
 	void spaceIntro();
 	void sCombat(struct gm& gm);
+	void esCombat(struct gm& gm);
 	void gCombat(struct gm& gm);
 
 private:
