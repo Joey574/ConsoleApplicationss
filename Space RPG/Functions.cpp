@@ -819,7 +819,7 @@ void load(struct gm& gm, vector <systems>& t, class NPC& n)
 			getline(in, temp, ',');
 			gm.s.modules = stoi(temp);
 			getline(in, temp, ',');
-			gm.s.fuel = stoi(input);
+			gm.s.fuel = stoi(temp);
 			getline(in, temp, ',');
 			gm.s.weapons = stoi(temp);
 			getline(in, temp, ',');
@@ -1409,7 +1409,7 @@ void weaponValues(struct gm& gm)
 	gm.wD[7].name = "Torpedo";
 
 	gm.wD[8].minDamage = 2;
-	gm.wD[8].maxDamage = 3;
+	gm.wD[8].maxDamage = 8;
 	gm.wD[8].accuracy = 0.7;
 	gm.wD[8].shots = 1;
 	gm.wD[8].cost = 6;
