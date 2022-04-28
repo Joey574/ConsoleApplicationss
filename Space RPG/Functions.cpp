@@ -25,7 +25,7 @@ using namespace std;
 
 void gotoxy(int x, int y);
 void exploredUpdater(vector<systems>& s);
-void worldRan(int difficulty, vector <systems>& t, string input);
+void worldRan(int difficulty, vector <systems>& t, string input, struct gm& gm);
 void gameManager(struct gm &gm, vector <systems>& t, class NPC& n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
@@ -763,9 +763,6 @@ void load(struct gm& gm, vector <systems>& t, class NPC& n)
 				invalidInput();
 				continue;
 			}
-
-			in.open("save1.txt");
-
 		}
 		else if (input == "2")
 		{
@@ -786,6 +783,10 @@ void load(struct gm& gm, vector <systems>& t, class NPC& n)
 				invalidInput();
 				continue;
 			}
+		}
+		else if (input == "4")
+		{
+			break;
 		}
 		else
 		{
@@ -841,14 +842,22 @@ void load(struct gm& gm, vector <systems>& t, class NPC& n)
 				t[i].explored = stoi(temp);
 				getline(in, temp, ',');
 				t[i].encountered = stoi(temp);
-				getline(in, temp, ',');
+				getline(in, temp);
 				t[i].current = stoi(temp);
 			}
 		}
 
-		worldRan(gm.p.difficulty, t, gm.seed);
-		shopRan(n, t);
+		printf("Game has ben loaded, press any key to continue\n");
+		_getch();
 
+		gm.inGame = true;
+
+		worldRan(gm.p.difficulty, t, gm.seed, gm);
+		shopRan(n, t);
+		shipValues(gm);
+		weaponValues(gm);	
+
+		break;
 	}
 }
 
@@ -1017,7 +1026,7 @@ void worldConstructor()
 	cout << (char)topRightCorner;
 }
 
-void worldRan(int difficulty, vector <systems>& t, string input)
+void worldRan(int difficulty, vector <systems>& t, string input, struct gm& gm)
 {
 	vector <int> worldSeed;
 
@@ -1148,7 +1157,10 @@ void worldRan(int difficulty, vector <systems>& t, string input)
 	t[10].dangerLevel = 0;
 	t[11].dangerLevel = 0;
 
-	t[0].current = true; // setting current system
+	if (!gm.inGame)
+	{
+		t[0].current = true; // setting current system
+	}
 
 	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
 }
@@ -1217,7 +1229,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 		gameStart(gm, t);
 		difficultySet(gm);
 		gm.seed = seed();
-		worldRan(gm.p.difficulty, t, gm.seed);
+		worldRan(gm.p.difficulty, t, gm.seed, gm);
 		shopRan(n, t);
 		shipValues(gm);
 		weaponValues(gm);
@@ -1774,7 +1786,7 @@ void NPC::statDisplay(struct gm& gm)
 	gotoxy(100, 2);
 	cout << "Fuel: " << gm.s.fuel << " / " << gm.s.fuelMax;
 	gotoxy(100, 4);
-	printf("\nStats:");
+	printf("Stats:");
 	gotoxy(100, 5);
 	cout << "HP: " << gm.s.health << " / " << gm.s.healthMax;
 	gotoxy(100, 6);
@@ -2731,7 +2743,7 @@ void combat::sCombat(struct gm& gm)
 						gotoxy(50, 1);
 						cout << "Class: " << cm.es[enemyAttack].enemTypeName;
 						gotoxy(50, 2);
-						cout << "Race: " << enemyRace;
+						cout << "Race: " << enemRaceName;
 						gotoxy(50, 3);
 						cout << cm.es[enemyAttack].health << " / " << cm.es[enemyAttack].healthMax << " HP";
 						gotoxy(50, 4);
