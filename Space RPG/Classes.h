@@ -47,6 +47,8 @@ public:
 	void sStats();
 	void groundIntro();
 	void spaceIntro();
+	void cSD(int enemyAttack);
+	void mS(struct gm& gm);
 	void sCombat(struct gm& gm);
 	void esCombat(struct gm& gm);
 	void gCombat(struct gm& gm);

@@ -1239,7 +1239,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 	worldConstructor();
 	exploredUpdater(t);
 	systemInfo(t, gm);
-	while (!gm.p.victory && gm.p.alive)
+	while (!gm.p.victory && gm.p.alive && gm.s.alive)
 	{
 		mapStats(gm);
 		mapMenu(t, gm);
@@ -1340,6 +1340,7 @@ void shipValues(struct gm& gm)
 	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
 	gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
 	gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
+	gm.s.evasion = gm.s.shipData[gm.s.shipID][9] / 100;
 }
 
 void weaponValues(struct gm& gm)
@@ -2696,6 +2697,50 @@ void combat::spaceIntro()
 
 }
 
+void combat::cSD(int enemyAttack)
+{
+	gotoxy(50, 0);
+	printf("Enemy Stats:");
+	gotoxy(50, 1);
+	cout << "Class: " << cm.es[enemyAttack].enemTypeName;
+	gotoxy(50, 2);
+	cout << "Race: " << enemRaceName;
+	gotoxy(50, 3);
+	cout << cm.es[enemyAttack].health << " / " << cm.es[enemyAttack].healthMax << " HP";
+	gotoxy(50, 4);
+	cout << cm.es[enemyAttack].minDamge << " - " << cm.es[enemyAttack].maxDamage << " Damage Range";
+	gotoxy(50, 5);
+	cout << cm.es[enemyAttack].weapons;
+	if (cm.es[enemyAttack].weapons > 1)
+	{
+		cout << " Weapons";
+	}
+	else
+	{
+		cout << " Weapon";
+	}
+	gotoxy(50, 6);
+	cout << cm.es[enemyAttack].accuracy * 100 << "% Accuracy";
+	gotoxy(50, 7);
+	cout << (1 - cm.es[enemyAttack].evasion) * 100 << "% Evasion Chance";
+}
+
+void combat::mS(struct gm& gm)
+{
+	gotoxy(80, 0);
+	printf("Your Stats:");
+	gotoxy(80, 1);
+	cout << "HP: " << gm.s.health << " / " << gm.s.healthMax;
+	gotoxy(80, 2);
+	cout << "Shield: " << gm.s.shield << " / " << gm.s.shieldMax;
+	gotoxy(80, 3);
+	cout << "Shield Regen: " << gm.s.shieldRegeneration;
+	gotoxy(80, 4);
+	cout << "Weapons: " << gm.s.weapons << " / " << gm.s.maxWeap;
+	gotoxy(80, 5);
+	cout << (1 - gm.s.evasion) * 100 << "% Evasion Chance";
+}
+
 void combat::sCombat(struct gm& gm)
 {
 	string input;
@@ -2715,6 +2760,10 @@ void combat::sCombat(struct gm& gm)
 	{
 		system("CLS");
 		printf("Menu:\n\nAttack:\n");
+
+		mS(gm);
+
+		gotoxy(0, 0);
 
 		h.clear();
 		d.clear();
@@ -2738,30 +2787,9 @@ void combat::sCombat(struct gm& gm)
 					{
 						system("CLS");
 
-						gotoxy(50, 0);
-						printf("Enemy Stats:");
-						gotoxy(50, 1);
-						cout << "Class: " << cm.es[enemyAttack].enemTypeName;
-						gotoxy(50, 2);
-						cout << "Race: " << enemRaceName;
-						gotoxy(50, 3);
-						cout << cm.es[enemyAttack].health << " / " << cm.es[enemyAttack].healthMax << " HP";
-						gotoxy(50, 4);
-						cout << cm.es[enemyAttack].minDamge << " - " << cm.es[enemyAttack].maxDamage << " Damage Range";
-						gotoxy(50, 5);
-						cout << cm.es[enemyAttack].weapons;
-						if (cm.es[enemyAttack].weapons > 1)
-						{
-							cout << " Weapons";
-						}
-						else
-						{
-							cout << " Weapon";
-						}
-						gotoxy(50, 6);
-						cout << cm.es[enemyAttack].accuracy * 100 << "% Accuracy";
-						gotoxy(50, 7);
-						cout << (1 - cm.es[enemyAttack].evasion) * 100 << "% Evasion Chance";
+						cSD(enemyAttack);
+
+						mS(gm);
 						
 						gotoxy(0, 0);
 
@@ -2888,5 +2916,78 @@ void combat::sCombat(struct gm& gm)
 
 void combat::esCombat(struct gm& gm)
 {
+	int damage;
+	int fD = 0 ;
+	int shotsH = 0;
+	int cTH;
+	float x;
 
+	system("CLS");
+
+	for (int i = 0; i < enemies; i++)
+	{
+		for (int y = 0; y < cm.es[i].weapons; y++)
+		{
+			shotsH = 0;
+
+			damage = cm.es[i].minDamge + rand() % (cm.es[i].maxDamage - cm.es[i].minDamge);
+
+			cTH = rand() % 101;
+
+			x = (cm.es[i].accuracy * gm.s.evasion) + (y / 100);
+
+			if (x > (cTH / 100))
+			{
+				shotsH++;
+				fD += damage;
+			}
+		}
+
+		cout << "The " << cm.es[i].enemTypeName << " attacks you, " << shotsH;
+
+		if (shotsH > 1)
+		{
+			cout << " shots hit, dealing " << fD << " damage.";
+		}
+		else if (shotsH == 1)
+		{
+			cout << " shot has hit, dealing " << fD << " damage.";
+		}
+		else
+		{
+			cout << " completely missing its target, no damage dealt";
+		}
+
+		cout << endl;
+
+		for (int i = 0; gm.s.shield > 0, fD > 0; i++)
+		{
+			gm.s.shield--;
+			fD--;
+		}
+
+		for (int i = 0; gm.s.health > 0, fD > 0; i++)
+		{
+			gm.s.health--;
+			fD--;
+		}
+
+		if (gm.s.health < 1)
+		{
+			scrawlf("You have been defeated in combat...");
+			gm.s.alive = false;
+		}
+
+		_getch();
+
+		if (gm.s.shield < gm.s.shieldMax)
+		{
+			gm.s.shield += gm.s.shieldRegeneration;
+			if (gm.s.shield > gm.s.shieldMax)
+			{
+				gm.s.shield = gm.s.shieldMax;
+			}
+		}
+
+	} 
 }

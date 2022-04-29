@@ -46,15 +46,15 @@ struct ship
 	int maxWeap = 5;
 	vector<int> wID{ 0 };
 
-	float evasion = 0;
+	float evasion;
 
 	int shipID = 0; // tells program which line of shipData to look at
 
 	vector <vector<int>> shipData
 	{
-		{health, 10, shield, 10, 1, modules, 2, fuel, 25}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
-		{health, 15, shield, 15, 3, modules, 3, fuel, 40},
-		{health, 20, shield, 20, 5, modules, 5, fuel, 50},
+		{health, 10, shield, 10, 1, modules, 2, fuel, 25, 90}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax, evasion
+		{health, 15, shield, 15, 3, modules, 3, fuel, 40, 80},
+		{health, 20, shield, 20, 5, modules, 5, fuel, 50, 70},
 	};
 
 	bool alive;
