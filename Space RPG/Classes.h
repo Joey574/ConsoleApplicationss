@@ -29,8 +29,9 @@ public:
 	//purchases
 	void fuelPurch(struct gm& gm);
 	void shipPurch(struct gm& gm);
+	void modules(struct gm& gm);
 	void sWeapons(struct gm& gm);
-
+	void gWeapons(struct gm& gm);
 
 private:
 
