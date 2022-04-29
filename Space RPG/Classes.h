@@ -41,8 +41,8 @@ public:
 	void setEnemies(int e);
 
 	// accessories
-	void combatManager(struct gm &gm);
-	void enemyTypes();
+	void combatManager(struct gm &gm, vector <systems>&s);
+	void enemyTypes(struct gm& gm, vector <systems>& t);
 	void gStats();
 	void sStats();
 	void groundIntro();

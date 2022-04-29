@@ -66,7 +66,7 @@ void scrawlf(string s)
 	for (int i = 0; i < s.size(); i++)
 	{
 		cout << s[i];
-		Sleep(50);
+		Sleep(40);
 	}
 }
 
@@ -1267,7 +1267,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 				{
 					c.setComType(encounter - 1);
 					c.setEnemies(t[systemCurrent(t)].enemies);
-					c.combatManager(gm);
+					c.combatManager(gm, t);
 				}
 				else if (encounter == 3)
 				{
@@ -1340,7 +1340,7 @@ void shipValues(struct gm& gm)
 	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
 	gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
 	gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
-	gm.s.evasion = gm.s.shipData[gm.s.shipID][9] / 100;
+	gm.s.evasion = float(gm.s.shipData[gm.s.shipID][9]) / 100;
 }
 
 void weaponValues(struct gm& gm)
@@ -2115,10 +2115,10 @@ void combat::setEnemies(int e)
 	enemies = e;
 }
 
-void combat::combatManager(struct gm& gm)
+void combat::combatManager(struct gm& gm, vector <systems>& t)
 {
 	system("CLS");
-	enemyTypes();
+	enemyTypes(gm, t);
 	if (comType == 0) // ground
 	{
 		groundIntro();
@@ -2302,8 +2302,8 @@ void combat::sStats()
 			}
 			else if (enemyRace == 4) // Refips
 			{
-				cm.es[i].health = 10;
-				cm.es[i].healthMax = 10;
+				cm.es[i].health = 15;
+				cm.es[i].healthMax = 15;
 				cm.es[i].maxDamage = 4;
 				cm.es[i].minDamge = 2;
 				cm.es[i].weapons = 3;
@@ -2315,18 +2315,18 @@ void combat::sStats()
 		{
 			if (enemyRace == 0) // Androidus
 			{
-				cm.es[i].health = 25;
-				cm.es[i].healthMax = 25;
-				cm.es[i].maxDamage = 8;
+				cm.es[i].health = 45;
+				cm.es[i].healthMax = 45;
+				cm.es[i].maxDamage = 5;
 				cm.es[i].minDamge = 2;
-				cm.es[i].weapons = 1;
+				cm.es[i].weapons = 2;
 				cm.es[i].evasion = 1;
-				cm.es[i].accuracy = 0.7;
+				cm.es[i].accuracy = 0.6;
 			}
 			else if (enemyRace == 1) // Zorgons
 			{
-				cm.es[i].health = 20;
-				cm.es[i].healthMax = 20;
+				cm.es[i].health = 35;
+				cm.es[i].healthMax = 35;
 				cm.es[i].maxDamage = 8;
 				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 2;
@@ -2335,93 +2335,95 @@ void combat::sStats()
 			}
 			else if (enemyRace == 2) // Nalites
 			{
-				cm.es[i].health = 28;
-				cm.es[i].healthMax = 28;
-				cm.es[i].maxDamage = 1;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 8;
+				cm.es[i].health = 50;
+				cm.es[i].healthMax = 50;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 5;
 				cm.es[i].evasion = 1;
-				cm.es[i].accuracy = 0.7;
+				cm.es[i].accuracy = 0.6;
 			}
 			else if (enemyRace == 3) // Quotis
 			{
-				cm.es[i].health = 15;
-				cm.es[i].healthMax = 15;
-				cm.es[i].maxDamage = 2;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 1;
+				cm.es[i].health = 28;
+				cm.es[i].healthMax = 28;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 2;
 				cm.es[i].evasion = 1;
-				cm.es[i].accuracy = 0.8;
+				cm.es[i].accuracy = 0.7;
 			}
 			else if (enemyRace == 4) // Refips
 			{
-				cm.es[i].health = 12;
-				cm.es[i].healthMax = 12;
-				cm.es[i].maxDamage = 6;
+				cm.es[i].health = 30;
+				cm.es[i].healthMax = 30;
+				cm.es[i].maxDamage = 5;
 				cm.es[i].minDamge = 2;
 				cm.es[i].weapons = 2;
 				cm.es[i].evasion = 0.9;
-				cm.es[i].accuracy = 0.6;
+				cm.es[i].accuracy = 0.7;
 			}
 		}
 		else if (cm.es[i].type == 4) // assault carrier
 		{
 			if (enemyRace == 0) // Androidus
 			{
-				cm.es[i].health = 18;
-				cm.es[i].healthMax = 18;
-				cm.es[i].maxDamage = 1;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 8;
-				cm.es[i].evasion = 0.8;
-				cm.es[i].accuracy = 0.7;
-			}
-			else if (enemyRace == 1) // Zorgons
-			{
-				cm.es[i].health = 10;
-				cm.es[i].healthMax = 10;
-				cm.es[i].maxDamage = 1;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 16;
-				cm.es[i].evasion = 0.8;
-				cm.es[i].accuracy = 0.6;
-			}
-			else if (enemyRace == 2) // Nalites
-			{
-				cm.es[i].health = 20;
-				cm.es[i].healthMax = 20;
-				cm.es[i].maxDamage = 2;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 12;
-				cm.es[i].evasion = 0.8;
-				cm.es[i].accuracy = 0.7;
-			}
-			else if (enemyRace == 3) // Quotis
-			{
-				cm.es[i].health = 12;
-				cm.es[i].healthMax = 12;
+				cm.es[i].health = 30;
+				cm.es[i].healthMax = 30;
 				cm.es[i].maxDamage = 1;
 				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 8;
 				cm.es[i].evasion = 0.9;
-				cm.es[i].accuracy = 0.8;
+				cm.es[i].accuracy = 0.7;
+			}
+			else if (enemyRace == 1) // Zorgons
+			{
+				cm.es[i].health = 20;
+				cm.es[i].healthMax = 20;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 20;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.6;
+			}
+			else if (enemyRace == 2) // Nalites
+			{
+				cm.es[i].health = 35;
+				cm.es[i].healthMax = 35;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 12;
+				cm.es[i].evasion = 1;
+				cm.es[i].accuracy = 0.6;
+			}
+			else if (enemyRace == 3) // Quotis
+			{
+				cm.es[i].health = 25;
+				cm.es[i].healthMax = 25;
+				cm.es[i].maxDamage = 1;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 8;
+				cm.es[i].evasion = 0.9;
+				cm.es[i].accuracy = 0.7;
 			}
 			else if (enemyRace == 4) // Refips
 			{
-				cm.es[i].health = 8;
-				cm.es[i].healthMax = 8;
+				cm.es[i].health = 18;
+				cm.es[i].healthMax = 18;
 				cm.es[i].maxDamage = 4;
 				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 6;
 				cm.es[i].evasion = 1;
-				cm.es[i].accuracy = 0.7;
+				cm.es[i].accuracy = 0.6;
 			}
 		}
 	}
 }
 
-void combat::enemyTypes()
+void combat::enemyTypes(struct gm& gm, vector <systems> &s)
 {
+	int t;
+
 	for (int i = 0; i < enemies; i++)
 	{
 		if (comType == 0) // ground
@@ -2484,34 +2486,37 @@ void combat::enemyTypes()
 		}
 		else if (comType == 1) // space
 		{
-			cm.es[i].type = rand() % 5;
+			t = 1 + rand() % (100);
 
-			if (cm.es[i].type == 0)
+			t += gm.p.difficulty * 3;
+
+			if (t < 20 - (s[systemCurrent(s)].systemID / 4))
 			{
 				cm.es[i].enemTypeName = "Corvette";
+				cm.es[i].type = 0;
 			}
-			else if (cm.es[i].type == 1)
+			else if (t < 40 - (s[systemCurrent(s)].systemID / 4))
 			{
 				cm.es[i].enemTypeName = "Destroyer";
+				cm.es[i].type = 1;
 			}
-			if (cm.es[i].type == 2)
+			else if (t < 60 - (s[systemCurrent(s)].systemID / 4))
 			{
 				cm.es[i].enemTypeName = "Cruiser";
+				cm.es[i].type = 2;
 			}
-			if (cm.es[i].type == 3)
+			else if (t < 80 - (s[systemCurrent(s)].systemID / 4))
 			{
 				cm.es[i].enemTypeName = "Battleship";
+				cm.es[i].type = 3;
 			}
-			if (cm.es[i].type == 4)
+			else if (t > 80 - (s[systemCurrent(s)].systemID / 4))
 			{
 				cm.es[i].enemTypeName = "Assault Carrier";
+				cm.es[i].type = 4;
 			}
 		}
 	}
-
-
-
-
 } 
 
 void combat::groundIntro()
@@ -2759,11 +2764,12 @@ void combat::sCombat(struct gm& gm)
 	while (1)
 	{
 		system("CLS");
-		printf("Menu:\n\nAttack:\n");
 
 		mS(gm);
 
 		gotoxy(0, 0);
+
+		printf("Menu:\n\nAttack:\n");
 
 		h.clear();
 		d.clear();
@@ -2926,11 +2932,10 @@ void combat::esCombat(struct gm& gm)
 
 	for (int i = 0; i < enemies; i++)
 	{
+		shotsH = 0;
 		for (int y = 0; y < cm.es[i].weapons; y++)
 		{
-			shotsH = 0;
-
-			damage = cm.es[i].minDamge + rand() % (cm.es[i].maxDamage - cm.es[i].minDamge);
+			damage = cm.es[i].minDamge + rand() % 1 + (cm.es[i].maxDamage - cm.es[i].minDamge);
 
 			cTH = rand() % 101;
 
@@ -2955,18 +2960,18 @@ void combat::esCombat(struct gm& gm)
 		}
 		else
 		{
-			cout << " completely missing its target, no damage dealt";
+			cout << " shots landed, completely missing its target, no damage dealt";
 		}
 
 		cout << endl;
 
-		for (int i = 0; gm.s.shield > 0, fD > 0; i++)
+		while (gm.s.shield > 0 && fD > 0)
 		{
 			gm.s.shield--;
 			fD--;
 		}
 
-		for (int i = 0; gm.s.health > 0, fD > 0; i++)
+		while (gm.s.health > 0 && fD > 0)
 		{
 			gm.s.health--;
 			fD--;
@@ -2974,7 +2979,7 @@ void combat::esCombat(struct gm& gm)
 
 		if (gm.s.health < 1)
 		{
-			scrawlf("You have been defeated in combat...");
+			scrawlf("You have been defeated in combat...\n");
 			gm.s.alive = false;
 		}
 
