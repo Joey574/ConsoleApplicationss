@@ -24,9 +24,9 @@ struct player
 	string name;
 
 	int health = 10, healthMax = 10;
-	int actionPoints, actionPointsMax;
 	int difficulty;
 	int supplies = 20;
+	int score = 0;
 
 	bool alive = true;
 	bool victory = false;
@@ -52,9 +52,9 @@ struct ship
 
 	vector <vector<int>> shipData
 	{
-		{health, 10, shield, 10, 1, modules, 2, fuel, 25}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax
-		{health, 15, shield, 15, 3, modules, 3, fuel, 40},
-		{health, 20, shield, 20, 5, modules, 5, fuel, 50},
+		{health, 10, shield, 10, 1, modules, 2, fuel, 25, 90}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax, evasion
+		{health, 15, shield, 15, 3, modules, 3, fuel, 40, 80},
+		{health, 20, shield, 20, 5, modules, 5, fuel, 50, 70},
 	};
 
 	bool alive;
@@ -91,6 +91,8 @@ struct gm
 	vector <module> m;
 	vector <weaponData> wD;
 
+	string seed;
+
 	bool inMenu = false;
 	bool inGame = false;
 	bool inShop = false;
@@ -108,8 +110,6 @@ struct enemyShip
 	float evasion;
 
 	string enemTypeName;
-
-	vector <int> weaponType;
 };
 
 struct enemyGround
@@ -131,4 +131,10 @@ struct cm
 {
 	vector <enemyShip> es;
 	vector <enemyGround> eg;
+};
+
+struct shops
+{
+	int shopID;
+	int current;
 };

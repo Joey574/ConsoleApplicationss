@@ -4,12 +4,6 @@
 
 using namespace std;
 
-struct shops
-{
-	int shopID;
-	int current;
-};
-
 class NPC
 {
 public:
@@ -48,13 +42,16 @@ public:
 	void setEnemies(int e);
 
 	// accessories
-	void combatManager(struct gm &gm);
-	void enemyTypes();
+	void combatManager(struct gm &gm, vector <systems>&s);
+	void enemyTypes(struct gm& gm, vector <systems>& t);
 	void gStats();
 	void sStats();
 	void groundIntro();
 	void spaceIntro();
+	void cSD(int enemyAttack);
+	void mS(struct gm& gm);
 	void sCombat(struct gm& gm);
+	void esCombat(struct gm& gm);
 	void gCombat(struct gm& gm);
 
 private:
