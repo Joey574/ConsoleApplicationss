@@ -1536,10 +1536,8 @@ void mapStats(struct gm& gm)
 	gotoxy(120, 3);
 	cout << gm.s.health << " / " << gm.s.healthMax << " Ship Hull";
 	gotoxy(120, 4);
-	cout << gm.s.shield << " / " << gm.s.shieldMax << " Ship Shield";
-	gotoxy(120, 5);
 	cout << gm.s.fuel << " / " << gm.s.fuelMax << " Ship Fuel";
-	gotoxy(120, 6);
+	gotoxy(120, 5);
 	cout << gm.s.modules << " / " << gm.s.modulesMax << " Ship Modules";
 }
 
@@ -1886,11 +1884,11 @@ void NPC::shipShop(struct gm& gm)
 
 		if (input == "1")
 		{
-
+			fuelPurch(gm);
 		}
 		else if (input == "2")
 		{
-			
+			shipPurch(gm);
 		}
 		else if (input == "3")
 		{
@@ -2021,8 +2019,26 @@ void NPC::shipPurch(struct gm& gm)
 
 		printf("Menu:\n1: New ship - 20 supplies\n2: Back\nInput: ");
 		cin >> input;
+		system("CLS");
 
+		if (input == "1" && gm.p.supplies >= 20 && gm.s.shipID < 2)
+		{
+			gm.s.shipID++;
+			gm.p.supplies -= 20;
 
+			printf("Succesful Purchase! Press any key to continue");
+			_getch();
+			break;
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
 	}
 }
 
@@ -2378,13 +2394,13 @@ void combat::sStats()
 			}
 			else if (enemyRace == 1) // Zorgons
 			{
-				cm.es[i].health = 20;
-				cm.es[i].healthMax = 20;
+				cm.es[i].health = 18;
+				cm.es[i].healthMax = 18;
 				cm.es[i].maxDamage = 2;
 				cm.es[i].minDamge = 1;
-				cm.es[i].weapons = 20;
+				cm.es[i].weapons = 18;
 				cm.es[i].evasion = 0.9;
-				cm.es[i].accuracy = 0.6;
+				cm.es[i].accuracy = 0.5;
 			}
 			else if (enemyRace == 2) // Nalites
 			{
@@ -2820,7 +2836,7 @@ void combat::sCombat(struct gm& gm)
 							for (int i = 0; i < gm.wD[weaponU].shots; i++)
 							{
 
-								damage = gm.wD[weaponU].minDamage + rand() % 1 + (gm.wD[weaponU].maxDamage - gm.wD[weaponU].minDamage);
+								damage = gm.wD[weaponU].minDamage + rand() % (gm.wD[weaponU].maxDamage - gm.wD[weaponU].minDamage + 1);
 
 								d.push_back(damage);
 							}
@@ -2854,7 +2870,7 @@ void combat::sCombat(struct gm& gm)
 
 	for (float i = 0; i < gm.wD[weaponU].shots; i+= 1)
 	{
-		cTH = (gm.wD[weaponU].accuracy * cm.es[enemyAttack].evasion) + (i / 100);
+		cTH = (gm.wD[weaponU].accuracy * cm.es[enemyAttack].evasion) + (float(i) / 100);
 
 		fTemp = rand() % 101;
 		fTemp /= 100;
@@ -2935,13 +2951,13 @@ void combat::esCombat(struct gm& gm)
 		shotsH = 0;
 		for (int y = 0; y < cm.es[i].weapons; y++)
 		{
-			damage = cm.es[i].minDamge + rand() % 1 + (cm.es[i].maxDamage - cm.es[i].minDamge);
+			damage = cm.es[i].minDamge + rand() % (cm.es[i].maxDamage - cm.es[i].minDamge + 1);
 
 			cTH = rand() % 101;
 
-			x = (cm.es[i].accuracy * gm.s.evasion) + (y / 100);
+			x = (cm.es[i].accuracy * gm.s.evasion) + (float(y) / 100);
 
-			if (x > (cTH / 100))
+			if (x > (float(cTH) / 100))
 			{
 				shotsH++;
 				fD += damage;
