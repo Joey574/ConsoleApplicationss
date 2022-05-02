@@ -509,6 +509,10 @@ void save(struct gm& gm, vector <systems>& t)
 	string s1;
 	string s2;
 	string s3;
+	string f;
+
+	bool bTemp;
+
 	fstream in;
 
 	while (1)
@@ -544,154 +548,69 @@ void save(struct gm& gm, vector <systems>& t)
 
 		if (input == "1")
 		{
-			if (s1 != "Empty")
-			{
-				printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
-				cin >> input;
-				system("CLS");
-
-				if (input == "1")
-				{
-					printf("Enter new file name\nInput: ");
-					cin >> input;
-					system("CLS");
-
-					if (input == "Empty")
-					{
-						printf("Nice try buddy, try something else");
-						_getch();
-						continue;
-					}
-
-					in.open("save1.txt", ios::out | ios::trunc);
-
-					in << input;
-				}
-				else if (input == "2")
-				{
-					continue;
-				}
-				else
-				{
-					invalidInput();
-					continue;
-				}
-			}
-			else
-			{
-				printf("Enter file name\nInput: ");
-				cin >> input;
-				system("CLS");
-
-				if (input == "Empty")
-				{
-					printf("Nice try buddy, try something else");
-					_getch();
-					continue;
-				}
-
-				in.open("save1.txt", ios::out | ios::trunc);
-
-				in << input;
-			}
+			f = "save1.txt";
 		}
 		else if (input == "2")
 		{
-			if (s1 != "Empty")
-			{
-				printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
-				cin >> input;
-				system("CLS");
-
-				if (input == "1")
-				{
-					printf("Enter new file name\nInput: ");
-					cin >> input;
-					system("CLS");
-
-					if (input == "Empty")
-					{
-						printf("Nice try buddy, try something else");
-						_getch();
-						continue;
-					}
-
-					in.open("save2.txt", ios::out | ios::trunc);
-
-					in << input;
-				}
-			}
-			else
-			{
-				printf("Enter file name\nInput: ");
-				cin >> input;
-				system("CLS");
-
-				if (input == "Empty")
-				{
-					printf("Nice try buddy, try something else");
-					_getch();
-					continue;
-				}
-
-				in.open("save2.txt", ios::out | ios::trunc);
-
-				in << input;
-			}
+			f = "save2.txt";
 		}
 		else if (input == "3")
 		{
-			if (s1 != "Empty")
-			{
-				printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
-				cin >> input;
-				system("CLS");
+			f = "save3.txt";
+		}
 
-				if (input == "1")
-				{
-					printf("Enter new file name\nInput: ");
-					cin >> input;
-					system("CLS");
-
-					if (input == "Empty")
-					{
-						printf("Nice try buddy, try something else");
-						_getch();
-						continue;
-					}
-
-					in.open("save3.txt", ios::out | ios::trunc);
-
-					in << input;
-				}
-			}
-			else
-			{
-				printf("Enter file name\nInput: ");
-				cin >> input;
-				system("CLS");
-
-				if (input == "Empty")
-				{
-					printf("Nice try buddy, try something else");
-					_getch();
-					continue;
-				}
-
-				in.open("save3.txt", ios::out | ios::trunc);
-
-				in << input;
-			}
+		if (input == "1" && s1 != "Empty")
+		{
+			bTemp = true;
+		}
+		else if (input == "1" && s2 != "Empty")
+		{
+			bTemp = true;
+		}
+		else if (input == "1" && s3 != "Empty")
+		{
+			bTemp = true;
 		}
 		else if (input == "4")
 		{
 			break;
 		}
-		else
+		else if (!intCheck(input) || stoi(input) > 4)
 		{
 			invalidInput();
 			continue;
 		}
+
+
+		if (bTemp)
+		{
+			printf("File is already in use, are you sure you want to overwrite it?\nMenu:\n1: Yes\n2: No\nInput: ");
+			cin >> input;
+			system("CLS");
+
+			if (input == "1")
+			{
+				printf("Enter new file name\nInput: ");
+				cin >> input;		
+			}
+		}
+		else
+		{
+			printf("Enter file name\nInput: ");
+			cin >> input;
+		}
+
+		system("CLS");
+		if (input == "Empty")
+		{
+			printf("Nice try buddy, try something else");
+			_getch();
+			continue;
+		}
+
+		in.open(f, ios::out | ios::trunc);
+
+		in << input;
 
 		in << endl;
 		in << gm.seed << endl;
@@ -897,6 +816,8 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 {
 	string input;
 
+	vector <int> v;
+
 	NPC n;
 
 	while (1) // menu loop
@@ -907,13 +828,12 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 
 		if (gm.inGame == false) // check to see if game has already been started
 		{
-			printf("Menu:\n1: Start Game\n"); // not started
+			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: ");
 		}
 		else
 		{
-			printf("Menu:\n1: Resume Game\n"); // has started
+			printf("Menu:\n1: New Game\n2: Resume Game\n3: High Scores\n4: Help\n5: Credits\n6: Save/Load\n7: Exit\nInput: ");
 		}
-		printf("2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: "); // default menus
 
 		cin >> input;
 		system("CLS");
@@ -1385,7 +1305,7 @@ void weaponValues(struct gm& gm)
 	gm.wD[4].maxDamage = 4;
 	gm.wD[4].accuracy = 1;
 	gm.wD[4].shots = 4;
-	gm.wD[4].cost = 5;
+	gm.wD[4].cost = 10;
 	gm.wD[4].name = "Missile Launcher";
 
 	gm.wD[5].minDamage = 1;
@@ -1403,9 +1323,9 @@ void weaponValues(struct gm& gm)
 	gm.wD[6].name = "Coilgun";
 
 	gm.wD[7].minDamage = 5;
-	gm.wD[7].maxDamage = 7;
+	gm.wD[7].maxDamage = 10;
 	gm.wD[7].accuracy = 0.5;
-	gm.wD[7].shots = 1;
+	gm.wD[7].shots = 2;
 	gm.wD[7].cost = 6;
 	gm.wD[7].name = "Torpedo";
 
@@ -1755,6 +1675,12 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 		t[i].enemies = 0;
 		t[i].addedSup = 0;
 	}
+
+	gm.s.wID.clear();
+	gm.s.wID.push_back(1);
+	gm.s.weapons = 1;
+	gm.s.maxWeap = 5;
+
 }
 
 // Shop Class
@@ -2028,6 +1954,14 @@ void NPC::shipPurch(struct gm& gm)
 
 			printf("Succesful Purchase! Press any key to continue");
 			_getch();
+
+			gm.s.healthMax = gm.s.shipData[gm.s.shipID][1];
+			gm.s.shieldMax = gm.s.shipData[gm.s.shipID][3];
+			gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
+			gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
+			gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
+			gm.s.evasion = float(gm.s.shipData[gm.s.shipID][9]) / 100;
+
 			break;
 		}
 		else if (input == "2")
@@ -2997,18 +2931,14 @@ void combat::esCombat(struct gm& gm)
 		{
 			scrawlf("You have been defeated in combat...\n");
 			gm.s.alive = false;
+			gm.p.alive = false;
 		}
 
 		_getch();
-
-		if (gm.s.shield < gm.s.shieldMax)
-		{
-			gm.s.shield += gm.s.shieldRegeneration;
-			if (gm.s.shield > gm.s.shieldMax)
-			{
-				gm.s.shield = gm.s.shieldMax;
-			}
-		}
-
 	} 
+
+	if (gm.s.shield < gm.s.shieldMax)
+	{
+		gm.s.shield += gm.s.shieldRegeneration;
+	}
 }
