@@ -52,9 +52,9 @@ struct ship
 
 	vector <vector<int>> shipData
 	{
-		{health, 10, shield, 10, 1, modules, 2, fuel, 25, 90}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax, evasion
-		{health, 15, shield, 15, 3, modules, 3, fuel, 40, 80},
-		{health, 20, shield, 20, 5, modules, 5, fuel, 50, 70},
+		{health, 20, shield, 10, 1, modules, 2, fuel, 25, 90}, // health, healthMax, shield, shieldMax, shieldRegeneration, current module count, max modules, fuel, fuelMax, evasion
+		{health, 30, shield, 15, 3, modules, 3, fuel, 40, 80},
+		{health, 40, shield, 20, 5, modules, 4, fuel, 50, 70},
 	};
 
 	bool alive;
@@ -71,25 +71,12 @@ struct weaponData
 	string name;
 };
 
-struct module
-{
-	string name;
-
-	int health, healthMax;
-	int shieldRegeneration;
-	int moduleID;
-
-	bool boardable;
-	bool powered;
-	bool crewed;
-};
-
 struct gm
 {
 	player p;
 	ship s;
-	vector <module> m;
 	vector <weaponData> wD;
+	vector <bool> mod;
 
 	string seed;
 

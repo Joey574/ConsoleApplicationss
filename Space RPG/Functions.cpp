@@ -816,7 +816,13 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 {
 	string input;
 
-	vector <int> v;
+	int r = 0;
+	int s = 0;
+	int hs = 0;
+	int h = 0;
+	int c = 0;
+	int sl = 0;
+	int e = 0;
 
 	NPC n;
 
@@ -829,43 +835,68 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 		if (gm.inGame == false) // check to see if game has already been started
 		{
 			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: ");
+			s = 1;
+			hs = 2;
+			h = 3;
+			c = 4;
+			sl = 5;
+			e = 6;
 		}
 		else
 		{
 			printf("Menu:\n1: New Game\n2: Resume Game\n3: High Scores\n4: Help\n5: Credits\n6: Save/Load\n7: Exit\nInput: ");
+			s = 1;
+			r = 2;
+			hs = 3;
+			h = 4;
+			c = 5;
+			sl = 6;
+			e = 7;
 		}
 
 		cin >> input;
 		system("CLS");
 
-		if (input == "1") // start/resume game
-		{
-			gameManager(gm, t, n);
-		}
-		else if (input == "2") // High scores
-		{
-			scores();
-		}
-		else if (input == "3") // help
-		{
-			help(gm);
-		}
-		else if (input == "4") // credits
-		{
-			credits();
-		}
-		else if (input == "5") // save/load
-		{
-			saveAndLoad(gm, t, n);
-		}
-		else if (input == "6") // exit
-		{
-			exit(0);
-		}
-		else // invalid input
+		if (!intCheck(input))
 		{
 			invalidInput();
 			continue;
+		}
+		if (stoi(input) > e || stoi(input) < 1)
+		{
+			invalidInput();
+			continue;
+		}
+
+		if (stoi(input) == s) // start game
+		{
+			gm.inGame = false;
+			gameRestart(gm, t);
+			gameManager(gm, t, n);
+		}
+		else if (stoi(input) == r)
+		{
+			gameManager(gm, t, n);
+		}
+		else if (stoi(input) == hs) // High scores
+		{
+			scores();
+		}
+		else if (stoi(input) == h) // help
+		{
+			help(gm);
+		}
+		else if (stoi(input) == c) // credits
+		{
+			credits();
+		}
+		else if (stoi(input) == sl) // save/load
+		{
+			saveAndLoad(gm, t, n);
+		}
+		else if (stoi(input) == e) // exit
+		{
+			exit(0);
 		}
 	}
 }
@@ -1236,6 +1267,11 @@ void moveUpdate(struct gm& gm)
 	{
 			gm.s.shield = gm.s.shieldMax;	
 	}	
+
+	if (gm.mod[0] && gm.s.health < gm.s.healthMax)
+	{
+		gm.s.health++;
+	}
 }
 
 void gameOver()
@@ -1440,8 +1476,10 @@ int encounterChance(vector <systems>&t)
 void objectiveFound(struct gm& gm)
 {
 	system("CLS");
-	printf("There it is, from the bridge of your ship you see it... A new hope, a candidate for life, \"I did it...\" you think to yourself.\n");
-	cout << "Your name... Captain " << gm.p.name << " will be written in the history books, forever remembered as the one who saved humanity.";
+	scrawlf("There it is, from the bridge of your ship you see it... A new hope, a candidate for life, \"I did it...\" you think to yourself.\n");
+	scrawlf("Your name... Captain ");
+	scrawlf(gm.p.name);
+	scrawlf(" will be written in the history books, forever remembered as the one who saved humanity.\n");
 	_getch();
 }
 
@@ -1657,13 +1695,15 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	gm.p.alive = true;
 	gm.inGame = false;
 	gm.s.alive = true;
-
-	gm.p.supplies = 20;
-	gm.s.fuel = 25;
-	gm.s.health = 10;
-	gm.s.shield = 10;
-	gm.s.modules = 1;
+	
 	gm.s.shipID = 0;
+	gm.p.supplies = 20;
+	gm.s.health = gm.s.shipData[gm.s.shipID][1];
+	gm.s.shield = gm.s.shipData[gm.s.shipID][3];
+	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
+	gm.s.modules = 1;
+	gm.s.fuel = gm.s.shipData[gm.s.shipID][8];
+	gm.s.evasion = float(gm.s.shipData[gm.s.shipID][9]) / 100;
 	
 	for (int i = 0; i < 100; i++)
 	{
@@ -1677,9 +1717,15 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	}
 
 	gm.s.wID.clear();
-	gm.s.wID.push_back(1);
+	gm.s.wID.push_back(0);
 	gm.s.weapons = 1;
 	gm.s.maxWeap = 5;
+	gm.mod.clear();
+
+	for (int i = 0; i < 4; i++)
+	{
+		gm.mod.push_back(0);
+	}
 
 }
 
@@ -1809,7 +1855,7 @@ void NPC::shipShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("This is a ship shop for all your ship purchasing needs!\nMenu:\n1: Fuel\n2: Better Ship\n3: Back\nInput: ");
+		printf("This is a ship shop for all your ship purchasing needs!\nMenu:\n1: Fuel\n2: Better Ship\n3: Modules\n4: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
@@ -1821,6 +1867,10 @@ void NPC::shipShop(struct gm& gm)
 			shipPurch(gm);
 		}
 		else if (input == "3")
+		{
+			modules(gm);
+		}
+		else if (input == "4")
 		{
 			break;
 		}
@@ -2114,7 +2164,76 @@ void NPC::repair(struct gm& gm)
 
 void NPC::modules(struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu:\n1: Repair Module - 15 Supplies\n2: Combat Module - 15 Supplies\n3: Shield Booster - 15 Supplies\n4: Cloaking Module - 20 Supplies\n5: Back\nInput: ");
+		cin >> input;
+
+		if (!intCheck(input) || stoi(input) > 5 || stoi(input) < 1)
+		{
+			invalidInput();
+			continue;
+		}
+
+		if (input == "1" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
+		{
+			printf("This module will allow you to heal 1 HP for free every time you move\n");
+			_getch();
+
+			gm.mod[0] = true;
+			gm.s.modules++;
+			gm.p.supplies -= 15;
+		}
+		else if (input == "2" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
+		{
+			printf("This module will increase your damage dealt by 1 per shot\n");
+			_getch();
+
+			gm.mod[1] = true;
+			gm.s.modules++;
+			gm.p.supplies -= 15;
+		}
+		else if (input == "3" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
+		{
+			printf("This module will increase your shield regeneration in combat by 1\n");
+			_getch();
+
+			gm.mod[2] = true;
+			gm.s.modules++;
+			gm.p.supplies -= 15;
+		}
+		else if (input == "4" && gm.p.supplies > 20 && gm.s.modules < gm.s.modulesMax)
+		{
+			printf("This module will allow you to cloak during combat, making all enemies miss\n");
+			_getch();
+
+			gm.mod[3] = true;
+			gm.s.modules++;
+			gm.p.supplies -= 20;
+		}
+		else if (input == "5")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+		system("CLS");
+		printf("Succesful Purchase! Press any key to continue");
+		_getch();
+		break;
+	}
 }
 
 // Combat Class
@@ -2836,6 +2955,11 @@ void combat::sCombat(struct gm& gm)
 
 								damage = gm.wD[weaponU].minDamage + rand() % (gm.wD[weaponU].maxDamage - gm.wD[weaponU].minDamage + 1);
 
+								if (gm.mod[1]) // combat module
+								{
+									damage++;
+								}
+
 								d.push_back(damage);
 							}
 						}
@@ -3004,5 +3128,15 @@ void combat::esCombat(struct gm& gm)
 	if (gm.s.shield < gm.s.shieldMax)
 	{
 		gm.s.shield += gm.s.shieldRegeneration;
+
+		if (gm.mod[2]) // shield module
+		{
+			gm.s.shield++;
+		}
+
+		if (gm.s.shield > gm.s.shieldMax)
+		{
+			gm.s.shield = gm.s.shieldMax;
+		}
 	}
 }

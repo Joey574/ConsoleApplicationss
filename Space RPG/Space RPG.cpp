@@ -39,6 +39,11 @@ int main()
 
 	gm gm;
 
+	for (int i = 0; i < 4; i++)
+	{
+		gm.mod.push_back(0);
+	}
+
 	introArt();
 
 	mainMenu(gm, t);
