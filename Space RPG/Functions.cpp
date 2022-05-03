@@ -1770,7 +1770,7 @@ void NPC::generalShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("This is a general shop for all your general purchasing needs!\nMenu:\n1: Fuel\n2: Space Weapons\n3: Back\nInput: ");
+		printf("This is a general shop for all your general purchasing needs!\nMenu:\n1: Fuel\n2: Repair\n3: Space Weapons\n4: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
@@ -1779,9 +1779,13 @@ void NPC::generalShop(struct gm& gm)
 		}
 		else if (input == "2")
 		{
-			sWeapons(gm);
+			repair(gm);
 		}
 		else if (input == "3")
+		{
+			sWeapons(gm);
+		}
+		else if (input == "4")
 		{
 			break;
 		}
@@ -2051,6 +2055,66 @@ void NPC::sWeapons(struct gm& gm)
 			break;
 		}
 	}
+}
+
+void NPC::gWeapons(struct gm& gm)
+{
+
+}
+
+void NPC::repair(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu: (Enter how much health you want to repair 1:2 purchase)\nBack: S\nInput: ");
+		cin >> input;
+
+
+		if (intCheck(input) == false)
+		{
+			if (toupper(input[0]) == 'S')
+			{
+				break;
+			}
+			else
+			{
+				invalidInput();
+				continue;
+			}
+		}
+		else
+		{
+			if (stoi(input) * 2 > gm.p.supplies || stoi(input) + gm.s.health > gm.s.healthMax)
+			{
+				invalidInput();
+				continue;
+			}
+			else
+			{
+				gm.s.health += stoi(input);
+				gm.p.supplies -= stoi(input) * 2;
+
+				system("CLS");
+				printf("Succesful Purchase! Press any key to continue");
+				_getch();
+				break;
+			}
+		}
+
+	}
+}
+
+void NPC::modules(struct gm& gm)
+{
+
 }
 
 // Combat Class

@@ -26,6 +26,7 @@ public:
 	void modules(struct gm& gm);
 	void sWeapons(struct gm& gm);
 	void gWeapons(struct gm& gm);
+	void repair(struct gm& gm);
 
 private:
 
