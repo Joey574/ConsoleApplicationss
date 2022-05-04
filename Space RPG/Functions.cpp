@@ -437,7 +437,8 @@ void help(struct gm& gm)
 
 	while (1)
 	{
-		printf("Menu:\n1: Change Name\n2: Change Difficulty\n3: Reset Highscores\n4: Back\nInput: ");
+		system("CLS");
+		printf("Menu:\n1: Change Name\n2: Reset Highscores\n3: Back\nInput: ");
 		cin >> input;
 		system("CLS");
 
@@ -448,13 +449,6 @@ void help(struct gm& gm)
 			gm.p.name = input;
 		}
 		else if (input == "2")
-		{
-			printf("Difficulty:\n1: Easy\n2: Medium\n3: Hard\nInput: ");
-			cin >> input;
-
-			difficultySet(gm);
-		}
-		else if (input == "3")
 		{
 			ofstream highScores;
 
@@ -482,7 +476,7 @@ void help(struct gm& gm)
 				continue;
 			}
 		}
-		else if (input == "4")
+		else if (input == "3")
 		{
 			break;
 		}
@@ -498,7 +492,8 @@ void credits()
 {
 	printf("Author:\nJoey Soroka\n\n");
 	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\nBrooks Sammarco\nMonte Long\n\n");
-	printf("Creative Support:\nIssac Morine\nMonte Long\n");
+	printf("Creative Support:\nIssac Morine\nMonte Long\n\n");
+	printf("Testers:\nMonte Long\n");
 	_getch();
 }
 
@@ -1399,6 +1394,11 @@ void friendlyShip(struct gm& gm, vector <systems>& t)
 	{
 		printf(" fuel in hopes that you succeed in your jounrey!");
 		gm.s.fuel += t[current].addedSup;
+
+		if (gm.s.fuel > gm.s.fuelMax)
+		{
+			gm.s.fuel = gm.s.fuelMax;
+		}
 	}
 
 	_getch();
@@ -1929,7 +1929,7 @@ void NPC::miyoshiShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you desire young traveler?\nMenu: ");
+		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\nMenu: ");
 		cin >> input;
 	}
 }
@@ -2289,20 +2289,20 @@ void combat::sStats()
 		{
 			if (enemyRace == 0) // Androidus
 			{
-				cm.es[i].health = 8;
-				cm.es[i].healthMax = 8;
+				cm.es[i].health = 10;
+				cm.es[i].healthMax = 10;
 				cm.es[i].maxDamage = 2;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 1;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 2;
 				cm.es[i].evasion = 0.8;
 				cm.es[i].accuracy = 0.8;
 			}
 			else if (enemyRace == 1) // Zorgons
 			{
-				cm.es[i].health = 5;
-				cm.es[i].healthMax = 5;
-				cm.es[i].maxDamage = 3;
-				cm.es[i].minDamge = 1;
+				cm.es[i].health = 8;
+				cm.es[i].healthMax = 8;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
 				cm.es[i].weapons = 2;
 				cm.es[i].evasion = 0.6;
 				cm.es[i].accuracy = 0.5;
@@ -2319,18 +2319,18 @@ void combat::sStats()
 			}
 			else if (enemyRace == 3) // Quotis
 			{
-				cm.es[i].health = 5;
-				cm.es[i].healthMax = 5;
-				cm.es[i].maxDamage = 2;
-				cm.es[i].minDamge = 0;
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 3;
+				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 1;
 				cm.es[i].evasion = 0.8;
 				cm.es[i].accuracy = 0.8;
 			}
 			else if (enemyRace == 4) // Refips
 			{
-				cm.es[i].health = 4;
-				cm.es[i].healthMax = 4;
+				cm.es[i].health = 8;
+				cm.es[i].healthMax = 8;
 				cm.es[i].maxDamage = 4;
 				cm.es[i].minDamge = 2;
 				cm.es[i].weapons = 1;
@@ -2352,9 +2352,9 @@ void combat::sStats()
 			}
 			else if (enemyRace == 1) // Zorgons
 			{
-				cm.es[i].health = 8;
-				cm.es[i].healthMax = 8;
-				cm.es[i].maxDamage = 4;
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
+				cm.es[i].maxDamage = 5;
 				cm.es[i].minDamge = 2;
 				cm.es[i].weapons = 3;
 				cm.es[i].evasion = 0.7;
@@ -2372,8 +2372,8 @@ void combat::sStats()
 			}
 			else if (enemyRace == 3) // Quotis
 			{
-				cm.es[i].health = 10;
-				cm.es[i].healthMax = 10;
+				cm.es[i].health = 15;
+				cm.es[i].healthMax = 15;
 				cm.es[i].maxDamage = 3;
 				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 2;
@@ -2382,8 +2382,8 @@ void combat::sStats()
 			}
 			else if (enemyRace == 4) // Refips
 			{
-				cm.es[i].health = 6;
-				cm.es[i].healthMax = 6;
+				cm.es[i].health = 12;
+				cm.es[i].healthMax = 12;
 				cm.es[i].maxDamage = 6;
 				cm.es[i].minDamge = 2;
 				cm.es[i].weapons = 1;
@@ -2405,8 +2405,8 @@ void combat::sStats()
 			}
 			else if (enemyRace == 1) // Zorgons
 			{
-				cm.es[i].health = 12;
-				cm.es[i].healthMax = 12;
+				cm.es[i].health = 18;
+				cm.es[i].healthMax = 18;
 				cm.es[i].maxDamage = 5;
 				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 2;
@@ -2418,7 +2418,7 @@ void combat::sStats()
 				cm.es[i].health = 22;
 				cm.es[i].healthMax = 22;
 				cm.es[i].maxDamage = 1;
-				cm.es[i].minDamge = 0;
+				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 6;
 				cm.es[i].evasion = 0.9;
 				cm.es[i].accuracy = 0.8;
@@ -2427,9 +2427,9 @@ void combat::sStats()
 			{
 				cm.es[i].health = 12;
 				cm.es[i].healthMax = 12;
-				cm.es[i].maxDamage = 2;
-				cm.es[i].minDamge = 0;
-				cm.es[i].weapons = 1;
+				cm.es[i].maxDamage = 4;
+				cm.es[i].minDamge = 2;
+				cm.es[i].weapons = 2;
 				cm.es[i].evasion = 0.9;
 				cm.es[i].accuracy = 1;
 			}
@@ -2437,8 +2437,8 @@ void combat::sStats()
 			{
 				cm.es[i].health = 15;
 				cm.es[i].healthMax = 15;
-				cm.es[i].maxDamage = 4;
-				cm.es[i].minDamge = 2;
+				cm.es[i].maxDamage = 6;
+				cm.es[i].minDamge = 1;
 				cm.es[i].weapons = 3;
 				cm.es[i].evasion = 0.8;
 				cm.es[i].accuracy = 0.6;
@@ -2470,9 +2470,9 @@ void combat::sStats()
 			{
 				cm.es[i].health = 50;
 				cm.es[i].healthMax = 50;
-				cm.es[i].maxDamage = 4;
-				cm.es[i].minDamge = 2;
-				cm.es[i].weapons = 5;
+				cm.es[i].maxDamage = 2;
+				cm.es[i].minDamge = 1;
+				cm.es[i].weapons = 6;
 				cm.es[i].evasion = 1;
 				cm.es[i].accuracy = 0.6;
 			}
