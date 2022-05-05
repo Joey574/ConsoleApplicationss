@@ -624,6 +624,12 @@ void save(struct gm& gm, vector <systems>& t)
 			in << t[i].supplies << "," << t[i].explored << "," << t[i].encountered << "," << t[i].current << endl;
 		}
 
+		for (int i = 0; i < gm.mod.size(); i++)
+		{
+			in << gm.mod[i] << ",";
+		}
+		in << endl;
+
 	}
 }
 
@@ -758,6 +764,14 @@ void load(struct gm& gm, vector <systems>& t, class NPC& n)
 				t[i].encountered = stoi(temp);
 				getline(in, temp);
 				t[i].current = stoi(temp);
+			}
+			getline(in, temp);
+			for (int i = 0; i < temp.size(); i++)
+			{
+				if (temp[i] != ',')
+				{
+					gm.mod[i] = temp[i];
+				}
 			}
 		}
 
@@ -1444,7 +1458,7 @@ int encounterChance(vector <systems>&t)
 		{
 			if (t[current].dangerLevel == 3)
 			{
-				t[current].enemies = 1 + rand() % (3);
+				t[current].enemies = 1 + rand() % (4);
 			}
 			else if (t[current].dangerLevel == 2)
 			{
@@ -1929,8 +1943,10 @@ void NPC::miyoshiShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\nMenu: ");
+		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\nMenu:\n1: ");
 		cin >> input;
+
+		break;
 	}
 }
 
@@ -2033,6 +2049,7 @@ void NPC::shipPurch(struct gm& gm)
 void NPC::sWeapons(struct gm& gm)
 {
 	string input;
+	int t;
 
 	while (1)
 	{
@@ -2061,8 +2078,11 @@ void NPC::sWeapons(struct gm& gm)
 			invalidInput();
 			continue;
 		}
+		if (stoi(input) == 11)
+		{
+			break;
+		}
 
-		bool t = false;
 
 		for (int i = 0; i < gm.s.weapons; i++)
 		{
@@ -2076,33 +2096,53 @@ void NPC::sWeapons(struct gm& gm)
 				Sleep(200);
 				printf(".");
 				Sleep(500);
-				t = true;
+				continue;
 			}
-		}
-
-		if (t == true)
-		{
-			continue;
 		}
 
 		for (int i = 0; i < 10; i++)
 		{
 			if (stoi(input) == gm.wD[i].type + 1)
 			{
-				if (gm.p.supplies >= gm.wD[i].cost && gm.s.weapons < gm.s.maxWeap)
-				{
-					gm.s.weapons++;
-					gm.p.supplies -= gm.wD[i].cost;
-					gm.s.wID.push_back(i);
-					printf("Purchase sucessful\n");
-					_getch();
-					break;
-				}
+				t = stoi(input) - 1;
 			}
 		}
-		if (stoi(input) == 11)
-		{ 
+
+		gotoxy(50, 0);
+		printf("Weapon Stats:");
+		gotoxy(50, 1);
+		cout << gm.wD[t].name;
+		gotoxy(50, 2);
+		cout << gm.wD[t].minDamage << " - " << gm.wD[stoi(input) - 1].maxDamage << " Damage Range";
+		gotoxy(50, 3);
+		cout << gm.wD[t].shots << " Shots";
+		gotoxy(50, 4);
+		cout << gm.wD[t].accuracy * 100 << "% Accuracy";
+		gotoxy(50, 5);
+		cout << gm.wD[t].cost;
+
+		gotoxy(0, 0);
+
+		printf("Menu:\n1: Confirm Purchase\n2: Back");
+		cin >> input;
+
+		if (input == "1" && gm.p.supplies >= gm.wD[t].cost && gm.s.weapons < gm.s.maxWeap)
+		{
+			gm.s.weapons++;
+			gm.p.supplies -= gm.wD[t].cost;
+			gm.s.wID.push_back(t);
+			printf("Purchase sucessful\n");
+			_getch();
 			break;
+		}
+		else if (input == "2")
+		{
+			continue;
+		}
+		else
+		{
+			invalidInput();
+			continue;
 		}
 	}
 }
@@ -2523,11 +2563,11 @@ void combat::sStats()
 			{
 				cm.es[i].health = 35;
 				cm.es[i].healthMax = 35;
-				cm.es[i].maxDamage = 2;
+				cm.es[i].maxDamage = 1;
 				cm.es[i].minDamge = 1;
-				cm.es[i].weapons = 12;
+				cm.es[i].weapons = 10;
 				cm.es[i].evasion = 1;
-				cm.es[i].accuracy = 0.6;
+				cm.es[i].accuracy = 0.5;
 			}
 			else if (enemyRace == 3) // Quotis
 			{
@@ -2541,11 +2581,11 @@ void combat::sStats()
 			}
 			else if (enemyRace == 4) // Refips
 			{
-				cm.es[i].health = 18;
-				cm.es[i].healthMax = 18;
+				cm.es[i].health = 15;
+				cm.es[i].healthMax = 15;
 				cm.es[i].maxDamage = 4;
 				cm.es[i].minDamge = 1;
-				cm.es[i].weapons = 6;
+				cm.es[i].weapons = 5;
 				cm.es[i].evasion = 1;
 				cm.es[i].accuracy = 0.6;
 			}
@@ -3120,6 +3160,7 @@ void combat::esCombat(struct gm& gm)
 			scrawlf("You have been defeated in combat...\n");
 			gm.s.alive = false;
 			gm.p.alive = false;
+			break;
 		}
 
 		_getch();
