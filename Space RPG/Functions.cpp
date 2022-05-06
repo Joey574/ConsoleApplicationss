@@ -492,7 +492,7 @@ void credits()
 {
 	printf("Author:\nJoey Soroka\n\n");
 	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\nBrooks Sammarco\nMonte Long\n\n");
-	printf("Creative Support:\nIssac Morine\nMonte Long\n\n");
+	printf("Creative Support:\nIssac Morine\nMonte Long\nJackson Heckert\nMason Hart\n\n");
 	printf("Testers:\nMonte Long\n");
 	_getch();
 }
@@ -1228,6 +1228,10 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 					c.setComType(encounter - 1);
 					c.setEnemies(t[systemCurrent(t)].enemies);
 					c.combatManager(gm, t);
+					if (gm.p.alive == false)
+					{
+						break;
+					}
 				}
 				else if (encounter == 3)
 				{
@@ -1812,10 +1816,8 @@ void NPC::shopManager(struct gm &gm, vector<systems> &t)
 	}
 	else if (sh[shopCID].shopID == 3)
 	{
-		miyoshiShop(gm);
+		miyoshiShop(gm, t);
 	}
-
-
 }
 
 void NPC::generalShop(struct gm& gm)
@@ -1935,19 +1937,22 @@ void NPC::weaponShop(struct gm& gm)
 	}
 }
 
-void NPC::miyoshiShop(struct gm& gm)
+void NPC::miyoshiShop(struct gm& gm, vector<systems>& t)
 {
 	string input;
 
 	while (1)
 	{
 		system("CLS");
+		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\n");
+		_getch();
+		system("CLS");
 
 		statDisplay(gm);
 
 		gotoxy(0, 0);
 
-		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\nMenu:\n1: Fuel\n2: Repair\n3: Space Weapons\n4: Ground Weapons\n5: Modules\n6: New Ship\n7: MiyoshiBucks, a new cryptocurrency, I hear it's all the rage\n8: Genesis Location\n9: Back\nInput: ");
+		printf("Menu:\n1 : Fuel\n2 : Repair\n3 : Space Weapons\n4 : Ground Weapons\n5 : Modules\n6 : New Ship\n7 : MiyoshiBucks, a new cryptocurrency, I hear it's all the rage\n8: Genesis Location\n9: Solid Works Tip\n10: MiyoshiTron 5000\n11: Back\nInput: ");
 		cin >> input;
 		system("CLS");
 
@@ -1977,13 +1982,21 @@ void NPC::miyoshiShop(struct gm& gm)
 		}
 		else if (input == "7")
 		{
-
+			miyoshiBucks(gm);
 		}
 		else if (input == "8")
 		{
+			genesisLoc(t, gm);
+		}
+		else if (input == "9") // solid works tip
+		{
+			solidWorks(gm);
+		}
+		else if (input == "10") // miyoshitron 5000
+		{
 
 		}
-		else if (input == "9")
+		else if (input == "11")
 		{
 			break;
 		}
@@ -2375,9 +2388,103 @@ void NPC::miyoshiBucks(struct gm& gm)
 	}
 }
 
-void NPC::genesisLoc(struct gm& gm)
+void NPC::genesisLoc(vector<systems>& t, struct gm& gm)
 {
+	string input;
 
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu (Cost - 20 Supplies):\n1: Confirm Purchase\n2: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1" && gm.p.supplies >= 20)
+		{
+			gm.p.supplies -= 20;
+
+			for (int i = 0; i < 100; i++)
+			{
+				if (t[i].objective == true)
+				{
+					t[i].explored = true;
+				}
+			}
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+		printf("Purchase sucessful\n");
+		_getch();
+		break;
+	}
+}
+
+void NPC::solidWorks(struct gm& gm)
+{
+	string input;
+
+	vector <string> tips
+	{
+		"It takes time.",
+		"You just have to do it.",
+		"Be careful with zero thickness geometry.",
+		"3D sketches are only really used for swept boss base.",
+		"Sketches are very handy.",
+		"Assemblies are nice for mutliple piece projects.",
+		"I can tell you what's wrong but it'll cost 25% of your grade.",
+		"You've got 3 mistakes... somwhere.",
+		"It's goalsheet day",
+		"What do you want?",
+		"Quit touching each other.",
+		"*Silence*",
+		"That's not how projected curves work dummy",
+		"Do I hear push-ups over there?",
+		"Give me 25 push-ups"
+	};
+
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu (Cost - 10 Supplies):\n1: Confirm Purchase\n2: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1" && gm.p.supplies >= 10)
+		{
+			gm.p.supplies -= 10;
+			cout << tips[rand() % 15] << endl;
+			_getch();
+			continue;
+		}
+		else if (input == "2")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+	}
 }
 
 // Combat Class
@@ -3286,3 +3393,5 @@ void combat::esCombat(struct gm& gm)
 		}
 	}
 }
+
+// Good work Joey!! Keep doing what you're doing!!!!!!! :) :) :)

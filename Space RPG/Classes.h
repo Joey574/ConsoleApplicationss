@@ -17,7 +17,7 @@ public:
 	void generalShop(struct gm& gm);
 	void shipShop(struct gm& gm);
 	void weaponShop(struct gm& gm);
-	void miyoshiShop(struct gm& gm);
+	void miyoshiShop(struct gm& gm, vector<systems>& t);
 	void statDisplay(struct gm& gm);
 
 	//purchases
@@ -27,8 +27,9 @@ public:
 	void sWeapons(struct gm& gm);
 	void gWeapons(struct gm& gm);
 	void repair(struct gm& gm);
-	void genesisLoc(struct gm& gm);
+	void genesisLoc(vector<systems>& t, struct gm& gm);
 	void miyoshiBucks(struct gm& gm);
+	void solidWorks(struct gm& gm);
 
 private:
 
