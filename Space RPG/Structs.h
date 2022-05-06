@@ -26,6 +26,7 @@ struct player
 	int health = 10, healthMax = 10;
 	int difficulty;
 	int supplies = 20;
+	int miyoshiB = 0;
 	int score = 0;
 
 	bool alive = true;

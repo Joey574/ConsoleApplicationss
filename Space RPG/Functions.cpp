@@ -1503,17 +1503,30 @@ void objectiveFound(struct gm& gm)
 
 void mapStats(struct gm& gm)
 {
-	gotoxy(120, 0);
+	int x = 0;
+
+	gotoxy(120, x);
 	printf("Stats: ");
-	gotoxy(120, 1);
+	x++;
+	gotoxy(120, x);
 	cout << gm.p.supplies << " Supplies";
-	gotoxy(120, 2);
+	x++;
+	if (gm.p.miyoshiB > 0)
+	{
+		gotoxy(120, x);
+		cout << gm.p.miyoshiB << " MiyoshiBucks";
+		x++;
+	}
+	gotoxy(120, x);
 	cout << gm.p.health << " / " << gm.p.healthMax << " Player HP";
-	gotoxy(120, 3);
+	x++;
+	gotoxy(120, x);
 	cout << gm.s.health << " / " << gm.s.healthMax << " Ship Hull";
-	gotoxy(120, 4);
+	x++;
+	gotoxy(120, x);
 	cout << gm.s.fuel << " / " << gm.s.fuelMax << " Ship Fuel";
-	gotoxy(120, 5);
+	x++;
+	gotoxy(120, x);
 	cout << gm.s.modules << " / " << gm.s.modulesMax << " Ship Modules";
 }
 
@@ -1716,6 +1729,7 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	
 	gm.s.shipID = 0;
 	gm.p.supplies = 20;
+	gm.p.miyoshiB = 0;
 	gm.s.health = gm.s.shipData[gm.s.shipID][1];
 	gm.s.shield = gm.s.shipData[gm.s.shipID][3];
 	gm.s.shieldRegeneration = gm.s.shipData[gm.s.shipID][4];
@@ -2021,7 +2035,7 @@ void NPC::fuelPurch(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu: (Enter how much fuel you want 1:1 purchase)\nBack: S\nInput: ");
+		printf("Menu: (Enter how much fuel you want. Cost - 1 Supply)\nBack: S\nInput: ");
 		cin >> input;
 
 		
@@ -2225,7 +2239,7 @@ void NPC::repair(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu: (Enter how much health you want to repair 1:2 purchase)\nBack: S\nInput: ");
+		printf("Menu: (Enter how much health you want. Cost - 2 Supplies)\nBack: S\nInput: ");
 		cin >> input;
 
 
@@ -2371,7 +2385,7 @@ void NPC::miyoshiBucks(struct gm& gm)
 
 		gotoxy(0, 0);
 		
-		printf("Menu: (Enter how much fuel you want 1:1 purchase)\nBack: S\nInput: ");
+		printf("Menu: (Enter how many miyoshiBucks you want. Cost - 5 Supplies)\nBack: S\nInput: ");
 		cin >> input;
 		system("CLS");
 
@@ -2384,6 +2398,21 @@ void NPC::miyoshiBucks(struct gm& gm)
 			invalidInput();
 			continue;
 		}
+
+		if (stoi(input) * 5 < gm.p.supplies)
+		{
+			gm.p.miyoshiB += stoi(input);
+			gm.p.supplies -= stoi(input) * 5;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+		printf("Purchase sucessful\n");
+		_getch();
+		break;
 		
 	}
 }
