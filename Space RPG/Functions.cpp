@@ -1869,7 +1869,7 @@ void NPC::shipShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("This is a ship shop for all your ship purchasing needs!\nMenu:\n1: Fuel\n2: Better Ship\n3: Modules\n4: Back\nInput: ");
+		printf("This is a ship shop for all your ship purchasing needs!\nMenu:\n1: Fuel\n2: Repair\n3: Better Ship\n4: Modules\n5: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
@@ -1878,13 +1878,17 @@ void NPC::shipShop(struct gm& gm)
 		}
 		else if (input == "2")
 		{
-			shipPurch(gm);
+			repair(gm);
 		}
 		else if (input == "3")
 		{
-			modules(gm);
+			shipPurch(gm);
 		}
 		else if (input == "4")
+		{
+			modules(gm);
+		}
+		else if (input == "5")
 		{
 			break;
 		}
@@ -1908,7 +1912,7 @@ void NPC::weaponShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("This is a weapon shop for all your genocidal needs!\nMenu:\n1: Fuel\n2: Weapons\n3: Back\nInput: ");
+		printf("This is a weapon shop for all your genocidal needs!\nMenu:\n1: Fuel\n2: Space Weapons\n3: Back\nInput: ");
 		cin >> input;
 
 		if (input == "1")
@@ -1943,10 +1947,52 @@ void NPC::miyoshiShop(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\nMenu:\n1: ");
+		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\nMenu:\n1: Fuel\n2: Repair\n3: Space Weapons\n4: Ground Weapons\n5: Modules\n6: New Ship\n7: MiyoshiBucks, a new cryptocurrency, I hear it's all the rage\n8: Genesis Location\n9: Back\nInput: ");
 		cin >> input;
+		system("CLS");
 
-		break;
+		if (input == "1")
+		{
+			fuelPurch(gm);
+		}
+		else if (input == "2")
+		{
+			repair(gm);
+		}
+		else if (input == "3")
+		{
+			sWeapons(gm);
+		}
+		else if (input == "4")
+		{
+			gWeapons(gm);
+		}
+		else if (input == "5")
+		{
+			modules(gm);
+		}
+		else if (input == "6")
+		{
+			shipPurch(gm);
+		}
+		else if (input == "7")
+		{
+
+		}
+		else if (input == "8")
+		{
+
+		}
+		else if (input == "9")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		
 	}
 }
 
@@ -2031,6 +2077,7 @@ void NPC::shipPurch(struct gm& gm)
 			gm.s.modulesMax = gm.s.shipData[gm.s.shipID][6];
 			gm.s.fuelMax = gm.s.shipData[gm.s.shipID][8];
 			gm.s.evasion = float(gm.s.shipData[gm.s.shipID][9]) / 100;
+			gm.s.health = gm.s.shipData[gm.s.shipID][1];
 
 			break;
 		}
@@ -2123,8 +2170,9 @@ void NPC::sWeapons(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu:\n1: Confirm Purchase\n2: Back");
+		printf("Menu:\n1: Confirm Purchase\n2: Back\nInput: ");
 		cin >> input;
+		system("CLS");
 
 		if (input == "1" && gm.p.supplies >= gm.wD[t].cost && gm.s.weapons < gm.s.maxWeap)
 		{
@@ -2205,6 +2253,7 @@ void NPC::repair(struct gm& gm)
 void NPC::modules(struct gm& gm)
 {
 	string input;
+	string i;
 
 	while (1)
 	{
@@ -2216,6 +2265,7 @@ void NPC::modules(struct gm& gm)
 
 		printf("Menu:\n1: Repair Module - 15 Supplies\n2: Combat Module - 15 Supplies\n3: Shield Booster - 15 Supplies\n4: Cloaking Module - 20 Supplies\n5: Back\nInput: ");
 		cin >> input;
+		system("CLS");
 
 		if (!intCheck(input) || stoi(input) > 5 || stoi(input) < 1)
 		{
@@ -2226,42 +2276,62 @@ void NPC::modules(struct gm& gm)
 		if (input == "1" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will allow you to heal 1 HP for free every time you move\n");
-			_getch();
-
-			gm.mod[0] = true;
-			gm.s.modules++;
-			gm.p.supplies -= 15;
 		}
 		else if (input == "2" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will increase your damage dealt by 1 per shot\n");
-			_getch();
-
-			gm.mod[1] = true;
-			gm.s.modules++;
-			gm.p.supplies -= 15;
 		}
 		else if (input == "3" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will increase your shield regeneration in combat by 1\n");
-			_getch();
-
-			gm.mod[2] = true;
-			gm.s.modules++;
-			gm.p.supplies -= 15;
 		}
 		else if (input == "4" && gm.p.supplies > 20 && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will allow you to cloak during combat, making all enemies miss\n");
-			_getch();
-
-			gm.mod[3] = true;
-			gm.s.modules++;
-			gm.p.supplies -= 20;
 		}
 		else if (input == "5")
 		{
 			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+
+		printf("Menu\n1: Confirm purchase\n2: Back\nInput: ");
+		cin >> i;
+
+		if (i == "1")
+		{
+			if (input == "1")
+			{
+				gm.s.modules++;
+				gm.mod[0] = true;
+				gm.p.supplies -= 15;
+			}
+			else if (input == "2")
+			{
+				gm.s.modules++;
+				gm.mod[1] = true;
+				gm.p.supplies -= 15;
+			}
+			else if (input == "3")
+			{
+				gm.s.modules++;
+				gm.mod[2] = true;
+				gm.p.supplies -= 15;
+			}
+			else if (input == "4")
+			{
+				gm.s.modules++;
+				gm.mod[3] = true;
+				gm.p.supplies -= 20;
+			}
+		}
+		else if (i == "2")
+		{
+			continue;
 		}
 		else
 		{
@@ -2274,6 +2344,40 @@ void NPC::modules(struct gm& gm)
 		_getch();
 		break;
 	}
+}
+
+void NPC::miyoshiBucks(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+
+		statDisplay(gm);
+
+		gotoxy(0, 0);
+		
+		printf("Menu: (Enter how much fuel you want 1:1 purchase)\nBack: S\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (upper(input) == "S")
+		{
+			break;
+		}
+		else if (!intCheck(input))
+		{
+			invalidInput();
+			continue;
+		}
+		
+	}
+}
+
+void NPC::genesisLoc(struct gm& gm)
+{
+
 }
 
 // Combat Class
@@ -2962,54 +3066,6 @@ void combat::sCombat(struct gm& gm)
 				if (stoi(input) == cm.es[i].ID)
 				{
 					enemyAttack = stoi(input) - 1;
-					while (1)
-					{
-						system("CLS");
-
-						cSD(enemyAttack);
-
-						mS(gm);
-						
-						gotoxy(0, 0);
-
-						printf("Menu:\n\nWeapons:\n");
-						for (int i = 0; i < gm.s.weapons; i++)
-						{
-							cout << i + 1 << ": " << gm.wD[gm.s.wID[i]].name << endl;
-						}
-						printf("Input: ");
-						cin >> input;
-
-						if (intCheck(input))
-						{
-							if (stoi(input) > gm.s.weapons)
-							{
-								invalidInput();
-								continue;
-							}
-
-							weaponU = gm.wD[gm.s.wID[stoi(input) - 1]].type;
-
-							for (int i = 0; i < gm.wD[weaponU].shots; i++)
-							{
-
-								damage = gm.wD[weaponU].minDamage + rand() % (gm.wD[weaponU].maxDamage - gm.wD[weaponU].minDamage + 1);
-
-								if (gm.mod[1]) // combat module
-								{
-									damage++;
-								}
-
-								d.push_back(damage);
-							}
-						}
-						else
-						{
-							invalidInput();
-							continue;
-						}
-						break;
-					}
 				}
 				else if (temp > enemies)
 				{
@@ -3020,6 +3076,55 @@ void combat::sCombat(struct gm& gm)
 				{
 					temp++;
 				}
+			}
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		break;
+	}
+
+	while (1)
+	{
+		system("CLS");
+
+		cSD(enemyAttack);
+
+		mS(gm);
+
+		gotoxy(0, 0);
+
+		printf("Menu:\n\nWeapons:\n");
+		for (int i = 0; i < gm.s.weapons; i++)
+		{
+			cout << i + 1 << ": " << gm.wD[gm.s.wID[i]].name << endl;
+		}
+		printf("Input: ");
+		cin >> input;
+
+		if (intCheck(input))
+		{
+			if (stoi(input) > gm.s.weapons)
+			{
+				invalidInput();
+				continue;
+			}
+
+			weaponU = gm.wD[gm.s.wID[stoi(input) - 1]].type;
+
+			for (int i = 0; i < gm.wD[weaponU].shots; i++)
+			{
+
+				damage = gm.wD[weaponU].minDamage + rand() % (gm.wD[weaponU].maxDamage - gm.wD[weaponU].minDamage + 1);
+
+				if (gm.mod[1]) // combat module
+				{
+					damage++;
+				}
+
+				d.push_back(damage);
 			}
 		}
 		else

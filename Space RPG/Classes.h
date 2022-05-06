@@ -27,6 +27,8 @@ public:
 	void sWeapons(struct gm& gm);
 	void gWeapons(struct gm& gm);
 	void repair(struct gm& gm);
+	void genesisLoc(struct gm& gm);
+	void miyoshiBucks(struct gm& gm);
 
 private:
 
