@@ -76,6 +76,7 @@ struct gm
 {
 	player p;
 	ship s;
+	items i;
 	vector <weaponData> wD;
 	vector <bool> mod;
 
@@ -125,4 +126,19 @@ struct shops
 {
 	int shopID;
 	int current;
+};
+
+struct items
+{
+	int mBC = 10;
+	int gLC = 20;
+	int fC = 1;
+	int sUC = 20;
+	int rC = 2;
+	int rMC = 15;
+	int cMC = 15;
+	int sMC = 15;
+	int cMC = 20;
+	int sWT = 10;
+
 };

@@ -1237,10 +1237,6 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 				{
 					friendlyShip(gm, t);
 				}
-				else if (encounter == 4)
-				{
-					n.shopManager(gm, t);
-				}
 				worldConstructor();
 				systemInfo(t, gm);
 			}
@@ -1434,9 +1430,10 @@ int encounterChance(vector <systems>&t)
 
 	ran = 1 + rand() % (10);
 
-	if (t[current].shop == true) // shop
+	if (t[current].objective)
 	{
-		encounter = 4;
+		t[current].enemies = 2 + rand() % (4);
+		encounter = 2;
 	}
 	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0) // enemies attack
 	{
@@ -1462,7 +1459,7 @@ int encounterChance(vector <systems>&t)
 		{
 			if (t[current].dangerLevel == 3)
 			{
-				t[current].enemies = 1 + rand() % (4);
+				t[current].enemies = 2 + rand() % (3);
 			}
 			else if (t[current].dangerLevel == 2)
 			{
@@ -1800,6 +1797,8 @@ void NPC::statDisplay(struct gm& gm)
 	cout << "Weapons: " << gm.s.weapons << " / " << gm.s.maxWeap;
 	gotoxy(100, 9);
 	cout << "Modules: " << gm.s.modules << " / " << gm.s.modulesMax;
+	gotoxy(100, 10);
+	cout << "Ship Level " << gm.s.shipID + 1 << " / 3";
 }
 
 void NPC::shopManager(struct gm &gm, vector<systems> &t)
@@ -1818,15 +1817,18 @@ void NPC::shopManager(struct gm &gm, vector<systems> &t)
 
 	if (sh[shopCID].shopID == 0)
 	{
-		generalShop(gm);
+		miyoshiShop(gm, t);
+		//generalShop(gm);
 	}
 	else if (sh[shopCID].shopID == 1)
 	{
-		shipShop(gm);
+		miyoshiShop(gm, t);
+		//shipShop(gm);
 	}
 	else if (sh[shopCID].shopID == 2)
 	{
-		weaponShop(gm);
+		miyoshiShop(gm, t);
+		//weaponShop(gm);
 	}
 	else if (sh[shopCID].shopID == 3)
 	{
@@ -2035,7 +2037,7 @@ void NPC::fuelPurch(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu: (Enter how much fuel you want. Cost - 1 Supply)\nBack: S\nInput: ");
+		cout << "Menu: (Enter how much fuel you want. Cost - " << gm.i.fC << " Supply)\nBack: S\nInput: ";
 		cin >> input;
 
 		
@@ -2053,7 +2055,7 @@ void NPC::fuelPurch(struct gm& gm)
 		}
 		else
 		{
-			if (stoi(input) > gm.p.supplies || stoi(input) + gm.s.fuel > gm.s.fuelMax)
+			if (stoi(input) * gm.i.fC > gm.p.supplies || stoi(input) + gm.s.fuel > gm.s.fuelMax)
 			{
 				invalidInput();
 				continue;
@@ -2061,7 +2063,7 @@ void NPC::fuelPurch(struct gm& gm)
 			else
 			{
 				gm.s.fuel += stoi(input);
-				gm.p.supplies -= stoi(input);
+				gm.p.supplies -= stoi(input) * gm.i.fC;
 
 				system("CLS");
 				printf("Succesful Purchase! Press any key to continue");
@@ -2086,14 +2088,14 @@ void NPC::shipPurch(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu:\n1: New ship - 20 supplies\n2: Back\nInput: ");
+		cout << "Menu:\n1: New ship - " << gm.i.sUC << " Supplies\n2: Back\nInput: ";
 		cin >> input;
 		system("CLS");
 
-		if (input == "1" && gm.p.supplies >= 20 && gm.s.shipID < 2)
+		if (input == "1" && gm.p.supplies >= gm.i.sUC && gm.s.shipID < 2)
 		{
 			gm.s.shipID++;
-			gm.p.supplies -= 20;
+			gm.p.supplies -= gm.i.sUC;
 
 			printf("Succesful Purchase! Press any key to continue");
 			_getch();
@@ -2239,7 +2241,7 @@ void NPC::repair(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu: (Enter how much health you want. Cost - 2 Supplies)\nBack: S\nInput: ");
+		cout << "Menu: (Enter how much health you want. Cost - " << gm.i.rC << " Supplies)\nBack: S\nInput: ";
 		cin >> input;
 
 
@@ -2257,7 +2259,7 @@ void NPC::repair(struct gm& gm)
 		}
 		else
 		{
-			if (stoi(input) * 2 > gm.p.supplies || stoi(input) + gm.s.health > gm.s.healthMax)
+			if (stoi(input) * gm.i.rC > gm.p.supplies || stoi(input) + gm.s.health > gm.s.healthMax)
 			{
 				invalidInput();
 				continue;
@@ -2265,7 +2267,7 @@ void NPC::repair(struct gm& gm)
 			else
 			{
 				gm.s.health += stoi(input);
-				gm.p.supplies -= stoi(input) * 2;
+				gm.p.supplies -= stoi(input) * gm.i.rC;
 
 				system("CLS");
 				printf("Succesful Purchase! Press any key to continue");
@@ -2385,7 +2387,7 @@ void NPC::miyoshiBucks(struct gm& gm)
 
 		gotoxy(0, 0);
 		
-		printf("Menu: (Enter how many miyoshiBucks you want. Cost - 5 Supplies)\nBack: S\nInput: ");
+		cout << "Menu: (Enter how many miyoshiBucks you want. Cost - " << gm.i.mBC << " Supplies)\nBack: S\nInput : ";
 		cin >> input;
 		system("CLS");
 
@@ -2399,10 +2401,10 @@ void NPC::miyoshiBucks(struct gm& gm)
 			continue;
 		}
 
-		if (stoi(input) * 5 < gm.p.supplies)
+		if (stoi(input) * gm.i.mBC < gm.p.supplies)
 		{
 			gm.p.miyoshiB += stoi(input);
-			gm.p.supplies -= stoi(input) * 5;
+			gm.p.supplies -= stoi(input) * gm.i.mBC;
 		}
 		else
 		{
@@ -2429,13 +2431,13 @@ void NPC::genesisLoc(vector<systems>& t, struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu (Cost - 20 Supplies):\n1: Confirm Purchase\n2: Back\nInput: ");
+		cout << "Menu (Cost - " << gm.i.gLC << " Supplies):\n1: Confirm Purchase\n2: Back\nInput: ";
 		cin >> input;
 		system("CLS");
 
-		if (input == "1" && gm.p.supplies >= 20)
+		if (input == "1" && gm.p.supplies >= gm.i.gLC)
 		{
-			gm.p.supplies -= 20;
+			gm.p.supplies -= gm.i.gLC;
 
 			for (int i = 0; i < 100; i++)
 			{
@@ -2474,7 +2476,7 @@ void NPC::solidWorks(struct gm& gm)
 		"Sketches are very handy.",
 		"Assemblies are nice for mutliple piece projects.",
 		"I can tell you what's wrong but it'll cost 25% of your grade.",
-		"You've got 3 mistakes... somwhere.",
+		"You've got 3 mistakes... somewhere.",
 		"It's goalsheet day",
 		"What do you want?",
 		"Quit touching each other.",
@@ -2492,14 +2494,14 @@ void NPC::solidWorks(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu (Cost - 10 Supplies):\n1: Confirm Purchase\n2: Back\nInput: ");
+		cout << "Menu (Cost - " << gm.i.sWT << " Supplies):\n1: Confirm Purchase\n2: Back\nInput: ";
 		cin >> input;
 		system("CLS");
 
-		if (input == "1" && gm.p.supplies >= 10)
+		if (input == "1" && gm.p.supplies >= gm.i.sWT)
 		{
-			gm.p.supplies -= 10;
-			cout << tips[rand() % 15] << endl;
+			gm.p.supplies -= gm.i.sWT;
+			cout << tips[rand() % tips.size()] << endl;
 			_getch();
 			continue;
 		}
