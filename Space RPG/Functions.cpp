@@ -39,6 +39,51 @@ void shopRan(class NPC& n, vector <systems>& t);
 void mapStats(struct gm& gm);
 void weaponValues(struct gm& gm);
 
+// variables
+
+bool skip = false;
+
+// multithreading
+
+DWORD WINAPI InputThread(LPVOID data)
+{
+	const char ESC = 27;
+	char input;
+	while (1)
+	{
+		input = _getche();
+		if (input == ESC)
+		{
+			skip = true;
+			break;
+		}
+	}
+	return 0;
+}
+
+void mScrawlf(string s)
+{
+	for (int i = 0; i < s.size(); i++)
+	{
+		if (skip)
+		{
+			system("CLS");
+			break;
+		}
+		cout << s[i];
+		Sleep(30);
+	}
+}
+
+void mSleep(int t)
+{
+	while (!skip && t > 0)
+	{
+		Sleep(10);
+		t -= 10;
+	}
+}
+
 // Useful Functions
 
 void gotoxy(int x, int y) // credit: Miyoshi
@@ -66,7 +111,7 @@ void scrawlf(string s)
 	for (int i = 0; i < s.size(); i++)
 	{
 		cout << s[i];
-		Sleep(40);
+		Sleep(30);
 	}
 }
 
@@ -1285,17 +1330,23 @@ void moveUpdate(struct gm& gm)
 
 void gameOver()
 {
+	HANDLE threadHandle;
+	DWORD threadID;
+
+	threadHandle = CreateThread(NULL, 0, InputThread, (LPVOID)1, 0, &threadID);
+	
 	system("CLS");
-	scrawlf("You have failed your mission, and as you and your crew slowly succumb to the dangers of space, you realize you shall never know the fate of Earth, and along with it... \nHumanity");
-	Sleep(800);
-	printf(".");
-	Sleep(300);
-	printf(".");
-	Sleep(300);
-	printf(".");
-	Sleep(800);
-	scrawlf("\nGoodbye");
-	Sleep(1200);
+
+	gotoxy(0, 4);
+	printf("Press ESC to skip.");
+	gotoxy(0, 0);
+	
+	mScrawlf("You have failed your mission, and as you and your crew slowly succumb to the dangers of space, you realize you shall never know the fate of Earth, and along with it... \nHumanity...");
+	mSleep(800);
+	mScrawlf("\nGoodbye");
+	mSleep(1200);
+
+	skip = false;
 }
 
 void shipValues(struct gm& gm)
@@ -1332,18 +1383,18 @@ void weaponValues(struct gm& gm)
 	gm.wD[1].cost = 6;
 	gm.wD[1].name = "Heavy Cannon";
 
-	gm.wD[2].minDamage = 2;
-	gm.wD[2].maxDamage = 4;
+	gm.wD[2].minDamage = 3;
+	gm.wD[2].maxDamage = 5;
 	gm.wD[2].accuracy = 0.7;
-	gm.wD[2].shots = 2;
-	gm.wD[2].cost = 3;
+	gm.wD[2].shots = 4;
+	gm.wD[2].cost = 6;
 	gm.wD[2].name = "Light Cannon";
 
 	gm.wD[3].minDamage = 1;
 	gm.wD[3].maxDamage = 1;
 	gm.wD[3].accuracy = 0.1;
-	gm.wD[3].shots = 50;
-	gm.wD[3].cost = 3;
+	gm.wD[3].shots = 30;
+	gm.wD[3].cost = 5;
 	gm.wD[3].name = "PD Cannon";
 
 	gm.wD[4].minDamage = 3;
@@ -1490,12 +1541,24 @@ int encounterChance(vector <systems>&t)
 
 void objectiveFound(struct gm& gm)
 {
+	HANDLE threadHandle;
+	DWORD threadID;
+
+	threadHandle = CreateThread(NULL, 0, InputThread, (LPVOID)1, 0, &threadID);
+
 	system("CLS");
-	scrawlf("There it is, from the bridge of your ship you see it... A new hope, a candidate for life, \"I did it...\" you think to yourself.\n");
-	scrawlf("Your name... Captain ");
-	scrawlf(gm.p.name);
-	scrawlf(" will be written in the history books, forever remembered as the one who saved humanity.\n");
-	_getch();
+
+	gotoxy(0, 4);
+	printf("Press ESC to skip.");
+	gotoxy(0, 0);
+
+	mScrawlf("There it is, from the bridge of your ship you see it... A new hope, a candidate for life, \"I did it...\" you think to yourself.\n");
+	mScrawlf("Your name... Captain ");
+	mScrawlf(gm.p.name);
+	mScrawlf(" will be written in the history books, forever remembered as the one who saved humanity.\n");
+	mSleep(1200);
+
+	skip = false;
 }
 
 void mapStats(struct gm& gm)
@@ -1719,6 +1782,8 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 void gameRestart(struct gm& gm, vector <systems>& t)
 {
+	crew temp;
+
 	gm.p.victory = false;
 	gm.p.alive = true;
 	gm.inGame = false;
@@ -1754,6 +1819,12 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 	for (int i = 0; i < 4; i++)
 	{
 		gm.mod.push_back(0);
+	}
+
+	gm.crew.clear();
+	for (int i = 0; i < 3; i++)
+	{
+		gm.crew.push_back(temp);
 	}
 
 }
@@ -1817,18 +1888,15 @@ void NPC::shopManager(struct gm &gm, vector<systems> &t)
 
 	if (sh[shopCID].shopID == 0)
 	{
-		miyoshiShop(gm, t);
-		//generalShop(gm);
+		generalShop(gm);
 	}
 	else if (sh[shopCID].shopID == 1)
 	{
-		miyoshiShop(gm, t);
-		//shipShop(gm);
+		shipShop(gm);
 	}
 	else if (sh[shopCID].shopID == 2)
 	{
-		miyoshiShop(gm, t);
-		//weaponShop(gm);
+		weaponShop(gm);
 	}
 	else if (sh[shopCID].shopID == 3)
 	{
@@ -2292,29 +2360,30 @@ void NPC::modules(struct gm& gm)
 
 		gotoxy(0, 0);
 
-		printf("Menu:\n1: Repair Module - 15 Supplies\n2: Combat Module - 15 Supplies\n3: Shield Booster - 15 Supplies\n4: Cloaking Module - 20 Supplies\n5: Back\nInput: ");
+		cout << "Menu:\n1: Repair Module - " << gm.i.rMC << " Supplies\n2: Combat Module - " << gm.i.cMC << " Supplies\n3: Shield Booster - " << gm.i.sMC << " Supplies";
+		cout << "\n4: Cloaking Module - " << gm.i.clMC << " Supplies\n5: Back\nInput: ";
 		cin >> input;
 		system("CLS");
 
-		if (!intCheck(input) || stoi(input) > 5 || stoi(input) < 1)
+		if (!intCheck(input) || stoi(input) > gm.mod.size() + 1 || stoi(input) < 1)
 		{
 			invalidInput();
 			continue;
 		}
 
-		if (input == "1" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
+		if (input == "1" && gm.p.supplies > gm.i.rMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will allow you to heal 1 HP for free every time you move\n");
 		}
-		else if (input == "2" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
+		else if (input == "2" && gm.p.supplies > gm.i.cMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will increase your damage dealt by 1 per shot\n");
 		}
-		else if (input == "3" && gm.p.supplies > 15 && gm.s.modules < gm.s.modulesMax)
+		else if (input == "3" && gm.p.supplies > gm.i.sMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will increase your shield regeneration in combat by 1\n");
 		}
-		else if (input == "4" && gm.p.supplies > 20 && gm.s.modules < gm.s.modulesMax)
+		else if (input == "4" && gm.p.supplies > gm.i.clMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will allow you to cloak during combat, making all enemies miss\n");
 		}
@@ -2328,7 +2397,7 @@ void NPC::modules(struct gm& gm)
 			continue;
 		}
 
-		printf("Menu\n1: Confirm purchase\n2: Back\nInput: ");
+		printf("Menu:\n1: Confirm purchase\n2: Back\nInput: ");
 		cin >> i;
 
 		if (i == "1")
@@ -2337,25 +2406,25 @@ void NPC::modules(struct gm& gm)
 			{
 				gm.s.modules++;
 				gm.mod[0] = true;
-				gm.p.supplies -= 15;
+				gm.p.supplies -= gm.i.rMC;
 			}
 			else if (input == "2")
 			{
 				gm.s.modules++;
 				gm.mod[1] = true;
-				gm.p.supplies -= 15;
+				gm.p.supplies -= gm.i.cMC;
 			}
 			else if (input == "3")
 			{
 				gm.s.modules++;
 				gm.mod[2] = true;
-				gm.p.supplies -= 15;
+				gm.p.supplies -= gm.i.sMC;
 			}
 			else if (input == "4")
 			{
 				gm.s.modules++;
 				gm.mod[3] = true;
-				gm.p.supplies -= 20;
+				gm.p.supplies -= gm.i.clMC;
 			}
 		}
 		else if (i == "2")

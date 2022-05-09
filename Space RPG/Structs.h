@@ -33,6 +33,15 @@ struct player
 	bool victory = false;
 };
 
+struct crew
+{
+	vector <bool> weapon;
+
+	int health = 10, healthMax = 10;
+
+	bool alive = true;
+};
+
 struct ship
 {
 	string name;
@@ -72,12 +81,28 @@ struct weaponData
 	string name;
 };
 
+struct items
+{
+	int mBC = 10; // miyoshi bucl
+	int gLC = 20; // genesis location
+	int fC = 1; // fuel
+	int sUC = 20; // ship upgrade
+	int rC = 2; // repair
+	int rMC = 15; // repair module
+	int cMC = 15; // combat module
+	int sMC = 15; // shield module
+	int clMC = 20; // cloak module
+	int sWT = 10; // solid works tip
+
+};
+
 struct gm
 {
 	player p;
 	ship s;
 	items i;
 	vector <weaponData> wD;
+	vector <crew> crew;
 	vector <bool> mod;
 
 	string seed;
@@ -126,19 +151,4 @@ struct shops
 {
 	int shopID;
 	int current;
-};
-
-struct items
-{
-	int mBC = 10;
-	int gLC = 20;
-	int fC = 1;
-	int sUC = 20;
-	int rC = 2;
-	int rMC = 15;
-	int cMC = 15;
-	int sMC = 15;
-	int cMC = 20;
-	int sWT = 10;
-
 };
