@@ -30,7 +30,7 @@ void gameManager(struct gm &gm, vector <systems>& t, class NPC& n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
 void gameRestart(struct gm& gm, vector <systems>& t);
-int encounterChance(vector <systems>& t);
+int encounterChance(struct gm& gm, vector <systems>& t);
 void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
 void moveUpdate(struct gm& gm);
@@ -1265,7 +1265,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 			moveUpdate(gm);
 			exploredUpdater(t);
 			systemInfo(t, gm);
-			encounter = encounterChance(t);
+			encounter = encounterChance(gm, t);
 			if (encounter > 0)
 			{
 				if (encounter == 1 || encounter == 2)
@@ -1273,7 +1273,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 					c.setComType(encounter - 1);
 					c.setEnemies(t[systemCurrent(t)].enemies);
 					c.combatManager(gm, t);
-					if (gm.p.alive == false)
+					if (!gm.p.alive)
 					{
 						break;
 					}
@@ -1469,7 +1469,7 @@ void friendlyShip(struct gm& gm, vector <systems>& t)
 	_getch();
 }
 
-int encounterChance(vector <systems>&t)
+int encounterChance(struct gm& gm, vector <systems>&t)
 {
 	int current;
 	int enemies = 0;
@@ -1483,7 +1483,7 @@ int encounterChance(vector <systems>&t)
 
 	if (t[current].objective)
 	{
-		t[current].enemies = 2 + rand() % (4);
+		t[current].enemies = gm.p.difficulty + rand() % (4);
 		encounter = 2;
 	}
 	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0) // enemies attack
@@ -1524,7 +1524,7 @@ int encounterChance(vector <systems>&t)
 		}
 		
 	}
-	else if (ran <= 10 && ran > 9 && t[current].encountered == false) // friendly ships with supplies
+	else if (ran <= 10 && ran > 9 && t[current].encountered == false && t[current].dangerLevel < 2) // friendly ships with supplies
 	{
 		t[current].addedSup = 2 + rand() % (6);
 		encounter = 3;
@@ -1821,10 +1821,10 @@ void gameRestart(struct gm& gm, vector <systems>& t)
 		gm.mod.push_back(0);
 	}
 
-	gm.crew.clear();
+	gm.cr.clear();
 	for (int i = 0; i < 3; i++)
 	{
-		gm.crew.push_back(temp);
+		gm.cr.push_back(temp);
 	}
 
 }
@@ -2613,9 +2613,9 @@ void combat::combatManager(struct gm& gm, vector <systems>& t)
 		spaceIntro();
 		sStats();
 
-		while (enemies >= 1 && gm.s.alive)
+		while (enemies >= 1 && gm.s.alive && !escape)
 		{
-			sCombat(gm);
+			sCombat(gm, t);
 			esCombat(gm);
 		}
 	}
@@ -3230,20 +3230,16 @@ void combat::mS(struct gm& gm)
 	cout << (1 - gm.s.evasion) * 100 << "% Evasion Chance";
 }
 
-void combat::sCombat(struct gm& gm)
+void combat::sCombat(struct gm& gm, vector <systems>& s)
 {
 	string input;
 
-	vector <int> d;
-	vector <bool> h;
-
-	int temp = 1;
-	int damage = 0;
+	int temp;
+	int select = 1;
+	int eJ;
+	int clM = -1;
 	int enemyAttack;
-	int weaponU;
-	int shotsHit = 0;
-	float cTH;
-	float fTemp;
+	int current;
 
 	while (1)
 	{
@@ -3255,16 +3251,27 @@ void combat::sCombat(struct gm& gm)
 
 		printf("Menu:\n\nAttack:\n");
 
-		h.clear();
-		d.clear();
-
 		for (int i = 0; i < enemies; i++)
 		{
 				cout << cm.es[i].ID << ": " << cm.es[i].enemTypeName << " " << cm.es[i].health << "/" << cm.es[i].healthMax << " HP" << endl;
+				select++;
+		}
+
+		gotoxy(0, select + 3);
+		printf("Defend:\n");
+		cout << select << ": Emergency Jump\n";
+		eJ = select;
+		select++;
+		if (gm.mod[3])
+		{
+			cout << select << ": Cloaking Module\n";
+			clM = select;
+			select++;
 		}
 
 		printf("Input: ");
 		cin >> input;
+		system("CLS");
 
 		if (intCheck(input))
 		{
@@ -3273,16 +3280,109 @@ void combat::sCombat(struct gm& gm)
 				if (stoi(input) == cm.es[i].ID)
 				{
 					enemyAttack = stoi(input) - 1;
+					sACombat(gm, enemyAttack);
 				}
-				else if (temp > enemies)
+			}
+			if (stoi(input) == eJ)
+			{
+				printf("Are you sure you want to activate your Emergency Jump? A failed jump will result in a loss of 5 HP\nMenu:\n1: Confirm\n2: Back\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "1")
 				{
-					invalidInput();
+					current = systemCurrent(s);
+
+					if (rand() % 1 + (100) > 20)
+					{
+						temp = rand() % 8;
+
+						if (s[current].x > 0 && temp == 0)
+						{
+							s[current - 1].current = true;
+						}
+						if (s[current].x < 9 && temp == 1)
+						{
+							s[current + 1].current = true;
+						}
+						if (s[current].y > 0 && temp == 2)
+						{
+							s[current - 10].current = true;
+						}
+						if (s[current].y < 9 && temp == 3)
+						{
+							s[current + 10].current = true;
+						}
+						if (s[current].x < 9 && s[current].y < 9 && temp == 4)
+						{
+							s[current + 11].current = true;
+						}
+						if (s[current].x > 0 && s[current].y < 9 && temp == 5)
+						{
+							s[current + 9].current = true;
+						}
+						if (s[current].x > 0 && s[current].y > 0 && temp == 6)
+						{
+							s[current - 11].current = true;
+						}
+						if (s[current].x < 9 && s[current].y > 0 && temp == 7)
+						{
+							s[current - 9].current = true;
+						}
+						else
+						{
+							printf("Jump has failed, you have lost 5 HP\n");
+							_getch();
+							gm.s.health -= 5;
+							break;
+						}
+						printf("Succesul jump! You have jumped to a random adjacent sector\n");
+						current = systemCurrent(s);
+						s[current].current = false;
+					}
+					else
+					{
+						printf("Jump has failed, you have lost 5 HP\n");
+						_getch();
+						gm.s.health -= 5;
+					}
+				}
+				else if (input == "2")
+				{
 					continue;
 				}
 				else
 				{
-					temp++;
+					invalidInput();
+					continue;
 				}
+			}
+			else if (stoi(input) == clM)
+			{
+				printf("Are you sure you want to activate your cloak?\nMenu:\n1: Confirm\n2: Back\nInput: ");
+				cin >> input;
+				system("CLS");
+
+				if (input == "1")
+				{
+					printf("Cloak activated.\n");
+					cloaked = true;
+					_getch();
+				}
+				else if (input == "2")
+				{
+					continue;
+				}
+				else
+				{
+					invalidInput();
+					continue;
+				}				
+			}
+			else if (stoi(input) > select - 1)
+			{
+				invalidInput();
+				continue;
 			}
 		}
 		else
@@ -3292,6 +3392,20 @@ void combat::sCombat(struct gm& gm)
 		}
 		break;
 	}
+}
+
+void combat::sACombat(struct gm& gm, int enemyAttack)
+{
+	string input;
+
+	vector <int> d;
+	vector <bool> h;
+
+	int weaponU;
+	int damage = 0;
+	int shotsHit = 0;
+	float cTH;
+	float fTemp;
 
 	while (1)
 	{
@@ -3342,7 +3456,7 @@ void combat::sCombat(struct gm& gm)
 		break;
 	}
 
-	for (float i = 0; i < gm.wD[weaponU].shots; i+= 1)
+	for (float i = 0; i < gm.wD[weaponU].shots; i += 1)
 	{
 		cTH = (gm.wD[weaponU].accuracy * cm.es[enemyAttack].evasion) + (float(i) / 100);
 
@@ -3366,7 +3480,7 @@ void combat::sCombat(struct gm& gm)
 	if (shotsHit >= 1)
 	{
 		cout << "Hit! ";
-		
+
 		if (shotsHit >= 2)
 		{
 			cout << shotsHit << " Shots hit their target! ";
@@ -3492,6 +3606,11 @@ void combat::esCombat(struct gm& gm)
 			gm.s.shield = gm.s.shieldMax;
 		}
 	}
+}
+
+void combat::gCombat(struct gm& gm)
+{
+
 }
 
 // Good work Joey!! Keep doing what you're doing!!!!!!! :) :) :)

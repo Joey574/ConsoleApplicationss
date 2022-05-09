@@ -54,7 +54,8 @@ public:
 	void spaceIntro();
 	void cSD(int enemyAttack);
 	void mS(struct gm& gm);
-	void sCombat(struct gm& gm);
+	void sCombat(struct gm& gm, vector <systems>& s);
+	void sACombat(struct gm& gm, int enemyAttack);
 	void esCombat(struct gm& gm);
 	void gCombat(struct gm& gm);
 
@@ -62,6 +63,8 @@ private:
 	int enemyRace;
 	int comType; // 0 = boarding, 1 = ship to ship
 	int enemies; // # of enemies
+	bool cloaked = false;
+	bool escape = false;
 
 	string enemRaceName;
 

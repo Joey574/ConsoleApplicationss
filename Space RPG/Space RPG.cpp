@@ -47,7 +47,7 @@ int main()
 
 	for (int i = 0; i < 3; i++)
 	{
-		gm.crew.push_back(temp);
+		gm.cr.push_back(temp);
 	}
 
 	introArt();

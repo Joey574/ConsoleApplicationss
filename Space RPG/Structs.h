@@ -83,7 +83,7 @@ struct weaponData
 
 struct items
 {
-	int mBC = 10; // miyoshi bucl
+	int mBC = 10; // miyoshi buck
 	int gLC = 20; // genesis location
 	int fC = 1; // fuel
 	int sUC = 20; // ship upgrade
@@ -93,7 +93,6 @@ struct items
 	int sMC = 15; // shield module
 	int clMC = 20; // cloak module
 	int sWT = 10; // solid works tip
-
 };
 
 struct gm
@@ -102,7 +101,7 @@ struct gm
 	ship s;
 	items i;
 	vector <weaponData> wD;
-	vector <crew> crew;
+	vector <crew> cr;
 	vector <bool> mod;
 
 	string seed;
