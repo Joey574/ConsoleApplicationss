@@ -42,6 +42,7 @@ void weaponValues(struct gm& gm);
 // variables
 
 bool skip = false;
+bool finished = false;
 
 // multithreading
 
@@ -52,7 +53,7 @@ DWORD WINAPI InputThread(LPVOID data)
 	while (1)
 	{
 		input = _getche();
-		if (input == ESC)
+		if (input == ESC && !finished)
 		{
 			skip = true;
 			break;
@@ -886,7 +887,7 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 
 		menuArt();
 
-		if (gm.inGame == false) // check to see if game has already been started
+		if (!gm.inGame) // check to see if game has already been started
 		{
 			printf("Menu:\n1: Start Game\n2: High Scores\n3: Help\n4: Credits\n5: Save/Load\n6: Exit\nInput: ");
 			s = 1;
@@ -911,12 +912,7 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 		cin >> input;
 		system("CLS");
 
-		if (!intCheck(input))
-		{
-			invalidInput();
-			continue;
-		}
-		if (stoi(input) > e || stoi(input) < 1)
+		if (!intCheck(input) || stoi(input) > e || stoi(input) < 1)
 		{
 			invalidInput();
 			continue;
@@ -928,7 +924,7 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 			gameRestart(gm, t);
 			gameManager(gm, t, n);
 		}
-		else if (stoi(input) == r)
+		else if (stoi(input) == r) // resume game
 		{
 			gameManager(gm, t, n);
 		}
@@ -1277,6 +1273,11 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 					{
 						break;
 					}
+					if (c.getEscape())
+					{
+						exploredUpdater(t);
+						systemInfo(t, gm);
+					}
 				}
 				else if (encounter == 3)
 				{
@@ -1335,6 +1336,8 @@ void gameOver()
 
 	threadHandle = CreateThread(NULL, 0, InputThread, (LPVOID)1, 0, &threadID);
 	
+	finished = false;
+
 	system("CLS");
 
 	gotoxy(0, 4);
@@ -1347,6 +1350,7 @@ void gameOver()
 	mSleep(1200);
 
 	skip = false;
+	finished = true;
 }
 
 void shipValues(struct gm& gm)
@@ -1546,6 +1550,8 @@ void objectiveFound(struct gm& gm)
 
 	threadHandle = CreateThread(NULL, 0, InputThread, (LPVOID)1, 0, &threadID);
 
+	finished = false;
+
 	system("CLS");
 
 	gotoxy(0, 4);
@@ -1559,6 +1565,7 @@ void objectiveFound(struct gm& gm)
 	mSleep(1200);
 
 	skip = false;
+	finished = true;
 }
 
 void mapStats(struct gm& gm)
@@ -2194,6 +2201,7 @@ void NPC::sWeapons(struct gm& gm)
 {
 	string input;
 	int t;
+	bool temp = false;
 
 	while (1)
 	{
@@ -2212,12 +2220,7 @@ void NPC::sWeapons(struct gm& gm)
 		cin >> input;
 		system("CLS");
 
-		if (intCheck(input) == false)
-		{
-			invalidInput();
-			continue;
-		}
-		if (stoi(input) > 11)
+		if (!intCheck(input) || stoi(input) > 11)
 		{
 			invalidInput();
 			continue;
@@ -2240,8 +2243,13 @@ void NPC::sWeapons(struct gm& gm)
 				Sleep(200);
 				printf(".");
 				Sleep(500);
-				continue;
+				temp = true;
 			}
+		}
+
+		if (temp)
+		{
+			continue;
 		}
 
 		for (int i = 0; i < 10; i++)
@@ -2599,10 +2607,19 @@ void combat::setEnemies(int e)
 	enemies = e;
 }
 
+bool combat::getEscape()
+{
+	return escape;
+}
+
 void combat::combatManager(struct gm& gm, vector <systems>& t)
 {
 	system("CLS");
 	enemyTypes(gm, t);
+
+	escape = false;
+	cloaked = false;
+
 	if (comType == 0) // ground
 	{
 		groundIntro();
@@ -2616,7 +2633,10 @@ void combat::combatManager(struct gm& gm, vector <systems>& t)
 		while (enemies >= 1 && gm.s.alive && !escape)
 		{
 			sCombat(gm, t);
-			esCombat(gm);
+			if (!escape)
+			{
+				esCombat(gm);
+			}
 		}
 	}
 }
@@ -3285,15 +3305,16 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 			}
 			if (stoi(input) == eJ)
 			{
-				printf("Are you sure you want to activate your Emergency Jump? A failed jump will result in a loss of 5 HP\nMenu:\n1: Confirm\n2: Back\nInput: ");
+				cout << "Are you sure you want to activate your Emergency Jump? A failed jump will result in a loss of " << gm.i.eJD << " HP\nMenu:\n1: Confirm\n2: Back\nInput: ";
 				cin >> input;
 				system("CLS");
 
 				if (input == "1")
 				{
 					current = systemCurrent(s);
+					temp = rand() % 1 + (100);
 
-					if (rand() % 1 + (100) > 20)
+					if (temp > 50)
 					{
 						temp = rand() % 8;
 
@@ -3301,31 +3322,31 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 						{
 							s[current - 1].current = true;
 						}
-						if (s[current].x < 9 && temp == 1)
+						else if (s[current].x < 9 && temp == 1)
 						{
 							s[current + 1].current = true;
 						}
-						if (s[current].y > 0 && temp == 2)
+						else if (s[current].y > 0 && temp == 2)
 						{
 							s[current - 10].current = true;
 						}
-						if (s[current].y < 9 && temp == 3)
+						else if (s[current].y < 9 && temp == 3)
 						{
 							s[current + 10].current = true;
 						}
-						if (s[current].x < 9 && s[current].y < 9 && temp == 4)
+						else if (s[current].x < 9 && s[current].y < 9 && temp == 4)
 						{
 							s[current + 11].current = true;
 						}
-						if (s[current].x > 0 && s[current].y < 9 && temp == 5)
+						else if (s[current].x > 0 && s[current].y < 9 && temp == 5)
 						{
 							s[current + 9].current = true;
 						}
-						if (s[current].x > 0 && s[current].y > 0 && temp == 6)
+						else if (s[current].x > 0 && s[current].y > 0 && temp == 6)
 						{
 							s[current - 11].current = true;
 						}
-						if (s[current].x < 9 && s[current].y > 0 && temp == 7)
+						else if (s[current].x < 9 && s[current].y > 0 && temp == 7)
 						{
 							s[current - 9].current = true;
 						}
@@ -3333,18 +3354,19 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 						{
 							printf("Jump has failed, you have lost 5 HP\n");
 							_getch();
-							gm.s.health -= 5;
+							gm.s.health -= gm.i.eJD;
 							break;
 						}
 						printf("Succesul jump! You have jumped to a random adjacent sector\n");
-						current = systemCurrent(s);
+						_getch();
 						s[current].current = false;
+						escape = true;
 					}
 					else
 					{
 						printf("Jump has failed, you have lost 5 HP\n");
 						_getch();
-						gm.s.health -= 5;
+						gm.s.health -= gm.i.eJD;
 					}
 				}
 				else if (input == "2")

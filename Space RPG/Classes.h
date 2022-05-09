@@ -45,6 +45,9 @@ public:
 	void setComType(int c);
 	void setEnemies(int e);
 
+	// getters
+	bool getEscape();
+
 	// accessories
 	void combatManager(struct gm &gm, vector <systems>&s);
 	void enemyTypes(struct gm& gm, vector <systems>& t);

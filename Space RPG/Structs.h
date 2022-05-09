@@ -6,11 +6,14 @@ using namespace std;
 
 struct systems
 {
+	vector <int> enemyTypes;
+
     int dangerLevel;
     int supplies;
     int x, y;
     int systemID;
 	int enemies = 0;
+	int enemyRace;
 	int addedSup = 0;
     bool explored;
 	bool encountered = false;
@@ -93,6 +96,7 @@ struct items
 	int sMC = 15; // shield module
 	int clMC = 20; // cloak module
 	int sWT = 10; // solid works tip
+	int eJD = 5; // emergency jump damage
 };
 
 struct gm
