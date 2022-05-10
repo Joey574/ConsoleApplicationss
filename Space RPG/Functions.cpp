@@ -35,7 +35,7 @@ void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
 void moveUpdate(struct gm& gm);
 void shipValues(struct gm& gm);
-void shopRan(class NPC& n, vector <systems>& t);
+void shopRan(class NPC& n, vector <systems>& t, struct gm& gm);
 void mapStats(struct gm& gm);
 void weaponValues(struct gm& gm);
 
@@ -827,7 +827,7 @@ void load(struct gm& gm, vector <systems>& t, class NPC& n)
 		gm.inGame = true;
 
 		worldRan(gm.p.difficulty, t, gm.seed, gm);
-		shopRan(n, t);
+		shopRan(n, t, gm);
 		shipValues(gm);
 		weaponValues(gm);	
 
@@ -1166,26 +1166,43 @@ void worldRan(int difficulty, vector <systems>& t, string input, struct gm& gm)
 	t[50 + rand() % 50].objective = true; // setting random system to be the "objective"
 }
 
-string seed()
+string seed(struct gm& gm)
 {
 	string input;
+	string s;
 
 	system("CLS");
 	printf("World Seed: "); // getting user inputted value for world seed
 	cin >> input;
-	system("CLS");
+	while (1)
+	{
+		system("CLS");
+		printf("Number of Shops (1 - 10): ");
+		cin >> s;
+		system("CLS");
 
+		if (intCheck(s) && stoi(s) > 0 && stoi(s) < 11)
+		{
+			gm.i.shopNum = stoi(s);
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+		break;
+	}
 	return input;
 }
 
-void shopRan(class NPC &n, vector <systems>& t)
+void shopRan(class NPC &n, vector <systems>& t, struct gm& gm)
 {
 	int i = 0;
 
 	vector <int> id;
 	vector <int> c;
 
-	while (i < 6)  // finding 6 random systems from ID 19-99 to be used for shops
+	while (i < gm.i.shopNum) // finding 6 random systems from ID 19-99 to be used for shops
 	{
 		int q = 20 + rand() % 80;
 		if (t[q].shop == false && t[q].objective == false)
@@ -1229,9 +1246,9 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 	{
 		gameStart(gm, t);
 		difficultySet(gm);
-		gm.seed = seed();
+		gm.seed = seed(gm);
 		worldRan(gm.p.difficulty, t, gm.seed, gm);
-		shopRan(n, t);
+		shopRan(n, t, gm);
 		shipValues(gm);
 		weaponValues(gm);
 	}
@@ -1601,6 +1618,9 @@ void mapStats(struct gm& gm)
 	x++;
 	gotoxy(120, x);
 	cout << gm.s.modules << " / " << gm.s.modulesMax << " Ship Modules";
+	x++;
+	gotoxy(120, x);
+	cout << gm.s.weapons << " / " << gm.s.maxWeap << " Ship Weapons";
 }
 
 void mapMenu(vector <systems>& t, struct gm& gm)
@@ -1891,7 +1911,7 @@ void NPC::shopManager(struct gm &gm, vector<systems> &t)
 	int current = systemCurrent(t);
 	int shopCID;
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < gm.i.shopNum; i++)
 	{
 		if (current == sh[i].current)
 		{
@@ -2379,25 +2399,25 @@ void NPC::modules(struct gm& gm)
 		cin >> input;
 		system("CLS");
 
-		if (!intCheck(input) || stoi(input) > gm.mod.size() + 1 || stoi(input) < 1)
+		if (!intCheck(input))
 		{
 			invalidInput();
 			continue;
 		}
 
-		if (input == "1" && gm.p.supplies > gm.i.rMC && gm.s.modules < gm.s.modulesMax)
+		if (input == "1" && gm.p.supplies >= gm.i.rMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will allow you to heal 1 HP for free every time you move\n");
 		}
-		else if (input == "2" && gm.p.supplies > gm.i.cMC && gm.s.modules < gm.s.modulesMax)
+		else if (input == "2" && gm.p.supplies >= gm.i.cMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will increase your damage dealt by 1 per shot\n");
 		}
-		else if (input == "3" && gm.p.supplies > gm.i.sMC && gm.s.modules < gm.s.modulesMax)
+		else if (input == "3" && gm.p.supplies >= gm.i.sMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will increase your shield regeneration in combat by 1\n");
 		}
-		else if (input == "4" && gm.p.supplies > gm.i.clMC && gm.s.modules < gm.s.modulesMax)
+		else if (input == "4" && gm.p.supplies >= gm.i.clMC && gm.s.modules < gm.s.modulesMax)
 		{
 			printf("This module will allow you to cloak during combat, making all enemies miss\n");
 		}
@@ -2931,7 +2951,7 @@ void combat::sStats()
 	}
 }
 
-void combat::enemyTypes(struct gm& gm, vector <systems> &s) // not correctly assigning roles if system already been escaped, could be display?
+void combat::enemyTypes(struct gm& gm, vector <systems> &s)
 {
 	int t;
 	bool c = false;
@@ -3033,6 +3053,27 @@ void combat::enemyTypes(struct gm& gm, vector <systems> &s) // not correctly ass
 			{
 				cm.es[i].type = s[systemCurrent(s)].enemyTypes[i];
 				c = true;
+
+				if (cm.es[i].type == 0)
+				{
+					cm.es[i].enemTypeName = "Corvette";
+				}
+				else if (cm.es[i].type == 1)
+				{
+					cm.es[i].enemTypeName = "Destroyer";
+				}
+				else if (cm.es[i].type == 2)
+				{
+					cm.es[i].enemTypeName = "Cruiser";
+				}
+				else if (cm.es[i].type == 3)
+				{
+					cm.es[i].enemTypeName = "Battleship";
+				}
+				else if (cm.es[i].type == 4)
+				{
+					cm.es[i].enemTypeName = "Assault Carrier";
+				}
 			}
 
 			if (!c)
@@ -3285,18 +3326,31 @@ void combat::cSD(int enemyAttack)
 
 void combat::mS(struct gm& gm)
 {
-	gotoxy(80, 0);
+	int y = 0;
+	gotoxy(80, y);
 	printf("Your Stats:");
-	gotoxy(80, 1);
+	y++;
+	gotoxy(80, y);
 	cout << "HP: " << gm.s.health << " / " << gm.s.healthMax;
-	gotoxy(80, 2);
+	y++;
+	gotoxy(80, y);
 	cout << "Shield: " << gm.s.shield << " / " << gm.s.shieldMax;
-	gotoxy(80, 3);
+	y++;
+	gotoxy(80, y);
 	cout << "Shield Regen: " << gm.s.shieldRegeneration;
-	gotoxy(80, 4);
+	y++;
+	gotoxy(80, y);
 	cout << "Weapons: " << gm.s.weapons << " / " << gm.s.maxWeap;
-	gotoxy(80, 5);
+	y++;
+	gotoxy(80, y);
 	cout << (1 - gm.s.evasion) * 100 << "% Evasion Chance";
+	y++;
+	if (gm.mod[3]) // cloak module
+	{
+		gotoxy(80, y);
+		cout << "Cloak cooldown " << cloakT << " / " << gm.i.clMCo << " Turns";
+		y++;
+	}
 }
 
 void combat::sCombat(struct gm& gm, vector <systems>& s)
@@ -3304,7 +3358,7 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 	string input;
 
 	int temp;
-	int select = 1;
+	int select;
 	int eJ;
 	int clM = -1;
 	int enemyAttack;
@@ -3312,6 +3366,8 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 
 	while (1)
 	{
+		select = 1;
+
 		system("CLS");
 
 		mS(gm);
@@ -3354,54 +3410,68 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 			}
 			if (stoi(input) == eJ)
 			{
-				cout << "Are you sure you want to activate your Emergency Jump? A failed jump will result in a loss of " << gm.i.eJD << " HP\nMenu:\n1: Confirm\n2: Back\nInput: ";
+				cout << "Are you sure you want to activate your Emergency Jump Drive? It will cost " << gm.i.ejC << " Fuel and a failed jump will result in a loss of " << gm.i.eJD << " HP\nMenu:\n1: Confirm\n2: Back\nInput: ";
 				cin >> input;
 				system("CLS");
 
 				if (input == "1")
 				{
+					if (gm.s.fuel < gm.i.ejC)
+					{
+						invalidInput();
+						continue;
+					}
+
 					current = systemCurrent(s);
 					temp = rand() % 1 + (100);
 
-					if (temp > 50)
+					if (temp > gm.i.ejCh)
 					{
 						temp = rand() % 8;
 
 						if (s[current].x > 0 && temp == 0)
 						{
 							s[current - 1].current = true;
+							s[current - 1].encountered = true;
 						}
 						else if (s[current].x < 9 && temp == 1)
 						{
 							s[current + 1].current = true;
+							s[current + 1].encountered = true;
 						}
 						else if (s[current].y > 0 && temp == 2)
 						{
 							s[current - 10].current = true;
+							s[current - 10].encountered = true;
 						}
 						else if (s[current].y < 9 && temp == 3)
 						{
 							s[current + 10].current = true;
+							s[current + 10].encountered = true;
 						}
 						else if (s[current].x < 9 && s[current].y < 9 && temp == 4)
 						{
 							s[current + 11].current = true;
+							s[current + 11].encountered = true;
 						}
 						else if (s[current].x > 0 && s[current].y < 9 && temp == 5)
 						{
 							s[current + 9].current = true;
+							s[current + 9].encountered = true;
 						}
 						else if (s[current].x > 0 && s[current].y > 0 && temp == 6)
 						{
 							s[current - 11].current = true;
+							s[current - 11].encountered = true;
 						}
 						else if (s[current].x < 9 && s[current].y > 0 && temp == 7)
 						{
 							s[current - 9].current = true;
+							s[current - 9].encountered = true;
 						}
 						else
 						{
-							printf("Jump has failed, you have lost 5 HP\n");
+							cout << "Jump has failed, you have lost " << gm.i.eJD << " HP\n";
 							_getch();
 							gm.s.health -= gm.i.eJD;
 							break;
@@ -3410,11 +3480,12 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 						_getch();
 						s[current].current = false;
 						s[current].esc = true;
+						gm.s.fuel -= gm.i.ejC;
 						escape = true;
 					}
 					else
 					{
-						printf("Jump has failed, you have lost 5 HP\n");
+						cout << "Jump has failed, you have lost " << gm.i.eJD << " HP\n";
 						_getch();
 						gm.s.health -= gm.i.eJD;
 					}
@@ -3431,11 +3502,11 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 			}
 			else if (stoi(input) == clM)
 			{
-				printf("Are you sure you want to activate your cloak?\nMenu:\n1: Confirm\n2: Back\nInput: ");
+				cout << "Are you sure you want to activate your cloak? It will have a " << gm.i.clMCo << " turn cooldown\nMenu:\n1: Confirm\n2: Back\nInput: ";
 				cin >> input;
 				system("CLS");
 
-				if (input == "1")
+				if (input == "1" && cloakT < 1)
 				{
 					printf("Cloak activated.\n");
 					cloaked = true;
@@ -3620,7 +3691,7 @@ void combat::esCombat(struct gm& gm)
 
 			x = (cm.es[i].accuracy * gm.s.evasion) + (float(y) / 100);
 
-			if (x > (float(cTH) / 100))
+			if (x > (float(cTH) / 100) && !cloaked)
 			{
 				shotsH++;
 				fD += damage;
@@ -3680,6 +3751,17 @@ void combat::esCombat(struct gm& gm)
 		{
 			gm.s.shield = gm.s.shieldMax;
 		}
+	}
+	if (cloaked)
+	{
+		cloakT = gm.i.clMCo;
+	}
+
+	cloaked = false;
+
+	if (cloakT > 0)
+	{
+		cloakT--;
 	}
 }
 
