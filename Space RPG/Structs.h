@@ -7,13 +7,15 @@ using namespace std;
 struct systems
 {
 	vector <int> enemyTypes;
+	int enemies = 0;
+	int enemyRace;
+	int combatT;
+	bool esc = false;
 
     int dangerLevel;
     int supplies;
     int x, y;
     int systemID;
-	int enemies = 0;
-	int enemyRace;
 	int addedSup = 0;
     bool explored;
 	bool encountered = false;

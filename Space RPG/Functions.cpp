@@ -1485,7 +1485,11 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 
 	ran = 1 + rand() % (10);
 
-	if (t[current].objective)
+	if (t[current].enemies > 0)
+	{
+		encounter = t[current].combatT;
+	}
+	else if (t[current].objective)
 	{
 		t[current].enemies = gm.p.difficulty + rand() % (4);
 		encounter = 2;
@@ -1509,6 +1513,7 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 				t[current].enemies = 3 + rand() % (4);	
 			}
 			encounter = 1;
+			t[current].combatT = 1;
 		}
 		else if (ran == 1) // ship attack
 		{
@@ -1525,6 +1530,7 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 				t[current].enemies = 1;
 			}
 			encounter = 2;
+			t[current].combatT = 2;
 		}
 		
 	}
@@ -2615,6 +2621,7 @@ bool combat::getEscape()
 void combat::combatManager(struct gm& gm, vector <systems>& t)
 {
 	system("CLS");
+
 	enemyTypes(gm, t);
 
 	escape = false;
@@ -2924,44 +2931,60 @@ void combat::sStats()
 	}
 }
 
-void combat::enemyTypes(struct gm& gm, vector <systems> &s)
+void combat::enemyTypes(struct gm& gm, vector <systems> &s) // not correctly assigning roles if system already been escaped, could be display?
 {
 	int t;
+	bool c = false;
 
-	for (int i = 0; i < enemies; i++)
+	cm.eg.clear();
+	cm.es.clear();
+
+		for (int i = 0; i < enemies; i++)
+		{
+			if (comType == 0) // ground
+			{
+				cm.eg.push_back(enemGround);
+				cm.eg[i].ID = i + 1;
+			}
+			else if (comType == 1) // space
+			{
+				cm.es.push_back(enemShip);
+				cm.es[i].ID = i + 1;
+			}
+		}
+
+	if (!s[systemCurrent(s)].esc)
 	{
-		if (comType == 0) // ground
-		{
-			cm.eg.push_back(enemGround);
-			cm.eg[i].ID = i + 1;
-		}
-		else if (comType == 1) // space
-		{
-			cm.es.push_back(enemShip);
-			cm.es[i].ID = i + 1;
-		}
+		enemyRace = rand() % 5;
 	}
-
-	enemyRace = rand() % 5;
+	else
+	{
+		enemyRace = s[systemCurrent(s)].enemyRace;
+	}
 
 	if (enemyRace == 0)
 	{
+		s[systemCurrent(s)].enemyRace = 0;
 		enemRaceName = "Androidus";
 	}
 	else if (enemyRace == 1)
 	{
+		s[systemCurrent(s)].enemyRace = 1;
 		enemRaceName = "Zorgons";
 	}
 	else if (enemyRace == 2)
 	{
+		s[systemCurrent(s)].enemyRace = 2;
 		enemRaceName = "Nalites";
 	}
 	else if (enemyRace == 3)
 	{
+		s[systemCurrent(s)].enemyRace = 3;
 		enemRaceName = "Quotis";
 	}
 	else if (enemyRace == 4)
 	{
+		s[systemCurrent(s)].enemyRace = 4;
 		enemRaceName = "Refips";
 	}
 
@@ -2969,55 +2992,81 @@ void combat::enemyTypes(struct gm& gm, vector <systems> &s)
 	{
 		if (comType == 0) // ground
 		{
-			cm.eg[i].type = rand() % 4;
+			if (!s[systemCurrent(s)].esc)
+			{
+				cm.eg[i].type = rand() % 4;
+			}
+			else
+			{
+				cm.eg[i].type = s[systemCurrent(s)].enemyTypes[i];
+			}
 
 			if (cm.eg[i].type == 0)
 			{
 				cm.eg[i].enemTypeName = "Trooper";
+				s[systemCurrent(s)].enemyTypes.push_back(0);
 			}
 			else if (cm.eg[i].type == 1)
 			{
 				cm.eg[i].enemTypeName = "Gunner";
+				s[systemCurrent(s)].enemyTypes.push_back(1);
 			}
 			else if (cm.eg[i].type == 2)
 			{
 				cm.eg[i].enemTypeName = "Warrior";
+				s[systemCurrent(s)].enemyTypes.push_back(2);
 			}
 			else if (cm.eg[i].type == 3)
 			{
 				cm.eg[i].enemTypeName = "Officer";
+				s[systemCurrent(s)].enemyTypes.push_back(3);
 			}
 		}
 		else if (comType == 1) // space
 		{
-			t = 1 + rand() % (100);
+			if (!s[systemCurrent(s)].esc)
+			{
+				t = 1 + rand() % (100);
+				t += gm.p.difficulty * 3;
+			}
+			else
+			{
+				cm.es[i].type = s[systemCurrent(s)].enemyTypes[i];
+				c = true;
+			}
 
-			t += gm.p.difficulty * 3;
-
-			if (t < 20 - (s[systemCurrent(s)].systemID / 4))
+			if (!c)
 			{
-				cm.es[i].enemTypeName = "Corvette";
-				cm.es[i].type = 0;
-			}
-			else if (t < 40 - (s[systemCurrent(s)].systemID / 4))
-			{
-				cm.es[i].enemTypeName = "Destroyer";
-				cm.es[i].type = 1;
-			}
-			else if (t < 60 - (s[systemCurrent(s)].systemID / 4))
-			{
-				cm.es[i].enemTypeName = "Cruiser";
-				cm.es[i].type = 2;
-			}
-			else if (t < 80 - (s[systemCurrent(s)].systemID / 4))
-			{
-				cm.es[i].enemTypeName = "Battleship";
-				cm.es[i].type = 3;
-			}
-			else if (t > 80 - (s[systemCurrent(s)].systemID / 4))
-			{
-				cm.es[i].enemTypeName = "Assault Carrier";
-				cm.es[i].type = 4;
+				if (t < 20 - (s[systemCurrent(s)].systemID / 5))
+				{
+					cm.es[i].enemTypeName = "Corvette";
+					cm.es[i].type = 0;
+					s[systemCurrent(s)].enemyTypes.push_back(0);
+				}
+				else if (t < 40 - (s[systemCurrent(s)].systemID / 5))
+				{
+					cm.es[i].enemTypeName = "Destroyer";
+					cm.es[i].type = 1;
+					s[systemCurrent(s)].enemyTypes.push_back(1);
+				}
+				else if (t < 60 - (s[systemCurrent(s)].systemID / 5))
+				{
+					cm.es[i].enemTypeName = "Cruiser";
+					cm.es[i].type = 2;
+					s[systemCurrent(s)].enemyTypes.push_back(2);
+				}
+				else if (t < 80 - (s[systemCurrent(s)].systemID / 5))
+				{
+					cm.es[i].enemTypeName = "Battleship";
+					cm.es[i].type = 3;
+					s[systemCurrent(s)].enemyTypes.push_back(3);
+				}
+				else if (t > 80 - (s[systemCurrent(s)].systemID / 4))
+				{
+					cm.es[i].enemTypeName = "Assault Carrier";
+					cm.es[i].type = 4;
+					s[systemCurrent(s)].enemyTypes.push_back(4);
+				}
 			}
 		}
 	}
@@ -3300,7 +3349,7 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 				if (stoi(input) == cm.es[i].ID)
 				{
 					enemyAttack = stoi(input) - 1;
-					sACombat(gm, enemyAttack);
+					sACombat(gm, enemyAttack, s);
 				}
 			}
 			if (stoi(input) == eJ)
@@ -3360,6 +3409,7 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 						printf("Succesul jump! You have jumped to a random adjacent sector\n");
 						_getch();
 						s[current].current = false;
+						s[current].esc = true;
 						escape = true;
 					}
 					else
@@ -3416,7 +3466,7 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 	}
 }
 
-void combat::sACombat(struct gm& gm, int enemyAttack)
+void combat::sACombat(struct gm& gm, int enemyAttack, vector <systems>& s)
 {
 	string input;
 
@@ -3537,6 +3587,9 @@ void combat::sACombat(struct gm& gm, int enemyAttack)
 
 			cm.es.erase(cm.es.begin() + enemyAttack);
 			enemies--;
+
+			s[systemCurrent(s)].enemies--;
+			s[systemCurrent(s)].enemyTypes.erase(s[systemCurrent(s)].enemyTypes.begin() + enemyAttack);
 		}
 	}
 	else

@@ -58,7 +58,7 @@ public:
 	void cSD(int enemyAttack);
 	void mS(struct gm& gm);
 	void sCombat(struct gm& gm, vector <systems>& s);
-	void sACombat(struct gm& gm, int enemyAttack);
+	void sACombat(struct gm& gm, int enemyAttack, vector <systems>& s);
 	void esCombat(struct gm& gm);
 	void gCombat(struct gm& gm);
 
