@@ -29,7 +29,7 @@ void worldRan(int difficulty, vector <systems>& t, string input, struct gm& gm);
 void gameManager(struct gm &gm, vector <systems>& t, class NPC& n);
 void mapMenu(vector <systems>& t, struct gm& gm);
 void objectiveFound(struct gm& gm);
-void gameRestart(struct gm& gm, vector <systems>& t);
+void gameRestart(struct gm& gm, vector <systems>& t, class NPC& n);
 int encounterChance(struct gm& gm, vector <systems>& t);
 void friendlyShip(struct gm& gm, vector <systems>& t);
 void gameOver();
@@ -538,8 +538,8 @@ void credits()
 {
 	printf("Author:\nJoey Soroka\n\n");
 	printf("Programming Support:\nEric Pace\nKian Darrington\nSlater Swart\nIssac Morine\nTucker Norris\nBrooks Sammarco\nMonte Long\n\n");
-	printf("Creative Support:\nIssac Morine\nMonte Long\nJackson Heckert\nMason Hart\n\n");
-	printf("Testers:\nMonte Long\n");
+	printf("Creative Support:\nIssac Morine\nMonte Long\nEric Pace\nJackson Heckert\nMason Hart\n\n");
+	printf("Testers:\nMonte Long\nMother Soroka\nChristina Soroka\nEric Pace\n");
 	_getch();
 }
 
@@ -919,7 +919,7 @@ void mainMenu(struct gm &gm, vector <systems>& t, class NPC& n)
 		if (stoi(input) == s) // start game
 		{
 			gm.inGame = false;
-			gameRestart(gm, t);
+			gameRestart(gm, t, n);
 			gameManager(gm, t, n);
 		}
 		else if (stoi(input) == r) // resume game
