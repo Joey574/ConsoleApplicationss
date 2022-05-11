@@ -415,7 +415,7 @@ void gameStart(struct gm& gm, vector <systems>& t)
 	printf("You have been assigned the role of team captain and are tasked with finding a habitable world for the population of the earth. (The Genesis)\n");
 	_getch();
 	system("CLS");
-	printf("So what say you Captain? What shall your callsign be? You can change it later.\n");
+	printf("So what say you Captain? What shall your callsign be?\n");
 	cin >> gm.p.name;
 	system("CLS");
 	cout << "Captain " << gm.p.name << ", you shall be in charge of a voyager class starship, what do you wish to call it?\n";
@@ -431,7 +431,7 @@ void gameStart(struct gm& gm, vector <systems>& t)
 	printf("more modules with the blueprints we have supplied you with.\n");
 	_getch();
 	system("CLS");
-	printf("If you ever need help or want to save visit your ships onboard computer, located in your command module, and reopen the menu.\n");
+	printf("If you ever need help or want to save you can always reopen the menu.\n");
 	_getch();
 	system("CLS");
 	cout << "Good luck Captain " << gm.p.name << ", and make sure you come home safe!" << endl;
@@ -867,7 +867,7 @@ void saveAndLoad(struct gm& gm, vector <systems>& t, class NPC& n)
 	
 }
 
-void mainMenu(struct gm &gm, vector <systems>& t)
+void mainMenu(struct gm &gm, vector <systems>& t, class NPC& n)
 {
 	string input;
 
@@ -878,8 +878,6 @@ void mainMenu(struct gm &gm, vector <systems>& t)
 	int c = 0;
 	int sl = 0;
 	int e = 0;
-
-	NPC n;
 
 	while (1) // menu loop
 	{
@@ -1263,7 +1261,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 		mapMenu(t, gm);
 		if (gm.inMenu == true)
 		{
-			mainMenu(gm, t);
+			mainMenu(gm, t, n);
 			gm.inMenu = false;
 		}
 		else if (gm.inShop == true)
@@ -1292,6 +1290,10 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 					}
 					if (c.getEscape())
 					{
+						if (gm.s.fuel < 1)
+						{
+							gm.s.alive = false;
+						}
 						exploredUpdater(t);
 						systemInfo(t, gm);
 					}
@@ -1313,7 +1315,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 	{
 		gameOver();
 	}
-	gameRestart(gm, t);
+	gameRestart(gm, t, n);
 }
 
 void moveUpdate(struct gm& gm)
@@ -1495,6 +1497,7 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 	int current;
 	int enemies = 0;
 	int ran;
+	int te;
 
 	int encounter;
 
@@ -1511,7 +1514,7 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 		t[current].enemies = gm.p.difficulty + rand() % (4);
 		encounter = 2;
 	}
-	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0) // enemies attack
+	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0 && !t[current].shop) // enemies attack
 	{
 		ran = rand() % (2);
 
@@ -1534,24 +1537,36 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 		}
 		else if (ran == 1) // ship attack
 		{
-			if (t[current].dangerLevel == 3)
+			te = rand() % 2;
+
+			if (te == 0 && t[current].dangerLevel == 3)
 			{
-				t[current].enemies = 2 + rand() % (3);
-			}
-			else if (t[current].dangerLevel == 2)
-			{
-				t[current].enemies = 1 + rand() % (2);
+				t[current].enemies = 5 + rand() % (6);
+				t[current].allies = 3 + rand() % (3);
+				encounter = 4;
+				t[current].combatT = 2;
 			}
 			else
 			{
-				t[current].enemies = 1;
+				if (t[current].dangerLevel == 3)
+				{
+					t[current].enemies = 2 + rand() % (3);
+				}
+				else if (t[current].dangerLevel == 2)
+				{
+					t[current].enemies = 1 + rand() % (2);
+				}
+				else
+				{
+					t[current].enemies = 1;
+				}
+				encounter = 2;
+				t[current].combatT = 2;
 			}
-			encounter = 2;
-			t[current].combatT = 2;
 		}
 		
 	}
-	else if (ran <= 10 && ran > 9 && t[current].encountered == false && t[current].dangerLevel < 2) // friendly ships with supplies
+	else if (ran <= 10 && ran > 9 && t[current].encountered == false && t[current].dangerLevel < 2 && !t[current].shop) // friendly ships with supplies
 	{
 		t[current].addedSup = 2 + rand() % (6);
 		encounter = 3;
@@ -1813,7 +1828,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 		printf("                   ");
 }
 
-void gameRestart(struct gm& gm, vector <systems>& t)
+void gameRestart(struct gm& gm, vector <systems>& t, class NPC& n)
 {
 	crew temp;
 
@@ -1907,7 +1922,6 @@ void NPC::statDisplay(struct gm& gm)
 
 void NPC::shopManager(struct gm &gm, vector<systems> &t)
 {
-
 	int current = systemCurrent(t);
 	int shopCID;
 
@@ -2058,11 +2072,12 @@ void NPC::miyoshiShop(struct gm& gm, vector<systems>& t)
 {
 	string input;
 
+	system("CLS");
+	printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\n");
+	_getch();
+
 	while (1)
 	{
-		system("CLS");
-		printf("Hello... I am Miyoshi, many travelers come to me for help in their journey, what do you want?\n");
-		_getch();
 		system("CLS");
 
 		statDisplay(gm);
@@ -2122,7 +2137,6 @@ void NPC::miyoshiShop(struct gm& gm, vector<systems>& t)
 			invalidInput();
 			continue;
 		}
-		
 	}
 }
 

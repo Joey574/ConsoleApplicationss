@@ -64,7 +64,7 @@ public:
 
 private:
 	int enemyRace;
-	int comType; // 0 = boarding, 1 = ship to ship
+	int comType; // 0 = boarding, 1 = ship to ship, 2 = fleet combat
 	int enemies; // # of enemies
 	int cloakT = 0;
 	bool cloaked = false;

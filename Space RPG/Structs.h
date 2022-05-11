@@ -8,6 +8,7 @@ struct systems
 {
 	vector <int> enemyTypes;
 	int enemies = 0;
+	int allies = 0;
 	int enemyRace;
 	int combatT;
 	bool esc = false;
@@ -88,20 +89,20 @@ struct weaponData
 
 struct items
 {
-	int mBC = 10; // miyoshi buck
-	int gLC = 20; // genesis location
-	int fC = 1; // fuel
-	int sUC = 20; // ship upgrade
-	int rC = 2; // repair
-	int rMC = 15; // repair module
-	int cMC = 15; // combat module
-	int sMC = 15; // shield module
-	int clMC = 20; // cloak module
+	int mBC = 10; // miyoshi buck cost
+	int gLC = 20; // genesis location cost
+	int fC = 1; // fuel cost
+	int sUC = 20; // ship upgrade cost
+	int rC = 2; // repair cost
+	int rMC = 15; // repair module cost
+	int cMC = 15; // combat module cost
+	int sMC = 15; // shield module cost
+	int clMC = 20; // cloak module cost
 	int clMCo = 3; // cloak module cooldown
 	int sWT = 10; // solid works tip
 	int eJD = 5; // emergency jump damage
 	int ejC = 3; // emergency jump fuel cost
-	int ejCh = 40; // emergency jump chance
+	int ejCh = 30; // emergency jump chance
 	int shopNum; // # of shops (user defined)
 };
 

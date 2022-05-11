@@ -39,6 +39,7 @@ int main()
 
 	gm gm;
 	crew temp;
+	NPC n;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -52,5 +53,5 @@ int main()
 
 	introArt();
 
-	mainMenu(gm, t);
+	mainMenu(gm, t, n);
 }
