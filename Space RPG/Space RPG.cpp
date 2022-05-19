@@ -54,4 +54,6 @@ int main()
 	introArt();
 
 	mainMenu(gm, t, n);
+
+	return 0;
 }

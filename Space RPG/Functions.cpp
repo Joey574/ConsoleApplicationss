@@ -1251,7 +1251,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 		weaponValues(gm);
 	}
 	gm.inGame = true;
-	gm.inMenu = false;
+	gm.inMenu = false; 
 	worldConstructor();
 	exploredUpdater(t);
 	systemInfo(t, gm);
@@ -1276,34 +1276,37 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 			moveUpdate(gm);
 			exploredUpdater(t);
 			systemInfo(t, gm);
-			encounter = encounterChance(gm, t);
-			if (encounter > 0)
+			while (!t[systemCurrent(t)].encountered)
 			{
-				if (encounter == 1 || encounter == 2)
+				encounter = encounterChance(gm, t);
+				if (encounter > 0)
 				{
-					c.setComType(encounter - 1);
-					c.setEnemies(t[systemCurrent(t)].enemies);
-					c.combatManager(gm, t);
-					if (!gm.p.alive)
+					if (encounter == 1 || encounter == 2)
 					{
-						break;
-					}
-					if (c.getEscape())
-					{
-						if (gm.s.fuel < 1)
+						c.setComType(encounter - 1);
+						c.setEnemies(t[systemCurrent(t)].enemies);
+						c.combatManager(gm, t);
+						if (!gm.p.alive)
 						{
-							gm.s.alive = false;
+							break;
 						}
-						exploredUpdater(t);
-						systemInfo(t, gm);
+						if (c.getEscape())
+						{
+							if (gm.s.fuel < 1)
+							{
+								gm.s.alive = false;
+							}
+							exploredUpdater(t);
+							systemInfo(t, gm);
+						}
 					}
+					else if (encounter == 3)
+					{
+						friendlyShip(gm, t);
+					}
+					worldConstructor();
+					systemInfo(t, gm);
 				}
-				else if (encounter == 3)
-				{
-					friendlyShip(gm, t);
-				}
-				worldConstructor();
-				systemInfo(t, gm);
 			}
 		}
 	}
@@ -2311,7 +2314,7 @@ void NPC::sWeapons(struct gm& gm)
 		gotoxy(50, 4);
 		cout << gm.wD[t].accuracy * 100 << "% Accuracy";
 		gotoxy(50, 5);
-		cout << gm.wD[t].cost;
+		cout << "Cost: " << gm.wD[t].cost << " Supplies";
 
 		gotoxy(0, 0);
 
@@ -3446,42 +3449,34 @@ void combat::sCombat(struct gm& gm, vector <systems>& s)
 						if (s[current].x > 0 && temp == 0)
 						{
 							s[current - 1].current = true;
-							s[current - 1].encountered = true;
 						}
 						else if (s[current].x < 9 && temp == 1)
 						{
 							s[current + 1].current = true;
-							s[current + 1].encountered = true;
 						}
 						else if (s[current].y > 0 && temp == 2)
 						{
 							s[current - 10].current = true;
-							s[current - 10].encountered = true;
 						}
 						else if (s[current].y < 9 && temp == 3)
 						{
 							s[current + 10].current = true;
-							s[current + 10].encountered = true;
 						}
 						else if (s[current].x < 9 && s[current].y < 9 && temp == 4)
 						{
 							s[current + 11].current = true;
-							s[current + 11].encountered = true;
 						}
 						else if (s[current].x > 0 && s[current].y < 9 && temp == 5)
 						{
 							s[current + 9].current = true;
-							s[current + 9].encountered = true;
 						}
 						else if (s[current].x > 0 && s[current].y > 0 && temp == 6)
 						{
 							s[current - 11].current = true;
-							s[current - 11].encountered = true;
 						}
 						else if (s[current].x < 9 && s[current].y > 0 && temp == 7)
 						{
 							s[current - 9].current = true;
-							s[current - 9].encountered = true;
 						}
 						else
 						{
