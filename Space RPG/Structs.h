@@ -92,7 +92,7 @@ struct items
 	int mBC = 10; // miyoshi buck cost
 	int gLC = 20; // genesis location cost
 	int fC = 1; // fuel cost
-	int sUC = 20; // ship upgrade cost
+	int sUC = 30; // ship upgrade cost
 	int rC = 2; // repair cost
 	int rMC = 15; // repair module cost
 	int cMC = 15; // combat module cost
