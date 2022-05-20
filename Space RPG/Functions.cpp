@@ -1571,15 +1571,15 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 	}
 	else if (ran <= 10 && ran > 9 && t[current].encountered == false && t[current].dangerLevel < 2 && !t[current].shop) // friendly ships with supplies
 	{
-		t[current].addedSup = 2 + rand() % (6);
+		t[current].addedSup = 2 + rand() % (4);
 		encounter = 3;
+		t[current].encountered = true;
 	}
 	else // no encounter
 	{
 		encounter = 0;
+		t[current].encountered = true;
 	}
-
-	t[current].encountered = true;
 
 	return encounter;
 }
@@ -1752,7 +1752,7 @@ void mapMenu(vector <systems>& t, struct gm& gm)
 
 		if (input != "W" && input != "A" && input != "S" && input != "D")
 		{
-			if (stoi(input) > aces || stoi(input) < 0)
+			if (stoi(input) > aces || stoi(input) < 1)
 			{
 				gotoxy(101, move);
 				invalidInput();
@@ -2668,6 +2668,7 @@ void combat::combatManager(struct gm& gm, vector <systems>& t)
 	{
 		groundIntro();
 		gStats();
+		t[systemCurrent(t)].encountered = true;
 	}
 	else if (comType == 1) // space
 	{
@@ -2682,6 +2683,11 @@ void combat::combatManager(struct gm& gm, vector <systems>& t)
 				esCombat(gm);
 			}
 		}
+	}
+
+	if (enemies < 1)
+	{
+		t[systemCurrent(t)].encountered = true;
 	}
 }
 
@@ -3368,6 +3374,9 @@ void combat::mS(struct gm& gm)
 		cout << "Cloak cooldown " << cloakT << " / " << gm.i.clMCo << " Turns";
 		y++;
 	}
+	gotoxy(80, y);
+	cout << gm.s.fuel << " / " << gm.s.fuelMax << " Fuel";
+	y++;
 }
 
 void combat::sCombat(struct gm& gm, vector <systems>& s)
