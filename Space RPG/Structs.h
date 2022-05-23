@@ -102,7 +102,7 @@ struct items
 	int sWT = 10; // solid works tip
 	int eJD = 5; // emergency jump damage
 	int ejC = 3; // emergency jump fuel cost
-	int ejCh = 30; // emergency jump chance
+	int ejCh = 25; // emergency jump chance
 	int shopNum; // # of shops (user defined)
 };
 
@@ -120,6 +120,7 @@ struct gm
 	bool inMenu = false;
 	bool inGame = false;
 	bool inShop = false;
+	bool lookedAt = false; 
 };
 
 struct enemyShip

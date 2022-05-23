@@ -38,6 +38,7 @@ void shipValues(struct gm& gm);
 void shopRan(class NPC& n, vector <systems>& t, struct gm& gm);
 void mapStats(struct gm& gm);
 void weaponValues(struct gm& gm);
+void cryptoBuy(struct gm& gm);
 
 // variables
 
@@ -477,6 +478,73 @@ void scores()
 	_getch();
 }
 
+void tutorial(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+		printf("Menu:\n1: First time playing\n2: Emergency Jump\n3: Combat\n4: Supplies\n5: Modules\n6: Enemy Types\n7: Your ship\n8: Back\nInput: ");
+		cin >> input;
+		system("CLS");
+
+		if (input == "1")
+		{
+			printf("In this game your goal is simply to find the \"Genesis\", a planet that has the potential to save the human race. A mission that is as dangerous as it is important.\n");
+			_getch();
+			system("CLS");
+			printf("You play as the captain of a ship capable of traveling faster than light, you will get the option to not only name your ship, but yourself as well.\n");
+			_getch();
+			system("CLS");
+			printf("As a user you get to decide the difficulty of the game, which is used to decide number of enemies, danger level, etc. You also get to decide the world seed, which is used to \"seed\" the random number generator used to generate the world, as well as the option of choosing how many shops will be generated.\n");
+			_getch();
+			system("CLS");
+			printf("Once you get into the game you can use the WASD keys to control your movement, and your 123 keys to do things like reopening the menu, entering a shop, or collecting the\nsupplies in a system.\n");
+			_getch();
+			system("CLS");
+			cout << "You are displayed on the map as an omega symbol (" << char(234) << "), each tile represents a different system, systems will display some of their data if they have been \"explored\", meaning they are adjacent to you" << endl;
+			_getch();
+			system("CLS");
+			printf("Be careful on your journey and don't forget to stop by shops to upgrade all sorts of things!\n");
+			_getch();
+		}
+		else if (input == "2")
+		{
+
+		}
+		else if (input == "3")
+		{
+
+		}
+		else if (input == "4")
+		{
+
+		}
+		else if (input == "5")
+		{
+
+		}
+		else if (input == "6")
+		{
+
+		}
+		else if (input == "7")
+		{
+
+		}
+		else if (input == "8")
+		{
+			break;
+		}
+		else
+		{
+			invalidInput();
+			continue;
+		}
+	}
+}
+
 void help(struct gm& gm)
 {
 	string input;
@@ -484,15 +552,13 @@ void help(struct gm& gm)
 	while (1)
 	{
 		system("CLS");
-		printf("Menu:\n1: Change Name\n2: Reset Highscores\n3: Back\nInput: ");
+		printf("Menu:\n1: Tutorial\n2: Reset Highscores\n3: Back\nInput: ");
 		cin >> input;
 		system("CLS");
 
 		if (input == "1")
 		{
-			printf("Enter new name: ");
-			cin >> input;
-			gm.p.name = input;
+			tutorial(gm);
 		}
 		else if (input == "2")
 		{
@@ -1304,6 +1370,10 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 					{
 						friendlyShip(gm, t);
 					}
+					else if (encounter == 4)
+					{
+
+					}
 					worldConstructor();
 					systemInfo(t, gm);
 				}
@@ -1517,6 +1587,11 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 		t[current].enemies = gm.p.difficulty + rand() % (4);
 		encounter = 2;
 	}
+	else if (gm.lookedAt && gm.p.miyoshiB < 1)
+	{
+		gm.lookedAt = false;
+		encounter = 4;
+	}
 	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0 && !t[current].shop) // enemies attack
 	{
 		ran = rand() % (2);
@@ -1582,6 +1657,20 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 	}
 
 	return encounter;
+}
+
+void cryptoBuy(struct gm& gm)
+{
+	string input;
+
+	while (1)
+	{
+		system("CLS");
+		gotoxy(50, 0);
+		cout << "Miyoshi Bucks: " << gm.p.miyoshiB;
+		gotoxy(0, 0);
+		printf("Hello, I'll buy your Miyoshi Bucks for 100 supplies each!");
+	}
 }
 
 void objectiveFound(struct gm& gm)
@@ -2498,6 +2587,8 @@ void NPC::modules(struct gm& gm)
 void NPC::miyoshiBucks(struct gm& gm)
 {
 	string input;
+
+	gm.lookedAt = true;
 
 	while (1)
 	{
