@@ -1372,7 +1372,7 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 					}
 					else if (encounter == 4)
 					{
-
+						cryptoBuy(gm);
 					}
 					worldConstructor();
 					systemInfo(t, gm);
@@ -1589,7 +1589,7 @@ int encounterChance(struct gm& gm, vector <systems>&t)
 	}
 	else if (gm.lookedAt && gm.p.miyoshiB < 1)
 	{
-		gm.lookedAt = false;
+		t[current].encountered = true;
 		encounter = 4;
 	}
 	else if (ran <= 9 && ran > 3 && t[current].encountered == false && t[current].dangerLevel > 0 && !t[current].shop) // enemies attack
@@ -1669,8 +1669,25 @@ void cryptoBuy(struct gm& gm)
 		gotoxy(50, 0);
 		cout << "Miyoshi Bucks: " << gm.p.miyoshiB;
 		gotoxy(0, 0);
-		printf("Hello, I'll buy your Miyoshi Bucks for 100 supplies each!");
+		printf("Hello, I'll buy your Miyoshi Bucks for 100 supplies each! Enter how many you want to sell! (or S to go back)\nInput: ");
+		cin >> input;
+
+		if (toupper(input[0]) == 'S')
+		{
+			break;
+		}
+		else if (!intCheck(input) || stoi(input) > gm.p.miyoshiB)
+		{
+			invalidInput();
+			continue;
+		}
+
+		break;
+
 	}
+
+	gm.lookedAt = false;
+
 }
 
 void objectiveFound(struct gm& gm)
@@ -2027,15 +2044,18 @@ void NPC::shopManager(struct gm &gm, vector<systems> &t)
 
 	if (sh[shopCID].shopID == 0)
 	{
-		generalShop(gm);
+		//generalShop(gm);
+		miyoshiShop(gm, t);
 	}
 	else if (sh[shopCID].shopID == 1)
 	{
-		shipShop(gm);
+		//shipShop(gm);
+		miyoshiShop(gm, t);
 	}
 	else if (sh[shopCID].shopID == 2)
 	{
-		weaponShop(gm);
+		//weaponShop(gm);
+		miyoshiShop(gm, t);
 	}
 	else if (sh[shopCID].shopID == 3)
 	{
