@@ -1333,9 +1333,9 @@ void gameManager(struct gm& gm, vector <systems> &t, class NPC& n)
 		else if (gm.inShop == true)
 		{
 			n.shopManager(gm, t);
+			gm.inShop = false;
 			worldConstructor();
 			systemInfo(t, gm);
-			gm.inShop = false;
 		}
 		else
 		{
